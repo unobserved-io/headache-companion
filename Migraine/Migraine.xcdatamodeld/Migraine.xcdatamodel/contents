@@ -1,9 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="true" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22D68" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Attack" representedClassName="Attack" syncable="YES">
+        <attribute name="auras" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="Set&lt;String&gt;"/>
+        <attribute name="headacheType" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="otherPainGroup" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="otherPainText" optional="YES" attributeType="String"/>
+        <attribute name="painLevel" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pressing" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="pressingSide" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pulsating" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="pulsatingSide" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="stopTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="symptoms" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="Set&lt;String&gt;"/>
+        <relationship name="date" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayData" inverseName="attack" inverseEntity="DayData"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="DayData" representedClassName="DayData" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="diet" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="exercise" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="notes" attributeType="String" defaultValueString=""/>
+        <attribute name="relax" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sleep" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="water" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="attack" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attack" inverseName="date" inverseEntity="Attack"/>
+        <relationship name="medication" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medication" inverseName="date" inverseEntity="Medication"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="date"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="MAppData" representedClassName="MAppData" syncable="YES" codeGenerationType="class">
+        <attribute name="doctorNotes" attributeType="String" defaultValueString=""/>
+    </entity>
+    <entity name="Medication" representedClassName="Medication" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dose" optional="YES" attributeType="String"/>
+        <attribute name="helpful" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <relationship name="date" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayData" inverseName="medication" inverseEntity="DayData"/>
+    </entity>
 </model>

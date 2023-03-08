@@ -7,6 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C057CF429B0ECAE00DA8920 /* ActivitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C057CF329B0ECAE00DA8920 /* ActivitiesView.swift */; };
+		9C1983AA29B73DD2007754AB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983A929B73DD2007754AB /* MainView.swift */; };
+		9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983AC29B7923D007754AB /* ClickedMedication.swift */; };
+		9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE5F29AE6626000EB6C2 /* AttackView.swift */; };
+		9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE6129AE662E000EB6C2 /* CalendarView.swift */; };
+		9C682CEB29B3962D00032874 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEA29B3962D00032874 /* Extensions.swift */; };
+		9C682CED29B3B96C00032874 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEC29B3B96C00032874 /* Enums.swift */; };
+		9C86239329AE8CBD006DA6C6 /* DayData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86238D29AE8CBD006DA6C6 /* DayData+CoreDataClass.swift */; };
+		9C86239429AE8CBD006DA6C6 /* DayData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86238E29AE8CBD006DA6C6 /* DayData+CoreDataProperties.swift */; };
+		9C86239529AE8CBD006DA6C6 /* Attack+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86238F29AE8CBD006DA6C6 /* Attack+CoreDataClass.swift */; };
+		9C86239629AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86239029AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift */; };
+		9C86239729AE8CBD006DA6C6 /* Medication+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86239129AE8CBD006DA6C6 /* Medication+CoreDataClass.swift */; };
+		9C86239829AE8CBD006DA6C6 /* Medication+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86239229AE8CBD006DA6C6 /* Medication+CoreDataProperties.swift */; };
+		9C96928029B497520023A00C /* MultiSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96927F29B497520023A00C /* MultiSelectionView.swift */; };
+		9C96928329B4ADB80023A00C /* MultiSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96928229B4ADB80023A00C /* MultiSelector.swift */; };
+		9C98449A29B5E3C600ABDC36 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C98449929B5E3C600ABDC36 /* Globals.swift */; };
+		9C98449C29B5F3E300ABDC36 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C98449B29B5F3E300ABDC36 /* NotesView.swift */; };
+		9C98449E29B5FC9F00ABDC36 /* DoctorNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C98449D29B5FC9F00ABDC36 /* DoctorNotesView.swift */; };
+		9C98B22829B8AD5D000816A9 /* ClickedAttack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C98B22729B8AD5D000816A9 /* ClickedAttack.swift */; };
+		9CEAA3C829B535D600240952 /* MedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAA3C729B535D600240952 /* MedicationView.swift */; };
+		9CEAA3CA29B53A5C00240952 /* AddEditMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */; };
 		9CF7308029ACD93800D91F99 /* MigraineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF7307F29ACD93800D91F99 /* MigraineApp.swift */; };
 		9CF7308229ACD93800D91F99 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF7308129ACD93800D91F99 /* Persistence.swift */; };
 		9CF7308529ACD93800D91F99 /* Migraine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9CF7308329ACD93800D91F99 /* Migraine.xcdatamodeld */; };
@@ -16,6 +37,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C057CF329B0ECAE00DA8920 /* ActivitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesView.swift; sourceTree = "<group>"; };
+		9C1983A929B73DD2007754AB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		9C1983AC29B7923D007754AB /* ClickedMedication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickedMedication.swift; sourceTree = "<group>"; };
+		9C45EE5F29AE6626000EB6C2 /* AttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackView.swift; sourceTree = "<group>"; };
+		9C45EE6129AE662E000EB6C2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		9C682CEA29B3962D00032874 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		9C682CEC29B3B96C00032874 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		9C86238D29AE8CBD006DA6C6 /* DayData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9C86238E29AE8CBD006DA6C6 /* DayData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9C86238F29AE8CBD006DA6C6 /* Attack+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attack+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9C86239029AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attack+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9C86239129AE8CBD006DA6C6 /* Medication+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Medication+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9C86239229AE8CBD006DA6C6 /* Medication+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Medication+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9C96927F29B497520023A00C /* MultiSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionView.swift; sourceTree = "<group>"; };
+		9C96928229B4ADB80023A00C /* MultiSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelector.swift; sourceTree = "<group>"; };
+		9C98449929B5E3C600ABDC36 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		9C98449B29B5F3E300ABDC36 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
+		9C98449D29B5FC9F00ABDC36 /* DoctorNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorNotesView.swift; sourceTree = "<group>"; };
+		9C98B22729B8AD5D000816A9 /* ClickedAttack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickedAttack.swift; sourceTree = "<group>"; };
+		9CEAA3C729B535D600240952 /* MedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationView.swift; sourceTree = "<group>"; };
+		9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditMedicationView.swift; sourceTree = "<group>"; };
 		9CF7307C29ACD93800D91F99 /* Migraine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Migraine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CF7307F29ACD93800D91F99 /* MigraineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigraineApp.swift; sourceTree = "<group>"; };
 		9CF7308129ACD93800D91F99 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -37,6 +79,63 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C1983AB29B79210007754AB /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				9C1983AC29B7923D007754AB /* ClickedMedication.swift */,
+				9C98B22729B8AD5D000816A9 /* ClickedAttack.swift */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
+		9C45EE5B29AE5E04000EB6C2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9CF7308629ACD93800D91F99 /* ContentView.swift */,
+				9C45EE5F29AE6626000EB6C2 /* AttackView.swift */,
+				9C45EE6129AE662E000EB6C2 /* CalendarView.swift */,
+				9C057CF329B0ECAE00DA8920 /* ActivitiesView.swift */,
+				9C96927F29B497520023A00C /* MultiSelectionView.swift */,
+				9CEAA3C729B535D600240952 /* MedicationView.swift */,
+				9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */,
+				9C98449B29B5F3E300ABDC36 /* NotesView.swift */,
+				9C98449D29B5FC9F00ABDC36 /* DoctorNotesView.swift */,
+				9C1983A929B73DD2007754AB /* MainView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9C86238C29AE8CA0006DA6C6 /* DataEntities */ = {
+			isa = PBXGroup;
+			children = (
+				9C86238D29AE8CBD006DA6C6 /* DayData+CoreDataClass.swift */,
+				9C86238E29AE8CBD006DA6C6 /* DayData+CoreDataProperties.swift */,
+				9C86238F29AE8CBD006DA6C6 /* Attack+CoreDataClass.swift */,
+				9C86239029AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift */,
+				9C86239129AE8CBD006DA6C6 /* Medication+CoreDataClass.swift */,
+				9C86239229AE8CBD006DA6C6 /* Medication+CoreDataProperties.swift */,
+			);
+			path = DataEntities;
+			sourceTree = "<group>";
+		};
+		9C96928129B4ADA70023A00C /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				9C96928229B4ADB80023A00C /* MultiSelector.swift */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
+		9C98B22629B8A784000816A9 /* Globals */ = {
+			isa = PBXGroup;
+			children = (
+				9C682CEA29B3962D00032874 /* Extensions.swift */,
+				9C682CEC29B3B96C00032874 /* Enums.swift */,
+				9C98449929B5E3C600ABDC36 /* Globals.swift */,
+			);
+			path = Globals;
+			sourceTree = "<group>";
+		};
 		9CF7307329ACD93700D91F99 = {
 			isa = PBXGroup;
 			children = (
@@ -56,9 +155,13 @@
 		9CF7307E29ACD93800D91F99 /* Migraine */ = {
 			isa = PBXGroup;
 			children = (
+				9C98B22629B8A784000816A9 /* Globals */,
+				9C1983AB29B79210007754AB /* Objects */,
+				9C96928129B4ADA70023A00C /* Widgets */,
+				9C86238C29AE8CA0006DA6C6 /* DataEntities */,
+				9C45EE5B29AE5E04000EB6C2 /* Views */,
 				9CF7307F29ACD93800D91F99 /* MigraineApp.swift */,
 				9CF7308129ACD93800D91F99 /* Persistence.swift */,
-				9CF7308629ACD93800D91F99 /* ContentView.swift */,
 				9CF7308829ACD93800D91F99 /* Assets.xcassets */,
 				9CF7308A29ACD93800D91F99 /* Migraine.entitlements */,
 				9CF7308329ACD93800D91F99 /* Migraine.xcdatamodeld */,
@@ -145,10 +248,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CEAA3CA29B53A5C00240952 /* AddEditMedicationView.swift in Sources */,
+				9C86239829AE8CBD006DA6C6 /* Medication+CoreDataProperties.swift in Sources */,
+				9C86239429AE8CBD006DA6C6 /* DayData+CoreDataProperties.swift in Sources */,
+				9C86239629AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift in Sources */,
+				9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */,
+				9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */,
+				9C057CF429B0ECAE00DA8920 /* ActivitiesView.swift in Sources */,
+				9C86239329AE8CBD006DA6C6 /* DayData+CoreDataClass.swift in Sources */,
+				9C98449A29B5E3C600ABDC36 /* Globals.swift in Sources */,
+				9CEAA3C829B535D600240952 /* MedicationView.swift in Sources */,
+				9C682CED29B3B96C00032874 /* Enums.swift in Sources */,
+				9C86239729AE8CBD006DA6C6 /* Medication+CoreDataClass.swift in Sources */,
 				9CF7308029ACD93800D91F99 /* MigraineApp.swift in Sources */,
+				9C98449E29B5FC9F00ABDC36 /* DoctorNotesView.swift in Sources */,
+				9C96928329B4ADB80023A00C /* MultiSelector.swift in Sources */,
+				9C98449C29B5F3E300ABDC36 /* NotesView.swift in Sources */,
 				9CF7308229ACD93800D91F99 /* Persistence.swift in Sources */,
 				9CF7308729ACD93800D91F99 /* ContentView.swift in Sources */,
 				9CF7308529ACD93800D91F99 /* Migraine.xcdatamodeld in Sources */,
+				9C98B22829B8AD5D000816A9 /* ClickedAttack.swift in Sources */,
+				9C1983AA29B73DD2007754AB /* MainView.swift in Sources */,
+				9C86239529AE8CBD006DA6C6 /* Attack+CoreDataClass.swift in Sources */,
+				9C682CEB29B3962D00032874 /* Extensions.swift in Sources */,
+				9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */,
+				9C96928029B497520023A00C /* MultiSelectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
