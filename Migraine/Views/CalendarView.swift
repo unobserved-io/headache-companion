@@ -16,7 +16,7 @@ struct CalendarView: View {
     @State private var selectedDay: Date = .now
     @State private var refreshIt: Bool = false
     @State private var attackSheet: Bool = false
-    @State private var clickedIndex: Int? = nil
+//    @State private var clickedIndex: Int? = nil
     @StateObject var clickedAttack = ClickedAttack(nil)
     
     var body: some View {
@@ -34,7 +34,7 @@ struct CalendarView: View {
             Section("Attacks") {
                 ForEach(getDayData()?.attacks ?? []) { attack in
                     Button {
-                        clickedIndex = getDayData()?.attacks.firstIndex(of: attack) ?? nil
+//                        clickedIndex = getDayData()?.attacks.firstIndex(of: attack) ?? nil
                         clickedAttack.attack = attack
                         attackSheet.toggle()
                     } label: {
@@ -55,10 +55,9 @@ struct CalendarView: View {
         .onAppear {
             refreshIt.toggle()
         }
-        .sheet(isPresented: $attackSheet, onDismiss: indexToNil) {
-            if clickedIndex != nil {
-                AttackView(attack: getDayData()!.attacks[clickedIndex!])
-            }
+        .sheet(isPresented: $attackSheet) {
+            AttackView()
+                .environmentObject(clickedAttack)
         }
     }
     
@@ -69,9 +68,9 @@ struct CalendarView: View {
         return dayData.filter { $0.date == selectedDayFormatted }.first
     }
     
-    private func indexToNil() {
-        clickedIndex = nil
-    }
+//    private func indexToNil() {
+//        clickedIndex = nil
+//    }
 }
 
 struct CalendarView_Previews: PreviewProvider {

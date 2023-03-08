@@ -11,8 +11,7 @@ import SwiftUI
 struct AttackView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest var dayData: FetchedResults<DayData>
-    @ObservedObject var attack: Attack
-//    @EnvironmentObject var attack: ClickedAttack
+    @EnvironmentObject var attack: ClickedAttack
     @State var nextFrom: Set<String> = []
     @State var newAttack: Bool = false
     let basicSymptoms = [
@@ -37,9 +36,7 @@ struct AttackView: View {
         "Visual"
     ]
     
-    init(attack: Attack) {
-        self.attack = attack
-        
+    init() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let today = dateFormatter.string(from: .now)
@@ -55,7 +52,7 @@ struct AttackView: View {
                 // Start time picker
                 DatePicker(
                     "When did the attack start?",
-                    selection: $attack.startTime.toUnwrapped(defaultValue: Date.now),
+                    selection: $attack.attack.toUnwrapped(defaultValue: Attack(context: viewContext)).startTime.toUnwrapped(defaultValue: Date.now),
                     in: timeRange(),
                     displayedComponents: [.hourAndMinute]
                 )
@@ -68,11 +65,11 @@ struct AttackView: View {
                     HStack {
                         Text("What is your pain level?")
                             .padding(.trailing)
-                        Text("\(Int(attack.painLevel))").bold()
+                        Text("\(Int(attack.attack?.painLevel ?? 0))").bold()
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     Slider(
-                        value: $attack.painLevel,
+                        value: $attack.attack.toUnwrapped(defaultValue: Attack(context: viewContext)).painLevel,
                         in: 0 ... 10,
                         step: 1.0
                     ) {
@@ -86,40 +83,40 @@ struct AttackView: View {
                     }
                 }
                 
-                if attack.painLevel == 0 && !nextFrom.contains("painLevel") {
+                if attack.attack?.painLevel == 0 && !nextFrom.contains("painLevel") {
                     nextButton(addToNext: "painLevel")
                 }
                 
                 // Type of pain
-                if attack.painLevel > 0 {
+                if attack.attack?.painLevel ?? 0 > 0 {
                     VStack {
                         Text("What type of pain are you experiencing?")
                             .frame(maxWidth: .infinity, alignment: .leading)
                         VStack {
-                            Toggle(isOn: $attack.pressing) {
+                            Toggle(isOn: $attack.attack.toUnwrapped(defaultValue: Attack(context: viewContext)).pressing) {
                                 Text("Pressure / pressing")
                             }
-                            .onChange(of: attack.pressing) { _ in saveData() }
-                            if attack.pressing {
-                                Picker("Where?", selection: $attack.pressingSide) {
+                            .onChange(of: attack.attack?.pressing) { _ in saveData() }
+                            if attack.attack?.pressing ?? false {
+                                Picker("Where?", selection: $attack.attack.toUnwrapped(defaultValue: Attack(context: viewContext)).pressingSide) {
                                     Text("One side").tag(Sides.one)
                                     Text("Both sides").tag(Sides.both)
                                 }
-                                .onChange(of: attack.pressingSide) { _ in saveData() }
+                                .onChange(of: attack.attack?.pressingSide) { _ in saveData() }
                             }
                         }
                         .padding(.leading)
                         VStack {
-                            Toggle(isOn: $attack.pulsating) {
+                            Toggle(isOn: $attack.attack.toUnwrapped(defaultValue: Attack(context: viewContext)).pulsating) {
                                 Text("Pulsating / throbbing")
                             }
-                            .onChange(of: attack.pulsating) { _ in saveData() }
-                            if attack.pulsating {
-                                Picker("Where?", selection: $attack.pulsatingSide) {
+                            .onChange(of: attack.attack?.pulsating) { _ in saveData() }
+                            if attack.attack?.pulsating ?? false {
+                                Picker("Where?", selection: $attack.attack.toUnwrapped(defaultValue: Attack(context: viewContext)).pulsatingSide) {
                                     Text("One side").tag(Sides.one)
                                     Text("Both sides").tag(Sides.both)
                                 }
-                                .onChange(of: attack.pulsatingSide) { _ in saveData() }
+                                .onChange(of: attack.attack?.pulsatingSide) { _ in saveData() }
                             }
                         }
                         .padding(.leading)
@@ -128,43 +125,43 @@ struct AttackView: View {
                     }
                     .pickerStyle(.segmented)
                     
-                    if !attack.pressing && !attack.pulsating {
+                    if !(attack.attack?.pressing ?? true) && !(attack.attack?.pulsating ?? true) {
                         nextButton(addToNext: "painType")
                     }
                 }
                 
                 // Accompanying symptoms
-                if attack.pressing || attack.pulsating || nextFrom.contains("painType") || nextFrom.contains("painLevel") {
+                if attack.attack?.pressing ?? false || attack.attack?.pulsating ?? false || nextFrom.contains("painType") || nextFrom.contains("painLevel") {
                     MultiSelector(
                         label: Text("Symptoms"),
                         options: basicSymptoms,
-                        selected: $attack.symptoms
+                        selected: $attack.attack.toUnwrapped(defaultValue: Attack(context: viewContext)).symptoms
                     )
                     
-                    if attack.symptoms.isEmpty && !nextFrom.contains("symptoms") {
+                    if attack.attack?.symptoms.isEmpty ?? false && !nextFrom.contains("symptoms") {
                         nextButton(addToNext: "symptoms")
                     }
                 }
                 
                 // Aura
-                if !attack.symptoms.isEmpty || nextFrom.contains("symptoms") {
+                if !(attack.attack?.symptoms.isEmpty ?? true) || nextFrom.contains("symptoms") {
                     MultiSelector(
                         label: Text("Aura"),
                         options: auraTypes,
-                        selected: $attack.auras
+                        selected: $attack.attack.toUnwrapped(defaultValue: Attack(context: viewContext)).auras
                     )
                     
-                    if attack.auras.isEmpty && !nextFrom.contains("auras") {
+                    if attack.attack?.auras.isEmpty ?? false && !nextFrom.contains("auras") {
                         nextButton(addToNext: "auras")
                     }
                 }
                 
                 // Type of headache
-                if !attack.auras.isEmpty || nextFrom.contains("auras") {
+                if !(attack.attack?.auras.isEmpty ?? true) || nextFrom.contains("auras") {
                     HStack {
                         Text("Type of headache")
                         Spacer()
-                        Picker("Type of headache", selection: $attack.headacheType) {
+                        Picker("Type of headache", selection: $attack.attack.toUnwrapped(defaultValue: Attack(context: viewContext)).headacheType) {
                             Text("Migraine").tag(Headaches.migraine)
                             Text("Tension").tag(Headaches.tension)
                             Text("Cluster").tag(Headaches.cluster)
@@ -176,7 +173,7 @@ struct AttackView: View {
                             Text("Menstrual").tag(Headaches.menstrual)
                             Text("Other").tag(Headaches.other)
                         }
-                        .onChange(of: attack.headacheType) { _ in saveData() }
+                        .onChange(of: attack.attack?.headacheType) { _ in saveData() }
                     }
                 }
                 
@@ -186,12 +183,12 @@ struct AttackView: View {
             .padding()
         }
         .onAppear {
-            if attack.id == nil {
+            if attack.attack != nil && attack.attack?.id == nil {
                 // New attack (add to DayData and give id & startTime)
-                dayData.first?.addToAttack(attack)
+                dayData.first?.addToAttack(attack.attack!)
                 
-                attack.id = UUID().uuidString
-                attack.startTime = Date.now
+                attack.attack?.id = UUID().uuidString
+                attack.attack?.startTime = Date.now
                 newAttack = true
             }
             saveData()
@@ -218,6 +215,6 @@ struct AttackView: View {
 struct AttackView_Previews: PreviewProvider {
     static var previews: some View {
         let viewContext = PersistenceController.shared.container.viewContext
-        AttackView(attack: Attack(context: viewContext)).environment(\.managedObjectContext, viewContext)
+        AttackView().environment(\.managedObjectContext, viewContext)
     }
 }
