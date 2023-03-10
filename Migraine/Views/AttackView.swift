@@ -10,6 +10,7 @@ import SwiftUI
 
 struct AttackView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.dismiss) var dismiss // TODO: From iOS 15+. Test on iOS 14
     @FetchRequest var dayData: FetchedResults<DayData>
     @ObservedObject var attack: Attack
     @State var nextFrom: Set<String> = []
@@ -85,12 +86,12 @@ struct AttackView: View {
                     }
                 }
                 
-                if attack.stopTime == nil && attack.symptoms.isEmpty && attack.painLevel == 0 && !nextFrom.contains("painLevel") {
+                if newAttack && attack.symptoms.isEmpty && attack.painLevel == 0 && !nextFrom.contains("painLevel") {
                     nextButton(addToNext: "painLevel")
                 }
                 
                 // Type of pain
-                if attack.painLevel > 0 || attack.stopTime != nil {
+                if attack.painLevel > 0 || !newAttack {
                     VStack {
                         Text("What type of pain are you experiencing?")
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -127,39 +128,39 @@ struct AttackView: View {
                     }
                     .pickerStyle(.segmented)
                     
-                    if attack.stopTime == nil && attack.symptoms.isEmpty && !attack.pressing && !attack.pulsating && !nextFrom.contains("painType") {
+                    if newAttack && attack.symptoms.isEmpty && !attack.pressing && !attack.pulsating && !nextFrom.contains("painType") {
                         nextButton(addToNext: "painType")
                     }
                 }
                 
                 // Accompanying symptoms
-                if !attack.symptoms.isEmpty || attack.pressing || attack.pulsating || nextFrom.contains("painType") || nextFrom.contains("painLevel") || attack.stopTime != nil {
+                if !attack.symptoms.isEmpty || attack.pressing || attack.pulsating || nextFrom.contains("painType") || nextFrom.contains("painLevel") || !newAttack {
                     MultiSelector(
                         label: "Symptoms",
                         options: basicSymptoms,
                         selected: $attack.symptoms
                     )
                     
-                    if attack.stopTime == nil && attack.symptoms.isEmpty && !nextFrom.contains("symptoms") {
+                    if newAttack && attack.symptoms.isEmpty && !nextFrom.contains("symptoms") {
                         nextButton(addToNext: "symptoms")
                     }
                 }
                 
                 // Aura
-                if !attack.symptoms.isEmpty || nextFrom.contains("symptoms") || attack.stopTime != nil {
+                if !attack.symptoms.isEmpty || nextFrom.contains("symptoms") || !newAttack {
                     MultiSelector(
                         label: "Aura",
                         options: auraTypes,
                         selected: $attack.auras
                     )
                     
-                    if attack.stopTime == nil && attack.auras.isEmpty && !nextFrom.contains("auras") {
+                    if newAttack && attack.auras.isEmpty && !nextFrom.contains("auras") {
                         nextButton(addToNext: "auras")
                     }
                 }
                 
                 // Type of headache
-                if !attack.auras.isEmpty || nextFrom.contains("auras") || attack.stopTime != nil {
+                if !attack.auras.isEmpty || nextFrom.contains("auras") || !newAttack {
                     HStack {
                         Text("Type of headache")
                         Spacer()
@@ -176,6 +177,16 @@ struct AttackView: View {
                             Text("Other").tag(Headaches.other)
                         }
                         .onChange(of: attack.headacheType) { _ in saveData() }
+                    }
+                    
+                    if newAttack {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Text("Done")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.accentColor)
                     }
                 }
                 
