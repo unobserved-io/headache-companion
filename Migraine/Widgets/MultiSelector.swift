@@ -8,8 +8,8 @@
 import SwiftUI
 import CoreData
 
-struct MultiSelector<LabelView: View>: View {
-    let label: LabelView
+struct MultiSelector: View {
+    let label: String
     let options: [String]
     
     var selected: Binding<Set<String>>
@@ -19,9 +19,9 @@ struct MultiSelector<LabelView: View>: View {
     }
 
     var body: some View {
-        NavigationLink(destination: multiSelectionView()) {
+        NavigationLink(destination: multiSelectionView().navigationTitle("Add \(label)")) {
             HStack {
-                label
+                Text(label)
                 Spacer()
                 if formattedSelectedListString.isEmpty {
                     Text("None")
@@ -49,7 +49,7 @@ struct MultiSelector_Previews: PreviewProvider {
     
     static var previews: some View {
         MultiSelector(
-            label: Text("MultiSelector"),
+            label: "MultiSelector",
             options: ["Red", "White", "Blue"],
             selected: $selected
         )

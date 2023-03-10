@@ -83,12 +83,12 @@ struct AttackView: View {
                     }
                 }
                 
-                if attack.attack?.painLevel == 0 && !nextFrom.contains("painLevel") {
+                if attack.attack?.stopTime == nil && attack.attack?.symptoms.isEmpty ?? true && attack.attack?.painLevel == 0 && !nextFrom.contains("painLevel") {
                     nextButton(addToNext: "painLevel")
                 }
                 
                 // Type of pain
-                if attack.attack?.painLevel ?? 0 > 0 {
+                if attack.attack?.painLevel ?? 0 > 0 || attack.attack?.stopTime != nil {
                     VStack {
                         Text("What type of pain are you experiencing?")
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -125,39 +125,39 @@ struct AttackView: View {
                     }
                     .pickerStyle(.segmented)
                     
-                    if !(attack.attack?.pressing ?? true) && !(attack.attack?.pulsating ?? true) {
+                    if attack.attack?.stopTime == nil && attack.attack?.symptoms.isEmpty ?? true && !(attack.attack?.pressing ?? true) && !(attack.attack?.pulsating ?? true) && !nextFrom.contains("painType") {
                         nextButton(addToNext: "painType")
                     }
                 }
                 
                 // Accompanying symptoms
-                if attack.attack?.pressing ?? false || attack.attack?.pulsating ?? false || nextFrom.contains("painType") || nextFrom.contains("painLevel") {
+                if !(attack.attack?.symptoms.isEmpty ?? true) || attack.attack?.pressing ?? false || attack.attack?.pulsating ?? false || nextFrom.contains("painType") || nextFrom.contains("painLevel") || attack.attack?.stopTime != nil {
                     MultiSelector(
-                        label: Text("Symptoms"),
+                        label: "Symptoms",
                         options: basicSymptoms,
                         selected: $attack.attack.toUnwrapped(defaultValue: Attack(context: viewContext)).symptoms
                     )
                     
-                    if attack.attack?.symptoms.isEmpty ?? false && !nextFrom.contains("symptoms") {
+                    if attack.attack?.stopTime == nil && attack.attack?.symptoms.isEmpty ?? false && !nextFrom.contains("symptoms") {
                         nextButton(addToNext: "symptoms")
                     }
                 }
                 
                 // Aura
-                if !(attack.attack?.symptoms.isEmpty ?? true) || nextFrom.contains("symptoms") {
+                if !(attack.attack?.symptoms.isEmpty ?? true) || nextFrom.contains("symptoms") || attack.attack?.stopTime != nil {
                     MultiSelector(
-                        label: Text("Aura"),
+                        label: "Aura",
                         options: auraTypes,
                         selected: $attack.attack.toUnwrapped(defaultValue: Attack(context: viewContext)).auras
                     )
                     
-                    if attack.attack?.auras.isEmpty ?? false && !nextFrom.contains("auras") {
+                    if attack.attack?.stopTime == nil && attack.attack?.auras.isEmpty ?? false && !nextFrom.contains("auras") {
                         nextButton(addToNext: "auras")
                     }
                 }
                 
                 // Type of headache
-                if !(attack.attack?.auras.isEmpty ?? true) || nextFrom.contains("auras") {
+                if !(attack.attack?.auras.isEmpty ?? true) || nextFrom.contains("auras") || attack.attack?.stopTime != nil {
                     HStack {
                         Text("Type of headache")
                         Spacer()
@@ -176,7 +176,6 @@ struct AttackView: View {
                         .onChange(of: attack.attack?.headacheType) { _ in saveData() }
                     }
                 }
-                
                 
                 Spacer()
             }

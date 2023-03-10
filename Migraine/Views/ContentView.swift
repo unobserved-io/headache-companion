@@ -142,7 +142,7 @@ struct ContentView: View {
                         NavigationLink(
                             "Notes for Doctor",
                             destination: DoctorNotesView()
-                                .navigationTitle("Notes")
+                                .navigationTitle("Notes for Doctor")
                         )
                             .buttonStyle(.bordered)
                     }
