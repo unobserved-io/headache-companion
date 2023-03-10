@@ -44,7 +44,6 @@ struct ContentView: View {
                     NavigationLink(
                         "Attack",
                         destination: AttackView(attack: Attack(context: viewContext))
-//                            .environmentObject(ClickedAttack(Attack(context: viewContext)))
                             .navigationTitle("Add Attack")
                     )
                     .buttonStyle(.borderedProminent)

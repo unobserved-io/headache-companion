@@ -16,7 +16,6 @@ struct CalendarView: View {
     @State private var selectedDay: Date = .now
     @State private var refreshIt: Bool = false
     @State private var attackSheet: Bool = false
-//    @StateObject var clickedAttack = ClickedAttack(nil)
     
     var body: some View {
         NavigationView {
@@ -33,18 +32,6 @@ struct CalendarView: View {
                 
                 Section("Attacks") {
                     ForEach(getDayData()?.attacks ?? []) { attack in
-//                        Button {
-//                            clickedAttack.attack = attack
-//                            attackSheet.toggle()
-//                        } label: {
-//                            if attack.stopTime != nil {
-//                                Text("\(refreshIt ? "" : "")\(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened)) - \(attack.wrappedStopTime.formatted(date: .omitted, time: .shortened))")
-//                            } else {
-//                                Text(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened))
-//                            }
-//                        }
-//                        .tint(.primary)
-                        
                         NavigationLink (destination: AttackView(attack: attack)) {
                             if attack.stopTime != nil {
                                 Text("\(refreshIt ? "" : "")\(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened)) - \(attack.wrappedStopTime.formatted(date: .omitted, time: .shortened))")
@@ -52,7 +39,6 @@ struct CalendarView: View {
                                 Text(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened))
                             }
                         }
-                        
                     }
                     
                     if getDayData()?.attacks.isEmpty ?? true {
@@ -64,12 +50,6 @@ struct CalendarView: View {
         .onAppear {
             refreshIt.toggle()
         }
-//        .sheet(isPresented: $attackSheet) {
-//            NavigationView {
-//                AttackView()
-//                    .environmentObject(clickedAttack)
-//            }
-//        }
     }
     
     private func getDayData() -> DayData? {
