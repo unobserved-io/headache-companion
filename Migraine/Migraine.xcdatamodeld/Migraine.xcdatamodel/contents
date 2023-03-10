@@ -43,7 +43,7 @@
     <entity name="Medication" representedClassName="Medication" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="dose" optional="YES" attributeType="String"/>
-        <attribute name="helpful" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="effective" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="type" optional="YES" attributeType="String"/>

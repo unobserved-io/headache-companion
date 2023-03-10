@@ -19,7 +19,7 @@ extension Medication {
     @NSManaged public var id: String?
     @NSManaged public var amount: Int32
     @NSManaged public var dose: String?
-    @NSManaged public var helpful: Bool
+    @NSManaged public var effective: Bool
     @NSManaged public var time: Date?
     @NSManaged public var type: String?
     @NSManaged public var date: DayData?

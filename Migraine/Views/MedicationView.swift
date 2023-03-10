@@ -50,11 +50,11 @@ struct MedicationView: View {
                                             .bold()
                                         Text("(\(medication.dose ?? ""))")
                                     }
-                                    if medication.helpful {
-                                        Text("Helpful")
+                                    if medication.effective {
+                                        Text("Effective")
                                             .font(.footnote)
                                     } else {
-                                        Text("Not Helpful")
+                                        Text("Ineffective")
                                             .font(.footnote)
                                     }
                                 }

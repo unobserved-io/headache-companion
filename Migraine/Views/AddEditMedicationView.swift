@@ -16,7 +16,7 @@ struct AddEditMedicationView: View {
     @State var medDose: String = ""
     @State var medAmount: Int32 = 1
     @State var medTime: Date = .now
-    @State var medHelpful: Bool = true
+    @State var medEffective: Bool = true
     
     init() {
         let dateFormatter = DateFormatter()
@@ -55,11 +55,11 @@ struct AddEditMedicationView: View {
                 displayedComponents: [.hourAndMinute]
             )
             
-            // Helpful picker
+            // Effective picker
             HStack {
-                Text("Helpful")
+                Text("Effective")
                 Spacer().padding(.trailing)
-                Picker("Helpful", selection: $medHelpful) {
+                Picker("Effective", selection: $medEffective) {
                     Text("Yes").tag(true)
                     Text("No").tag(false)
                 }
@@ -74,7 +74,7 @@ struct AddEditMedicationView: View {
                     medication.medication?.dose = medDose
                     medication.medication?.amount = medAmount
                     medication.medication?.time = medTime
-                    medication.medication?.helpful = medHelpful
+                    medication.medication?.effective = medEffective
                     
                     if medication.medication?.id == nil {
                         // New medication, give it an id and add to Day
@@ -110,7 +110,7 @@ struct AddEditMedicationView: View {
                 medDose = medication.medication?.dose ?? ""
                 medAmount = medication.medication?.amount ?? 0
                 medTime = medication.medication?.time ?? Date.now
-                medHelpful = medication.medication?.helpful ?? false
+                medEffective = medication.medication?.effective ?? false
             }
         }
     }
