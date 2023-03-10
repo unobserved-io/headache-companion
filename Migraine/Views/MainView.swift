@@ -21,6 +21,11 @@ struct MainView: View {
                 .tabItem {
                     Label("Calendar", systemImage: "calendar")
                 }
+            
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
         }
     }
 }
