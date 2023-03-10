@@ -11,7 +11,6 @@ import SwiftUI
 struct AttackView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest var dayData: FetchedResults<DayData>
-//    @EnvironmentObject var attack: ClickedAttack
     @ObservedObject var attack: Attack
     @State var nextFrom: Set<String> = []
     @State var newAttack: Bool = false
