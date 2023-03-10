@@ -39,7 +39,6 @@ struct MedicationView: View {
                             HStack {
                                 // Amount number
                                 Text("\(refreshIt ? "" : "")\(medication.amount)")
-                                    .bold()
                                     .font(Font.system(.title).monospacedDigit())
                                     .padding(.trailing)
                                     
@@ -63,7 +62,6 @@ struct MedicationView: View {
                                     
                                 // Time taken
                                 Text("\(medication.wrappedTime.formatted(date: .omitted, time: .shortened))")
-                                    .bold()
                             }
                         }
                         .tint(.primary)
