@@ -56,33 +56,7 @@ struct CalendarView: View {
                             clickedMedication.medication = medication
                             showingMedSheet.toggle()
                         } label: {
-                            HStack {
-                                // Amount number
-                                Text("\(refreshIt ? "" : "")\(medication.amount)")
-                                    .font(Font.system(.title).monospacedDigit())
-                                    .padding(.trailing)
-                                    
-                                // Med details
-                                VStack(alignment: .leading) {
-                                    HStack {
-                                        Text("\(medication.type ?? "Unknown")")
-                                            .bold()
-                                        Text("(\(medication.dose ?? ""))")
-                                    }
-                                    if medication.effective {
-                                        Text("Effective")
-                                            .font(.footnote)
-                                    } else {
-                                        Text("Ineffective")
-                                            .font(.footnote)
-                                    }
-                                }
-                                    
-                                Spacer()
-                                    
-                                // Time taken
-                                Text("\(medication.wrappedTime.formatted(date: .omitted, time: .shortened))")
-                            }
+                            MedicationLabelView(medication: medication, refresh: refreshIt)
                         }
                         .tint(.primary)
                     }

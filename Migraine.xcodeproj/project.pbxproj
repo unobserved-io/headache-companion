@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		9C057CF429B0ECAE00DA8920 /* ActivitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C057CF329B0ECAE00DA8920 /* ActivitiesView.swift */; };
 		9C18C06F29BB6A04008084E2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C06E29BB6A04008084E2 /* SettingsView.swift */; };
+		9C18C07229BB6C5B008084E2 /* CommonMedicationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07129BB6C5B008084E2 /* CommonMedicationsView.swift */; };
+		9C18C07829BB753C008084E2 /* MedicationLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07729BB753C008084E2 /* MedicationLabelView.swift */; };
+		9C18C07A29BB87E1008084E2 /* AddEditCommonMedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07929BB87E1008084E2 /* AddEditCommonMedsView.swift */; };
+		9C18C07D29BB8A6D008084E2 /* MAppData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07B29BB8A6D008084E2 /* MAppData+CoreDataClass.swift */; };
+		9C18C07E29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07C29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift */; };
 		9C1983AA29B73DD2007754AB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983A929B73DD2007754AB /* MainView.swift */; };
 		9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983AC29B7923D007754AB /* ClickedMedication.swift */; };
 		9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE5F29AE6626000EB6C2 /* AttackView.swift */; };
@@ -39,6 +44,11 @@
 /* Begin PBXFileReference section */
 		9C057CF329B0ECAE00DA8920 /* ActivitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesView.swift; sourceTree = "<group>"; };
 		9C18C06E29BB6A04008084E2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		9C18C07129BB6C5B008084E2 /* CommonMedicationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonMedicationsView.swift; sourceTree = "<group>"; };
+		9C18C07729BB753C008084E2 /* MedicationLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationLabelView.swift; sourceTree = "<group>"; };
+		9C18C07929BB87E1008084E2 /* AddEditCommonMedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditCommonMedsView.swift; sourceTree = "<group>"; };
+		9C18C07B29BB8A6D008084E2 /* MAppData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9C18C07C29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9C1983A929B73DD2007754AB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9C1983AC29B7923D007754AB /* ClickedMedication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickedMedication.swift; sourceTree = "<group>"; };
 		9C45EE5F29AE6626000EB6C2 /* AttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackView.swift; sourceTree = "<group>"; };
@@ -82,6 +92,8 @@
 		9C18C07029BB6BF1008084E2 /* SettingsViews */ = {
 			isa = PBXGroup;
 			children = (
+				9C18C07129BB6C5B008084E2 /* CommonMedicationsView.swift */,
+				9C18C07929BB87E1008084E2 /* AddEditCommonMedsView.swift */,
 			);
 			path = SettingsViews;
 			sourceTree = "<group>";
@@ -108,6 +120,7 @@
 				9C96927F29B497520023A00C /* MultiSelectionView.swift */,
 				9C98449B29B5F3E300ABDC36 /* NotesView.swift */,
 				9C18C06E29BB6A04008084E2 /* SettingsView.swift */,
+				9C18C07729BB753C008084E2 /* MedicationLabelView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -115,6 +128,8 @@
 		9C86238C29AE8CA0006DA6C6 /* DataEntities */ = {
 			isa = PBXGroup;
 			children = (
+				9C18C07B29BB8A6D008084E2 /* MAppData+CoreDataClass.swift */,
+				9C18C07C29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift */,
 				9C86238F29AE8CBD006DA6C6 /* Attack+CoreDataClass.swift */,
 				9C86239029AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift */,
 				9C86238D29AE8CBD006DA6C6 /* DayData+CoreDataClass.swift */,
@@ -260,6 +275,7 @@
 				9C86239829AE8CBD006DA6C6 /* Medication+CoreDataProperties.swift in Sources */,
 				9C86239429AE8CBD006DA6C6 /* DayData+CoreDataProperties.swift in Sources */,
 				9C86239629AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift in Sources */,
+				9C18C07229BB6C5B008084E2 /* CommonMedicationsView.swift in Sources */,
 				9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */,
 				9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */,
 				9C057CF429B0ECAE00DA8920 /* ActivitiesView.swift in Sources */,
@@ -272,11 +288,15 @@
 				9C98449E29B5FC9F00ABDC36 /* DoctorNotesView.swift in Sources */,
 				9C96928329B4ADB80023A00C /* MultiSelector.swift in Sources */,
 				9C18C06F29BB6A04008084E2 /* SettingsView.swift in Sources */,
+				9C18C07D29BB8A6D008084E2 /* MAppData+CoreDataClass.swift in Sources */,
 				9C98449C29B5F3E300ABDC36 /* NotesView.swift in Sources */,
 				9CF7308229ACD93800D91F99 /* Persistence.swift in Sources */,
+				9C18C07A29BB87E1008084E2 /* AddEditCommonMedsView.swift in Sources */,
+				9C18C07E29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift in Sources */,
 				9CF7308729ACD93800D91F99 /* ContentView.swift in Sources */,
 				9CF7308529ACD93800D91F99 /* Migraine.xcdatamodeld in Sources */,
 				9C1983AA29B73DD2007754AB /* MainView.swift in Sources */,
+				9C18C07829BB753C008084E2 /* MedicationLabelView.swift in Sources */,
 				9C86239529AE8CBD006DA6C6 /* Attack+CoreDataClass.swift in Sources */,
 				9C682CEB29B3962D00032874 /* Extensions.swift in Sources */,
 				9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */,

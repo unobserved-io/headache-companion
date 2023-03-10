@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(
+        entity: MAppData.entity(),
+        sortDescriptors: []
+    )
+    var mAppData: FetchedResults<MAppData>
+    
     var body: some View {
-        Form {
-            Section("Custom Inputs") {
-                NavigationLink("Common Medications") {
-                    
+        NavigationView {
+            Form {
+                Section("Custom Inputs") {
+                    NavigationLink(destination: CommonMedicationsView()) {
+                        Label("Common Medications", systemImage: "pill.fill")
+                    }
+                }
+            }
+            .onAppear() {
+                if mAppData.first == nil {
+                    let newMAppData = MAppData(context: viewContext)
+                    newMAppData.doctorNotes = ""
+                    saveData()
                 }
             }
         }

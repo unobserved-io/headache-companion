@@ -37,8 +37,9 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="MAppData" representedClassName="MAppData" syncable="YES" codeGenerationType="class">
+    <entity name="MAppData" representedClassName="MAppData" syncable="YES">
         <attribute name="doctorNotes" attributeType="String" defaultValueString=""/>
+        <relationship name="commonMedications" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medication" inverseName="mAppData" inverseEntity="Medication"/>
     </entity>
     <entity name="Medication" representedClassName="Medication" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -48,5 +49,6 @@
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="type" optional="YES" attributeType="String"/>
         <relationship name="date" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayData" inverseName="medication" inverseEntity="DayData"/>
+        <relationship name="mAppData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MAppData" inverseName="commonMedications" inverseEntity="MAppData"/>
     </entity>
 </model>

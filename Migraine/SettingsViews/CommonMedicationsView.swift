@@ -1,44 +1,31 @@
 //
-//  MedicationView.swift
+//  CommonMedicationsView.swift
 //  Migraine
 //
-//  Created by Ricky Kresslein on 3/5/23.
+//  Created by Ricky Kresslein on 3/10/23.
 //
 
 import SwiftUI
 
-struct MedicationView: View {
+struct CommonMedicationsView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest var dayData: FetchedResults<DayData>
     @FetchRequest(
         entity: MAppData.entity(),
         sortDescriptors: []
     )
     var mAppData: FetchedResults<MAppData>
     @StateObject var clickedMedication = ClickedMedication(nil)
-    @State private var showingSheet: Bool = false
-    @State private var settingsDetent = PresentationDetent.medium
+    @State private var showingSheet = false
     @State private var refreshIt: Bool = true
     
-    // TODO: Fix layout constraint issue when clicking off of DatePicker. May have to do with shortening the sheet
-    
-    init() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let today = dateFormatter.string(from: .now)
-        _dayData = FetchRequest(
-            sortDescriptors: [],
-            predicate: NSPredicate(format: "date = %@", today)
-        )
-    }
-    
     var body: some View {
-        List {
+        Form {
             if !(mAppData.first?.commonMeds.isEmpty ?? true) {
-                Section("Common Medications") {
+                Section {
                     ForEach(mAppData.first?.commonMeds ?? []) { medication in
                         Button {
                             clickedMedication.medication = medication
+                            showingSheet.toggle()
                         } label: {
                             HStack {
                                 // Amount number
@@ -60,33 +47,16 @@ struct MedicationView: View {
                 }
             }
             
-            if !(dayData.first?.medications.isEmpty ?? true) {
-                Section("Medication Taken") {
-                    ForEach(dayData.first?.medications ?? []) { medication in
-                        Button {
-                            clickedMedication.medication = medication
-                            showingSheet.toggle()
-                        } label: {
-                            MedicationLabelView(medication: medication, refresh: refreshIt)
-                        }
-                        .tint(.primary)
-                    }
-                    .onDelete(perform: deleteMedication)
-                }
-            }
-                
-            Section {
-                Button("Add Medication") {
-                    clickedMedication.medication = Medication(context: viewContext)
-                    showingSheet.toggle()
-                }
+            Button("Add Common Medication") {
+                clickedMedication.medication = Medication(context: viewContext)
+                showingSheet.toggle()
             }
         }
         .sheet(isPresented: $showingSheet, onDismiss: refreshView) {
             if clickedMedication.medication != nil {
-                AddEditMedicationView()
+                AddEditCommonMedsView()
                     .environmentObject(clickedMedication)
-                    .navigationTitle("Add Medication")
+                    .navigationTitle("Add Common Medication")
                     .presentationDetents([.medium])
             }
         }
@@ -99,7 +69,7 @@ struct MedicationView: View {
     private func deleteMedication(at offsets: IndexSet) {
         let index = offsets.first
         if index != nil {
-            let medToDelete: Medication? = dayData.first?.medications[index!]
+            let medToDelete: Medication? = mAppData.first?.commonMeds[index!]
             if medToDelete != nil {
                 viewContext.delete(medToDelete!)
                 saveData()
@@ -108,8 +78,8 @@ struct MedicationView: View {
     }
 }
 
-struct MedicationView_Previews: PreviewProvider {
+struct CommonMedicationsView_Previews: PreviewProvider {
     static var previews: some View {
-        MedicationView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        CommonMedicationsView()
     }
 }
