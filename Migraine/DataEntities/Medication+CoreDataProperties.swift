@@ -27,6 +27,10 @@ extension Medication {
     public var wrappedTime: Date {
         time ?? Date.init(timeIntervalSince1970: 0)
     }
+    
+    public var wrappedType: String {
+        type ?? "Unknown"
+    }
 }
 
 extension Medication : Identifiable {

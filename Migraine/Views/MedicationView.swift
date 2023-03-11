@@ -38,7 +38,15 @@ struct MedicationView: View {
                 Section("Common Medications") {
                     ForEach(mAppData.first?.commonMeds ?? []) { medication in
                         Button {
-                            clickedMedication.medication = medication
+                            let newMedication = Medication(context: viewContext)
+                            newMedication.id = UUID().uuidString
+                            newMedication.type = medication.type
+                            newMedication.dose = medication.dose
+                            newMedication.amount = medication.amount
+                            newMedication.effective = true
+                            newMedication.time = Date.now
+                            dayData.first?.addToMedication(newMedication)
+                            saveData()
                         } label: {
                             HStack {
                                 // Amount number
@@ -56,7 +64,6 @@ struct MedicationView: View {
                         }
                         .tint(.primary)
                     }
-                    .onDelete(perform: deleteMedication)
                 }
             }
             
