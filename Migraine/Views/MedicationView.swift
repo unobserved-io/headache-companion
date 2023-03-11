@@ -93,6 +93,10 @@ struct MedicationView: View {
                     clickedMedication.medication = Medication(context: viewContext)
                     showingSheet.toggle()
                 }
+                NavigationLink("Add Previous Medication") {
+                    PreviouslyTakenMedsView()
+                }
+                .foregroundColor(.accentColor)
             }
         }
         .sheet(isPresented: $showingSheet, onDismiss: refreshView) {
