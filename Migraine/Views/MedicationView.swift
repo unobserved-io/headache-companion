@@ -61,6 +61,11 @@ struct MedicationView: View {
                                         .bold()
                                     Text("(\(medication.dose ?? ""))")
                                 }
+                                
+                                Spacer()
+                                
+                                Image(systemName: "plus.circle")
+                                    .foregroundColor(.accentColor)
                             }
                         }
                         .tint(.primary)
