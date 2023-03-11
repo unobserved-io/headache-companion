@@ -16,14 +16,15 @@ struct AddEditCommonMedsView: View {
         sortDescriptors: []
     )
     var mAppData: FetchedResults<MAppData>
-    @State var medType: String = ""
+    @State var medName: String = ""
     @State var medDose: String = ""
+    @State var medType: MedTypes = .preventive
     @State var medAmount: Int32 = 1
     
     var body: some View {
         Form {
             // Type field
-            TextField("Type", text: $medType, prompt: Text("Ibuprofen, Aspirin, etc."))
+            TextField("Name", text: $medName, prompt: Text("Ibuprofen, Aspirin, etc."))
             
             // Dose field
             TextField("Dose", text: $medDose, prompt: Text("20 mg, 4 oz, etc."))
@@ -39,13 +40,20 @@ struct AddEditCommonMedsView: View {
                     .labelsHidden()
             }
             
+            Picker("Type", selection: $medType) {
+                Text("Preventive").tag(MedTypes.preventive)
+                Text("Symptom Relieving").tag(MedTypes.symptomRelieving)
+                Text("Other").tag(MedTypes.other)
+            }
+            
             // Save & Cancel buttons
             Section {
                 // Save
                 Button {
-                    medication.medication?.type = medType
+                    medication.medication?.name = medName
                     medication.medication?.dose = medDose
                     medication.medication?.amount = medAmount
+                    medication.medication?.type = medType
                     
                     if medication.medication?.id == nil {
                         // New medication, give it an id and add to Common Meds
@@ -77,7 +85,7 @@ struct AddEditCommonMedsView: View {
         .onAppear() {
             if medication.medication != nil && medication.medication?.id != nil {
                 // Medication not nil - get values
-                medType = medication.medication?.type ?? ""
+                medName = medication.medication?.name ?? ""
                 medDose = medication.medication?.dose ?? ""
                 medAmount = medication.medication?.amount ?? 0
             }

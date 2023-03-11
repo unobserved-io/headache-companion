@@ -12,7 +12,7 @@ struct AddEditMedicationView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var medication: ClickedMedication
     @FetchRequest var dayData: FetchedResults<DayData>
-    @State var medType: String = ""
+    @State var medName: String = ""
     @State var medDose: String = ""
     @State var medAmount: Int32 = 1
     @State var medTime: Date = .now
@@ -31,7 +31,7 @@ struct AddEditMedicationView: View {
     var body: some View {
         Form {
             // Type field
-            TextField("Type", text: $medType, prompt: Text("Ibuprofen, Aspirin, etc."))
+            TextField("Name", text: $medName, prompt: Text("Ibuprofen, Aspirin, etc."))
             
             // Dose field
             TextField("Dose", text: $medDose, prompt: Text("20 mg, 4 oz, etc."))
@@ -70,7 +70,7 @@ struct AddEditMedicationView: View {
             Section {
                 // Save
                 Button {
-                    medication.medication?.type = medType
+                    medication.medication?.name = medName
                     medication.medication?.dose = medDose
                     medication.medication?.amount = medAmount
                     medication.medication?.time = medTime
@@ -106,7 +106,7 @@ struct AddEditMedicationView: View {
         .onAppear() {
             if medication.medication != nil && medication.medication?.id != nil {
                 // Medication not nil - get values
-                medType = medication.medication?.type ?? ""
+                medName = medication.medication?.name ?? ""
                 medDose = medication.medication?.dose ?? ""
                 medAmount = medication.medication?.amount ?? 0
                 medTime = medication.medication?.time ?? Date.now

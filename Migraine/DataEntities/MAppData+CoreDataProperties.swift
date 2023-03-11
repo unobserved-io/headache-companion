@@ -23,7 +23,7 @@ extension MAppData {
         let set = commonMedications as? Set<Medication> ?? []
 
         return set.sorted {
-            $0.wrappedType < $1.wrappedType
+            $0.wrappedName < $1.wrappedName
         }
     }
 

@@ -21,15 +21,16 @@ extension Medication {
     @NSManaged public var dose: String?
     @NSManaged public var effective: Bool
     @NSManaged public var time: Date?
-    @NSManaged public var type: String?
+    @NSManaged public var name: String?
+    @NSManaged public var type: MedTypes
     @NSManaged public var date: DayData?
     
     public var wrappedTime: Date {
         time ?? Date.init(timeIntervalSince1970: 0)
     }
     
-    public var wrappedType: String {
-        type ?? "Unknown"
+    public var wrappedName: String {
+        name ?? "Unknown"
     }
 }
 

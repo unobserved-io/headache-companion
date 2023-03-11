@@ -21,7 +21,7 @@ struct MedicationLabelView: View {
             // Med details
             VStack(alignment: .leading) {
                 HStack {
-                    Text("\(medication.type ?? "Unknown")")
+                    Text("\(medication.name ?? "Unknown")")
                         .bold()
                     Text("(\(medication.dose ?? ""))")
                 }

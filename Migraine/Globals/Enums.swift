@@ -27,3 +27,10 @@ public enum Headaches: Int16 {
     case menstrual
     case other
 }
+
+@objc
+public enum MedTypes: Int16 {
+    case other
+    case preventive
+    case symptomRelieving
+}

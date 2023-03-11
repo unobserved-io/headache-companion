@@ -46,8 +46,9 @@
         <attribute name="dose" optional="YES" attributeType="String"/>
         <attribute name="effective" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="date" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayData" inverseName="medication" inverseEntity="DayData"/>
         <relationship name="mAppData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MAppData" inverseName="commonMedications" inverseEntity="MAppData"/>
     </entity>

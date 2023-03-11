@@ -35,7 +35,7 @@ struct CommonMedicationsView: View {
                                     
                                 // Med details
                                 HStack {
-                                    Text("\(medication.type ?? "Unknown")")
+                                    Text("\(medication.name ?? "Unknown")")
                                         .bold()
                                     Text("(\(medication.dose ?? ""))")
                                 }

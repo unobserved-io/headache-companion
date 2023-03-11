@@ -40,9 +40,10 @@ struct MedicationView: View {
                         Button {
                             let newMedication = Medication(context: viewContext)
                             newMedication.id = UUID().uuidString
-                            newMedication.type = medication.type
+                            newMedication.name = medication.name
                             newMedication.dose = medication.dose
                             newMedication.amount = medication.amount
+                            newMedication.type = medication.type
                             newMedication.effective = true
                             newMedication.time = Date.now
                             dayData.first?.addToMedication(newMedication)
@@ -56,7 +57,7 @@ struct MedicationView: View {
                                     
                                 // Med details
                                 HStack {
-                                    Text("\(medication.type ?? "Unknown")")
+                                    Text("\(medication.name ?? "Unknown")")
                                         .bold()
                                     Text("(\(medication.dose ?? ""))")
                                 }
