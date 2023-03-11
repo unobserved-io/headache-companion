@@ -22,6 +22,11 @@ struct MainView: View {
                     Label("Calendar", systemImage: "calendar")
                 }
             
+            StatsView()
+                .tabItem {
+                    Label("Stats", systemImage: "chart.line.uptrend.xyaxis")
+                }
+            
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
