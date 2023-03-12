@@ -25,8 +25,8 @@ extension Attack {
     @NSManaged public var pressingSide: Sides
     @NSManaged public var pulsating: Bool
     @NSManaged public var pulsatingSide: Sides
-    @NSManaged public var auras: Set<String>  // [String] // NSObject?
-    @NSManaged public var symptoms: Set<String> // NSObject?
+    @NSManaged public var auras: Set<String>
+    @NSManaged public var symptoms: Set<String>
     @NSManaged public var startTime: Date?
     @NSManaged public var stopTime: Date?
     @NSManaged public var date: DayData?

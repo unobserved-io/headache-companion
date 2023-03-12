@@ -22,6 +22,7 @@ extension Medication {
     @NSManaged public var effective: Bool
     @NSManaged public var time: Date?
     @NSManaged public var name: String?
+    @NSManaged public var sideEffects: String?
     @NSManaged public var type: MedTypes
     @NSManaged public var date: DayData?
     
