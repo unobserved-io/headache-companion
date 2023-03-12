@@ -99,6 +99,9 @@ struct MedicationView: View {
                 .foregroundColor(.accentColor)
             }
         }
+        .onAppear() {
+            refreshView()
+        }
         .sheet(isPresented: $showingSheet, onDismiss: refreshView) {
             if clickedMedication.medication != nil {
                 AddEditMedicationView()
