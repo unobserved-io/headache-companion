@@ -43,43 +43,50 @@ struct StatsView: View {
                         statDescriptionChevron("Attacks")
                     }
                     //TODO: Only show all others if attacks > 0
-                    GridRow {
-                        mainStat("\(statsHelper.percentWithAttack) %")
-                        statDescription("Of days had an attack")
+                    if statsHelper.daysWithAttack > 0 {
+                        GridRow {
+                            mainStat("\(statsHelper.percentWithAttack) %")
+                            statDescription("Of days had an attack")
+                        }
+                        
+                        GridRow {
+                            mainStat(String(statsHelper.numberOfSymptoms))
+                            statDescriptionChevron("Symptoms")
+                        }
+                        
+                        GridRow {
+                            mainStat(String(statsHelper.numberOfTypesOfHeadaches))
+                            statDescriptionChevron("Types of headache")
+                        }
+                        
+                        GridRow {
+                            mainStat(String(statsHelper.averagePainLevel))
+                            statDescription("Average pain level")
+                        }
+                        
+                        GridRow {
+                            mainStat(String(statsHelper.numberOfAuras))
+                            statDescriptionChevron("Auras")
+                        }
+                        // TODO: Under Auras will be number broken down by type
+                        
+//                        GridRow {
+//                            Image(systemName: "sunrise")
+//                                .font(.title2)
+//                                .foregroundColor(.accentColor)
+//                                .bold()
+//                                .padding(.trailing)
+//                            Text("Most common time of day")
+//                                .font(.title3)
+//                        }
+                        // TODO: Add most common type of headache
                     }
-                    
-                    GridRow {
-                        mainStat(String(statsHelper.numberOfSymptoms))
-                        statDescriptionChevron("Symptoms")
-                    }
-                    
-                    GridRow {
-                        mainStat(String(statsHelper.numberOfTypesOfHeadaches))
-                        statDescriptionChevron("Types of headache")
-                    }
-                    
-                    GridRow {
-                        mainStat(String(statsHelper.averagePainLevel))
-                        statDescription("Average pain level")
-                    }
-                    
-                    GridRow {
-                        mainStat(String(statsHelper.numberOfAuras))
-                        statDescriptionChevron("Auras")
-                    }
-                    // TODO: Under Auras will be number broken down by type
-//                    GridRow {
-//                        Image(systemName: "sunrise")
-//                            .font(.title2)
-//                            .foregroundColor(.accentColor)
-//                            .bold()
-//                            .padding(.trailing)
-//                        Text("Most common time of day")
-//                            .font(.title3)
-//                    }
-                    // TODO: Add most common type of headache
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                
+//                mainStat(String(statsHelper.mostCommonTypeOfHeadache))
+//                statDescription("Most common type")
+                
             } label: {
                 HStack {
                     Spacer()
@@ -98,7 +105,7 @@ struct StatsView: View {
                     Spacer()
                 }
             }
-
+            
             Spacer()
         }
         .padding()

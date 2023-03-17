@@ -18,6 +18,7 @@ class StatsHelper: ObservableObject {
     @Published var numberOfSymptoms: Int = 0
     @Published var numberOfAuras: Int = 0
     @Published var numberOfTypesOfHeadaches: Int = 0
+    @Published var mostCommonTypeOfHeadache: String = ""
     @Published var averagePainLevel: Double = 0.0
     @Published var percentWithAttack: Int = 0
     
@@ -29,7 +30,7 @@ class StatsHelper: ObservableObject {
     private func calculateMainStats(_ dayData: [DayData]) {
         var allSymptoms = Set<String>()
         var allAuras = Set<String>()
-        var allTypesOfHeadache = Set<Headaches>()
+        var typesOfHeadacheCount: [String:Int] = [:]
         var painLevelsPerDay: [Double] = []
         
         for day in dayData {
@@ -54,7 +55,11 @@ class StatsHelper: ObservableObject {
                     }
                     
                     painLevels.append(attack.painLevel)
-                    allTypesOfHeadache.insert(attack.headacheType)
+                    if typesOfHeadacheCount[headacheTypeString(attack.headacheType)] != nil {
+                        typesOfHeadacheCount[headacheTypeString(attack.headacheType)]! += 1
+                    } else {
+                        typesOfHeadacheCount[headacheTypeString(attack.headacheType)] = 1
+                    }
                 }
                 painLevelsPerDay.append(painLevels.reduce(0,+) / Double(painLevels.count))
             }
@@ -63,7 +68,11 @@ class StatsHelper: ObservableObject {
         // Get final numbers from sets
         numberOfSymptoms = allSymptoms.count
         numberOfAuras = allAuras.count
-        numberOfTypesOfHeadaches = allTypesOfHeadache.count
+        numberOfTypesOfHeadaches = typesOfHeadacheCount.count
+        if !typesOfHeadacheCount.isEmpty {
+            let largest = typesOfHeadacheCount.max { a, b in a.value < b.value }
+            mostCommonTypeOfHeadache = largest?.key ?? "Unknown"
+        }
         averagePainLevel = daysWithAttack == 0 ? 0 : painLevelsPerDay.reduce(0,+) / Double(daysWithAttack)
         getPercentWithAttack()
     }
@@ -84,6 +93,31 @@ class StatsHelper: ObservableObject {
             percentWithAttack = 0
         } else {
             percentWithAttack = Int((Double(daysWithAttack) / Double(daysTracked)) * 100)
+        }
+    }
+    
+    private func headacheTypeString(_ type: Headaches) -> String {
+        switch type {
+        case .migraine:
+            return "Migraine"
+        case .tension:
+            return "Tension"
+        case .cluster:
+            return "Cluster"
+        case .exertional:
+            return "Exertional"
+        case .hypnic:
+            return "Hypnic"
+        case .sinus:
+            return "Sinus"
+        case .caffeine:
+            return "Caffeine"
+        case .injury:
+            return "Inuury"
+        case .menstrual:
+            return "Menstrual"
+        case .other:
+            return "Other"
         }
     }
     
