@@ -19,62 +19,56 @@ struct StatsView: View {
         case thirtyDays
         case sixMonths
         case year
+        case allTime
         case custom
     }
 
-//    private let columns: [GridItem] = [
-//        GridItem(.flexible(maximum: 60)),
-//        GridItem(.flexible()),
-//    ]
-    private let statsHelper = StatsHelper()
+    @ObservedObject var statsHelper = StatsHelper.sharedInstance
     @State private var dateRange: DateRange = .week
 
     var body: some View {
         VStack {
             GroupBox {
-                HStack {
-                    Spacer()
-                    Text("In the last")
-                    Picker("", selection: $dateRange) {
-                        Text("Week").tag(DateRange.week)
-                        Text("30 days").tag(DateRange.thirtyDays)
-                        Text("6 months").tag(DateRange.sixMonths)
-                        Text("Year").tag(DateRange.year)
-                        Text("Date Range").tag(DateRange.custom)
+                Grid(alignment: .leading, verticalSpacing: 5) {
+                    GridRow {
+                        mainStat(String(statsHelper.daysTracked))
+                        statDescription("Days tracked")
                     }
-                    .onChange(of: dateRange) { range in
-                        
+                    GridRow {
+                        mainStat(String(statsHelper.daysWithAttack))
+                        statDescription("Days with an attack")
                     }
-                    Spacer()
-                }
-
-//                VStack(spacing: 15) {
-//                    statStack(stat: "18", description: "Attacks", chevron: true)
-//                        .containerShape(Rectangle())
-//                        .onTapGesture {
-//                            print("tapped")
-//                        }
-//                    statStack(stat: "18", description: "Days tracked")
-//                    statStack(stat: "18%", description: "of days had an attack")
-//                    statStack(stat: "10", description: "Symptoms", chevron: true)
-//                        .containerShape(Rectangle())
-//                        .onTapGesture {
-//                            print("tapped")
-//                        }
-//                    statStack(stat: "2", description: "Types of headache", chevron: true)
-//                        .containerShape(Rectangle())
-//                        .onTapGesture {
-//                            print("tapped")
-//                        }
-//                    statStack(stat: "3.5", description: "Average pain level")
-//                    statStack(stat: "3", description: "Auras", chevron: true)
-//                        .containerShape(Rectangle())
-//                        .onTapGesture {
-//                            print("tapped")
-//                        }
-//                    // TODO: Under Auras will be number broken down by type
-//                    // Time of day?
-//                    HStack(alignment: .center) {
+                    GridRow {
+                        mainStat(String(statsHelper.numberOfAttacks))
+                        statDescriptionChevron("Attacks")
+                    }
+                    //TODO: Only show all others if attacks > 0
+                    GridRow {
+                        mainStat("\(statsHelper.percentWithAttack) %")
+                        statDescription("Of days had an attack")
+                    }
+                    
+                    GridRow {
+                        mainStat(String(statsHelper.numberOfSymptoms))
+                        statDescriptionChevron("Symptoms")
+                    }
+                    
+                    GridRow {
+                        mainStat(String(statsHelper.numberOfTypesOfHeadaches))
+                        statDescriptionChevron("Types of headache")
+                    }
+                    
+                    GridRow {
+                        mainStat(String(statsHelper.averagePainLevel))
+                        statDescription("Average pain level")
+                    }
+                    
+                    GridRow {
+                        mainStat(String(statsHelper.numberOfAuras))
+                        statDescriptionChevron("Auras")
+                    }
+                    // TODO: Under Auras will be number broken down by type
+//                    GridRow {
 //                        Image(systemName: "sunrise")
 //                            .font(.title2)
 //                            .foregroundColor(.accentColor)
@@ -83,79 +77,35 @@ struct StatsView: View {
 //                        Text("Most common time of day")
 //                            .font(.title3)
 //                    }
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//                }
-                
-//                LazyVGrid(columns: columns, alignment: .leading, spacing: 10) {
-//                    mainStat("18")
-//                    statDescriptionChevron("Attacks")
-//
-//                    mainStat("18")
-//                    statDescription("Days tracked")
-//                }
-                Grid(alignment: .leading, verticalSpacing: 5) {
-                    GridRow {
-                        mainStat("18")
-                        statDescriptionChevron("Attacks")
-                    }
-                    GridRow {
-                        mainStat("18")
-                        statDescription("Days Tracked")
-                    }
-                    GridRow {
-                        mainStat("18 %")
-                        statDescription("Of days had an attack")
-                    }
-                    GridRow {
-                        mainStat("10")
-                        statDescriptionChevron("Symptoms")
-                    }
-                    GridRow {
-                        mainStat("2")
-                        statDescriptionChevron("Types of headache")
-                    }
-                    GridRow {
-                        mainStat("3.5")
-                        statDescription("Average pain level")
-                    }
-                    GridRow {
-                        mainStat("3")
-                        statDescriptionChevron("Auras")
-                    }
-                    GridRow {
-                        Image(systemName: "sunrise")
-                            .font(.title2)
-                            .foregroundColor(.accentColor)
-                            .bold()
-                            .padding(.trailing)
-                        Text("Most common time of day")
-                            .font(.title3)
-                    }
+                    // TODO: Add most common type of headache
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+            } label: {
+                HStack {
+                    Spacer()
+                    Text("In the last")
+                    Picker("", selection: $dateRange) {
+                        Text("Week").tag(DateRange.week)
+                        Text("30 days").tag(DateRange.thirtyDays)
+                        Text("6 months").tag(DateRange.sixMonths)
+                        Text("Year").tag(DateRange.year)
+                        Text("All time").tag(DateRange.allTime)
+                        Text("Date Range").tag(DateRange.custom)
+                    }
+                    .onChange(of: dateRange) { range in
+                        statsHelper.getStats(from: dayDataInRange(range))
+                    }
+                    Spacer()
+                }
             }
 
             Spacer()
         }
         .padding()
+        .onAppear() {
+            statsHelper.getStats(from: dayDataInRange(dateRange))
+        }
     }
-
-//    private func statStack(stat: String, description: String, chevron: Bool = false) -> some View {
-//        return HStack(alignment: .center) {
-//            Text(stat)
-//                .font(.title2)
-//                .foregroundColor(.accentColor)
-//                .bold()
-//                .padding(.trailing)
-//            Text(description)
-//                .font(.title3)
-//            if chevron {
-//                Image(systemName: "chevron.right")
-//                    .font(.system(size: 12))
-//            }
-//        }
-//        .frame(maxWidth: .infinity, alignment: .leading)
-//    }
     
     private func mainStat(_ stat: String) -> some View {
         return Text(stat)
@@ -183,22 +133,41 @@ struct StatsView: View {
         }
     }
     
-    private func getStats() {
+    private func dayDataInRange(_ range: DateRange) -> [DayData] {
+        var inRange: [DayData] = []
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         
+        var fromDate: Date = Calendar.current.startOfDay(for: Date.now)
+        let today: Date = .now
+        
+        switch range {
+        case .week:
+            fromDate = Calendar.current.date(byAdding: .day, value: -7, to: fromDate) ?? Date.now
+        case .thirtyDays:
+            fromDate = Calendar.current.date(byAdding: .day, value: -30, to: fromDate) ?? Date.now
+        case .sixMonths:
+            fromDate = Calendar.current.date(byAdding: .day, value: -180, to: fromDate) ?? Date.now
+        case .year:
+            fromDate = Calendar.current.date(byAdding: .day, value: -365, to: fromDate) ?? Date.now
+        case .allTime:
+            fromDate = Date.init(timeIntervalSince1970: 0)
+        case .custom:
+            // TODO: use custom dats
+            break
+        }
+        
+        for day in dayData {
+            let dayDate = dateFormatter.date(from: day.date ?? "1970-01-01")
+            
+            if dayDate?.isBetween(fromDate, and: today) ?? false {
+                inRange.append(day)
+            }
+        }
+        
+        return inRange
     }
-    
-//    func loadQuestion() -> [DayData]? {
-//        let fetchRequest: NSFetchRequest<DayData> = DayData.fetchRequest()
-//
-//        do {
-//            let array = try viewContext.fetch(fetchRequest) as [DayData]
-//            return array
-//        } catch {
-//            print("error FetchRequest \(error)")
-//        }
-//
-//        return nil
-//    }
+
 }
 
 struct StatsView_Previews: PreviewProvider {
