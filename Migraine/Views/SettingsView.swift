@@ -32,6 +32,11 @@ struct SettingsView: View {
                         Label("Activity Colors", systemImage: "paintpalette.fill")
                     }
                 }
+                
+                Section("Data") {
+                    Label("Reset Settings", systemImage: "gear.badge.xmark")
+                    Label("Delete Data", systemImage: "folder.fill.badge.minus")
+                }
             }
         }
     }
