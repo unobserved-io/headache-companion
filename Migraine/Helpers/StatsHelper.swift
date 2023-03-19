@@ -87,7 +87,6 @@ class StatsHelper: ObservableObject {
         if !allTypesOfHeadache.isEmpty {
             let largest = allTypesOfHeadache.max { a, b in a.value < b.value }
             mostCommonTypeOfHeadache = largest?.key ?? "Unknown"
-            print(mostCommonTypeOfHeadache)
         }
         averagePainLevel = daysWithAttack == 0 ? 0 : painLevelsPerDay.reduce(0,+) / Double(daysWithAttack)
         getPercentWithAttack()
