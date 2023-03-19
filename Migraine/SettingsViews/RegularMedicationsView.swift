@@ -54,7 +54,7 @@ struct RegularMedicationsView: View {
         }
         .sheet(isPresented: $showingSheet, onDismiss: refreshView) {
             if clickedMedication.medication != nil {
-                AddEditCommonMedsView()
+                AddEditRegularMedsView()
                     .environmentObject(clickedMedication)
                     .navigationTitle("Add Common Medication")
                     .presentationDetents([.medium])

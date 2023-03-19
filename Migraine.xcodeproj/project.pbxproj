@@ -11,7 +11,7 @@
 		9C18C06F29BB6A04008084E2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C06E29BB6A04008084E2 /* SettingsView.swift */; };
 		9C18C07229BB6C5B008084E2 /* RegularMedicationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07129BB6C5B008084E2 /* RegularMedicationsView.swift */; };
 		9C18C07829BB753C008084E2 /* MedicationLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07729BB753C008084E2 /* MedicationLabelView.swift */; };
-		9C18C07A29BB87E1008084E2 /* AddEditCommonMedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07929BB87E1008084E2 /* AddEditCommonMedsView.swift */; };
+		9C18C07A29BB87E1008084E2 /* AddEditRegularMedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07929BB87E1008084E2 /* AddEditRegularMedsView.swift */; };
 		9C18C07D29BB8A6D008084E2 /* MAppData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07B29BB8A6D008084E2 /* MAppData+CoreDataClass.swift */; };
 		9C18C07E29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07C29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift */; };
 		9C1983AA29B73DD2007754AB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983A929B73DD2007754AB /* MainView.swift */; };
@@ -51,7 +51,7 @@
 		9C18C06E29BB6A04008084E2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9C18C07129BB6C5B008084E2 /* RegularMedicationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularMedicationsView.swift; sourceTree = "<group>"; };
 		9C18C07729BB753C008084E2 /* MedicationLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationLabelView.swift; sourceTree = "<group>"; };
-		9C18C07929BB87E1008084E2 /* AddEditCommonMedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditCommonMedsView.swift; sourceTree = "<group>"; };
+		9C18C07929BB87E1008084E2 /* AddEditRegularMedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRegularMedsView.swift; sourceTree = "<group>"; };
 		9C18C07B29BB8A6D008084E2 /* MAppData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9C18C07C29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9C1983A929B73DD2007754AB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				9C18C07129BB6C5B008084E2 /* RegularMedicationsView.swift */,
-				9C18C07929BB87E1008084E2 /* AddEditCommonMedsView.swift */,
+				9C18C07929BB87E1008084E2 /* AddEditRegularMedsView.swift */,
 				9CA81F0B29C74DD200EDBCEF /* CustomSymptomsView.swift */,
 				9CA81F0D29C7755D00EDBCEF /* ActivityColorsView.swift */,
 			);
@@ -318,7 +318,7 @@
 				9C18C07D29BB8A6D008084E2 /* MAppData+CoreDataClass.swift in Sources */,
 				9C98449C29B5F3E300ABDC36 /* NotesView.swift in Sources */,
 				9CF7308229ACD93800D91F99 /* Persistence.swift in Sources */,
-				9C18C07A29BB87E1008084E2 /* AddEditCommonMedsView.swift in Sources */,
+				9C18C07A29BB87E1008084E2 /* AddEditRegularMedsView.swift in Sources */,
 				9C18C07E29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift in Sources */,
 				9CC529CE29BCBEA500DD5491 /* StatsView.swift in Sources */,
 				9CF7308729ACD93800D91F99 /* ContentView.swift in Sources */,

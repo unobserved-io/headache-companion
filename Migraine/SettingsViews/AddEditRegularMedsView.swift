@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddEditCommonMedsView: View {
+struct AddEditRegularMedsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var medication: ClickedMedication
@@ -100,6 +100,6 @@ struct AddEditCommonMedsView: View {
 
 struct AddEditCommonMedsView_Previews: PreviewProvider {
     static var previews: some View {
-        AddEditCommonMedsView()
+        AddEditRegularMedsView()
     }
 }
