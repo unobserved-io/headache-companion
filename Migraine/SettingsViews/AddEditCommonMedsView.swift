@@ -27,7 +27,7 @@ struct AddEditCommonMedsView: View {
             TextField("Name", text: $medName, prompt: Text("Ibuprofen, Aspirin, etc."))
             
             // Dose field
-            TextField("Dose", text: $medDose, prompt: Text("20 mg, 4 oz, etc."))
+            TextField("Dose", text: $medDose, prompt: Text("Pills, 20 mg, etc."))
 
             // Amount stepper
             HStack {
