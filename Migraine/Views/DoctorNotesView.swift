@@ -39,9 +39,7 @@ struct DoctorNotesView: View {
         .padding()
         .onAppear() {
             if mAppData.first == nil {
-                let newMAppData = MAppData(context: viewContext)
-                newMAppData.doctorNotes = ""
-                saveData()
+                initializeMApp() 
             }
         }
         .onDisappear() {

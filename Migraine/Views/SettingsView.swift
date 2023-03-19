@@ -29,10 +29,7 @@ struct SettingsView: View {
             }
             .onAppear() {
                 if mAppData.first == nil {
-                    let newMAppData = MAppData(context: viewContext)
-                    newMAppData.doctorNotes = ""
-                    newMAppData.customSymptoms = []
-                    saveData()
+                    initializeMApp()
                 }
             }
         }

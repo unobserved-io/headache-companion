@@ -40,3 +40,11 @@ func activityColor(of i: ActivityRanks) -> Color {
         return Color.gray
     }
 }
+
+func initializeMApp() {
+    let viewContext = PersistenceController.shared.container.viewContext
+    let newMAppData = MAppData(context: viewContext)
+    newMAppData.doctorNotes = ""
+    newMAppData.customSymptoms = []
+    saveData()
+}
