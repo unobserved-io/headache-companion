@@ -96,7 +96,7 @@ struct StatsView: View {
                     //TODO: Only show all others if attacks > 0
                     if statsHelper.daysWithAttack > 0 {
                         GridRow(alignment: .top) {
-                            mainStat("\(statsHelper.percentWithAttack) %")
+                            mainStat("\(statsHelper.percentWithAttack)%")
                             statDescription("Of days had an attack")
                         }
                         
@@ -106,7 +106,7 @@ struct StatsView: View {
                         }
                         
                         GridRow(alignment: .top) {
-                            mainStat(String(statsHelper.averagePainLevel))
+                            mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
                             statDescription("Average pain level")
                         }
                         
@@ -208,7 +208,7 @@ struct StatsView: View {
             .font(.title2)
             .foregroundColor(.accentColor)
             .bold()
-            .padding(.trailing)
+//            .padding(.trailing)
     }
     
     private func statDescription(_ description: String) -> some View {
