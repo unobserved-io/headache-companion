@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CommonMedicationsView: View {
+struct RegularMedicationsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
         entity: MAppData.entity(),
@@ -20,9 +20,9 @@ struct CommonMedicationsView: View {
     
     var body: some View {
         Form {
-            if !(mAppData.first?.commonMeds.isEmpty ?? true) {
+            if !(mAppData.first?.regularMeds.isEmpty ?? true) {
                 Section {
-                    ForEach(mAppData.first?.commonMeds ?? []) { medication in
+                    ForEach(mAppData.first?.regularMeds ?? []) { medication in
                         Button {
                             clickedMedication.medication = medication
                             showingSheet.toggle()
@@ -69,7 +69,7 @@ struct CommonMedicationsView: View {
     private func deleteMedication(at offsets: IndexSet) {
         let index = offsets.first
         if index != nil {
-            let medToDelete: Medication? = mAppData.first?.commonMeds[index!]
+            let medToDelete: Medication? = mAppData.first?.regularMeds[index!]
             if medToDelete != nil {
                 viewContext.delete(medToDelete!)
                 saveData()
@@ -80,6 +80,6 @@ struct CommonMedicationsView: View {
 
 struct CommonMedicationsView_Previews: PreviewProvider {
     static var previews: some View {
-        CommonMedicationsView()
+        RegularMedicationsView()
     }
 }

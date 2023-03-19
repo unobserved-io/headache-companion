@@ -34,9 +34,9 @@ struct MedicationView: View {
     
     var body: some View {
         List {
-            if !(mAppData.first?.commonMeds.isEmpty ?? true) {
-                Section("Common Medications") {
-                    ForEach(mAppData.first?.commonMeds ?? []) { medication in
+            if !(mAppData.first?.regularMeds.isEmpty ?? true) {
+                Section("Regular Medications") {
+                    ForEach(mAppData.first?.regularMeds ?? []) { medication in
                         Button {
                             let newMedication = Medication(context: viewContext)
                             newMedication.id = UUID().uuidString

@@ -19,10 +19,10 @@ extension MAppData {
     @NSManaged public var doctorNotes: String?
     @NSManaged public var customSymptoms: [String]?
     @NSManaged public var activityColors: [Data]?
-    @NSManaged public var commonMedications: NSSet?
+    @NSManaged public var regularMedications: NSSet?
     
-    var commonMeds: [Medication] {
-        let set = commonMedications as? Set<Medication> ?? []
+    var regularMeds: [Medication] {
+        let set = regularMedications as? Set<Medication> ?? []
 
         return set.sorted {
             $0.wrappedName < $1.wrappedName
@@ -34,17 +34,17 @@ extension MAppData {
 // MARK: Generated accessors for commonMedications
 extension MAppData {
 
-    @objc(addCommonMedicationsObject:)
-    @NSManaged public func addToCommonMedications(_ value: Medication)
+    @objc(addRegularMedicationsObject:)
+    @NSManaged public func addToRegularMedications(_ value: Medication)
 
-    @objc(removeCommonMedicationsObject:)
-    @NSManaged public func removeFromCommonMedications(_ value: Medication)
+    @objc(removeRegularMedicationsObject:)
+    @NSManaged public func removeFromRegularMedications(_ value: Medication)
 
-    @objc(addCommonMedications:)
-    @NSManaged public func addToCommonMedications(_ values: NSSet)
+    @objc(addRegularMedications:)
+    @NSManaged public func addToRegularMedications(_ values: NSSet)
 
-    @objc(removeCommonMedications:)
-    @NSManaged public func removeFromCommonMedications(_ values: NSSet)
+    @objc(removeRegularMedications:)
+    @NSManaged public func removeFromRegularMedications(_ values: NSSet)
 
 }
 

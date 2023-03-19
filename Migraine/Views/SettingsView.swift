@@ -19,8 +19,8 @@ struct SettingsView: View {
         NavigationView {
             Form {
                 Section("Custom Inputs") {
-                    NavigationLink(destination: CommonMedicationsView()) {
-                        Label("Common Medications", systemImage: "pill.fill")
+                    NavigationLink(destination: RegularMedicationsView()) {
+                        Label("Regular Medications", systemImage: "pill.fill")
                     }
                     NavigationLink(destination: CustomSymptomsView()) {
                         Label("Add Symptoms", systemImage: "medical.thermometer.fill")

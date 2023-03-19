@@ -59,7 +59,7 @@ struct AddEditCommonMedsView: View {
                         // New medication, give it an id and add to Common Meds
                         medication.medication?.id = UUID().uuidString
                         if medication.medication != nil {
-                            mAppData.first?.addToCommonMedications(medication.medication!)
+                            mAppData.first?.addToRegularMedications(medication.medication!)
                         }
                     }
                     
