@@ -73,7 +73,7 @@ class StatsHelper: ObservableObject {
                         
                     }
                     
-                    if var index = allTypesOfHeadache.firstIndex(where: {$0.key == headacheTypeString(attack.headacheType)}) {
+                    if let index = allTypesOfHeadache.firstIndex(where: {$0.key == headacheTypeString(attack.headacheType)}) {
                         allTypesOfHeadache[index].value += 1
                     } else {
                         allTypesOfHeadache.append((headacheTypeString(attack.headacheType), 1))
