@@ -38,6 +38,7 @@
         </uniquenessConstraints>
     </entity>
     <entity name="MAppData" representedClassName="MAppData" syncable="YES">
+        <attribute name="customSymptoms" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="doctorNotes" attributeType="String" defaultValueString=""/>
         <relationship name="commonMedications" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medication" inverseName="mAppData" inverseEntity="Medication"/>
     </entity>

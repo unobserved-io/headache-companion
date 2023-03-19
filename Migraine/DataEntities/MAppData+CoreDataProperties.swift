@@ -17,6 +17,7 @@ extension MAppData {
     }
 
     @NSManaged public var doctorNotes: String?
+    @NSManaged public var customSymptoms: [String]?
     @NSManaged public var commonMedications: NSSet?
     
     var commonMeds: [Medication] {

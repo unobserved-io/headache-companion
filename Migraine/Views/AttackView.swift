@@ -13,6 +13,11 @@ struct AttackView: View {
     @Environment(\.dismiss) var dismiss // TODO: From iOS 15+. Test on iOS 14
     @FetchRequest var dayData: FetchedResults<DayData>
     @ObservedObject var attack: Attack
+    @FetchRequest(
+        entity: MAppData.entity(),
+        sortDescriptors: []
+    )
+    var mAppData: FetchedResults<MAppData>
     @State var nextFrom: Set<String> = []
     @State var newAttack: Bool = false
     let basicSymptoms = [
@@ -137,7 +142,7 @@ struct AttackView: View {
                 if !attack.symptoms.isEmpty || attack.pressing || attack.pulsating || nextFrom.contains("painType") || nextFrom.contains("painLevel") || !newAttack {
                     MultiSelector(
                         label: "Symptoms",
-                        options: basicSymptoms,
+                        options: basicSymptoms + (mAppData.first?.customSymptoms ?? []), // TODO: basicSymptoms + customSymptoms
                         selected: $attack.symptoms
                     )
                     

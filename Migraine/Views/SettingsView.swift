@@ -22,12 +22,16 @@ struct SettingsView: View {
                     NavigationLink(destination: CommonMedicationsView()) {
                         Label("Common Medications", systemImage: "pill.fill")
                     }
+                    NavigationLink(destination: CustomSymptomsView()) {
+                        Label("Add Symptoms", systemImage: "medical.thermometer.fill")
+                    }
                 }
             }
             .onAppear() {
                 if mAppData.first == nil {
                     let newMAppData = MAppData(context: viewContext)
                     newMAppData.doctorNotes = ""
+                    newMAppData.customSymptoms = []
                     saveData()
                 }
             }
