@@ -228,7 +228,7 @@ struct ContentView: View {
         let newMAppData = MAppData(context: viewContext)
         newMAppData.doctorNotes = ""
         newMAppData.customSymptoms = []
-        mAppData.first?.activityColors = [
+        newMAppData.activityColors = [
             getData(from: UIColor(Color.gray)) ?? Data(),
             getData(from: UIColor(Color.red)) ?? Data(),
             getData(from: UIColor(Color.yellow)) ?? Data(),
