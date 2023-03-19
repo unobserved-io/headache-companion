@@ -15,10 +15,9 @@ class StatsHelper: ObservableObject {
     @Published var daysTracked: Int = 0
     @Published var daysWithAttack: Int = 0
     @Published var numberOfAttacks: Int = 0
-    @Published var numberOfSymptoms: Int = 0
     @Published var allSymptoms = Set<String>()
-    @Published var numberOfAuras: Int = 0
-    @Published var numberOfTypesOfHeadaches: Int = 0
+    @Published var allAuras = Set<String>()
+    @Published var allTypesOfHeadache: [(key: String, value: Int)] = []
     @Published var mostCommonTypeOfHeadache: String = ""
     @Published var averagePainLevel: Double = 0.0
     @Published var percentWithAttack: Int = 0
@@ -41,8 +40,6 @@ class StatsHelper: ObservableObject {
     }
     
     private func calculateMainStats(_ dayData: [DayData]) {
-        var allAuras = Set<String>()
-        var typesOfHeadacheCount: [String:Int] = [:]
         var painLevelsPerDay: [Double] = []
         
         for day in dayData {
@@ -67,10 +64,19 @@ class StatsHelper: ObservableObject {
                     }
                     
                     painLevels.append(attack.painLevel)
-                    if typesOfHeadacheCount[headacheTypeString(attack.headacheType)] != nil {
-                        typesOfHeadacheCount[headacheTypeString(attack.headacheType)]! += 1
+//                    if allTypesOfHeadache[headacheTypeString(attack.headacheType)] != nil {
+//                        allTypesOfHeadache[headacheTypeString(attack.headacheType)]! += 1
+//                    } else {
+//                        allTypesOfHeadache[headacheTypeString(attack.headacheType)] = 1
+//                    }
+                    if allTypesOfHeadache.contains(where: {$0.key == headacheTypeString(attack.headacheType)}) {
+                        
+                    }
+                    
+                    if var index = allTypesOfHeadache.firstIndex(where: {$0.key == headacheTypeString(attack.headacheType)}) {
+                        allTypesOfHeadache[index].value += 1
                     } else {
-                        typesOfHeadacheCount[headacheTypeString(attack.headacheType)] = 1
+                        allTypesOfHeadache.append((headacheTypeString(attack.headacheType), 1))
                     }
                 }
                 painLevelsPerDay.append(painLevels.reduce(0,+) / Double(painLevels.count))
@@ -78,12 +84,10 @@ class StatsHelper: ObservableObject {
         }
         
         // Get final numbers from sets
-        numberOfSymptoms = allSymptoms.count
-        numberOfAuras = allAuras.count
-        numberOfTypesOfHeadaches = typesOfHeadacheCount.count
-        if !typesOfHeadacheCount.isEmpty {
-            let largest = typesOfHeadacheCount.max { a, b in a.value < b.value }
+        if !allTypesOfHeadache.isEmpty {
+            let largest = allTypesOfHeadache.max { a, b in a.value < b.value }
             mostCommonTypeOfHeadache = largest?.key ?? "Unknown"
+            print(mostCommonTypeOfHeadache)
         }
         averagePainLevel = daysWithAttack == 0 ? 0 : painLevelsPerDay.reduce(0,+) / Double(daysWithAttack)
         getPercentWithAttack()
@@ -127,10 +131,9 @@ class StatsHelper: ObservableObject {
         daysTracked = 0
         daysWithAttack = 0
         numberOfAttacks = 0
-        numberOfSymptoms = 0
         allSymptoms = []
-        numberOfAuras = 0
-        numberOfTypesOfHeadaches = 0
+        allAuras = []
+        allTypesOfHeadache = []
         averagePainLevel = 0.0
         percentWithAttack = 0
         waterInSelectedDays = []

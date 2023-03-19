@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StatsView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.colorScheme) var colorScheme
     @FetchRequest(
         entity: DayData.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: true)]
@@ -27,18 +28,34 @@ struct StatsView: View {
         dateformat.dateFormat = "yyyy-MM-dd"
         return dateformat
     }()
-//    private var activityItems: [GridItem] {
-//        Array(repeating: .init(.flexible(minimum: 20)), count: 999)
-//    }
-    private var activityItems = [GridItem(.flexible(minimum: 20, maximum: 20))]
 
     @ObservedObject var statsHelper = StatsHelper.sharedInstance
     @State private var dateRange: DateRange = .week
     @State private var clickedAttacks: Bool = false
+    @State private var clickedSymptoms: Bool = false
+//    @State private var clickedHeadaches: Bool = false
+    @State private var clickedAuras: Bool = false
 
     var body: some View {
-        VStack {
-            GroupBox {
+        ScrollView {
+            VStack {
+                HStack {
+                    Spacer()
+                    Text("In the last")
+                    Picker("", selection: $dateRange) {
+                        Text("Week").tag(DateRange.week)
+                        Text("30 days").tag(DateRange.thirtyDays)
+                        Text("6 months").tag(DateRange.sixMonths)
+                        Text("Year").tag(DateRange.year)
+                        Text("All time").tag(DateRange.allTime)
+                        Text("Date Range").tag(DateRange.custom)
+                    }
+                    .onChange(of: dateRange) { range in
+                        statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range))
+                        
+                    }
+                    Spacer()
+                }
                 Grid(alignment: .leading, verticalSpacing: 5) {
                     GridRow(alignment: .top) {
                         mainStat(String(statsHelper.daysTracked))
@@ -50,7 +67,32 @@ struct StatsView: View {
                     }
                     GridRow(alignment: .top) {
                         mainStat(String(statsHelper.numberOfAttacks))
-                        statDescriptionChevron("Attacks")
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text("Attacks")
+                                    .font(.title3)
+                                Image(systemName: clickedAttacks ? "chevron.down" : "chevron.right")
+                                    .font(.system(size: 12))
+                            }
+                            if clickedAttacks {
+                                Grid(alignment: .leading, verticalSpacing: 5) {
+                                    ForEach(statsHelper.allTypesOfHeadache, id: \.key) { type, num in
+                                        GridRow {
+                                            Text(String(num))
+                                                .foregroundColor(.accentColor)
+                                                .bold()
+                                                .padding(.trailing)
+                                            Text(type)
+                                        }
+                                    }
+                                }
+                                .padding(.leading)
+                            }
+                        }
+                        .containerShape(Rectangle())
+                        .onTapGesture {
+                            clickedAttacks.toggle()
+                        }
                     }
                     //TODO: Only show all others if attacks > 0
                     if statsHelper.daysWithAttack > 0 {
@@ -60,14 +102,14 @@ struct StatsView: View {
                         }
                         
                         GridRow(alignment: .top) {
-                            mainStat(String(statsHelper.numberOfSymptoms))
-                            statDescriptionChevron("Symptoms")
+                            mainStat(String(statsHelper.allSymptoms.count))
+                            statDescriptionChevron(for: "Symptoms", clicked: clickedSymptoms, list: statsHelper.allSymptoms)
                         }
                         
-                        GridRow(alignment: .top) {
-                            mainStat(String(statsHelper.numberOfTypesOfHeadaches))
-                            statDescriptionChevron("Types of headache")
-                        }
+//                        GridRow(alignment: .top) {
+//                            mainStat(String(statsHelper.allTypesOfHeadache.count))
+//                            statDescriptionChevron(for: "Types of headache", clicked: clickedHeadaches, list: statsHelper.allTypesOfHeadache)
+//                        }
                         
                         GridRow(alignment: .top) {
                             mainStat(String(statsHelper.averagePainLevel))
@@ -75,8 +117,8 @@ struct StatsView: View {
                         }
                         
                         GridRow(alignment: .top) {
-                            mainStat(String(statsHelper.numberOfAuras))
-                            statDescriptionChevron("Auras")
+                            mainStat(String(statsHelper.allAuras.count))
+                            statDescriptionChevron(for: "Auras", clicked: clickedAuras, list: statsHelper.allAuras)
                         }
                         // TODO: Under Auras will be number broken down by type
                         
@@ -139,25 +181,11 @@ struct StatsView: View {
                         scrollActivity(statsHelper.sleepInSelectedDays)
                     }
                 }
-            } label: {
-                HStack {
-                    Spacer()
-                    Text("In the last")
-                    Picker("", selection: $dateRange) {
-                        Text("Week").tag(DateRange.week)
-                        Text("30 days").tag(DateRange.thirtyDays)
-                        Text("6 months").tag(DateRange.sixMonths)
-                        Text("Year").tag(DateRange.year)
-                        Text("All time").tag(DateRange.allTime)
-                        Text("Date Range").tag(DateRange.custom)
-                    }
-                    .onChange(of: dateRange) { range in
-                        statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range))
-                        
-                    }
-                    Spacer()
-                }
             }
+            .padding()
+            .background(colorScheme == .light ? .gray.opacity(0.20) : .white.opacity(0.10))
+            .cornerRadius(15)
+            .padding(.bottom)
             
             HStack {
                 mainStat(String(dayData.count))
@@ -194,9 +222,8 @@ struct StatsView: View {
                 .font(.title3)
     }
     
-    private func statDescriptionChevron(_ description: String) -> some View {
-        var clicked = false
-        return VStack {
+    private func statDescriptionChevron(for description: String, clicked: Bool, list: Set<String>) -> some View {
+        VStack(alignment: .leading, spacing: 5) {
             HStack {
                 Text(description)
                     .font(.title3)
@@ -204,15 +231,24 @@ struct StatsView: View {
                     .font(.system(size: 12))
             }
             if clicked {
-                ForEach(Array(statsHelper.allSymptoms), id: \.self) { symptom in
+                ForEach(Array(list), id: \.self) { symptom in
                     Text(symptom)
+                        .padding(.leading)
                 }
             }
         }
         .containerShape(Rectangle())
         .onTapGesture {
-            print("tapped")
-            clicked = true
+            switch description {
+            case "Symptoms":
+                clickedSymptoms.toggle()
+//            case "Types of headache":
+//                clickedHeadaches.toggle()
+            case "Auras":
+                clickedAuras.toggle()
+            default:
+                break
+            }
         }
     }
     
