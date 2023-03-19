@@ -23,12 +23,12 @@
     </entity>
     <entity name="DayData" representedClassName="DayData" syncable="YES">
         <attribute name="date" optional="YES" attributeType="String"/>
-        <attribute name="diet" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="exercise" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="diet" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="exercise" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="notes" attributeType="String" defaultValueString=""/>
-        <attribute name="relax" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="sleep" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="water" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="relax" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="sleep" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="water" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="attack" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attack" inverseName="date" inverseEntity="Attack"/>
         <relationship name="medication" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medication" inverseName="date" inverseEntity="Medication"/>
         <uniquenessConstraints>

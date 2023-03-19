@@ -15,12 +15,12 @@ public extension DayData {
     }
 
     @NSManaged var date: String?
-    @NSManaged var diet: Int16
-    @NSManaged var exercise: Int16
+    @NSManaged var diet: ActivityRanks
+    @NSManaged var exercise: ActivityRanks
     @NSManaged var notes: String
-    @NSManaged var relax: Int16
-    @NSManaged var sleep: Int16
-    @NSManaged var water: Int16
+    @NSManaged var relax: ActivityRanks
+    @NSManaged var sleep: ActivityRanks
+    @NSManaged var water: ActivityRanks
     @NSManaged var attack: NSSet?
     @NSManaged var medication: NSSet?
 

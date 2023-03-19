@@ -72,7 +72,7 @@ struct ContentView: View {
                             Image(systemName: "bed.double")
                         }
                         .font(.system(size: 60))
-                        .foregroundColor(correspondingColor(of: dayData.first?.sleep ?? 0))
+                        .foregroundColor(activityColor(of: dayData.first?.sleep ?? .none))
                         Text("Sleep").padding(.top, 4)
                     }
                     .padding(.trailing, 100)
@@ -84,7 +84,7 @@ struct ContentView: View {
                             Image(systemName: "drop")
                         }
                         .font(.system(size: 60))
-                        .foregroundColor(correspondingColor(of: dayData.first?.water ?? 0))
+                        .foregroundColor(activityColor(of: dayData.first?.water ?? .none))
                         Text("Water").padding(.top, 1)
                     }
                 }
@@ -98,7 +98,7 @@ struct ContentView: View {
                             Image(systemName: "carrot")
                         }
                         .font(.system(size: 60))
-                        .foregroundColor(correspondingColor(of: dayData.first?.diet ?? 0))
+                        .foregroundColor(activityColor(of: dayData.first?.diet ?? .none))
                         Text("Diet").padding(.top, 1)
                     }
                 }
@@ -111,7 +111,7 @@ struct ContentView: View {
                             Image(systemName: "figure.strengthtraining.functional")
                         }
                         .font(.system(size: 60))
-                        .foregroundColor(correspondingColor(of: dayData.first?.exercise ?? 0))
+                        .foregroundColor(activityColor(of: dayData.first?.exercise ?? .none))
                         Text("Excercise").padding(.top, 4)
                     }
                     .padding(.trailing, 100)
@@ -123,7 +123,7 @@ struct ContentView: View {
                             Image(systemName: "figure.mind.and.body")
                         }
                         .font(.system(size: 60))
-                        .foregroundColor(correspondingColor(of: dayData.first?.relax ?? 0))
+                        .foregroundColor(activityColor(of: dayData.first?.relax ?? .none))
                         Text("Relax").padding(.top, 4)
                     }
                 }
@@ -214,21 +214,6 @@ struct ContentView: View {
             }
         }
         return false
-    }
-    
-    private func correspondingColor(of i: Int16) -> Color {
-        switch i {
-        case 0:
-            return Color.gray
-        case 1:
-            return Color.red
-        case 2:
-            return Color.yellow
-        case 3:
-            return Color.green
-        default:
-            return Color.gray
-        }
     }
 }
 

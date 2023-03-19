@@ -34,3 +34,24 @@ public enum MedTypes: Int16 {
     case preventive
     case symptomRelieving
 }
+
+@objc
+public enum ActivityRanks: Int16, Identifiable {
+    public var id: UUID {
+        switch self {
+        case .none:
+            return UUID()
+        case .bad:
+            return UUID()
+        case .ok:
+            return UUID()
+        case .good:
+            return UUID()
+        }
+    }
+
+    case none
+    case bad
+    case ok
+    case good
+}

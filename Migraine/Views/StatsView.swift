@@ -22,49 +22,59 @@ struct StatsView: View {
         case allTime
         case custom
     }
+    private let dateFormatter: DateFormatter = {
+        let dateformat = DateFormatter()
+        dateformat.dateFormat = "yyyy-MM-dd"
+        return dateformat
+    }()
+//    private var activityItems: [GridItem] {
+//        Array(repeating: .init(.flexible(minimum: 20)), count: 999)
+//    }
+    private var activityItems = [GridItem(.flexible(minimum: 20, maximum: 20))]
 
     @ObservedObject var statsHelper = StatsHelper.sharedInstance
     @State private var dateRange: DateRange = .week
+    @State private var clickedAttacks: Bool = false
 
     var body: some View {
         VStack {
             GroupBox {
                 Grid(alignment: .leading, verticalSpacing: 5) {
-                    GridRow {
+                    GridRow(alignment: .top) {
                         mainStat(String(statsHelper.daysTracked))
                         statDescription("Days tracked")
                     }
-                    GridRow {
+                    GridRow(alignment: .top) {
                         mainStat(String(statsHelper.daysWithAttack))
                         statDescription("Days with an attack")
                     }
-                    GridRow {
+                    GridRow(alignment: .top) {
                         mainStat(String(statsHelper.numberOfAttacks))
                         statDescriptionChevron("Attacks")
                     }
                     //TODO: Only show all others if attacks > 0
                     if statsHelper.daysWithAttack > 0 {
-                        GridRow {
+                        GridRow(alignment: .top) {
                             mainStat("\(statsHelper.percentWithAttack) %")
                             statDescription("Of days had an attack")
                         }
                         
-                        GridRow {
+                        GridRow(alignment: .top) {
                             mainStat(String(statsHelper.numberOfSymptoms))
                             statDescriptionChevron("Symptoms")
                         }
                         
-                        GridRow {
+                        GridRow(alignment: .top) {
                             mainStat(String(statsHelper.numberOfTypesOfHeadaches))
                             statDescriptionChevron("Types of headache")
                         }
                         
-                        GridRow {
+                        GridRow(alignment: .top) {
                             mainStat(String(statsHelper.averagePainLevel))
                             statDescription("Average pain level")
                         }
                         
-                        GridRow {
+                        GridRow(alignment: .top) {
                             mainStat(String(statsHelper.numberOfAuras))
                             statDescriptionChevron("Auras")
                         }
@@ -83,10 +93,52 @@ struct StatsView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.bottom)
                 
 //                mainStat(String(statsHelper.mostCommonTypeOfHeadache))
 //                statDescription("Most common type")
                 
+                VStack(spacing: 10) {
+                    Text("Water")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    if dateRange == .week || dateRange == .thirtyDays {
+                        noScrollActivity(statsHelper.waterInSelectedDays)
+                    } else {
+                        scrollActivity(statsHelper.waterInSelectedDays)
+                    }
+                    
+                    Text("Diet")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    if dateRange == .week || dateRange == .thirtyDays {
+                        noScrollActivity(statsHelper.dietInSelectedDays)
+                    } else {
+                        scrollActivity(statsHelper.dietInSelectedDays)
+                    }
+                    
+                    Text("Exercise")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    if dateRange == .week || dateRange == .thirtyDays {
+                        noScrollActivity(statsHelper.exerciseInSelectedDays)
+                    } else {
+                        scrollActivity(statsHelper.exerciseInSelectedDays)
+                    }
+                    
+                    Text("Relax")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    if dateRange == .week || dateRange == .thirtyDays {
+                        noScrollActivity(statsHelper.relaxInSelectedDays)
+                    } else {
+                        scrollActivity(statsHelper.relaxInSelectedDays)
+                    }
+                    
+                    Text("Sleep")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    if dateRange == .week || dateRange == .thirtyDays {
+                        noScrollActivity(statsHelper.sleepInSelectedDays)
+                    } else {
+                        scrollActivity(statsHelper.sleepInSelectedDays)
+                    }
+                }
             } label: {
                 HStack {
                     Spacer()
@@ -100,17 +152,32 @@ struct StatsView: View {
                         Text("Date Range").tag(DateRange.custom)
                     }
                     .onChange(of: dateRange) { range in
-                        statsHelper.getStats(from: dayDataInRange(range))
+                        statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range))
+                        
                     }
                     Spacer()
                 }
             }
             
+            HStack {
+                mainStat(String(dayData.count))
+                statDescription("Days with recorded data") // TODO: Change app name
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading)
+            
+            HStack {
+                mainStat(String((Calendar.current.dateComponents([.day], from: dateFormatter.date(from: dayData.first?.date ?? dateFormatter.string(from: Date.now)) ?? Date.now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
+                statDescription("Days using Migraine") // TODO: Change app name
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading)
+            
             Spacer()
         }
         .padding()
         .onAppear() {
-            statsHelper.getStats(from: dayDataInRange(dateRange))
+            statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange))
         }
     }
     
@@ -128,41 +195,32 @@ struct StatsView: View {
     }
     
     private func statDescriptionChevron(_ description: String) -> some View {
-        return HStack {
-            Text(description)
-                .font(.title3)
-            Image(systemName: "chevron.right")
-                .font(.system(size: 12))
+        var clicked = false
+        return VStack {
+            HStack {
+                Text(description)
+                    .font(.title3)
+                Image(systemName: clicked ? "chevron.down" : "chevron.right")
+                    .font(.system(size: 12))
+            }
+            if clicked {
+                ForEach(Array(statsHelper.allSymptoms), id: \.self) { symptom in
+                    Text(symptom)
+                }
+            }
         }
         .containerShape(Rectangle())
         .onTapGesture {
             print("tapped")
+            clicked = true
         }
     }
     
     private func dayDataInRange(_ range: DateRange) -> [DayData] {
         var inRange: [DayData] = []
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        var fromDate: Date = Calendar.current.startOfDay(for: Date.now)
         let today: Date = .now
         
-        switch range {
-        case .week:
-            fromDate = Calendar.current.date(byAdding: .day, value: -7, to: fromDate) ?? Date.now
-        case .thirtyDays:
-            fromDate = Calendar.current.date(byAdding: .day, value: -30, to: fromDate) ?? Date.now
-        case .sixMonths:
-            fromDate = Calendar.current.date(byAdding: .day, value: -180, to: fromDate) ?? Date.now
-        case .year:
-            fromDate = Calendar.current.date(byAdding: .day, value: -365, to: fromDate) ?? Date.now
-        case .allTime:
-            fromDate = Date.init(timeIntervalSince1970: 0)
-        case .custom:
-            // TODO: use custom dats
-            break
-        }
+        let fromDate = getFromDate(range)
         
         for day in dayData {
             let dayDate = dateFormatter.date(from: day.date ?? "1970-01-01")
@@ -173,6 +231,50 @@ struct StatsView: View {
         }
         
         return inRange
+    }
+    
+    private func getFromDate(_ range: DateRange) -> Date {
+        var fromDate: Date = Calendar.current.startOfDay(for: Date.now)
+        
+        switch range {
+        case .week:
+            fromDate = Calendar.current.date(byAdding: .day, value: -6, to: fromDate) ?? Date.now
+        case .thirtyDays:
+            fromDate = Calendar.current.date(byAdding: .day, value: -29, to: fromDate) ?? Date.now
+        case .sixMonths:
+            fromDate = Calendar.current.date(byAdding: .day, value: -179, to: fromDate) ?? Date.now
+        case .year:
+            fromDate = Calendar.current.date(byAdding: .day, value: -364, to: fromDate) ?? Date.now
+        case .allTime:
+            fromDate = Date.init(timeIntervalSince1970: 0)
+        case .custom:
+            // TODO: use custom dates
+            break
+        }
+        
+        return fromDate
+    }
+    
+    private func noScrollActivity(_ activityRanks: [ActivityRanks]) -> some View {
+        HStack(spacing: 1) {
+            ForEach(activityRanks) { activity in
+                Rectangle()
+                    .fill(activityColor(of: activity))
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: 15, alignment: .leading)
+    }
+    
+    private func scrollActivity(_ activityRanks: [ActivityRanks]) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 1) {
+                ForEach(activityRanks) { activity in
+                    Rectangle()
+                        .fill(activityColor(of: activity))
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: 15, alignment: .leading)
+        }
     }
 
 }

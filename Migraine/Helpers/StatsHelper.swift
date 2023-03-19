@@ -16,19 +16,31 @@ class StatsHelper: ObservableObject {
     @Published var daysWithAttack: Int = 0
     @Published var numberOfAttacks: Int = 0
     @Published var numberOfSymptoms: Int = 0
+    @Published var allSymptoms = Set<String>()
     @Published var numberOfAuras: Int = 0
     @Published var numberOfTypesOfHeadaches: Int = 0
     @Published var mostCommonTypeOfHeadache: String = ""
     @Published var averagePainLevel: Double = 0.0
     @Published var percentWithAttack: Int = 0
+    @Published var waterInSelectedDays: [ActivityRanks] = []
+    @Published var dietInSelectedDays: [ActivityRanks] = []
+    @Published var exerciseInSelectedDays: [ActivityRanks] = []
+    @Published var relaxInSelectedDays: [ActivityRanks] = []
+    @Published var sleepInSelectedDays: [ActivityRanks] = []
     
-    func getStats(from dayData: [DayData]) {
+    private let dateFormatter: DateFormatter = {
+        let dateformat = DateFormatter()
+        dateformat.dateFormat = "yyyy-MM-dd"
+        return dateformat
+    }()
+    
+    func getStats(from dayData: [DayData], startDate: Date) {
         resetAllStats()
         calculateMainStats(dayData)
+        calculateActivityStats(dayData, startDate: startDate)
     }
     
     private func calculateMainStats(_ dayData: [DayData]) {
-        var allSymptoms = Set<String>()
         var allAuras = Set<String>()
         var typesOfHeadacheCount: [String:Int] = [:]
         var painLevelsPerDay: [Double] = []
@@ -77,15 +89,55 @@ class StatsHelper: ObservableObject {
         getPercentWithAttack()
     }
     
+    private func calculateActivityStats(_ dayData: [DayData], startDate: Date) {
+        var listOfDatesBetween: [String] = []
+        var date = startDate
+        let endDate = Date.now
+        while date.compare(endDate) != .orderedDescending {
+            listOfDatesBetween.append(dateFormatter.string(from: date))
+            // Advance by one day:
+            date = Calendar.current.date(byAdding: .day, value: 1, to: date) ?? Date.now
+        }
+        
+        var found = false
+        for between in listOfDatesBetween {
+            for oneDayData in dayData {
+                if oneDayData.date == between {
+                    waterInSelectedDays.append(oneDayData.water)
+                    dietInSelectedDays.append(oneDayData.diet)
+                    exerciseInSelectedDays.append(oneDayData.exercise)
+                    relaxInSelectedDays.append(oneDayData.relax)
+                    sleepInSelectedDays.append(oneDayData.sleep)
+                    found = true
+                    break
+                }
+            }
+            if !found {
+                waterInSelectedDays.append(.none)
+                dietInSelectedDays.append(.none)
+                exerciseInSelectedDays.append(.none)
+                relaxInSelectedDays.append(.none)
+                sleepInSelectedDays.append(.none)
+            }
+            found = false
+        }
+    }
+    
     private func resetAllStats() {
         daysTracked = 0
         daysWithAttack = 0
         numberOfAttacks = 0
         numberOfSymptoms = 0
+        allSymptoms = []
         numberOfAuras = 0
         numberOfTypesOfHeadaches = 0
         averagePainLevel = 0.0
         percentWithAttack = 0
+        waterInSelectedDays = []
+        dietInSelectedDays = []
+        exerciseInSelectedDays = []
+        relaxInSelectedDays = []
+        sleepInSelectedDays = []
     }
     
     private func getPercentWithAttack() {
@@ -121,14 +173,14 @@ class StatsHelper: ObservableObject {
         }
     }
     
-    func getAllData() -> [DayData] {
-        let fetchRequest: NSFetchRequest<DayData> = DayData.fetchRequest()
-
-        do {
-            return try PersistenceController.shared.container.viewContext.fetch(fetchRequest)
-        } catch {
-            print("Failed to fetch movies: \(error)")
-            return []
-        }
-    }
+//    func getAllData() -> [DayData] {
+//        let fetchRequest: NSFetchRequest<DayData> = DayData.fetchRequest()
+//
+//        do {
+//            return try PersistenceController.shared.container.viewContext.fetch(fetchRequest)
+//        } catch {
+//            print("Failed to fetch day data: \(error)")
+//            return []
+//        }
+//    }
 }

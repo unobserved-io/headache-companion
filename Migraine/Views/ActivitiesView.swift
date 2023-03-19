@@ -97,30 +97,30 @@ struct ActivitiesView: View {
         }
     }
     
-    private func correspondingInt() -> Int16 {
+    private func correspondingInt() -> ActivityRanks {
         switch currentColor {
         case .gray:
-            return 0
+            return .none
         case .red:
-            return 1
+            return .bad
         case .yellow:
-            return 2
+            return .ok
         case .green:
-            return 3
+            return .good
         default:
-            return 0
+            return .none
         }
     }
     
-    private func correspondingColor(of i: Int16) -> Color {
-        switch i {
-        case 0:
+    private func correspondingColor(of activityRank: ActivityRanks) -> Color {
+        switch activityRank {
+        case .none:
             return Color.gray
-        case 1:
+        case .bad:
             return Color.red
-        case 2:
+        case .ok:
             return Color.yellow
-        case 3:
+        case .good:
             return Color.green
         default:
             return Color.gray
@@ -149,15 +149,15 @@ struct ActivitiesView: View {
     private func getCurrentColor() {
         switch selectedActivity {
         case "sleep":
-            currentColor = correspondingColor(of: dayData.first?.sleep ?? 0)
+            currentColor = correspondingColor(of: dayData.first?.sleep ?? .none)
         case "water":
-            currentColor = correspondingColor(of: dayData.first?.water ?? 0)
+            currentColor = correspondingColor(of: dayData.first?.water ?? .none)
         case "diet":
-            currentColor = correspondingColor(of: dayData.first?.diet ?? 0)
+            currentColor = correspondingColor(of: dayData.first?.diet ?? .none)
         case "exercise":
-            currentColor = correspondingColor(of: dayData.first?.exercise ?? 0)
+            currentColor = correspondingColor(of: dayData.first?.exercise ?? .none)
         case "relax":
-            currentColor = correspondingColor(of: dayData.first?.relax ?? 0)
+            currentColor = correspondingColor(of: dayData.first?.relax ?? .none)
         default:
             currentColor = Color.gray
         }

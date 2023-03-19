@@ -25,3 +25,18 @@ func saveData() {
         }
     }
 }
+
+func activityColor(of i: ActivityRanks) -> Color {
+    switch i {
+    case .none:
+        return Color.gray
+    case .bad:
+        return Color.red
+    case .ok:
+        return Color.yellow
+    case .good:
+        return Color.green
+    default:
+        return Color.gray
+    }
+}
