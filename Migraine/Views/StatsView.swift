@@ -33,7 +33,6 @@ struct StatsView: View {
     @State private var dateRange: DateRange = .week
     @State private var clickedAttacks: Bool = false
     @State private var clickedSymptoms: Bool = false
-//    @State private var clickedHeadaches: Bool = false
     @State private var clickedAuras: Bool = false
 
     var body: some View {
@@ -105,11 +104,6 @@ struct StatsView: View {
                             mainStat(String(statsHelper.allSymptoms.count))
                             statDescriptionChevron(for: "Symptoms", clicked: clickedSymptoms, list: statsHelper.allSymptoms)
                         }
-                        
-//                        GridRow(alignment: .top) {
-//                            mainStat(String(statsHelper.allTypesOfHeadache.count))
-//                            statDescriptionChevron(for: "Types of headache", clicked: clickedHeadaches, list: statsHelper.allTypesOfHeadache)
-//                        }
                         
                         GridRow(alignment: .top) {
                             mainStat(String(statsHelper.averagePainLevel))
@@ -242,8 +236,6 @@ struct StatsView: View {
             switch description {
             case "Symptoms":
                 clickedSymptoms.toggle()
-//            case "Types of headache":
-//                clickedHeadaches.toggle()
             case "Auras":
                 clickedAuras.toggle()
             default:
