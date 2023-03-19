@@ -15,6 +15,11 @@ struct StatsView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: true)]
     )
     var dayData: FetchedResults<DayData>
+    @FetchRequest(
+        entity: MAppData.entity(),
+        sortDescriptors: []
+    )
+    var mAppData: FetchedResults<MAppData>
     private enum DateRange {
         case week
         case thirtyDays
@@ -304,7 +309,21 @@ struct StatsView: View {
             .frame(maxWidth: .infinity, maxHeight: 15, alignment: .leading)
         }
     }
-
+    
+    private func activityColor(of i: ActivityRanks) -> Color {
+        switch i {
+        case .none:
+            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+        case .bad:
+            return getColor(from: mAppData.first?.activityColors?[1] ?? Data(), default: Color.red)
+        case .ok:
+            return getColor(from: mAppData.first?.activityColors?[2] ?? Data(), default: Color.yellow)
+        case .good:
+            return getColor(from: mAppData.first?.activityColors?[3] ?? Data(), default: Color.green)
+        default:
+            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+        }
+    }
 }
 
 struct StatsView_Previews: PreviewProvider {

@@ -26,10 +26,11 @@ struct SettingsView: View {
                         Label("Add Symptoms", systemImage: "medical.thermometer.fill")
                     }
                 }
-            }
-            .onAppear() {
-                if mAppData.first == nil {
-                    initializeMApp()
+                
+                Section("Appearance") {
+                    NavigationLink(destination: ActivityColorsView()) {
+                        Label("Activity Colors", systemImage: "paintpalette.fill")
+                    }
                 }
             }
         }

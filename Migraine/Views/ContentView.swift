@@ -11,6 +11,11 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest var dayData: FetchedResults<DayData>
+    @FetchRequest(
+        entity: MAppData.entity(),
+        sortDescriptors: []
+    )
+    var mAppData: FetchedResults<MAppData>
     @State private var activitiesSheet: Bool = false
     @State private var selectedActivity: String = ""
     @State private var endAttackConfirmation: Bool = false
@@ -153,6 +158,9 @@ struct ContentView: View {
             if dayData.isEmpty {
                 initNewDay()
             }
+            if mAppData.isEmpty {
+                initializeMApp()
+            }
         }
         .sheet(isPresented: $activitiesSheet) {
             ActivitiesView(of: $selectedActivity)
@@ -214,6 +222,34 @@ struct ContentView: View {
             }
         }
         return false
+    }
+    
+    private func initializeMApp() {
+        let newMAppData = MAppData(context: viewContext)
+        newMAppData.doctorNotes = ""
+        newMAppData.customSymptoms = []
+        mAppData.first?.activityColors = [
+            getData(from: UIColor(Color.gray)) ?? Data(),
+            getData(from: UIColor(Color.red)) ?? Data(),
+            getData(from: UIColor(Color.yellow)) ?? Data(),
+            getData(from: UIColor(Color.green)) ?? Data(),
+        ]
+        saveData()
+    }
+    
+    private func activityColor(of i: ActivityRanks) -> Color {
+        switch i {
+        case .none:
+            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+        case .bad:
+            return getColor(from: mAppData.first?.activityColors?[1] ?? Data(), default: Color.red)
+        case .ok:
+            return getColor(from: mAppData.first?.activityColors?[2] ?? Data(), default: Color.yellow)
+        case .good:
+            return getColor(from: mAppData.first?.activityColors?[3] ?? Data(), default: Color.green)
+        default:
+            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+        }
     }
 }
 

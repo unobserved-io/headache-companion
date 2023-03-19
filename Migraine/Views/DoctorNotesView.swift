@@ -37,11 +37,6 @@ struct DoctorNotesView: View {
             }
         }
         .padding()
-        .onAppear() {
-            if mAppData.first == nil {
-                initializeMApp() 
-            }
-        }
         .onDisappear() {
             saveData()
         }

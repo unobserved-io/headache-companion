@@ -10,9 +10,16 @@ import SwiftUI
 struct ActivitiesView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest var dayData: FetchedResults<DayData>
-//    let selectedActivity: String
+    @FetchRequest(
+        entity: MAppData.entity(),
+        sortDescriptors: []
+    )
+    var mAppData: FetchedResults<MAppData>
     @Binding var selectedActivity: String
     @State var currentColor = Color.gray
+    @State var badColor = Color.red
+    @State var okColor = Color.yellow
+    @State var goodColor = Color.green
     
     init(of selectedActivity: Binding<String>) {
         _selectedActivity = selectedActivity
@@ -29,8 +36,8 @@ struct ActivitiesView: View {
     var body: some View {
         HStack {
             Button {
-                currentColor = Color.gray
-                saveSelected()
+                currentColor = correspondingColor(of: .none)
+                saveSelected(rank: .none)
             } label: {
                 Image(systemName: selectedImage())
             }
@@ -38,45 +45,48 @@ struct ActivitiesView: View {
             .foregroundColor(currentColor)
             VStack {
                 Button {
-                    currentColor = Color.red
-                    saveSelected()
+                    currentColor = correspondingColor(of: .bad)
+                    saveSelected(rank: .bad)
                 } label: {
                     Image(systemName: "circle.fill")
                 }
                 .font(.system(size: 30))
-                .foregroundColor(.red)
+                .foregroundColor(badColor)
                 Text("Bad")
-                    .foregroundColor(.red)
+                    .foregroundColor(badColor)
             }
             .padding(.trailing)
             VStack {
                 Button {
-                    currentColor = Color.yellow
-                    saveSelected()
+                    currentColor = correspondingColor(of: .ok)
+                    saveSelected(rank: .ok)
                 } label: {
                     Image(systemName: "circle.fill")
                 }
                 .font(.system(size: 30))
-                .foregroundColor(.yellow)
+                .foregroundColor(okColor)
                 Text("OK")
-                    .foregroundColor(.yellow)
+                    .foregroundColor(okColor)
             }
             .padding(.trailing)
             VStack {
                 Button {
-                    currentColor = Color.green
-                    saveSelected()
+                    currentColor = correspondingColor(of: .good)
+                    saveSelected(rank: .good)
                 } label: {
                     Image(systemName: "circle.fill")
                 }
                 .font(.system(size: 30))
-                .foregroundColor(.green)
+                .foregroundColor(goodColor)
                 Text("Good")
-                    .foregroundColor(.green)
+                    .foregroundColor(goodColor)
             }
         }
         .onAppear() {
             getCurrentColor()
+            badColor = correspondingColor(of: .bad)
+            okColor = correspondingColor(of: .ok)
+            goodColor = correspondingColor(of: .good)
         }
     }
     
@@ -97,48 +107,33 @@ struct ActivitiesView: View {
         }
     }
     
-    private func correspondingInt() -> ActivityRanks {
-        switch currentColor {
-        case .gray:
-            return .none
-        case .red:
-            return .bad
-        case .yellow:
-            return .ok
-        case .green:
-            return .good
-        default:
-            return .none
-        }
-    }
-    
     private func correspondingColor(of activityRank: ActivityRanks) -> Color {
         switch activityRank {
         case .none:
-            return Color.gray
+            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
         case .bad:
-            return Color.red
+            return getColor(from: mAppData.first?.activityColors?[1] ?? Data(), default: Color.red)
         case .ok:
-            return Color.yellow
+            return getColor(from: mAppData.first?.activityColors?[2] ?? Data(), default: Color.yellow)
         case .good:
-            return Color.green
+            return getColor(from: mAppData.first?.activityColors?[3] ?? Data(), default: Color.green)
         default:
-            return Color.gray
+            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
         }
     }
     
-    private func saveSelected() {
+    private func saveSelected(rank: ActivityRanks) {
         switch selectedActivity {
         case "sleep":
-            dayData.first?.sleep = correspondingInt()
+            dayData.first?.sleep = rank
         case "water":
-            dayData.first?.water = correspondingInt()
+            dayData.first?.water = rank
         case "diet":
-            dayData.first?.diet = correspondingInt()
+            dayData.first?.diet = rank
         case "exercise":
-            dayData.first?.exercise = correspondingInt()
+            dayData.first?.exercise = rank
         case "relax":
-            dayData.first?.relax = correspondingInt()
+            dayData.first?.relax = rank
         default:
             break
         }

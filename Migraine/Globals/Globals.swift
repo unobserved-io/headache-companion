@@ -26,25 +26,36 @@ func saveData() {
     }
 }
 
-func activityColor(of i: ActivityRanks) -> Color {
-    switch i {
-    case .none:
-        return Color.gray
-    case .bad:
-        return Color.red
-    case .ok:
-        return Color.yellow
-    case .good:
-        return Color.green
-    default:
-        return Color.gray
+//func activityColor(of i: ActivityRanks) -> Color {
+//    switch i {
+//    case .none:
+//        return Color.gray
+//    case .bad:
+//        return Color.red
+//    case .ok:
+//        return Color.yellow
+//    case .good:
+//        return Color.green
+//    default:
+//        return Color.gray
+//    }
+//}
+
+func getData(from color: UIColor) -> Data? {
+    do {
+        return try NSKeyedArchiver.archivedData(withRootObject: color, requiringSecureCoding: false)
+    } catch {
+        print(error)
     }
+    return nil
 }
 
-func initializeMApp() {
-    let viewContext = PersistenceController.shared.container.viewContext
-    let newMAppData = MAppData(context: viewContext)
-    newMAppData.doctorNotes = ""
-    newMAppData.customSymptoms = []
-    saveData()
+func getColor(from data: Data, default defaultColor: Color) -> Color {
+    do {
+        return try Color(NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data)!)
+    } catch {
+        print(error)
+    }
+
+    return defaultColor
 }

@@ -6,7 +6,7 @@
 //
 //
 
-import Foundation
+import SwiftUI
 import CoreData
 
 
@@ -18,6 +18,7 @@ extension MAppData {
 
     @NSManaged public var doctorNotes: String?
     @NSManaged public var customSymptoms: [String]?
+    @NSManaged public var activityColors: [Data]?
     @NSManaged public var commonMedications: NSSet?
     
     var commonMeds: [Medication] {
