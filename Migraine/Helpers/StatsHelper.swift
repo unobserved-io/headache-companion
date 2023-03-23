@@ -64,14 +64,6 @@ class StatsHelper: ObservableObject {
                     }
                     
                     painLevels.append(attack.painLevel)
-//                    if allTypesOfHeadache[headacheTypeString(attack.headacheType)] != nil {
-//                        allTypesOfHeadache[headacheTypeString(attack.headacheType)]! += 1
-//                    } else {
-//                        allTypesOfHeadache[headacheTypeString(attack.headacheType)] = 1
-//                    }
-                    if allTypesOfHeadache.contains(where: {$0.key == headacheTypeString(attack.headacheType)}) {
-                        
-                    }
                     
                     if let index = allTypesOfHeadache.firstIndex(where: {$0.key == headacheTypeString(attack.headacheType)}) {
                         allTypesOfHeadache[index].value += 1
