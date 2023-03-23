@@ -15,7 +15,8 @@ struct SettingsView: View {
         sortDescriptors: []
     )
     var mAppData: FetchedResults<MAppData>
-    @State private var showingAlert: Bool = false
+    @State private var showingDeleteAlert: Bool = false
+    @State private var showingResetAlert: Bool = false
     
     var body: some View {
         NavigationView {
@@ -36,9 +37,18 @@ struct SettingsView: View {
                 }
                 
                 Section("Data") {
-                    Label("Reset Settings", systemImage: "gear.badge.xmark")
                     Button {
-                        showingAlert.toggle()
+                        showingResetAlert.toggle()
+                    } label: {
+                        Label{
+                            Text("Reset Settings")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "gear.badge.xmark")
+                        }
+                    }
+                    Button {
+                        showingDeleteAlert.toggle()
                     } label: {
                         Label {
                             Text("Delete Data")
@@ -50,13 +60,21 @@ struct SettingsView: View {
                 }
             }
         }
-        .alert("Delete everything?", isPresented: $showingAlert) {
+        .alert("Delete everything?", isPresented: $showingDeleteAlert) {
             Button("Delete") {
                 deleteAllData()
             }
             Button("Cancel", role: .cancel) { }
         } message: {
             Text("Are you sure you want to erase all of your data? This is irreversible.")
+        }
+        .alert("Reset settings?", isPresented: $showingResetAlert) {
+            Button("Reset") {
+                resetSettings()
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("Are you sure you want to reset all settings? This is irreversible.")
         }
     }
     
@@ -76,11 +94,12 @@ struct SettingsView: View {
             }
         }
         
-        // Re-initialize MAppData
-        let newMAppData = MAppData(context: viewContext)
-        newMAppData.doctorNotes = ""
-        newMAppData.customSymptoms = []
-        newMAppData.activityColors = [
+        initializeMAppData()
+    }
+    
+    private func resetSettings() {
+        mAppData.first?.customSymptoms = []
+        mAppData.first?.activityColors = [
             getData(from: UIColor(Color.gray)) ?? Data(),
             getData(from: UIColor(Color.red)) ?? Data(),
             getData(from: UIColor(Color.yellow)) ?? Data(),

@@ -26,20 +26,19 @@ func saveData() {
     }
 }
 
-//func activityColor(of i: ActivityRanks) -> Color {
-//    switch i {
-//    case .none:
-//        return Color.gray
-//    case .bad:
-//        return Color.red
-//    case .ok:
-//        return Color.yellow
-//    case .good:
-//        return Color.green
-//    default:
-//        return Color.gray
-//    }
-//}
+func initializeMAppData() {
+    let viewContext = PersistenceController.shared.container.viewContext
+    let newMAppData = MAppData(context: viewContext)
+    newMAppData.doctorNotes = ""
+    newMAppData.customSymptoms = []
+    newMAppData.activityColors = [
+        getData(from: UIColor(Color.gray)) ?? Data(),
+        getData(from: UIColor(Color.red)) ?? Data(),
+        getData(from: UIColor(Color.yellow)) ?? Data(),
+        getData(from: UIColor(Color.green)) ?? Data(),
+    ]
+    saveData()
+}
 
 func getData(from color: UIColor) -> Data? {
     do {

@@ -174,15 +174,4 @@ class StatsHelper: ObservableObject {
             return "Other"
         }
     }
-    
-//    func getAllData() -> [DayData] {
-//        let fetchRequest: NSFetchRequest<DayData> = DayData.fetchRequest()
-//
-//        do {
-//            return try PersistenceController.shared.container.viewContext.fetch(fetchRequest)
-//        } catch {
-//            print("Failed to fetch day data: \(error)")
-//            return []
-//        }
-//    }
 }
