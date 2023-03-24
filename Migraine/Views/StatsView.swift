@@ -42,7 +42,7 @@ struct StatsView: View {
     }()
 
     @ObservedObject var statsHelper = StatsHelper.sharedInstance
-    @State private var dateRange: DateRange = .week
+    @State private var dateRange: DateRange = .allTime
     @State private var clickedAttacks: Bool = false
     @State private var clickedSymptoms: Bool = false
     @State private var clickedAuras: Bool = false
@@ -55,16 +55,15 @@ struct StatsView: View {
                     Spacer()
                     Text("In the last")
                     Picker("", selection: $dateRange) {
-                        Text("Week").tag(DateRange.week)
-                        Text("30 days").tag(DateRange.thirtyDays)
-                        Text("6 months").tag(DateRange.sixMonths)
-                        Text("Year").tag(DateRange.year)
+                        dayData.count > 6 ? Text("Week").tag(DateRange.week) : nil
+                        dayData.count > 15 ? Text("30 days").tag(DateRange.thirtyDays) : nil
+                        dayData.count > 90 ? Text("6 months").tag(DateRange.sixMonths) : nil
+                        dayData.count > 200 ? Text("Year").tag(DateRange.year) : nil
                         Text("All time").tag(DateRange.allTime)
                         Text("Date Range").tag(DateRange.custom)
                     }
                     .onChange(of: dateRange) { range in
                         statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range))
-                        
                     }
                     Spacer()
                 }
