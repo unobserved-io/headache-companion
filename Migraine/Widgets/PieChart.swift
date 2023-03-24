@@ -47,13 +47,6 @@ struct PieChart: View {
     }
 }
 
-struct PieSliceData {
-    var startAngle: Angle
-    var endAngle: Angle
-    var text: String
-    var color: Color
-}
-
 struct PieChartView_Previews: PreviewProvider {
     static var previews: some View {
         PieChart(values: [1300, 500, 300, 200], colors: [Color.blue, Color.green, Color.orange, Color.red], icon: "drop.fill")

@@ -33,7 +33,9 @@ struct PieSliceView: View {
                         clockwise: false)
                     
                 }
-                .fill(pieSliceData.color)
+//                .fill(pieSliceData.color)
+//                .fill(RadialGradient(gradient: Gradient(colors: [pieSliceData.color.opacity(0.60), pieSliceData.color]), center: .center, startRadius: 50, endRadius: 60))
+                .fill(RadialGradient(gradient: Gradient(colors: [pieSliceData.color.opacity(0.60), pieSliceData.color]), center: .center, startRadius: 40, endRadius: 90))
                 
                 if pieSliceData.text != "0%" {
                     Text(pieSliceData.text)
@@ -48,6 +50,13 @@ struct PieSliceView: View {
         }
         .aspectRatio(1, contentMode: .fit)
     }
+}
+
+struct PieSliceData {
+    var startAngle: Angle
+    var endAngle: Angle
+    var text: String
+    var color: Color
 }
 
 struct PieSliceView_Previews: PreviewProvider {
