@@ -84,37 +84,41 @@ class StatsHelper: ObservableObject {
         getPercentWithAttack()
     }
     
+//    private func calculateActivityStats(_ dayData: [DayData], startDate: Date) {
+//        var listOfDatesBetween: [String] = []
+//        var beginDate = startDate
+//        let endDate = Date.now
+//        while beginDate.compare(endDate) != .orderedDescending {
+//            listOfDatesBetween.append(dateFormatter.string(from: beginDate))
+//            beginDate = Calendar.current.date(byAdding: .day, value: 1, to: beginDate) ?? Date.now
+//        }
+//
+//        for between in listOfDatesBetween {
+//            if let index = dayData.firstIndex(where: { $0.date == between }) {
+//                waterInSelectedDays.append(dayData[index].water)
+//                dietInSelectedDays.append(dayData[index].diet)
+//                exerciseInSelectedDays.append(dayData[index].exercise)
+//                relaxInSelectedDays.append(dayData[index].relax)
+//                sleepInSelectedDays.append(dayData[index].sleep)
+//            } else {
+//                waterInSelectedDays.append(.none)
+//                dietInSelectedDays.append(.none)
+//                exerciseInSelectedDays.append(.none)
+//                relaxInSelectedDays.append(.none)
+//                sleepInSelectedDays.append(.none)
+//            }
+//        }
+//    }
+    
     private func calculateActivityStats(_ dayData: [DayData], startDate: Date) {
-        var listOfDatesBetween: [String] = []
-        var date = startDate
-        let endDate = Date.now
-        while date.compare(endDate) != .orderedDescending {
-            listOfDatesBetween.append(dateFormatter.string(from: date))
-            // Advance by one day:
-            date = Calendar.current.date(byAdding: .day, value: 1, to: date) ?? Date.now
-        }
-        
-        var found = false
-        for between in listOfDatesBetween {
-            for oneDayData in dayData {
-                if oneDayData.date == between {
-                    waterInSelectedDays.append(oneDayData.water)
-                    dietInSelectedDays.append(oneDayData.diet)
-                    exerciseInSelectedDays.append(oneDayData.exercise)
-                    relaxInSelectedDays.append(oneDayData.relax)
-                    sleepInSelectedDays.append(oneDayData.sleep)
-                    found = true
-                    break
-                }
+        for day in dayData {
+            if (dateFormatter.date(from: day.date ?? "1970-01-01")?.isBetween(startDate, and: Date.now) ?? false) {
+                waterInSelectedDays.append(day.water)
+                dietInSelectedDays.append(day.diet)
+                exerciseInSelectedDays.append(day.exercise)
+                relaxInSelectedDays.append(day.relax)
+                sleepInSelectedDays.append(day.sleep)
             }
-            if !found {
-                waterInSelectedDays.append(.none)
-                dietInSelectedDays.append(.none)
-                exerciseInSelectedDays.append(.none)
-                relaxInSelectedDays.append(.none)
-                sleepInSelectedDays.append(.none)
-            }
-            found = false
         }
     }
     
@@ -122,16 +126,16 @@ class StatsHelper: ObservableObject {
         daysTracked = 0
         daysWithAttack = 0
         numberOfAttacks = 0
-        allSymptoms = []
-        allAuras = []
-        allTypesOfHeadache = []
+        allSymptoms.removeAll()
+        allAuras.removeAll()
+        allTypesOfHeadache.removeAll()
         averagePainLevel = 0.0
         percentWithAttack = 0
-        waterInSelectedDays = []
-        dietInSelectedDays = []
-        exerciseInSelectedDays = []
-        relaxInSelectedDays = []
-        sleepInSelectedDays = []
+        waterInSelectedDays.removeAll()
+        dietInSelectedDays.removeAll()
+        exerciseInSelectedDays.removeAll()
+        relaxInSelectedDays.removeAll()
+        sleepInSelectedDays.removeAll()
     }
     
     private func getPercentWithAttack() {
@@ -139,31 +143,6 @@ class StatsHelper: ObservableObject {
             percentWithAttack = 0
         } else {
             percentWithAttack = Int((Double(daysWithAttack) / Double(daysTracked)) * 100)
-        }
-    }
-    
-    private func headacheTypeString(_ type: Headaches) -> String {
-        switch type {
-        case .migraine:
-            return "Migraine"
-        case .tension:
-            return "Tension"
-        case .cluster:
-            return "Cluster"
-        case .exertional:
-            return "Exertional"
-        case .hypnic:
-            return "Hypnic"
-        case .sinus:
-            return "Sinus"
-        case .caffeine:
-            return "Caffeine"
-        case .injury:
-            return "Inuury"
-        case .menstrual:
-            return "Menstrual"
-        case .other:
-            return "Other"
         }
     }
 }

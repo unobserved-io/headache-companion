@@ -139,47 +139,79 @@ struct StatsView: View {
 //                mainStat(String(statsHelper.mostCommonTypeOfHeadache))
 //                statDescription("Most common type")
                 
-                VStack(spacing: 10) {
-                    Text("Water")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    if dateRange == .week || dateRange == .thirtyDays {
-                        noScrollActivity(statsHelper.waterInSelectedDays)
-                    } else {
-                        scrollActivity(statsHelper.waterInSelectedDays)
+//                if dateRange == .week || dateRange == .thirtyDays {
+//                    VStack(spacing: 10) {
+//                        Text("Water")
+//                            .frame(maxWidth: .infinity, alignment: .leading)
+//                        noScrollActivity(statsHelper.waterInSelectedDays)
+//                        Text("Diet")
+//                            .frame(maxWidth: .infinity, alignment: .leading)
+//                        noScrollActivity(statsHelper.dietInSelectedDays)
+//                        Text("Exercise")
+//                            .frame(maxWidth: .infinity, alignment: .leading)
+//                        noScrollActivity(statsHelper.exerciseInSelectedDays)
+//                        Text("Relax")
+//                            .frame(maxWidth: .infinity, alignment: .leading)
+//                        noScrollActivity(statsHelper.relaxInSelectedDays)
+//                        Text("Sleep")
+//                            .frame(maxWidth: .infinity, alignment: .leading)
+//                        noScrollActivity(statsHelper.sleepInSelectedDays)
+//                    }
+//                } else {
+                    Grid {
+                        activityGridRow("Water", activityRanks: statsHelper.waterInSelectedDays)
+                        Divider()
+                        activityGridRow("Diet", activityRanks: statsHelper.dietInSelectedDays)
+                        Divider()
+                        activityGridRow("Exercise", activityRanks: statsHelper.exerciseInSelectedDays)
+                        Divider()
+                        activityGridRow("Relax", activityRanks: statsHelper.relaxInSelectedDays)
+                        Divider()
+                        activityGridRow("Sleep", activityRanks: statsHelper.sleepInSelectedDays)
                     }
                     
-                    Text("Diet")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    if dateRange == .week || dateRange == .thirtyDays {
-                        noScrollActivity(statsHelper.dietInSelectedDays)
-                    } else {
-                        scrollActivity(statsHelper.dietInSelectedDays)
-                    }
-                    
-                    Text("Exercise")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    if dateRange == .week || dateRange == .thirtyDays {
-                        noScrollActivity(statsHelper.exerciseInSelectedDays)
-                    } else {
-                        scrollActivity(statsHelper.exerciseInSelectedDays)
-                    }
-                    
-                    Text("Relax")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    if dateRange == .week || dateRange == .thirtyDays {
-                        noScrollActivity(statsHelper.relaxInSelectedDays)
-                    } else {
-                        scrollActivity(statsHelper.relaxInSelectedDays)
-                    }
-                    
-                    Text("Sleep")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    if dateRange == .week || dateRange == .thirtyDays {
-                        noScrollActivity(statsHelper.sleepInSelectedDays)
-                    } else {
-                        scrollActivity(statsHelper.sleepInSelectedDays)
-                    }
-                }
+//                }
+//                VStack(spacing: 10) {
+//                    Text("Water")
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                    if dateRange == .week || dateRange == .thirtyDays {
+//                        noScrollActivity(statsHelper.waterInSelectedDays)
+//                    } else {
+//                        scrollActivity(statsHelper.waterInSelectedDays)
+//                    }
+//
+//                    Text("Diet")
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                    if dateRange == .week || dateRange == .thirtyDays {
+//                        noScrollActivity(statsHelper.dietInSelectedDays)
+//                    } else {
+//                        scrollActivity(statsHelper.dietInSelectedDays)
+//                    }
+//
+//                    Text("Exercise")
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                    if dateRange == .week || dateRange == .thirtyDays {
+//                        noScrollActivity(statsHelper.exerciseInSelectedDays)
+//                    } else {
+//                        scrollActivity(statsHelper.exerciseInSelectedDays)
+//                    }
+//
+//                    Text("Relax")
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                    if dateRange == .week || dateRange == .thirtyDays {
+//                        noScrollActivity(statsHelper.relaxInSelectedDays)
+//                    } else {
+//                        scrollActivity(statsHelper.relaxInSelectedDays)
+//                    }
+//
+//                    Text("Sleep")
+//                        .frame(maxWidth: .infinity, alignment: .leading)
+//                    if dateRange == .week || dateRange == .thirtyDays {
+//                        noScrollActivity(statsHelper.sleepInSelectedDays)
+//                    } else {
+//                        scrollActivity(statsHelper.sleepInSelectedDays)
+//                    }
+//                }
             }
             .padding()
             .background(colorScheme == .light ? .gray.opacity(0.20) : .white.opacity(0.10))
@@ -279,7 +311,7 @@ struct StatsView: View {
         case .year:
             fromDate = Calendar.current.date(byAdding: .day, value: -364, to: fromDate) ?? Date.now
         case .allTime:
-            fromDate = Date.init(timeIntervalSince1970: 0)
+            fromDate = Date(timeIntervalSince1970: 0) // TODO: Should only be from the first recorded date
         case .custom:
             // TODO: use custom dates
             break
@@ -299,8 +331,9 @@ struct StatsView: View {
     }
     
     private func scrollActivity(_ activityRanks: [ActivityRanks]) -> some View {
+        // TODO: Optimize this code to load faster. Maybe only load the pre-scroll boxes?
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 1) {
+            LazyHStack(spacing: 1) {
                 ForEach(activityRanks) { activity in
                     Rectangle()
                         .fill(activityColor(of: activity))
@@ -310,8 +343,22 @@ struct StatsView: View {
         }
     }
     
-    private func activityColor(of i: ActivityRanks) -> Color {
-        switch i {
+    private func activityGridRow(_ activityLabel: String, activityRanks: [ActivityRanks]) -> some View {
+        GridRow {
+            Text(activityLabel)
+                .gridColumnAlignment(.leading)
+            Text("\(activityRanks.filter{$0 == .bad}.count)")
+                .foregroundColor(activityColor(of: .bad))
+            Text("\(activityRanks.filter{$0 == .ok}.count)")
+                .foregroundColor(activityColor(of: .ok))
+            Text("\(activityRanks.filter{$0 == .good}.count)")
+                .foregroundColor(activityColor(of: .good))
+        }
+//        .frame(maxWidth: .infinity)
+    }
+    
+    private func activityColor(of activityRank: ActivityRanks) -> Color {
+        switch activityRank {
         case .none:
             return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
         case .bad:

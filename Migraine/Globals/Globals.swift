@@ -58,3 +58,28 @@ func getColor(from data: Data, default defaultColor: Color) -> Color {
 
     return defaultColor
 }
+
+func headacheTypeString(_ type: Headaches) -> String {
+    switch type {
+    case .migraine:
+        return "Migraine"
+    case .tension:
+        return "Tension"
+    case .cluster:
+        return "Cluster"
+    case .exertional:
+        return "Exertional"
+    case .hypnic:
+        return "Hypnic"
+    case .sinus:
+        return "Sinus"
+    case .caffeine:
+        return "Caffeine"
+    case .injury:
+        return "Inuury"
+    case .menstrual:
+        return "Menstrual"
+    case .other:
+        return "Other"
+    }
+}
