@@ -269,7 +269,7 @@ struct StatsView: View {
         case .year:
             fromDate = Calendar.current.date(byAdding: .day, value: -364, to: fromDate) ?? Date.now
         case .allTime:
-            fromDate = Date(timeIntervalSince1970: 0) // TODO: Should only be from the first recorded date
+            fromDate = dateFormatter.date(from: dayData.first?.date ?? "1970-01-01") ?? Date(timeIntervalSince1970: 0)
         case .custom:
             // TODO: use custom dates
             break
