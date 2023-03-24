@@ -101,16 +101,8 @@ class StatsHelper: ObservableObject {
                 relaxInSelectedDays[0] += 1
                 sleepInSelectedDays[0] += 1
             }
+            
             currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? Date.now
-        }
-        for day in dayData {
-            if (dateFormatter.date(from: day.date ?? "1970-01-01")?.isBetween(startDate, and: Date.now) ?? false) {
-                waterInSelectedDays[Int(day.water.rawValue)] += 1
-                dietInSelectedDays[Int(day.diet.rawValue)] += 1
-                exerciseInSelectedDays[Int(day.exercise.rawValue)] += 1
-                relaxInSelectedDays[Int(day.relax.rawValue)] += 1
-                sleepInSelectedDays[Int(day.sleep.rawValue)] += 1
-            }
         }
     }
     
