@@ -98,6 +98,7 @@ struct SettingsView: View {
     }
     
     private func resetSettings() {
+        mAppData.first?.getsPeriod = false
         mAppData.first?.customSymptoms = []
         mAppData.first?.activityColors = [
             getData(from: UIColor(Color.gray)) ?? Data(),

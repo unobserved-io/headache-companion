@@ -4,6 +4,7 @@
         <attribute name="auras" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="Set&lt;String&gt;"/>
         <attribute name="headacheType" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="onPeriod" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="otherPainGroup" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="otherPainText" optional="YES" attributeType="String"/>
         <attribute name="painLevel" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
@@ -41,6 +42,7 @@
         <attribute name="activityColors" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Data]"/>
         <attribute name="customSymptoms" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="doctorNotes" attributeType="String" defaultValueString=""/>
+        <attribute name="getsPeriod" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <relationship name="regularMedications" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medication" inverseName="mAppData" inverseEntity="Medication"/>
     </entity>
     <entity name="Medication" representedClassName="Medication" syncable="YES">

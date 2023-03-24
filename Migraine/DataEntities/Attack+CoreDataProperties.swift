@@ -27,6 +27,7 @@ extension Attack {
     @NSManaged public var pulsatingSide: Sides
     @NSManaged public var auras: Set<String>
     @NSManaged public var symptoms: Set<String>
+    @NSManaged public var onPeriod: Bool
     @NSManaged public var startTime: Date?
     @NSManaged public var stopTime: Date?
     @NSManaged public var date: DayData?

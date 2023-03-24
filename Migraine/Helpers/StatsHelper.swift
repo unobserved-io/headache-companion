@@ -21,11 +21,16 @@ class StatsHelper: ObservableObject {
     @Published var mostCommonTypeOfHeadache: String = ""
     @Published var averagePainLevel: Double = 0.0
     @Published var percentWithAttack: Int = 0
-    @Published var waterInSelectedDays: [ActivityRanks] = []
-    @Published var dietInSelectedDays: [ActivityRanks] = []
-    @Published var exerciseInSelectedDays: [ActivityRanks] = []
-    @Published var relaxInSelectedDays: [ActivityRanks] = []
-    @Published var sleepInSelectedDays: [ActivityRanks] = []
+//    @Published var waterInSelectedDays: [ActivityRanks] = []
+//    @Published var dietInSelectedDays: [ActivityRanks] = []
+//    @Published var exerciseInSelectedDays: [ActivityRanks] = []
+//    @Published var relaxInSelectedDays: [ActivityRanks] = []
+//    @Published var sleepInSelectedDays: [ActivityRanks] = []
+    @Published var waterInSelectedDays: [Double] = [0, 0, 0, 0]
+    @Published var dietInSelectedDays: [Double] = [0, 0, 0, 0]
+    @Published var exerciseInSelectedDays: [Double] = [0, 0, 0, 0]
+    @Published var relaxInSelectedDays: [Double] = [0, 0, 0, 0]
+    @Published var sleepInSelectedDays: [Double] = [0, 0, 0, 0]
     
     private let dateFormatter: DateFormatter = {
         let dateformat = DateFormatter()
@@ -110,14 +115,43 @@ class StatsHelper: ObservableObject {
 //        }
 //    }
     
+//    private func calculateActivityStats(_ dayData: [DayData], startDate: Date) {
+//        for day in dayData {
+//            if (dateFormatter.date(from: day.date ?? "1970-01-01")?.isBetween(startDate, and: Date.now) ?? false) {
+//                waterInSelectedDays.append(day.water)
+//                dietInSelectedDays.append(day.diet)
+//                exerciseInSelectedDays.append(day.exercise)
+//                relaxInSelectedDays.append(day.relax)
+//                sleepInSelectedDays.append(day.sleep)
+//            }
+//        }
+//    }
     private func calculateActivityStats(_ dayData: [DayData], startDate: Date) {
+        var currentDate = startDate
+        
+        while currentDate.compare(Date.now) != .orderedDescending {
+            if let index = dayData.firstIndex(where: { $0.date == dateFormatter.string(from: currentDate) }) {
+                waterInSelectedDays[Int(dayData[index].water.rawValue)] += 1
+                dietInSelectedDays[Int(dayData[index].diet.rawValue)] += 1
+                exerciseInSelectedDays[Int(dayData[index].exercise.rawValue)] += 1
+                relaxInSelectedDays[Int(dayData[index].relax.rawValue)] += 1
+                sleepInSelectedDays[Int(dayData[index].sleep.rawValue)] += 1
+            } else {
+                waterInSelectedDays[0] += 1
+                dietInSelectedDays[0] += 1
+                exerciseInSelectedDays[0] += 1
+                relaxInSelectedDays[0] += 1
+                sleepInSelectedDays[0] += 1
+            }
+            currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? Date.now
+        }
         for day in dayData {
             if (dateFormatter.date(from: day.date ?? "1970-01-01")?.isBetween(startDate, and: Date.now) ?? false) {
-                waterInSelectedDays.append(day.water)
-                dietInSelectedDays.append(day.diet)
-                exerciseInSelectedDays.append(day.exercise)
-                relaxInSelectedDays.append(day.relax)
-                sleepInSelectedDays.append(day.sleep)
+                waterInSelectedDays[Int(day.water.rawValue)] += 1
+                dietInSelectedDays[Int(day.diet.rawValue)] += 1
+                exerciseInSelectedDays[Int(day.exercise.rawValue)] += 1
+                relaxInSelectedDays[Int(day.relax.rawValue)] += 1
+                sleepInSelectedDays[Int(day.sleep.rawValue)] += 1
             }
         }
     }
@@ -131,11 +165,16 @@ class StatsHelper: ObservableObject {
         allTypesOfHeadache.removeAll()
         averagePainLevel = 0.0
         percentWithAttack = 0
-        waterInSelectedDays.removeAll()
-        dietInSelectedDays.removeAll()
-        exerciseInSelectedDays.removeAll()
-        relaxInSelectedDays.removeAll()
-        sleepInSelectedDays.removeAll()
+//        waterInSelectedDays.removeAll()
+//        dietInSelectedDays.removeAll()
+//        exerciseInSelectedDays.removeAll()
+//        relaxInSelectedDays.removeAll()
+//        sleepInSelectedDays.removeAll()
+        waterInSelectedDays = [0, 0, 0, 0]
+        dietInSelectedDays = [0, 0, 0, 0]
+        exerciseInSelectedDays = [0, 0, 0, 0]
+        relaxInSelectedDays = [0, 0, 0, 0]
+        sleepInSelectedDays = [0, 0, 0, 0]
     }
     
     private func getPercentWithAttack() {

@@ -36,6 +36,8 @@
 		9CC2582029BDC36C00E55949 /* StatsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2581F29BDC36C00E55949 /* StatsHelper.swift */; };
 		9CC529CE29BCBEA500DD5491 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC529CD29BCBEA500DD5491 /* StatsView.swift */; };
 		9CC529D029BD02FD00DD5491 /* PreviouslyTakenMedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */; };
+		9CD3DC0B29CDBD0F004B86E8 /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DC0A29CDBD0F004B86E8 /* PieChart.swift */; };
+		9CD3DC0D29CDBDA8004B86E8 /* PieSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */; };
 		9CEAA3C829B535D600240952 /* MedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAA3C729B535D600240952 /* MedicationView.swift */; };
 		9CEAA3CA29B53A5C00240952 /* AddEditMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */; };
 		9CF7308029ACD93800D91F99 /* MigraineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF7307F29ACD93800D91F99 /* MigraineApp.swift */; };
@@ -76,6 +78,8 @@
 		9CC2581F29BDC36C00E55949 /* StatsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsHelper.swift; sourceTree = "<group>"; };
 		9CC529CD29BCBEA500DD5491 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviouslyTakenMedsView.swift; sourceTree = "<group>"; };
+		9CD3DC0A29CDBD0F004B86E8 /* PieChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
+		9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSlice.swift; sourceTree = "<group>"; };
 		9CEAA3C729B535D600240952 /* MedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationView.swift; sourceTree = "<group>"; };
 		9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditMedicationView.swift; sourceTree = "<group>"; };
 		9CF7307C29ACD93800D91F99 /* Migraine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Migraine.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +162,8 @@
 			isa = PBXGroup;
 			children = (
 				9C96928229B4ADB80023A00C /* MultiSelector.swift */,
+				9CD3DC0A29CDBD0F004B86E8 /* PieChart.swift */,
+				9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -303,6 +309,7 @@
 				9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */,
 				9C057CF429B0ECAE00DA8920 /* ActivitiesView.swift in Sources */,
 				9C86239329AE8CBD006DA6C6 /* DayData+CoreDataClass.swift in Sources */,
+				9CD3DC0B29CDBD0F004B86E8 /* PieChart.swift in Sources */,
 				9C98449A29B5E3C600ABDC36 /* Globals.swift in Sources */,
 				9CEAA3C829B535D600240952 /* MedicationView.swift in Sources */,
 				9C682CED29B3B96C00032874 /* Enums.swift in Sources */,
@@ -318,6 +325,7 @@
 				9C18C07D29BB8A6D008084E2 /* MAppData+CoreDataClass.swift in Sources */,
 				9C98449C29B5F3E300ABDC36 /* NotesView.swift in Sources */,
 				9CF7308229ACD93800D91F99 /* Persistence.swift in Sources */,
+				9CD3DC0D29CDBDA8004B86E8 /* PieSlice.swift in Sources */,
 				9C18C07A29BB87E1008084E2 /* AddEditRegularMedsView.swift in Sources */,
 				9C18C07E29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift in Sources */,
 				9CC529CE29BCBEA500DD5491 /* StatsView.swift in Sources */,

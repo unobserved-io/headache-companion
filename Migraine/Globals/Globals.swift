@@ -30,6 +30,7 @@ func initializeMAppData() {
     let viewContext = PersistenceController.shared.container.viewContext
     let newMAppData = MAppData(context: viewContext)
     newMAppData.doctorNotes = ""
+    newMAppData.getsPeriod = false
     newMAppData.customSymptoms = []
     newMAppData.activityColors = [
         getData(from: UIColor(Color.gray)) ?? Data(),
