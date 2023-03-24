@@ -33,10 +33,10 @@ class StatsHelper: ObservableObject {
         return dateformat
     }()
     
-    func getStats(from dayData: [DayData], startDate: Date) {
+    func getStats(from dayData: [DayData], startDate: Date, stopDate: Date) {
         resetAllStats()
         calculateMainStats(dayData)
-        calculateActivityStats(dayData, startDate: startDate)
+        calculateActivityStats(dayData, startDate: startDate, stopDate: stopDate)
     }
     
     private func calculateMainStats(_ dayData: [DayData]) {
@@ -84,10 +84,10 @@ class StatsHelper: ObservableObject {
         getPercentWithAttack()
     }
     
-    private func calculateActivityStats(_ dayData: [DayData], startDate: Date) {
+    private func calculateActivityStats(_ dayData: [DayData], startDate: Date, stopDate: Date) {
         var currentDate = startDate
         
-        while currentDate.compare(Date.now) != .orderedDescending {
+        while currentDate.compare(stopDate) != .orderedDescending {
             if let index = dayData.firstIndex(where: { $0.date == dateFormatter.string(from: currentDate) }) {
                 waterInSelectedDays[Int(dayData[index].water.rawValue)] += 1
                 dietInSelectedDays[Int(dayData[index].diet.rawValue)] += 1

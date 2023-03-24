@@ -43,6 +43,8 @@ struct StatsView: View {
 
     @ObservedObject var statsHelper = StatsHelper.sharedInstance
     @State private var dateRange: DateRange = .allTime
+    @State private var selectedStart: Date = Calendar.current.date(byAdding: .day, value: -6, to: Date.now) ?? Date.now
+    @State private var selectedStop: Date = Date.now
     @State private var clickedAttacks: Bool = false
     @State private var clickedSymptoms: Bool = false
     @State private var clickedAuras: Bool = false
@@ -63,9 +65,35 @@ struct StatsView: View {
                         Text("Date Range").tag(DateRange.custom)
                     }
                     .onChange(of: dateRange) { range in
-                        statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range))
+                        statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range), stopDate: getStopDate(range))
                     }
                     Spacer()
+                }
+                if dateRange == .custom {
+                    HStack {
+                        DatePicker(
+                            selection: $selectedStart,
+                            in: getStartRange(),
+                            displayedComponents: [.date],
+                            label: {}
+                        )
+                        .onChange(of: selectedStart) { range in
+                            statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
+                        }
+                        .labelsHidden()
+                        Text("to")
+                        DatePicker(
+                            selection: $selectedStop,
+                            in: getStopRange(),
+                            displayedComponents: [.date],
+                            label: {}
+                        )
+                        .onChange(of: selectedStop) { range in
+                            statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
+                        }
+                        .labelsHidden()
+                    }
+                    .padding(.bottom)
                 }
                 Grid(alignment: .leading, verticalSpacing: 5) {
                     GridRow(alignment: .top) {
@@ -194,7 +222,7 @@ struct StatsView: View {
         }
         .padding()
         .onAppear() {
-            statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange))
+            statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
         }
     }
     
@@ -240,14 +268,13 @@ struct StatsView: View {
     
     private func dayDataInRange(_ range: DateRange) -> [DayData] {
         var inRange: [DayData] = []
-        let today: Date = .now
-        
+        let stopDate: Date = getStopDate(range)
         let fromDate = getFromDate(range)
         
         for day in dayData {
             let dayDate = dateFormatter.date(from: day.date ?? "1970-01-01")
             
-            if dayDate?.isBetween(fromDate, and: today) ?? false {
+            if dayDate?.isBetween(fromDate, and: stopDate) ?? false {
                 inRange.append(day)
             }
         }
@@ -270,11 +297,18 @@ struct StatsView: View {
         case .allTime:
             fromDate = dateFormatter.date(from: dayData.first?.date ?? "1970-01-01") ?? Date(timeIntervalSince1970: 0)
         case .custom:
-            // TODO: use custom dates
-            break
+            fromDate = selectedStart
         }
         
         return fromDate
+    }
+    
+    private func getStopDate(_ range: DateRange) -> Date {
+        if range == .custom {
+            return selectedStop
+        } else {
+            return Date.now
+        }
     }
     
     private func activityColor(of activityRank: ActivityRanks) -> Color {
@@ -290,6 +324,18 @@ struct StatsView: View {
         default:
             return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
         }
+    }
+    
+    private func getStartRange() -> ClosedRange<Date> {
+        let min = Date(timeIntervalSinceReferenceDate: 0)
+        let max = selectedStop
+        return min...max
+    }
+    
+    private func getStopRange() -> ClosedRange<Date> {
+        let min = selectedStart
+        let max = Date.now
+        return min...max
     }
 }
 
