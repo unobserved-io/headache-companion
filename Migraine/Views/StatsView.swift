@@ -53,22 +53,17 @@ struct StatsView: View {
     var body: some View {
         ScrollView {
             VStack {
-                HStack {
-                    Spacer()
-                    Text("In the last")
                     Picker("", selection: $dateRange) {
-                        dayData.count > 6 ? Text("Week").tag(DateRange.week) : nil
-                        dayData.count > 15 ? Text("30 days").tag(DateRange.thirtyDays) : nil
-                        dayData.count > 90 ? Text("6 months").tag(DateRange.sixMonths) : nil
-                        dayData.count > 200 ? Text("Year").tag(DateRange.year) : nil
+                        dayData.count > 6 ? Text("Past week").tag(DateRange.week) : nil
+                        dayData.count > 15 ? Text("Past 30 days").tag(DateRange.thirtyDays) : nil
+                        dayData.count > 90 ? Text("Past 6 months").tag(DateRange.sixMonths) : nil
+                        dayData.count > 200 ? Text("Past year").tag(DateRange.year) : nil
                         Text("All time").tag(DateRange.allTime)
                         Text("Date Range").tag(DateRange.custom)
                     }
                     .onChange(of: dateRange) { range in
                         statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range), stopDate: getStopDate(range))
                     }
-                    Spacer()
-                }
                 if dateRange == .custom {
                     HStack {
                         DatePicker(
