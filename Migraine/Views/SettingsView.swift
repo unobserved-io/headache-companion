@@ -15,6 +15,11 @@ struct SettingsView: View {
         sortDescriptors: []
     )
     var mAppData: FetchedResults<MAppData>
+    @FetchRequest(
+        entity: DayData.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: true)]
+    )
+    var dayData: FetchedResults<DayData>
     @State private var showingDeleteAlert: Bool = false
     @State private var showingResetAlert: Bool = false
     
@@ -37,6 +42,21 @@ struct SettingsView: View {
                 }
                 
                 Section("Data") {
+                    Button {
+                        do {
+                            let encoder = JSONEncoder()
+                            encoder.outputFormatting = .prettyPrinted
+                            let jsonData = try encoder.encode(dayData.sorted(by: {$0.date ?? "" < $1.date ?? "" }))
+                            print(String(data: jsonData, encoding: .utf8) ?? "")
+                        } catch {}
+                    } label: {
+                        Text("Export Data")
+                    }
+                    Button {
+                        
+                    } label: {
+                        Text("Import Data")
+                    }
                     Button {
                         showingResetAlert.toggle()
                     } label: {
@@ -76,6 +96,19 @@ struct SettingsView: View {
         } message: {
             Text("Are you sure you want to reset all settings? This is irreversible.")
         }
+    }
+    
+    private func loadJson(fileName: String) -> DayData? {
+       let decoder = JSONDecoder()
+       guard
+            let url = Bundle.main.url(forResource: fileName, withExtension: "json"),
+            let data = try? Data(contentsOf: url),
+            let thisDayData = try? decoder.decode(DayData.self, from: data)
+       else {
+            return nil
+       }
+
+       return thisDayData
     }
     
     private func deleteAllData() {
