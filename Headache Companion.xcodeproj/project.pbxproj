@@ -189,7 +189,7 @@
 		9CF7307329ACD93700D91F99 = {
 			isa = PBXGroup;
 			children = (
-				9CF7307E29ACD93800D91F99 /* Migraine */,
+				9CF7307E29ACD93800D91F99 /* Headache Companion */,
 				9CF7307D29ACD93800D91F99 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -202,7 +202,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9CF7307E29ACD93800D91F99 /* Migraine */ = {
+		9CF7307E29ACD93800D91F99 /* Headache Companion */ = {
 			isa = PBXGroup;
 			children = (
 				9CC2581E29BDC35300E55949 /* Helpers */,
@@ -219,7 +219,7 @@
 				9C45EE5B29AE5E04000EB6C2 /* Views */,
 				9C96928129B4ADA70023A00C /* Widgets */,
 			);
-			path = Migraine;
+			path = "Headache Companion";
 			sourceTree = "<group>";
 		};
 		9CF7308B29ACD93800D91F99 /* Preview Content */ = {
