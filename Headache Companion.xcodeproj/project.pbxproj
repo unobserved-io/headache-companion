@@ -82,7 +82,7 @@
 		9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSlice.swift; sourceTree = "<group>"; };
 		9CEAA3C729B535D600240952 /* MedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationView.swift; sourceTree = "<group>"; };
 		9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditMedicationView.swift; sourceTree = "<group>"; };
-		9CF7307C29ACD93800D91F99 /* Migraine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Migraine.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CF7307C29ACD93800D91F99 /* Headache Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Headache Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CF7307F29ACD93800D91F99 /* MigraineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigraineApp.swift; sourceTree = "<group>"; };
 		9CF7308129ACD93800D91F99 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		9CF7308429ACD93800D91F99 /* Migraine.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Migraine.xcdatamodel; sourceTree = "<group>"; };
@@ -197,7 +197,7 @@
 		9CF7307D29ACD93800D91F99 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9CF7307C29ACD93800D91F99 /* Migraine.app */,
+				9CF7307C29ACD93800D91F99 /* Headache Companion.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -233,9 +233,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9CF7307B29ACD93700D91F99 /* Migraine */ = {
+		9CF7307B29ACD93700D91F99 /* Headache Companion */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9CF7309029ACD93800D91F99 /* Build configuration list for PBXNativeTarget "Migraine" */;
+			buildConfigurationList = 9CF7309029ACD93800D91F99 /* Build configuration list for PBXNativeTarget "Headache Companion" */;
 			buildPhases = (
 				9CF7307829ACD93700D91F99 /* Sources */,
 				9CF7307929ACD93700D91F99 /* Frameworks */,
@@ -245,9 +245,9 @@
 			);
 			dependencies = (
 			);
-			name = Migraine;
+			name = "Headache Companion";
 			productName = Migraine;
-			productReference = 9CF7307C29ACD93800D91F99 /* Migraine.app */;
+			productReference = 9CF7307C29ACD93800D91F99 /* Headache Companion.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -265,7 +265,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9CF7307729ACD93700D91F99 /* Build configuration list for PBXProject "Migraine" */;
+			buildConfigurationList = 9CF7307729ACD93700D91F99 /* Build configuration list for PBXProject "Headache Companion" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -278,7 +278,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9CF7307B29ACD93700D91F99 /* Migraine */,
+				9CF7307B29ACD93700D91F99 /* Headache Companion */,
 			);
 		};
 /* End PBXProject section */
@@ -531,7 +531,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9CF7307729ACD93700D91F99 /* Build configuration list for PBXProject "Migraine" */ = {
+		9CF7307729ACD93700D91F99 /* Build configuration list for PBXProject "Headache Companion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9CF7308E29ACD93800D91F99 /* Debug */,
@@ -540,7 +540,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9CF7309029ACD93800D91F99 /* Build configuration list for PBXNativeTarget "Migraine" */ = {
+		9CF7309029ACD93800D91F99 /* Build configuration list for PBXNativeTarget "Headache Companion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9CF7309129ACD93800D91F99 /* Debug */,
