@@ -90,6 +90,7 @@
 		9CFCECD729D076E3001656B5 /* Attack+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attack+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9CFCECD829D076E3001656B5 /* MAppData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9CFCECD929D076E3001656B5 /* MAppData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9CFCECE229D08248001656B5 /* Headache-Companion-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Headache-Companion-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,6 +206,7 @@
 		9CF7307E29ACD93800D91F99 /* Headache Companion */ = {
 			isa = PBXGroup;
 			children = (
+				9CFCECE229D08248001656B5 /* Headache-Companion-Info.plist */,
 				9CC2581E29BDC35300E55949 /* Helpers */,
 				9CF7308829ACD93800D91F99 /* Assets.xcassets */,
 				9C86238C29AE8CA0006DA6C6 /* DataEntities */,
@@ -466,6 +468,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Headache-Companion-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -506,6 +509,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Headache-Companion-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

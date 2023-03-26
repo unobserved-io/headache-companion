@@ -16,11 +16,6 @@
         <attribute name="stopTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="symptoms" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="Set&lt;String&gt;"/>
         <relationship name="date" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayData" inverseName="attack" inverseEntity="DayData"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="id"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
     <entity name="DayData" representedClassName="DayData" syncable="YES">
         <attribute name="date" optional="YES" attributeType="String"/>
@@ -32,16 +27,11 @@
         <attribute name="water" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="attack" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attack" inverseName="date" inverseEntity="Attack"/>
         <relationship name="medication" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medication" inverseName="date" inverseEntity="Medication"/>
-        <uniquenessConstraints>
-            <uniquenessConstraint>
-                <constraint value="date"/>
-            </uniquenessConstraint>
-        </uniquenessConstraints>
     </entity>
     <entity name="MAppData" representedClassName="MAppData" syncable="YES">
         <attribute name="activityColors" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Data]"/>
         <attribute name="customSymptoms" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
-        <attribute name="doctorNotes" attributeType="String"/>
+        <attribute name="doctorNotes" attributeType="String" defaultValueString=""/>
         <attribute name="getsPeriod" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <relationship name="regularMedications" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medication" inverseName="mAppData" inverseEntity="Medication"/>
     </entity>
