@@ -12,20 +12,12 @@
 		9C18C07229BB6C5B008084E2 /* RegularMedicationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07129BB6C5B008084E2 /* RegularMedicationsView.swift */; };
 		9C18C07829BB753C008084E2 /* MedicationLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07729BB753C008084E2 /* MedicationLabelView.swift */; };
 		9C18C07A29BB87E1008084E2 /* AddEditRegularMedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07929BB87E1008084E2 /* AddEditRegularMedsView.swift */; };
-		9C18C07D29BB8A6D008084E2 /* MAppData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07B29BB8A6D008084E2 /* MAppData+CoreDataClass.swift */; };
-		9C18C07E29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07C29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift */; };
 		9C1983AA29B73DD2007754AB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983A929B73DD2007754AB /* MainView.swift */; };
 		9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983AC29B7923D007754AB /* ClickedMedication.swift */; };
 		9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE5F29AE6626000EB6C2 /* AttackView.swift */; };
 		9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE6129AE662E000EB6C2 /* CalendarView.swift */; };
 		9C682CEB29B3962D00032874 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEA29B3962D00032874 /* Extensions.swift */; };
 		9C682CED29B3B96C00032874 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEC29B3B96C00032874 /* Enums.swift */; };
-		9C86239329AE8CBD006DA6C6 /* DayData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86238D29AE8CBD006DA6C6 /* DayData+CoreDataClass.swift */; };
-		9C86239429AE8CBD006DA6C6 /* DayData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86238E29AE8CBD006DA6C6 /* DayData+CoreDataProperties.swift */; };
-		9C86239529AE8CBD006DA6C6 /* Attack+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86238F29AE8CBD006DA6C6 /* Attack+CoreDataClass.swift */; };
-		9C86239629AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86239029AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift */; };
-		9C86239729AE8CBD006DA6C6 /* Medication+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86239129AE8CBD006DA6C6 /* Medication+CoreDataClass.swift */; };
-		9C86239829AE8CBD006DA6C6 /* Medication+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C86239229AE8CBD006DA6C6 /* Medication+CoreDataProperties.swift */; };
 		9C96928029B497520023A00C /* MultiSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96927F29B497520023A00C /* MultiSelectionView.swift */; };
 		9C96928329B4ADB80023A00C /* MultiSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96928229B4ADB80023A00C /* MultiSelector.swift */; };
 		9C98449A29B5E3C600ABDC36 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C98449929B5E3C600ABDC36 /* Globals.swift */; };
@@ -40,12 +32,20 @@
 		9CD3DC0D29CDBDA8004B86E8 /* PieSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */; };
 		9CEAA3C829B535D600240952 /* MedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAA3C729B535D600240952 /* MedicationView.swift */; };
 		9CEAA3CA29B53A5C00240952 /* AddEditMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */; };
-		9CF7308029ACD93800D91F99 /* MigraineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF7307F29ACD93800D91F99 /* MigraineApp.swift */; };
+		9CF7308029ACD93800D91F99 /* HeadacheCompanionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF7307F29ACD93800D91F99 /* HeadacheCompanionApp.swift */; };
 		9CF7308229ACD93800D91F99 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF7308129ACD93800D91F99 /* Persistence.swift */; };
-		9CF7308529ACD93800D91F99 /* Migraine.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9CF7308329ACD93800D91F99 /* Migraine.xcdatamodeld */; };
 		9CF7308729ACD93800D91F99 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF7308629ACD93800D91F99 /* ContentView.swift */; };
 		9CF7308929ACD93800D91F99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CF7308829ACD93800D91F99 /* Assets.xcassets */; };
 		9CF7308D29ACD93800D91F99 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CF7308C29ACD93800D91F99 /* Preview Assets.xcassets */; };
+		9CFCECD129D07447001656B5 /* HeadacheCompanion.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCECCF29D07447001656B5 /* HeadacheCompanion.xcdatamodeld */; };
+		9CFCECDA29D076E3001656B5 /* Medication+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCECD229D076E3001656B5 /* Medication+CoreDataClass.swift */; };
+		9CFCECDB29D076E3001656B5 /* Medication+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCECD329D076E3001656B5 /* Medication+CoreDataProperties.swift */; };
+		9CFCECDC29D076E3001656B5 /* DayData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCECD429D076E3001656B5 /* DayData+CoreDataClass.swift */; };
+		9CFCECDD29D076E3001656B5 /* DayData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCECD529D076E3001656B5 /* DayData+CoreDataProperties.swift */; };
+		9CFCECDE29D076E3001656B5 /* Attack+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCECD629D076E3001656B5 /* Attack+CoreDataClass.swift */; };
+		9CFCECDF29D076E3001656B5 /* Attack+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCECD729D076E3001656B5 /* Attack+CoreDataProperties.swift */; };
+		9CFCECE029D076E3001656B5 /* MAppData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCECD829D076E3001656B5 /* MAppData+CoreDataClass.swift */; };
+		9CFCECE129D076E3001656B5 /* MAppData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFCECD929D076E3001656B5 /* MAppData+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,20 +54,12 @@
 		9C18C07129BB6C5B008084E2 /* RegularMedicationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularMedicationsView.swift; sourceTree = "<group>"; };
 		9C18C07729BB753C008084E2 /* MedicationLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationLabelView.swift; sourceTree = "<group>"; };
 		9C18C07929BB87E1008084E2 /* AddEditRegularMedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRegularMedsView.swift; sourceTree = "<group>"; };
-		9C18C07B29BB8A6D008084E2 /* MAppData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		9C18C07C29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9C1983A929B73DD2007754AB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9C1983AC29B7923D007754AB /* ClickedMedication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickedMedication.swift; sourceTree = "<group>"; };
 		9C45EE5F29AE6626000EB6C2 /* AttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackView.swift; sourceTree = "<group>"; };
 		9C45EE6129AE662E000EB6C2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9C682CEA29B3962D00032874 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9C682CEC29B3B96C00032874 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
-		9C86238D29AE8CBD006DA6C6 /* DayData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayData+CoreDataClass.swift"; sourceTree = "<group>"; };
-		9C86238E29AE8CBD006DA6C6 /* DayData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		9C86238F29AE8CBD006DA6C6 /* Attack+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attack+CoreDataClass.swift"; sourceTree = "<group>"; };
-		9C86239029AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attack+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		9C86239129AE8CBD006DA6C6 /* Medication+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Medication+CoreDataClass.swift"; sourceTree = "<group>"; };
-		9C86239229AE8CBD006DA6C6 /* Medication+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Medication+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9C96927F29B497520023A00C /* MultiSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionView.swift; sourceTree = "<group>"; };
 		9C96928229B4ADB80023A00C /* MultiSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelector.swift; sourceTree = "<group>"; };
 		9C98449929B5E3C600ABDC36 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
@@ -83,13 +75,21 @@
 		9CEAA3C729B535D600240952 /* MedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationView.swift; sourceTree = "<group>"; };
 		9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditMedicationView.swift; sourceTree = "<group>"; };
 		9CF7307C29ACD93800D91F99 /* Headache Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Headache Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9CF7307F29ACD93800D91F99 /* MigraineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigraineApp.swift; sourceTree = "<group>"; };
+		9CF7307F29ACD93800D91F99 /* HeadacheCompanionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadacheCompanionApp.swift; sourceTree = "<group>"; };
 		9CF7308129ACD93800D91F99 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		9CF7308429ACD93800D91F99 /* Migraine.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Migraine.xcdatamodel; sourceTree = "<group>"; };
 		9CF7308629ACD93800D91F99 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9CF7308829ACD93800D91F99 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9CF7308A29ACD93800D91F99 /* Migraine.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Migraine.entitlements; sourceTree = "<group>"; };
+		9CF7308A29ACD93800D91F99 /* HeadacheCompanion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HeadacheCompanion.entitlements; sourceTree = "<group>"; };
 		9CF7308C29ACD93800D91F99 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9CFCECD029D07447001656B5 /* HeadacheCompanion.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HeadacheCompanion.xcdatamodel; sourceTree = "<group>"; };
+		9CFCECD229D076E3001656B5 /* Medication+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Medication+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9CFCECD329D076E3001656B5 /* Medication+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Medication+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9CFCECD429D076E3001656B5 /* DayData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9CFCECD529D076E3001656B5 /* DayData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DayData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9CFCECD629D076E3001656B5 /* Attack+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attack+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9CFCECD729D076E3001656B5 /* Attack+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attack+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9CFCECD829D076E3001656B5 /* MAppData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9CFCECD929D076E3001656B5 /* MAppData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,14 +146,14 @@
 		9C86238C29AE8CA0006DA6C6 /* DataEntities */ = {
 			isa = PBXGroup;
 			children = (
-				9C18C07B29BB8A6D008084E2 /* MAppData+CoreDataClass.swift */,
-				9C18C07C29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift */,
-				9C86238F29AE8CBD006DA6C6 /* Attack+CoreDataClass.swift */,
-				9C86239029AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift */,
-				9C86238D29AE8CBD006DA6C6 /* DayData+CoreDataClass.swift */,
-				9C86238E29AE8CBD006DA6C6 /* DayData+CoreDataProperties.swift */,
-				9C86239129AE8CBD006DA6C6 /* Medication+CoreDataClass.swift */,
-				9C86239229AE8CBD006DA6C6 /* Medication+CoreDataProperties.swift */,
+				9CFCECD229D076E3001656B5 /* Medication+CoreDataClass.swift */,
+				9CFCECD329D076E3001656B5 /* Medication+CoreDataProperties.swift */,
+				9CFCECD429D076E3001656B5 /* DayData+CoreDataClass.swift */,
+				9CFCECD529D076E3001656B5 /* DayData+CoreDataProperties.swift */,
+				9CFCECD629D076E3001656B5 /* Attack+CoreDataClass.swift */,
+				9CFCECD729D076E3001656B5 /* Attack+CoreDataProperties.swift */,
+				9CFCECD829D076E3001656B5 /* MAppData+CoreDataClass.swift */,
+				9CFCECD929D076E3001656B5 /* MAppData+CoreDataProperties.swift */,
 			);
 			path = DataEntities;
 			sourceTree = "<group>";
@@ -209,15 +209,15 @@
 				9CF7308829ACD93800D91F99 /* Assets.xcassets */,
 				9C86238C29AE8CA0006DA6C6 /* DataEntities */,
 				9C98B22629B8A784000816A9 /* Globals */,
-				9CF7308A29ACD93800D91F99 /* Migraine.entitlements */,
-				9CF7308329ACD93800D91F99 /* Migraine.xcdatamodeld */,
-				9CF7307F29ACD93800D91F99 /* MigraineApp.swift */,
+				9CF7308A29ACD93800D91F99 /* HeadacheCompanion.entitlements */,
+				9CF7307F29ACD93800D91F99 /* HeadacheCompanionApp.swift */,
 				9C1983AB29B79210007754AB /* Objects */,
 				9CF7308129ACD93800D91F99 /* Persistence.swift */,
 				9CF7308B29ACD93800D91F99 /* Preview Content */,
 				9C18C07029BB6BF1008084E2 /* SettingsViews */,
 				9C45EE5B29AE5E04000EB6C2 /* Views */,
 				9C96928129B4ADA70023A00C /* Widgets */,
+				9CFCECCF29D07447001656B5 /* HeadacheCompanion.xcdatamodeld */,
 			);
 			path = "Headache Companion";
 			sourceTree = "<group>";
@@ -301,39 +301,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CEAA3CA29B53A5C00240952 /* AddEditMedicationView.swift in Sources */,
-				9C86239829AE8CBD006DA6C6 /* Medication+CoreDataProperties.swift in Sources */,
-				9C86239429AE8CBD006DA6C6 /* DayData+CoreDataProperties.swift in Sources */,
-				9C86239629AE8CBD006DA6C6 /* Attack+CoreDataProperties.swift in Sources */,
 				9C18C07229BB6C5B008084E2 /* RegularMedicationsView.swift in Sources */,
+				9CFCECDF29D076E3001656B5 /* Attack+CoreDataProperties.swift in Sources */,
 				9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */,
+				9CFCECDB29D076E3001656B5 /* Medication+CoreDataProperties.swift in Sources */,
 				9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */,
 				9C057CF429B0ECAE00DA8920 /* ActivitiesView.swift in Sources */,
-				9C86239329AE8CBD006DA6C6 /* DayData+CoreDataClass.swift in Sources */,
 				9CD3DC0B29CDBD0F004B86E8 /* PieChart.swift in Sources */,
+				9CFCECDE29D076E3001656B5 /* Attack+CoreDataClass.swift in Sources */,
 				9C98449A29B5E3C600ABDC36 /* Globals.swift in Sources */,
 				9CEAA3C829B535D600240952 /* MedicationView.swift in Sources */,
 				9C682CED29B3B96C00032874 /* Enums.swift in Sources */,
-				9C86239729AE8CBD006DA6C6 /* Medication+CoreDataClass.swift in Sources */,
-				9CF7308029ACD93800D91F99 /* MigraineApp.swift in Sources */,
+				9CF7308029ACD93800D91F99 /* HeadacheCompanionApp.swift in Sources */,
 				9C98449E29B5FC9F00ABDC36 /* DoctorNotesView.swift in Sources */,
 				9CC2582029BDC36C00E55949 /* StatsHelper.swift in Sources */,
+				9CFCECDA29D076E3001656B5 /* Medication+CoreDataClass.swift in Sources */,
+				9CFCECE129D076E3001656B5 /* MAppData+CoreDataProperties.swift in Sources */,
 				9C96928329B4ADB80023A00C /* MultiSelector.swift in Sources */,
+				9CFCECDD29D076E3001656B5 /* DayData+CoreDataProperties.swift in Sources */,
 				9CA81F0E29C7755D00EDBCEF /* ActivityColorsView.swift in Sources */,
+				9CFCECE029D076E3001656B5 /* MAppData+CoreDataClass.swift in Sources */,
 				9C18C06F29BB6A04008084E2 /* SettingsView.swift in Sources */,
 				9CC529D029BD02FD00DD5491 /* PreviouslyTakenMedsView.swift in Sources */,
+				9CFCECDC29D076E3001656B5 /* DayData+CoreDataClass.swift in Sources */,
 				9CA81F0C29C74DD200EDBCEF /* CustomSymptomsView.swift in Sources */,
-				9C18C07D29BB8A6D008084E2 /* MAppData+CoreDataClass.swift in Sources */,
 				9C98449C29B5F3E300ABDC36 /* NotesView.swift in Sources */,
 				9CF7308229ACD93800D91F99 /* Persistence.swift in Sources */,
 				9CD3DC0D29CDBDA8004B86E8 /* PieSlice.swift in Sources */,
 				9C18C07A29BB87E1008084E2 /* AddEditRegularMedsView.swift in Sources */,
-				9C18C07E29BB8A6D008084E2 /* MAppData+CoreDataProperties.swift in Sources */,
 				9CC529CE29BCBEA500DD5491 /* StatsView.swift in Sources */,
 				9CF7308729ACD93800D91F99 /* ContentView.swift in Sources */,
-				9CF7308529ACD93800D91F99 /* Migraine.xcdatamodeld in Sources */,
 				9C1983AA29B73DD2007754AB /* MainView.swift in Sources */,
 				9C18C07829BB753C008084E2 /* MedicationLabelView.swift in Sources */,
-				9C86239529AE8CBD006DA6C6 /* Attack+CoreDataClass.swift in Sources */,
+				9CFCECD129D07447001656B5 /* HeadacheCompanion.xcdatamodeld in Sources */,
 				9C682CEB29B3962D00032874 /* Extensions.swift in Sources */,
 				9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */,
 				9C96928029B497520023A00C /* MultiSelectionView.swift in Sources */,
@@ -457,14 +457,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Migraine/Migraine.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Headache Companion/HeadacheCompanion.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Migraine/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Headache Companion/Preview Content\"";
 				DEVELOPMENT_TEAM = Z5MKQX2NCZ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -480,7 +482,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lakoliu.Migraine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lakoliu.headachecompanion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -495,14 +497,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Migraine/Migraine.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "Headache Companion/HeadacheCompanion.entitlements";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Migraine/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Headache Companion/Preview Content\"";
 				DEVELOPMENT_TEAM = Z5MKQX2NCZ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -518,7 +522,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lakoliu.Migraine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lakoliu.headachecompanion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -552,13 +556,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		9CF7308329ACD93800D91F99 /* Migraine.xcdatamodeld */ = {
+		9CFCECCF29D07447001656B5 /* HeadacheCompanion.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				9CF7308429ACD93800D91F99 /* Migraine.xcdatamodel */,
+				9CFCECD029D07447001656B5 /* HeadacheCompanion.xcdatamodel */,
 			);
-			currentVersion = 9CF7308429ACD93800D91F99 /* Migraine.xcdatamodel */;
-			path = Migraine.xcdatamodeld;
+			currentVersion = 9CFCECD029D07447001656B5 /* HeadacheCompanion.xcdatamodel */;
+			path = HeadacheCompanion.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

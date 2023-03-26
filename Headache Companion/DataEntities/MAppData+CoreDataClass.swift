@@ -1,8 +1,8 @@
 //
 //  MAppData+CoreDataClass.swift
-//  Migraine
+//  Headache Companion
 //
-//  Created by Ricky Kresslein on 3/10/23.
+//  Created by Ricky Kresslein on 3/26/23.
 //
 //
 
