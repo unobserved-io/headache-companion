@@ -13,7 +13,7 @@ struct HeadacheCompanionApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainView()
+            LoadingView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

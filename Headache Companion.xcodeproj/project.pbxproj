@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C005B5029D08DEA0019F9BE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C005B4F29D08DEA0019F9BE /* StoreKit.framework */; };
 		9C057CF429B0ECAE00DA8920 /* ActivitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C057CF329B0ECAE00DA8920 /* ActivitiesView.swift */; };
 		9C18C06F29BB6A04008084E2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C06E29BB6A04008084E2 /* SettingsView.swift */; };
 		9C18C07229BB6C5B008084E2 /* RegularMedicationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07129BB6C5B008084E2 /* RegularMedicationsView.swift */; };
@@ -16,6 +17,7 @@
 		9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983AC29B7923D007754AB /* ClickedMedication.swift */; };
 		9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE5F29AE6626000EB6C2 /* AttackView.swift */; };
 		9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE6129AE662E000EB6C2 /* CalendarView.swift */; };
+		9C4891FB29D1802000E1CD42 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4891FA29D1802000E1CD42 /* LoadingView.swift */; };
 		9C682CEB29B3962D00032874 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEA29B3962D00032874 /* Extensions.swift */; };
 		9C682CED29B3B96C00032874 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEC29B3B96C00032874 /* Enums.swift */; };
 		9C96928029B497520023A00C /* MultiSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96927F29B497520023A00C /* MultiSelectionView.swift */; };
@@ -49,6 +51,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C005B4F29D08DEA0019F9BE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9C057CF329B0ECAE00DA8920 /* ActivitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesView.swift; sourceTree = "<group>"; };
 		9C18C06E29BB6A04008084E2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9C18C07129BB6C5B008084E2 /* RegularMedicationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularMedicationsView.swift; sourceTree = "<group>"; };
@@ -58,6 +61,7 @@
 		9C1983AC29B7923D007754AB /* ClickedMedication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickedMedication.swift; sourceTree = "<group>"; };
 		9C45EE5F29AE6626000EB6C2 /* AttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackView.swift; sourceTree = "<group>"; };
 		9C45EE6129AE662E000EB6C2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		9C4891FA29D1802000E1CD42 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		9C682CEA29B3962D00032874 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9C682CEC29B3B96C00032874 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		9C96927F29B497520023A00C /* MultiSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionView.swift; sourceTree = "<group>"; };
@@ -98,12 +102,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C005B5029D08DEA0019F9BE /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C005B4E29D08DEA0019F9BE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C005B4F29D08DEA0019F9BE /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9C18C07029BB6BF1008084E2 /* SettingsViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +153,7 @@
 				9C18C07729BB753C008084E2 /* MedicationLabelView.swift */,
 				9CC529CD29BCBEA500DD5491 /* StatsView.swift */,
 				9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */,
+				9C4891FA29D1802000E1CD42 /* LoadingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -192,6 +206,7 @@
 			children = (
 				9CF7307E29ACD93800D91F99 /* Headache Companion */,
 				9CF7307D29ACD93800D91F99 /* Products */,
+				9C005B4E29D08DEA0019F9BE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -319,6 +334,7 @@
 				9CC2582029BDC36C00E55949 /* StatsHelper.swift in Sources */,
 				9CFCECDA29D076E3001656B5 /* Medication+CoreDataClass.swift in Sources */,
 				9CFCECE129D076E3001656B5 /* MAppData+CoreDataProperties.swift in Sources */,
+				9C4891FB29D1802000E1CD42 /* LoadingView.swift in Sources */,
 				9C96928329B4ADB80023A00C /* MultiSelector.swift in Sources */,
 				9CFCECDD29D076E3001656B5 /* DayData+CoreDataProperties.swift in Sources */,
 				9CA81F0E29C7755D00EDBCEF /* ActivityColorsView.swift in Sources */,
@@ -469,6 +485,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Headache-Companion-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Headache Companion";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -484,7 +501,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lakoliu.headachecompanion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -510,6 +527,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Headache-Companion-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Headache Companion";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -525,7 +543,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lakoliu.headachecompanion;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

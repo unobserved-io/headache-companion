@@ -28,6 +28,9 @@
         <relationship name="attack" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attack" inverseName="date" inverseEntity="Attack"/>
         <relationship name="medication" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medication" inverseName="date" inverseEntity="Medication"/>
     </entity>
+    <entity name="InitialSetup" representedClassName="InitialSetup" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
     <entity name="MAppData" representedClassName="MAppData" syncable="YES">
         <attribute name="activityColors" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Data]"/>
         <attribute name="customSymptoms" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
