@@ -41,10 +41,10 @@ struct AttackView: View {
         "Tingling",
         "Visual"
     ]
-
+    
     init(attack: Attack) {
         self.attack = attack
-
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let today = dateFormatter.string(from: .now)
@@ -53,7 +53,7 @@ struct AttackView: View {
             predicate: NSPredicate(format: "date = %@", today)
         )
     }
-
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 40) {
@@ -209,12 +209,12 @@ struct AttackView: View {
             }
         }
     }
-
+    
     private func timeRange() -> ClosedRange<Date> {
         let startTime = DateComponents(hour: 0, minute: 0)
         return Calendar.current.date(from: startTime)! ... Date.now
     }
-
+    
     private func nextButton(addToNext: String) -> some View {
         return Button {
             nextFrom.insert(addToNext)

@@ -16,13 +16,12 @@ struct ContentView: View {
         sortDescriptors: []
     )
     var mAppData: FetchedResults<MAppData>
-//    @FetchRequest(entity: InitialSetup.entity(), sortDescriptors: [])
-//    private var setupEntity: FetchedResults<InitialSetup>
     @State private var activitiesSheet: Bool = false
     @State private var selectedActivity: String = ""
     @State private var endAttackConfirmation: Bool = false
     @State private var attackEndTime: Date = .now
     @State private var refreshIt: Bool = false
+    @State private var attackOngoing: Bool = false
     
     init() {
         let dateFormatter = DateFormatter()
@@ -35,7 +34,7 @@ struct ContentView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 // Top two buttons
                 if currentAttackOngoing() {
