@@ -9,27 +9,83 @@ import SwiftUI
 
 struct LoadingView: View {
     @Environment(\.managedObjectContext) private var viewContext
-//    @FetchRequest(entity: InitialSetup.entity(), sortDescriptors: [])
-//    private var setups: FetchedResults<InitialSetup>
-    var setups: [String] = []
+    @FetchRequest(entity: DayData.entity(), sortDescriptors: [])
+    var dayData: FetchedResults<DayData>
+    @FetchRequest(entity: MAppData.entity(), sortDescriptors: [])
+    var mAppData: FetchedResults<MAppData>
+    @AppStorage("lastLaunch") private var lastLaunch = ""
+    @State var isAnimated: Bool = false
+    let todayString : String = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: .now)
+    }()
     
     var body: some View {
-        if !setups.isEmpty {
+        if lastLaunch == todayString {
             MainView()
-        } else {
-//            Text("Loading...")
-            ProgressView()
-                .progressViewStyle(.circular)
+        } else if dayData.isEmpty || mAppData.isEmpty || !dayData.contains(where: { $0.date == todayString}) {
+            LoadingBars(animate: $isAnimated, count: 3)
+                .foregroundColor(Color(hex: 0x7289D5))
+                .frame(maxWidth: 100)
                 .onAppear() {
-//                    print("DONE")
-//                    let setup = InitialSetup(context: viewContext)
-//                    setup.createdAt = Date()
-//                    do {
-//                        try viewContext.save()
-//                    } catch {
-//                        debugPrint("an error occurred saving initial setup: \(error.localizedDescription)")
-//                    }
+                    isAnimated = true
+                    
+                    // Use last launch to potentially speed up loading time on first run of the day
+                    if lastLaunch.isEmpty {
+                        initializeDataInThree()
+                    } else {
+                        if dayData.isEmpty {
+                            initializeDataInThree()
+                        } else {
+                            // Double check that dayData doesn't contain date before creating
+                            if !dayData.contains(where: { $0.date == todayString}) {
+                                initNewDay()
+                                lastLaunch = todayString
+                            }
+                        }
+                    }
                 }
+                .onDisappear { isAnimated = false }
+        } else {
+            MainView()
+        }
+    }
+    
+    private func initializeDataInThree() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            if mAppData.isEmpty {
+                initializeMApp()
+            }
+            if !dayData.contains(where: { $0.date == todayString}) {
+                initNewDay()
+                lastLaunch = todayString
+            }
+        }
+    }
+    
+    private func initNewDay() {
+        let newDay = DayData(context: viewContext)
+        newDay.date = todayString
+        saveData()
+    }
+    
+    private func initializeMApp() {
+        let newMAppData = MAppData(context: viewContext)
+        newMAppData.doctorNotes = ""
+        newMAppData.customSymptoms = []
+        newMAppData.activityColors = [
+            getData(from: UIColor(Color.gray)) ?? Data(),
+            getData(from: UIColor(Color.red)) ?? Data(),
+            getData(from: UIColor(Color.yellow)) ?? Data(),
+            getData(from: UIColor(Color.green)) ?? Data(),
+        ]
+        
+        // Double check that it does not exist before saving
+        if !mAppData.contains(where: { $0.doctorNotes == "" }) {
+            saveData()
+        } else {
+            viewContext.delete(newMAppData)
         }
     }
 }

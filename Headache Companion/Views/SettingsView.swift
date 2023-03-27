@@ -22,6 +22,7 @@ struct SettingsView: View {
     var dayData: FetchedResults<DayData>
     @State private var showingDeleteAlert: Bool = false
     @State private var showingResetAlert: Bool = false
+    @AppStorage("lastLaunch") private var lastLaunch = ""
     
     var body: some View {
         NavigationView {
@@ -243,6 +244,7 @@ struct SettingsView: View {
                 print("Detele all data error :", error)
             }
         }
+        lastLaunch = ""
         
         initializeMAppData()
     }

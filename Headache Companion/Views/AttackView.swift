@@ -41,10 +41,10 @@ struct AttackView: View {
         "Tingling",
         "Visual"
     ]
-    
+
     init(attack: Attack) {
         self.attack = attack
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let today = dateFormatter.string(from: .now)
@@ -53,7 +53,7 @@ struct AttackView: View {
             predicate: NSPredicate(format: "date = %@", today)
         )
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 40) {
@@ -64,10 +64,8 @@ struct AttackView: View {
                     in: timeRange(),
                     displayedComponents: [.hourAndMinute]
                 )
-                .onDisappear(perform: {
-                    saveData()
-                })
-                
+                .onChange(of: attack.startTime) { _ in saveData() }
+
                 // Pain level slider
                 VStack {
                     HStack {
@@ -90,11 +88,11 @@ struct AttackView: View {
                         saveData()
                     }
                 }
-                
+
                 if newAttack && attack.symptoms.isEmpty && attack.painLevel == 0 && !nextFrom.contains("painLevel") {
                     nextButton(addToNext: "painLevel")
                 }
-                
+
                 // Type of pain
                 if attack.painLevel > 0 || !newAttack {
                     VStack {
@@ -128,16 +126,16 @@ struct AttackView: View {
                             }
                         }
                         .padding(.leading)
-                        
+
                         // TODO: Add an 'Other' section
                     }
                     .pickerStyle(.segmented)
-                    
+
                     if newAttack && attack.symptoms.isEmpty && !attack.pressing && !attack.pulsating && !nextFrom.contains("painType") {
                         nextButton(addToNext: "painType")
                     }
                 }
-                
+
                 // Accompanying symptoms
                 if !attack.symptoms.isEmpty || attack.pressing || attack.pulsating || nextFrom.contains("painType") || nextFrom.contains("painLevel") || !newAttack {
                     MultiSelector(
@@ -145,12 +143,12 @@ struct AttackView: View {
                         options: basicSymptoms + (mAppData.first?.customSymptoms ?? []), // TODO: basicSymptoms + customSymptoms
                         selected: $attack.symptoms
                     )
-                    
+
                     if newAttack && attack.symptoms.isEmpty && !nextFrom.contains("symptoms") {
                         nextButton(addToNext: "symptoms")
                     }
                 }
-                
+
                 // Aura
                 if !attack.symptoms.isEmpty || nextFrom.contains("symptoms") || !newAttack {
                     MultiSelector(
@@ -158,12 +156,12 @@ struct AttackView: View {
                         options: auraTypes,
                         selected: $attack.auras
                     )
-                    
+
                     if newAttack && attack.auras.isEmpty && !nextFrom.contains("auras") {
                         nextButton(addToNext: "auras")
                     }
                 }
-                
+
                 // Type of headache
                 if !attack.auras.isEmpty || nextFrom.contains("auras") || !newAttack {
                     HStack {
@@ -183,7 +181,7 @@ struct AttackView: View {
                         }
                         .onChange(of: attack.headacheType) { _ in saveData() }
                     }
-                    
+
                     if newAttack {
                         Button {
                             dismiss()
@@ -194,7 +192,7 @@ struct AttackView: View {
                         .tint(.accentColor)
                     }
                 }
-                
+
                 Spacer()
             }
             .padding()
@@ -203,20 +201,20 @@ struct AttackView: View {
             if attack.id == nil {
                 // New attack (add to DayData and give id & startTime)
                 dayData.first?.addToAttack(attack)
-                
+
                 attack.id = UUID().uuidString
                 attack.startTime = Date.now
                 newAttack = true
+                saveData()
             }
-            saveData()
         }
     }
-    
+
     private func timeRange() -> ClosedRange<Date> {
         let startTime = DateComponents(hour: 0, minute: 0)
         return Calendar.current.date(from: startTime)! ... Date.now
     }
-    
+
     private func nextButton(addToNext: String) -> some View {
         return Button {
             nextFrom.insert(addToNext)

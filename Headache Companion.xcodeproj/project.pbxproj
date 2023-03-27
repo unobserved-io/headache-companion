@@ -18,6 +18,7 @@
 		9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE5F29AE6626000EB6C2 /* AttackView.swift */; };
 		9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE6129AE662E000EB6C2 /* CalendarView.swift */; };
 		9C4891FB29D1802000E1CD42 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4891FA29D1802000E1CD42 /* LoadingView.swift */; };
+		9C4891FD29D184D300E1CD42 /* LoadingBars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4891FC29D184D300E1CD42 /* LoadingBars.swift */; };
 		9C682CEB29B3962D00032874 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEA29B3962D00032874 /* Extensions.swift */; };
 		9C682CED29B3B96C00032874 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEC29B3B96C00032874 /* Enums.swift */; };
 		9C96928029B497520023A00C /* MultiSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96927F29B497520023A00C /* MultiSelectionView.swift */; };
@@ -62,6 +63,7 @@
 		9C45EE5F29AE6626000EB6C2 /* AttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackView.swift; sourceTree = "<group>"; };
 		9C45EE6129AE662E000EB6C2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9C4891FA29D1802000E1CD42 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		9C4891FC29D184D300E1CD42 /* LoadingBars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingBars.swift; sourceTree = "<group>"; };
 		9C682CEA29B3962D00032874 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9C682CEC29B3B96C00032874 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		9C96927F29B497520023A00C /* MultiSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionView.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				9C96928229B4ADB80023A00C /* MultiSelector.swift */,
 				9CD3DC0A29CDBD0F004B86E8 /* PieChart.swift */,
 				9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */,
+				9C4891FC29D184D300E1CD42 /* LoadingBars.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				9CD3DC0B29CDBD0F004B86E8 /* PieChart.swift in Sources */,
 				9CFCECDE29D076E3001656B5 /* Attack+CoreDataClass.swift in Sources */,
 				9C98449A29B5E3C600ABDC36 /* Globals.swift in Sources */,
+				9C4891FD29D184D300E1CD42 /* LoadingBars.swift in Sources */,
 				9CEAA3C829B535D600240952 /* MedicationView.swift in Sources */,
 				9C682CED29B3B96C00032874 /* Enums.swift in Sources */,
 				9CF7308029ACD93800D91F99 /* HeadacheCompanionApp.swift in Sources */,

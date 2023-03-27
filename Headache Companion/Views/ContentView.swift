@@ -16,6 +16,8 @@ struct ContentView: View {
         sortDescriptors: []
     )
     var mAppData: FetchedResults<MAppData>
+//    @FetchRequest(entity: InitialSetup.entity(), sortDescriptors: [])
+//    private var setupEntity: FetchedResults<InitialSetup>
     @State private var activitiesSheet: Bool = false
     @State private var selectedActivity: String = ""
     @State private var endAttackConfirmation: Bool = false
@@ -45,6 +47,7 @@ struct ContentView: View {
                     .controlSize(.large)
                     .tint(.accentColor)
                     .font(.title2)
+                    .disabled(dayData.isEmpty)
                 } else {
                     NavigationLink(
                         "Attack",
@@ -55,6 +58,7 @@ struct ContentView: View {
                     .controlSize(.large)
                     .tint(.accentColor)
                     .font(.title2)
+                    .disabled(dayData.isEmpty)
                 }
                 
                 NavigationLink(
@@ -66,6 +70,7 @@ struct ContentView: View {
                 .controlSize(.large)
                 .tint(.accentColor)
                 .padding(.bottom, 20)
+                .disabled(dayData.isEmpty)
                 
                 // Lifestyle buttons
                 HStack {
@@ -78,6 +83,7 @@ struct ContentView: View {
                         }
                         .font(.system(size: 60))
                         .foregroundColor(activityColor(of: dayData.first?.sleep ?? .none))
+                        .disabled(dayData.isEmpty)
                         Text("Sleep").padding(.top, 4)
                     }
                     .padding(.trailing, 100)
@@ -90,6 +96,7 @@ struct ContentView: View {
                         }
                         .font(.system(size: 60))
                         .foregroundColor(activityColor(of: dayData.first?.water ?? .none))
+                        .disabled(dayData.isEmpty)
                         Text("Water").padding(.top, 1)
                     }
                 }
@@ -104,6 +111,7 @@ struct ContentView: View {
                         }
                         .font(.system(size: 60))
                         .foregroundColor(activityColor(of: dayData.first?.diet ?? .none))
+                        .disabled(dayData.isEmpty)
                         Text("Diet").padding(.top, 1)
                     }
                 }
@@ -117,6 +125,7 @@ struct ContentView: View {
                         }
                         .font(.system(size: 60))
                         .foregroundColor(activityColor(of: dayData.first?.exercise ?? .none))
+                        .disabled(dayData.isEmpty)
                         Text("Excercise").padding(.top, 4)
                     }
                     .padding(.trailing, 100)
@@ -129,6 +138,7 @@ struct ContentView: View {
                         }
                         .font(.system(size: 60))
                         .foregroundColor(activityColor(of: dayData.first?.relax ?? .none))
+                        .disabled(dayData.isEmpty)
                         Text("Relax").padding(.top, 4)
                     }
                 }
@@ -143,23 +153,17 @@ struct ContentView: View {
                                 .navigationTitle("Daily Notes")
                         )
                             .buttonStyle(.bordered)
+                            .disabled(dayData.isEmpty)
                         NavigationLink(
                             "Notes for Doctor",
                             destination: DoctorNotesView()
                                 .navigationTitle("Notes for Doctor")
                         )
                             .buttonStyle(.bordered)
+                            .disabled(dayData.isEmpty)
                     }
                     .padding(.top, 40)
                 }
-            }
-        }
-        .onAppear {
-            if dayData.isEmpty {
-                initNewDay()
-            }
-            if mAppData.isEmpty {
-                initializeMApp()
             }
         }
         .sheet(isPresented: $activitiesSheet) {
