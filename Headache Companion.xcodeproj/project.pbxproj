@@ -96,7 +96,7 @@
 		9CFCECD729D076E3001656B5 /* Attack+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attack+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9CFCECD829D076E3001656B5 /* MAppData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9CFCECD929D076E3001656B5 /* MAppData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		9CFCECE229D08248001656B5 /* Headache-Companion-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Headache-Companion-Info.plist"; sourceTree = SOURCE_ROOT; };
+		9CFCECE229D08248001656B5 /* Headache-Companion-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Headache-Companion-Info.plist"; path = "Headache Companion/Headache-Companion-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
