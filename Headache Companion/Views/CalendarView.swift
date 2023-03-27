@@ -21,7 +21,7 @@ struct CalendarView: View {
     @State private var showingMedSheet: Bool = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section {
                     DatePicker(

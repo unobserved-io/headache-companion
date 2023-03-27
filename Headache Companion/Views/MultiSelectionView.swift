@@ -38,15 +38,10 @@ struct MultiSelectionView: View {
 }
 
 struct MultiSelectionView_Previews: PreviewProvider {
-//    struct IdentifiableString: Identifiable, Hashable {
-//        let string: String
-//        var id: String { string }
-//    }
-
     @State static var selected: Set<String> = Set(["A", "C"].map { $0 })
 
     static var previews: some View {
-        NavigationView {
+        NavigationStack {
             MultiSelectionView(
                 options: ["A", "B", "C", "D"],
                 selected: $selected

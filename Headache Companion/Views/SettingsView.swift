@@ -25,7 +25,7 @@ struct SettingsView: View {
     @AppStorage("lastLaunch") private var lastLaunch = ""
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section("Custom Inputs") {
                     NavigationLink(destination: RegularMedicationsView()) {
