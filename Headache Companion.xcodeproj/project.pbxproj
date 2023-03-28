@@ -15,6 +15,7 @@
 		9C18C07A29BB87E1008084E2 /* AddEditRegularMedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C18C07929BB87E1008084E2 /* AddEditRegularMedsView.swift */; };
 		9C1983AA29B73DD2007754AB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983A929B73DD2007754AB /* MainView.swift */; };
 		9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983AC29B7923D007754AB /* ClickedMedication.swift */; };
+		9C37EDF529D2E9DB0089DE2B /* NewAttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */; };
 		9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE5F29AE6626000EB6C2 /* AttackView.swift */; };
 		9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE6129AE662E000EB6C2 /* CalendarView.swift */; };
 		9C4891FB29D1802000E1CD42 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4891FA29D1802000E1CD42 /* LoadingView.swift */; };
@@ -60,6 +61,7 @@
 		9C18C07929BB87E1008084E2 /* AddEditRegularMedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRegularMedsView.swift; sourceTree = "<group>"; };
 		9C1983A929B73DD2007754AB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9C1983AC29B7923D007754AB /* ClickedMedication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickedMedication.swift; sourceTree = "<group>"; };
+		9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAttackView.swift; sourceTree = "<group>"; };
 		9C45EE5F29AE6626000EB6C2 /* AttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackView.swift; sourceTree = "<group>"; };
 		9C45EE6129AE662E000EB6C2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9C4891FA29D1802000E1CD42 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -96,7 +98,7 @@
 		9CFCECD729D076E3001656B5 /* Attack+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Attack+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9CFCECD829D076E3001656B5 /* MAppData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9CFCECD929D076E3001656B5 /* MAppData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MAppData+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		9CFCECE229D08248001656B5 /* Headache-Companion-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Headache-Companion-Info.plist"; path = "Headache Companion/Headache-Companion-Info.plist"; sourceTree = SOURCE_ROOT; };
+		9CFCECE229D08248001656B5 /* Headache-Companion-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Headache-Companion-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 				9CC529CD29BCBEA500DD5491 /* StatsView.swift */,
 				9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */,
 				9C4891FA29D1802000E1CD42 /* LoadingView.swift */,
+				9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				9CFCECDE29D076E3001656B5 /* Attack+CoreDataClass.swift in Sources */,
 				9C98449A29B5E3C600ABDC36 /* Globals.swift in Sources */,
 				9C4891FD29D184D300E1CD42 /* LoadingBars.swift in Sources */,
+				9C37EDF529D2E9DB0089DE2B /* NewAttackView.swift in Sources */,
 				9CEAA3C829B535D600240952 /* MedicationView.swift in Sources */,
 				9C682CED29B3B96C00032874 /* Enums.swift in Sources */,
 				9CF7308029ACD93800D91F99 /* HeadacheCompanionApp.swift in Sources */,

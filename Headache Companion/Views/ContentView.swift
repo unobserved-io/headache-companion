@@ -50,7 +50,7 @@ struct ContentView: View {
                 } else {
                     NavigationLink(
                         "Attack",
-                        destination: AttackView(attack: Attack(context: viewContext))
+                        destination: NewAttackView()
                             .navigationTitle("Add Attack")
                     )
                     .buttonStyle(.borderedProminent)
@@ -218,7 +218,7 @@ struct ContentView: View {
         saveData()
     }
     
-    private func currentAttackOngoing() -> Bool{
+    private func currentAttackOngoing() -> Bool {
         if !(dayData.first?.attacks.isEmpty ?? false) {
             if dayData.first?.attacks.last?.stopTime == nil {
                 return true
@@ -226,6 +226,14 @@ struct ContentView: View {
         }
         return false
     }
+    
+//    private func createDayAttack() -> Attack {
+//            let attack = Attack(context: viewContext)
+//            attack.id = UUID().uuidString
+//            attack.startTime = Date.now
+//            dayData.first?.addToAttack(attack)
+//            return attack
+//    }
     
     private func initializeMApp() {
         let newMAppData = MAppData(context: viewContext)

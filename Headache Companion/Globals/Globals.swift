@@ -17,6 +17,7 @@ func ??<T>(lhs: Binding<Optional<T>>, rhs: T) -> Binding<T> {
 
 func saveData() {
     let viewContext = PersistenceController.shared.container.viewContext
+    print("NEW: \(viewContext.insertedObjects)")
     if viewContext.hasChanges {
         do {
             try viewContext.save()

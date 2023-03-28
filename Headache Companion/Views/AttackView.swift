@@ -19,7 +19,7 @@ struct AttackView: View {
     )
     var mAppData: FetchedResults<MAppData>
     @State var nextFrom: Set<String> = []
-    @State var newAttack: Bool = false
+    let newAttack: Bool
     let basicSymptoms = [
         "Nausea",
         "Vomiting",
@@ -42,8 +42,9 @@ struct AttackView: View {
         "Visual"
     ]
     
-    init(attack: Attack) {
+    init(attack: Attack, newAttack: Bool = false) {
         self.attack = attack
+        self.newAttack = newAttack
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -197,15 +198,23 @@ struct AttackView: View {
             }
             .padding()
         }
-        .onAppear {
-            if attack.id == nil {
-                // New attack (add to DayData and give id & startTime)
-                dayData.first?.addToAttack(attack)
-
-                attack.id = UUID().uuidString
-                attack.startTime = Date.now
-                newAttack = true
-                saveData()
+        .onAppear() {
+            if newAttack {
+                if !dayData.isEmpty {
+                    if !(dayData.first?.attacks.contains(attack) ?? true) {
+                        dayData.first?.addToAttack(attack)
+                        saveData()
+                    }
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        if !dayData.isEmpty {
+                            if !(dayData.first?.attacks.contains(attack) ?? true) {
+                                dayData.first?.addToAttack(attack)
+                                saveData()
+                            }
+                        }
+                    }
+                }
             }
         }
     }
