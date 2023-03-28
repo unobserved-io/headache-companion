@@ -26,7 +26,7 @@ struct LoadingView: View {
             MainView()
         } else if dayData.isEmpty || mAppData.isEmpty || !dayData.contains(where: { $0.date == todayString}) {
             LoadingBars(animate: $isAnimated, count: 3)
-                .foregroundColor(Color(hex: 0x7289D5))
+                .foregroundColor(.accentColor)
                 .frame(maxWidth: 100)
                 .onAppear() {
                     isAnimated = true
