@@ -174,9 +174,9 @@ struct StatsView: View {
                     Picker("Activity", selection: $chosenActivity) {
                         Image(systemName: "drop.fill").tag(ChosenActivity.water)
                         Image(systemName: "carrot.fill").tag(ChosenActivity.diet)
+                        Image(systemName: "bed.double.fill").tag(ChosenActivity.sleep)
                         Image(systemName: "figure.strengthtraining.functional").tag(ChosenActivity.exercise)
                         Image(systemName: "figure.mind.and.body").tag(ChosenActivity.relax)
-                        Image(systemName: "bed.double.fill").tag(ChosenActivity.sleep)
                     }
                     .pickerStyle(.segmented)
                     switch chosenActivity {
@@ -201,14 +201,15 @@ struct StatsView: View {
             
             HStack {
                 mainStat(String(dayData.count))
-                statDescription("Days with recorded data") // TODO: Change app name
+                statDescription("Days with recorded data")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading)
             
             HStack {
+                // TODO: Change to the first date app was used in mAppData, otherwise this will change when a previous date's data is altered
                 mainStat(String((Calendar.current.dateComponents([.day], from: dateFormatter.date(from: dayData.first?.date ?? dateFormatter.string(from: Date.now)) ?? Date.now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
-                statDescription("Days using Migraine") // TODO: Change app name
+                statDescription("Days using Headache Companion")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading)
