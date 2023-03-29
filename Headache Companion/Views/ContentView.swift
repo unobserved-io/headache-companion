@@ -227,14 +227,6 @@ struct ContentView: View {
         return false
     }
     
-//    private func createDayAttack() -> Attack {
-//            let attack = Attack(context: viewContext)
-//            attack.id = UUID().uuidString
-//            attack.startTime = Date.now
-//            dayData.first?.addToAttack(attack)
-//            return attack
-//    }
-    
     private func initializeMApp() {
         let newMAppData = MAppData(context: viewContext)
         newMAppData.doctorNotes = ""
