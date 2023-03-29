@@ -22,14 +22,19 @@ struct ContentView: View {
     @State private var attackEndTime: Date = .now
     @State private var refreshIt: Bool = false
     @State private var attackOngoing: Bool = false
+    let todayString : String = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: .now)
+    }()
     
     init() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let today = dateFormatter.string(from: .now)
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//        let today = dateFormatter.string(from: .now)
         _dayData = FetchRequest(
             sortDescriptors: [],
-            predicate: NSPredicate(format: "date = %@", today)
+            predicate: NSPredicate(format: "date = %@", todayString)
         )
     }
 
@@ -75,19 +80,6 @@ struct ContentView: View {
                 HStack {
                     VStack {
                         Button {
-                            selectedActivity = "sleep"
-                            activitiesSheet.toggle()
-                        } label: {
-                            Image(systemName: "bed.double")
-                        }
-                        .font(.system(size: 60))
-                        .foregroundColor(activityColor(of: dayData.first?.sleep ?? .none))
-                        .disabled(dayData.isEmpty)
-                        Text("Sleep").padding(.top, 4)
-                    }
-                    .padding(.trailing, 100)
-                    VStack {
-                        Button {
                             selectedActivity = "water"
                             activitiesSheet.toggle()
                         } label: {
@@ -98,9 +90,7 @@ struct ContentView: View {
                         .disabled(dayData.isEmpty)
                         Text("Water").padding(.top, 1)
                     }
-                }
-                .padding()
-                HStack {
+                    .padding(.trailing, 100)
                     VStack {
                         Button {
                             selectedActivity = "diet"
@@ -112,6 +102,21 @@ struct ContentView: View {
                         .foregroundColor(activityColor(of: dayData.first?.diet ?? .none))
                         .disabled(dayData.isEmpty)
                         Text("Diet").padding(.top, 1)
+                    }
+                }
+                .padding()
+                HStack {
+                    VStack {
+                        Button {
+                            selectedActivity = "sleep"
+                            activitiesSheet.toggle()
+                        } label: {
+                            Image(systemName: "bed.double")
+                        }
+                        .font(.system(size: 60))
+                        .foregroundColor(activityColor(of: dayData.first?.sleep ?? .none))
+                        .disabled(dayData.isEmpty)
+                        Text("Sleep").padding(.top, 4)
                     }
                 }
                 HStack {
@@ -166,7 +171,7 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $activitiesSheet) {
-            ActivitiesView(of: $selectedActivity)
+            ActivitiesView(of: $selectedActivity, for: .now)
                 .presentationDetents([.bar])
         }
         .sheet(isPresented: $endAttackConfirmation) {
@@ -209,12 +214,8 @@ struct ContentView: View {
     }
     
     private func initNewDay() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let today = dateFormatter.string(from: .now)
-        
         let newDay = DayData(context: viewContext)
-        newDay.date = today
+        newDay.date = todayString
         saveData()
     }
     

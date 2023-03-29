@@ -21,12 +21,12 @@ struct ActivitiesView: View {
     @State var okColor = Color.yellow
     @State var goodColor = Color.green
     
-    init(of selectedActivity: Binding<String>) {
+    init(of selectedActivity: Binding<String>, for forDate: Date) {
         _selectedActivity = selectedActivity
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let today = dateFormatter.string(from: .now)
+        let today = dateFormatter.string(from: forDate)
         _dayData = FetchRequest(
             sortDescriptors: [],
             predicate: NSPredicate(format: "date = %@", today)
@@ -161,6 +161,6 @@ struct ActivitiesView: View {
 
 struct ActivitiesView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivitiesView(of: .constant("sleep"))
+        ActivitiesView(of: .constant("sleep"), for: .now)
     }
 }

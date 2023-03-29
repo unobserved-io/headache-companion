@@ -269,6 +269,8 @@
 			dependencies = (
 			);
 			name = "Headache Companion";
+			packageProductDependencies = (
+			);
 			productName = Migraine;
 			productReference = 9CF7307C29ACD93800D91F99 /* Headache Companion.app */;
 			productType = "com.apple.product-type.application";
@@ -297,6 +299,8 @@
 				Base,
 			);
 			mainGroup = 9CF7307329ACD93700D91F99;
+			packageReferences = (
+			);
 			productRefGroup = 9CF7307D29ACD93800D91F99 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

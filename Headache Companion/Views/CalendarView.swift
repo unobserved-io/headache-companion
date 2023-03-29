@@ -14,11 +14,19 @@ struct CalendarView: View {
         sortDescriptors: []
     )
     var dayData: FetchedResults<DayData>
+    @FetchRequest(
+        entity: MAppData.entity(),
+        sortDescriptors: []
+    )
+    var mAppData: FetchedResults<MAppData>
     @StateObject var clickedMedication = ClickedMedication(nil)
     @State private var selectedDay: Date = .now
     @State private var refreshIt: Bool = false
     @State private var attackSheet: Bool = false
     @State private var showingMedSheet: Bool = false
+    @State private var activitiesSheet: Bool = false
+    @State private var selectedActivity: String = ""
+    @State private var selectedDayData: DayData? = nil
     
     var body: some View {
         NavigationStack {
@@ -31,12 +39,16 @@ struct CalendarView: View {
                         displayedComponents: [.date]
                     )
                     .datePickerStyle(.graphical)
+                    .onChange(of: selectedDay) { newDay in
+                        getDayData()
+                    }
                 }
                 
                 Section("Attacks") {
-                    ForEach(getDayData()?.attacks ?? []) { attack in
+                    ForEach(selectedDayData?.attacks ?? []) { attack in
                         NavigationLink (destination: AttackView(attack: attack)) {
                             if attack.stopTime != nil {
+                                // TODO: Delete refreshIt here? One in lower section (or this section) may be enough
                                 Text("\(refreshIt ? "" : "")\(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened)) - \(attack.wrappedStopTime.formatted(date: .omitted, time: .shortened))")
                             } else {
                                 Text(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened))
@@ -45,13 +57,13 @@ struct CalendarView: View {
                     }
                     .onDelete(perform: deleteAttack)
                     
-                    if getDayData()?.attacks.isEmpty ?? true {
+                    if selectedDayData?.attacks.isEmpty ?? true {
                         Text("No attacks")
                     }
                 }
                 
                 Section("Medication") {
-                    ForEach(getDayData()?.medications ?? []) { medication in
+                    ForEach(selectedDayData?.medications ?? []) { medication in
                         Button {
                             clickedMedication.medication = medication
                             showingMedSheet.toggle()
@@ -62,14 +74,82 @@ struct CalendarView: View {
                     }
                     .onDelete(perform: deleteMedication)
                     
-                    if getDayData()?.medications.isEmpty ?? true {
+                    if selectedDayData?.medications.isEmpty ?? true {
                         Text("No medication taken")
+                    }
+                }
+                
+                Section(refreshIt ? "Activities" : "Activities") {
+                    Button {
+                        selectedActivity = "water"
+                        activitiesSheet.toggle()
+                    } label: {
+                        HStack {
+                            Text("Water")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Image(systemName: "drop.fill")
+                                .foregroundColor(activityColor(of: selectedDayData?.water ?? .none))
+                        }
+                    }
+                    Button {
+                        selectedActivity = "diet"
+                        activitiesSheet.toggle()
+                    } label: {
+                        HStack {
+                            Text("Diet")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Image(systemName: "carrot.fill")
+                                .foregroundColor(activityColor(of: selectedDayData?.diet ?? .none))
+                        }
+                    }
+                    Button {
+                        selectedActivity = "sleep"
+                        activitiesSheet.toggle()
+                    } label: {
+                        HStack {
+                            Text("Sleep")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Image(systemName: "bed.double.fill")
+                                .foregroundColor(activityColor(of: selectedDayData?.sleep ?? .none))
+                        }
+                    }
+                    Button {
+                        selectedActivity = "exercise"
+                        activitiesSheet.toggle()
+                    } label: {
+                        HStack {
+                            Text("Exercise")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Image(systemName: "figure.strengthtraining.functional")
+                                .foregroundColor(activityColor(of: selectedDayData?.exercise ?? .none))
+                        }
+                    }
+                    Button {
+                        selectedActivity = "relax"
+                        activitiesSheet.toggle()
+                    } label: {
+                        HStack {
+                            Text("Relax")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Image(systemName: "figure.mind.and.body")
+                                .foregroundColor(activityColor(of: selectedDayData?.relax ?? .none))
+                        }
                     }
                 }
             }
         }
         .onAppear {
             refreshView()
+            getDayData()
+        }
+        .sheet(isPresented: $activitiesSheet, onDismiss: refreshView) {
+            ActivitiesView(of: $selectedActivity, for: selectedDay)
+                .presentationDetents([.bar])
         }
         .sheet(isPresented: $showingMedSheet, onDismiss: refreshView) {
             if clickedMedication.medication != nil {
@@ -85,17 +165,18 @@ struct CalendarView: View {
         refreshIt.toggle()
     }
     
-    private func getDayData() -> DayData? {
+    private func getDayData() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let selectedDayFormatted = dateFormatter.string(from: selectedDay)
-        return dayData.filter { $0.date == selectedDayFormatted }.first
+        selectedDayData = dayData.filter { $0.date == selectedDayFormatted }.first
+//        return dayData.filter { $0.date == selectedDayFormatted }.first
     }
     
     private func deleteMedication(at offsets: IndexSet) {
         let index = offsets.first
         if index != nil {
-            let medToDelete: Medication? = getDayData()?.medications[index!]
+            let medToDelete: Medication? = selectedDayData?.medications[index!]
             if medToDelete != nil {
                 viewContext.delete(medToDelete!)
                 saveData()
@@ -106,11 +187,26 @@ struct CalendarView: View {
     private func deleteAttack(at offsets: IndexSet) {
         let index = offsets.first
         if index != nil {
-            let attackToDelete: Attack? = getDayData()?.attacks[index!]
+            let attackToDelete: Attack? = selectedDayData?.attacks[index!]
             if attackToDelete != nil {
                 viewContext.delete(attackToDelete!)
                 saveData()
             }
+        }
+    }
+    
+    private func activityColor(of i: ActivityRanks) -> Color {
+        switch i {
+        case .none:
+            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+        case .bad:
+            return getColor(from: mAppData.first?.activityColors?[1] ?? Data(), default: Color.red)
+        case .ok:
+            return getColor(from: mAppData.first?.activityColors?[2] ?? Data(), default: Color.yellow)
+        case .good:
+            return getColor(from: mAppData.first?.activityColors?[3] ?? Data(), default: Color.green)
+        default:
+            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
         }
     }
 }
