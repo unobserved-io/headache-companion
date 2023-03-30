@@ -23,6 +23,7 @@ struct SettingsView: View {
     var dayData: FetchedResults<DayData>
     @State private var showingDeleteAlert: Bool = false
     @State private var showingResetAlert: Bool = false
+    @State private var showingImportAlert: Bool = false
     @State private var showingFilePicker: Bool = false
     @State private var showingFileExporter: Bool = false
     @AppStorage("lastLaunch") private var lastLaunch = ""
@@ -60,78 +61,10 @@ struct SettingsView: View {
                     ) { _ in }
                     
                     Button {
-                        showingFilePicker.toggle()
+                        showingImportAlert.toggle()
                     } label: {
                         Text("Import Data")
                             .foregroundColor(.primary)
-                    }
-                    .fileImporter(isPresented: $showingFilePicker, allowedContentTypes: [.json]) { result in
-                        do {
-                            // TODO: Ask if the user wants to delete all current data, or merge current data with imported data
-                            let fileURL = try result.get()
-                            if let allDayData = try? JSONSerialization.jsonObject(with: Data(contentsOf: fileURL), options: .allowFragments) as? [[String: Any]]
-                            {
-                                for hcDayData in allDayData {
-                                    // Check if the day being imported already exists
-                                    var newDay: DayData
-                                    if let duplicateData = dayData.first(where: { $0.date == hcDayData["date"] as? String }) {
-                                        newDay = duplicateData
-                                    } else {
-                                        newDay = DayData(context: viewContext)
-                                    }
-                                    newDay.date = hcDayData["date"] as? String
-                                    newDay.diet = ActivityRanks(rawValue: hcDayData["diet"] as? Int16 ?? 0)!
-                                    newDay.exercise = ActivityRanks(rawValue: hcDayData["exercise"] as? Int16 ?? 0)!
-                                    newDay.relax = ActivityRanks(rawValue: hcDayData["relax"] as? Int16 ?? 0)!
-                                    newDay.sleep = ActivityRanks(rawValue: hcDayData["sleep"] as? Int16 ?? 0)!
-                                    newDay.water = ActivityRanks(rawValue: hcDayData["water"] as? Int16 ?? 0)!
-                                    newDay.notes = hcDayData["notes"] as! String
-                                    if let attacks = hcDayData["attacks"] as? [[String: Any]] {
-                                        for attack in attacks {
-                                            let newAttack = Attack(context: viewContext)
-                                            newAttack.id = attack["id"] as? String
-                                            newAttack.headacheType = Headaches(rawValue: attack["headacheType"] as? Int16 ?? 0)!
-                                            newAttack.otherPainGroup = attack["otherPainGroup"] as! Int16
-                                            newAttack.otherPainText = attack["otherPainText"] as? String
-                                            newAttack.painLevel = attack["painLevel"] as! Double
-                                            newAttack.pressing = attack["pressing"] as! Bool
-                                            newAttack.pressingSide = Sides(rawValue: attack["pressingSide"] as? Int16 ?? 0)!
-                                            newAttack.pulsating = attack["pulsating"] as! Bool
-                                            newAttack.pulsatingSide = Sides(rawValue: attack["pulsatingSide"] as? Int16 ?? 0)!
-                                            newAttack.onPeriod = attack["onPeriod"] as! Bool
-                                            let newStartTime = Date(timeIntervalSince1970: attack["startTime"] as! TimeInterval)
-                                            newAttack.startTime = newStartTime
-                                            let newStopTime = Date(timeIntervalSince1970: attack["stopTime"] as! TimeInterval)
-                                            newAttack.stopTime = newStopTime
-                                            if let auras = attack["auras"] as? [String] {
-                                                newAttack.auras = Set(auras)
-                                            }
-                                            if let symptoms = attack["symptoms"] as? [String] {
-                                                newAttack.symptoms = Set(symptoms)
-                                            }
-                                            newDay.addToAttack(newAttack)
-                                        }
-                                    }
-                                    if let medications = hcDayData["medications"] as? [[String: Any]] {
-                                        for medication in medications {
-                                            let newMedication = Medication(context: viewContext)
-                                            newDay.addToMedication(newMedication)
-                                            newMedication.id = medication["id"] as? String
-                                            newMedication.amount = medication["amount"] as! Int32
-                                            newMedication.dose = medication["dose"] as? String
-                                            newMedication.effective = medication["effective"] as! Bool
-                                            newMedication.time = medication["time"] as? Date
-                                            newMedication.name = medication["name"] as? String
-                                            newMedication.sideEffects = medication["sideEffects"] as? String
-                                            newMedication.type = MedTypes(rawValue: medication["type"] as? Int16 ?? 0)!
-                                        }
-                                    }
-                                }
-                                saveData()
-                            }
-                        } catch {
-                            print("Failed to import data: \(error.localizedDescription)")
-                        }
                     }
                     
                     Button {
@@ -173,6 +106,100 @@ struct SettingsView: View {
         } message: {
             Text("Are you sure you want to reset all settings? This is irreversible.")
         }
+        .alert("Delete all data?", isPresented: $showingImportAlert) {
+            Button("Import") {
+                showingFilePicker.toggle()
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Importing data will delete all current data. Do you still want to import?")
+        }
+        .fileImporter(isPresented: $showingFilePicker, allowedContentTypes: [.json]) { result in
+            do {
+                let fileURL = try result.get()
+                if let allDayData = try? JSONSerialization.jsonObject(with: Data(contentsOf: fileURL), options: .allowFragments) as? [[String: Any]]
+                {
+                    // First, delete all current data
+                    deleteAllDayData()
+                    
+                    // Variables to check for today in imported data
+                    let todayString : String = {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "yyyy-MM-dd"
+                        return formatter.string(from: .now)
+                    }()
+                    var todayFound: Bool = false
+                    
+                    for hcDayData in allDayData {
+                        // Check if the day being imported already exists
+                        var newDay: DayData
+                        if let duplicateData = dayData.first(where: { $0.date == hcDayData["date"] as? String }) {
+                            viewContext.delete(duplicateData)
+                        }
+                        newDay = DayData(context: viewContext)
+                        newDay.date = hcDayData["date"] as? String
+                        // Check for today in imported data
+                        if newDay.date == todayString {
+                            todayFound = true
+                        }
+                        newDay.diet = ActivityRanks(rawValue: hcDayData["diet"] as? Int16 ?? 0)!
+                        newDay.exercise = ActivityRanks(rawValue: hcDayData["exercise"] as? Int16 ?? 0)!
+                        newDay.relax = ActivityRanks(rawValue: hcDayData["relax"] as? Int16 ?? 0)!
+                        newDay.sleep = ActivityRanks(rawValue: hcDayData["sleep"] as? Int16 ?? 0)!
+                        newDay.water = ActivityRanks(rawValue: hcDayData["water"] as? Int16 ?? 0)!
+                        newDay.notes = hcDayData["notes"] as! String
+                        if let attacks = hcDayData["attacks"] as? [[String: Any]] {
+                            for attack in attacks {
+                                let newAttack = Attack(context: viewContext)
+                                newAttack.id = attack["id"] as? String
+                                newAttack.headacheType = Headaches(rawValue: attack["headacheType"] as? Int16 ?? 0)!
+                                newAttack.otherPainGroup = attack["otherPainGroup"] as! Int16
+                                newAttack.otherPainText = attack["otherPainText"] as? String
+                                newAttack.painLevel = attack["painLevel"] as! Double
+                                newAttack.pressing = attack["pressing"] as! Bool
+                                newAttack.pressingSide = Sides(rawValue: attack["pressingSide"] as? Int16 ?? 0)!
+                                newAttack.pulsating = attack["pulsating"] as! Bool
+                                newAttack.pulsatingSide = Sides(rawValue: attack["pulsatingSide"] as? Int16 ?? 0)!
+                                newAttack.onPeriod = attack["onPeriod"] as! Bool
+                                let newStartTime = Date(timeIntervalSince1970: attack["startTime"] as! TimeInterval)
+                                newAttack.startTime = newStartTime
+                                let newStopTime = Date(timeIntervalSince1970: attack["stopTime"] as! TimeInterval)
+                                newAttack.stopTime = newStopTime
+                                if let auras = attack["auras"] as? [String] {
+                                    newAttack.auras = Set(auras)
+                                }
+                                if let symptoms = attack["symptoms"] as? [String] {
+                                    newAttack.symptoms = Set(symptoms)
+                                }
+                                newDay.addToAttack(newAttack)
+                            }
+                        }
+                        if let medications = hcDayData["medications"] as? [[String: Any]] {
+                            for medication in medications {
+                                let newMedication = Medication(context: viewContext)
+                                newDay.addToMedication(newMedication)
+                                newMedication.id = medication["id"] as? String
+                                newMedication.amount = medication["amount"] as! Int32
+                                newMedication.dose = medication["dose"] as? String
+                                newMedication.effective = medication["effective"] as! Bool
+                                newMedication.time = medication["time"] as? Date
+                                newMedication.name = medication["name"] as? String
+                                newMedication.sideEffects = medication["sideEffects"] as? String
+                                newMedication.type = MedTypes(rawValue: medication["type"] as? Int16 ?? 0)!
+                            }
+                        }
+                    }
+                    saveData()
+                    
+                    // Reload app if today is not found to build it
+                    if !todayFound {
+                        lastLaunch = ""
+                    }
+                }
+            } catch {
+                print("Failed to import data: \(error.localizedDescription)")
+            }
+        }
     }
     
     private func deleteAllData() {
@@ -193,6 +220,13 @@ struct SettingsView: View {
         lastLaunch = ""
         
         initializeMAppData()
+    }
+    
+    private func deleteAllDayData() {
+        dayData.forEach { day in
+            viewContext.delete(day)
+        }
+        saveData()
     }
     
     private func resetSettings() {
