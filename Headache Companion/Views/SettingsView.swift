@@ -52,7 +52,7 @@ struct SettingsView: View {
                         Text("Export Data")
                             .foregroundColor(.primary)
                     }
-                    .fileExporter(isPresented: $showingFileExporter, document: JSONDocument(data: getDayDataAsJSON() ?? "".data(using: .utf8)!), contentType: .json, defaultFilename: "HeadacheCompanion.json") { _ in }
+                    .fileExporter(isPresented: $showingFileExporter, document: JSONDocument(data: getDayDataAsJSON() ?? "[]".data(using: .utf8)!), contentType: .json, defaultFilename: "HeadacheCompanion.json") { _ in }
                     
                     Button {
                         showingFilePicker.toggle()
@@ -206,21 +206,6 @@ struct SettingsView: View {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .secondsSince1970
         encoder.outputFormatting = .prettyPrinted
-//        let temporaryDirectory = FileManager.default.temporaryDirectory
-//        let todayString : String = {
-//            let formatter = DateFormatter()
-//            formatter.dateFormat = "yyyy-MM-dd"
-//            return formatter.string(from: .now)
-//        }()
-//        let fileURL = temporaryDirectory.appendingPathComponent("HeadacheCompanion-\(todayString).json")
-//        do {
-//            let jsonData = try encoder.encode(dayData.sorted(by: {$0.date ?? "" < $1.date ?? "" }))
-//            try jsonData.write(to: fileURL)
-//        } catch {
-//            print("Error exporting data: \(error.localizedDescription)")
-//        }
-//
-//        return fileURL
         return try? encoder.encode(dayData.sorted(by: {$0.date ?? "" < $1.date ?? "" }))
     }
 }
