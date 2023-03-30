@@ -29,9 +29,6 @@ struct ContentView: View {
     }()
     
     init() {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "yyyy-MM-dd"
-//        let today = dateFormatter.string(from: .now)
         _dayData = FetchRequest(
             sortDescriptors: [],
             predicate: NSPredicate(format: "date = %@", todayString)
