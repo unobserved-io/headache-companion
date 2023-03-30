@@ -124,7 +124,9 @@ struct SettingsView: View {
                                 }
                                 saveData()
                             }
-                        } catch {}
+                        } catch {
+                            print("Failed to import data: \(error.localizedDescription)")
+                        }
                     }
                     
                     Button {
