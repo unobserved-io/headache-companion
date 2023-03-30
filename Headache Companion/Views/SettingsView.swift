@@ -52,7 +52,12 @@ struct SettingsView: View {
                         Text("Export Data")
                             .foregroundColor(.primary)
                     }
-                    .fileExporter(isPresented: $showingFileExporter, document: JSONDocument(data: getDayDataAsJSON() ?? "[]".data(using: .utf8)!), contentType: .json, defaultFilename: "HeadacheCompanion.json") { _ in }
+                    .fileExporter(
+                        isPresented: $showingFileExporter,
+                        document: JSONDocument(data: getDayDataAsJSON() ?? "[]".data(using: .utf8)!),
+                        contentType: .json,
+                        defaultFilename: "HeadacheCompanion.json"
+                    ) { _ in }
                     
                     Button {
                         showingFilePicker.toggle()
@@ -132,7 +137,7 @@ struct SettingsView: View {
                     Button {
                         showingResetAlert.toggle()
                     } label: {
-                        Label{
+                        Label {
                             Text("Reset Settings")
                                 .foregroundColor(.primary)
                         } icon: {
@@ -156,7 +161,7 @@ struct SettingsView: View {
             Button("Delete") {
                 deleteAllData()
             }
-            Button("Cancel", role: .cancel) { }
+            Button("Cancel", role: .cancel) {}
         } message: {
             Text("Are you sure you want to erase all of your data? This is irreversible.")
         }
@@ -164,24 +169,24 @@ struct SettingsView: View {
             Button("Reset") {
                 resetSettings()
             }
-            Button("Cancel", role: .cancel) { }
+            Button("Cancel", role: .cancel) {}
         } message: {
             Text("Are you sure you want to reset all settings? This is irreversible.")
         }
     }
     
     private func deleteAllData() {
-        let entityNames = PersistenceController.shared.container.managedObjectModel.entities.map({ $0.name!})
+        let entityNames = PersistenceController.shared.container.managedObjectModel.entities.map { $0.name! }
         entityNames.forEach { entityName in
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
             fetchRequest.returnsObjectsAsFaults = false
             do {
                 let results = try viewContext.fetch(fetchRequest)
                 for object in results {
-                    guard let objectData = object as? NSManagedObject else {continue}
+                    guard let objectData = object as? NSManagedObject else { continue }
                     viewContext.delete(objectData)
                 }
-            } catch let error {
+            } catch {
                 print("Detele all data error :", error)
             }
         }
@@ -206,7 +211,7 @@ struct SettingsView: View {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .secondsSince1970
         encoder.outputFormatting = .prettyPrinted
-        return try? encoder.encode(dayData.sorted(by: {$0.date ?? "" < $1.date ?? "" }))
+        return try? encoder.encode(dayData.sorted(by: { $0.date ?? "" < $1.date ?? "" }))
     }
 }
 
