@@ -146,6 +146,7 @@ struct CalendarView: View {
         .onAppear {
             refreshView()
             getDayData()
+            print(selectedDayData?.attacks ?? "ERROR")
         }
         .sheet(isPresented: $activitiesSheet, onDismiss: refreshView) {
             ActivitiesView(of: $selectedActivity, for: selectedDay)

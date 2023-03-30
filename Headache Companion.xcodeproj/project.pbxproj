@@ -34,6 +34,7 @@
 		9CC529D029BD02FD00DD5491 /* PreviouslyTakenMedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */; };
 		9CD3DC0B29CDBD0F004B86E8 /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DC0A29CDBD0F004B86E8 /* PieChart.swift */; };
 		9CD3DC0D29CDBDA8004B86E8 /* PieSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */; };
+		9CE8294F29D5968500010142 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE8294E29D5968500010142 /* JSONDocument.swift */; };
 		9CEAA3C829B535D600240952 /* MedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAA3C729B535D600240952 /* MedicationView.swift */; };
 		9CEAA3CA29B53A5C00240952 /* AddEditMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */; };
 		9CF7308029ACD93800D91F99 /* HeadacheCompanionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF7307F29ACD93800D91F99 /* HeadacheCompanionApp.swift */; };
@@ -80,6 +81,7 @@
 		9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviouslyTakenMedsView.swift; sourceTree = "<group>"; };
 		9CD3DC0A29CDBD0F004B86E8 /* PieChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
 		9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSlice.swift; sourceTree = "<group>"; };
+		9CE8294E29D5968500010142 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
 		9CEAA3C729B535D600240952 /* MedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationView.swift; sourceTree = "<group>"; };
 		9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditMedicationView.swift; sourceTree = "<group>"; };
 		9CF7307C29ACD93800D91F99 /* Headache Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Headache Companion.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				9C1983AC29B7923D007754AB /* ClickedMedication.swift */,
+				9CE8294E29D5968500010142 /* JSONDocument.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				9CC2582029BDC36C00E55949 /* StatsHelper.swift in Sources */,
 				9CFCECDA29D076E3001656B5 /* Medication+CoreDataClass.swift in Sources */,
 				9CFCECE129D076E3001656B5 /* MAppData+CoreDataProperties.swift in Sources */,
+				9CE8294F29D5968500010142 /* JSONDocument.swift in Sources */,
 				9C4891FB29D1802000E1CD42 /* LoadingView.swift in Sources */,
 				9C96928329B4ADB80023A00C /* MultiSelector.swift in Sources */,
 				9CFCECDD29D076E3001656B5 /* DayData+CoreDataProperties.swift in Sources */,
