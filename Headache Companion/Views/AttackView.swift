@@ -62,10 +62,21 @@ struct AttackView: View {
                 DatePicker(
                     "When did the attack start?",
                     selection: $attack.startTime.toUnwrapped(defaultValue: Date.now),
-                    in: timeRange(),
+                    in: startTimeRange(),
                     displayedComponents: [.hourAndMinute]
                 )
                 .onChange(of: attack.startTime) { _ in saveData() }
+                
+                // Stop time picker
+                if !newAttack {
+                    DatePicker(
+                        "When did the attack end?",
+                        selection: $attack.stopTime.toUnwrapped(defaultValue: Date.now),
+                        in: stopTimeRange(),
+                        displayedComponents: [.hourAndMinute]
+                    )
+                    .onChange(of: attack.stopTime) { _ in saveData() }
+                }
 
                 // Pain level slider
                 VStack {
@@ -219,11 +230,16 @@ struct AttackView: View {
         }
     }
     
-    private func timeRange() -> ClosedRange<Date> {
+    private func startTimeRange() -> ClosedRange<Date> {
         let startTime = DateComponents(hour: 0, minute: 0)
-        return Calendar.current.date(from: startTime)! ... Date.now
+        return Calendar.current.date(from: startTime)! ... (attack.stopTime ?? Date.now)
     }
     
+    private func stopTimeRange() -> ClosedRange<Date> {
+        let startTime = DateComponents(hour: 0, minute: 0)
+        return (attack.startTime ?? Calendar.current.date(from: startTime)!) ... Date.now
+    }
+        
     private func nextButton(addToNext: String) -> some View {
         return Button {
             nextFrom.insert(addToNext)

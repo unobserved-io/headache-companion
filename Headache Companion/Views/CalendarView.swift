@@ -66,6 +66,7 @@ struct CalendarView: View {
                     }
                     
                     // TODO: Add Attack button
+                    
                 }
                 
                 Section("Medication") {

@@ -167,6 +167,9 @@ struct ContentView: View {
                 }
             }
         }
+        .onAppear() {
+            refreshIt.toggle()
+        }
         .sheet(isPresented: $activitiesSheet) {
             ActivitiesView(of: $selectedActivity, for: .now)
                 .presentationDetents([.bar])
