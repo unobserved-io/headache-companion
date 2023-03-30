@@ -52,7 +52,7 @@ struct ContentView: View {
                 } else {
                     NavigationLink(
                         "Attack",
-                        destination: NewAttackView()
+                        destination: NewAttackView(for: .now)
                             .navigationTitle("Add Attack")
                     )
                     .buttonStyle(.borderedProminent)

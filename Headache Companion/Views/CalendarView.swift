@@ -66,7 +66,13 @@ struct CalendarView: View {
                     }
                     
                     // TODO: Add Attack button
-                    
+                    if !selectedDayIsToday() {
+                        NavigationLink(
+                            "Add Attack",
+                            destination: NewAttackView(for: selectedDay)
+                                .navigationTitle("Add Attack")
+                        )
+                    }
                 }
                 
                 Section("Medication") {
@@ -175,7 +181,12 @@ struct CalendarView: View {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let selectedDayFormatted = dateFormatter.string(from: selectedDay)
         selectedDayData = dayData.filter { $0.date == selectedDayFormatted }.first
-//        return dayData.filter { $0.date == selectedDayFormatted }.first
+    }
+    
+    private func selectedDayIsToday() -> Bool {
+        let selectedDate = Calendar.current.dateComponents([.year, .month, .day], from: selectedDay)
+        let todayDate = Calendar.current.dateComponents([.year, .month, .day], from: .now)
+        return selectedDate == todayDate
     }
     
     private func deleteMedication(at offsets: IndexSet) {

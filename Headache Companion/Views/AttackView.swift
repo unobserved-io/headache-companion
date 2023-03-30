@@ -20,6 +20,7 @@ struct AttackView: View {
     var mAppData: FetchedResults<MAppData>
     @State var nextFrom: Set<String> = []
     let newAttack: Bool
+    let inputDate: Date?
     let basicSymptoms = [
         "Nausea",
         "Vomiting",
@@ -42,16 +43,21 @@ struct AttackView: View {
         "Visual"
     ]
     
-    init(attack: Attack, newAttack: Bool = false) {
+    init(attack: Attack, for inputDate: Date? = nil) {
         self.attack = attack
-        self.newAttack = newAttack
+        self.inputDate = inputDate
+        if inputDate == nil {
+            self.newAttack = false
+        } else {
+            self.newAttack = true
+        }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let today = dateFormatter.string(from: .now)
+        let dateString = dateFormatter.string(from: inputDate ?? Date.now)
         _dayData = FetchRequest(
             sortDescriptors: [],
-            predicate: NSPredicate(format: "date = %@", today)
+            predicate: NSPredicate(format: "date = %@", dateString)
         )
     }
     
@@ -217,14 +223,14 @@ struct AttackView: View {
                         saveData()
                     }
                 } else {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        if !dayData.isEmpty {
-                            if !(dayData.first?.attacks.contains(attack) ?? true) {
-                                dayData.first?.addToAttack(attack)
-                                saveData()
-                            }
-                        }
-                    }
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    let dateString = dateFormatter.string(from: inputDate ?? Date.now)
+                    
+                    let newDay = DayData(context: viewContext)
+                    newDay.date = dateString
+                    newDay.addToAttack(attack)
+                    saveData()
                 }
             }
         }
