@@ -50,8 +50,12 @@ struct SettingsView: View {
                     Button {
                         showingFileExporter.toggle()
                     } label: {
-                        Text("Export Data")
-                            .foregroundColor(.primary)
+                        Label {
+                            Text("Export Data")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "square.and.arrow.up.fill")
+                        }
                     }
                     .fileExporter(
                         isPresented: $showingFileExporter,
@@ -61,10 +65,18 @@ struct SettingsView: View {
                     ) { _ in }
                     
                     Button {
-                        showingImportAlert.toggle()
+                        if dayData.count > 1 {
+                            showingImportAlert.toggle()
+                        } else {
+                            showingFilePicker.toggle()
+                        }
                     } label: {
-                        Text("Import Data")
-                            .foregroundColor(.primary)
+                        Label {
+                            Text("Import Data")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "square.and.arrow.down.fill")
+                        }
                     }
                     
                     Button {
