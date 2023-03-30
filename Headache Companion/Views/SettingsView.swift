@@ -43,91 +43,45 @@ struct SettingsView: View {
                 }
                 
                 Section("Data") {
-                    Button {
-                        do {
-                            let encoder = JSONEncoder()
-                            encoder.outputFormatting = .prettyPrinted
-                            let jsonData = try encoder.encode(dayData.sorted(by: {$0.date ?? "" < $1.date ?? "" }))
-                            print(String(data: jsonData, encoding: .utf8) ?? "")
-                        } catch {}
-                    } label: {
-                        Text("Export Data")
+                    ShareLink(item: getDayDataAsJSON()) {
+                        Text("Export")
                     }
                     Button {
                         let jsonString = """
 [
   {
-    "exercise" : 3,
-    "diet" : 3,
+    "exercise" : 0,
+    "diet" : 1,
     "notes" : "",
-    "date" : "2023-03-23",
-    "relax" : 2,
-    "attacks" : [
-
-    ],
-    "sleep" : 1,
-    "medications" : [
-
-    ],
-    "water" : 1
-  },
-  {
-    "exercise" : 3,
-    "diet" : 3,
-    "notes" : "",
-    "date" : "2023-03-24",
-    "relax" : 2,
-    "attacks" : [
-
-    ],
-    "sleep" : 3,
-    "medications" : [
-
-    ],
-    "water" : 2
-  },
-  {
-    "exercise" : 2,
-    "diet" : 2,
-    "notes" : "",
-    "date" : "2023-03-25",
-    "relax" : 3,
+    "date" : "2023-03-30",
+    "relax" : 0,
     "attacks" : [
       {
-        "pressing" : false,
-        "id" : "51FF7471-A1A7-47AE-B03D-EA8A7EEA102F",
+        "pressing" : true,
+        "id" : "89F76F11-64BE-4ECB-824A-0789E7DDFC78",
         "symptoms" : [
-            "Sensitivity to sound",
-            "Sensitivity to light"
+          "Neck pain",
+          "Sensitivity to sound"
         ],
         "pulsating" : false,
         "otherPainGroup" : 0,
         "otherPainText" : null,
         "painLevel" : 2,
-        "stopTime" : 701474555.50431597,
-        "pressingSide" : 0,
+        "stopTime" : 1680166306.6742392,
+        "pressingSide" : 2,
         "headacheType" : 0,
         "auras" : [
-            "Tingling",
-            "Visual"
+          "Tingling",
+          "Visual"
         ],
         "onPeriod" : false,
         "pulsatingSide" : 0,
-        "startTime" : 701474487.02191103
+        "startTime" : 1680166283.014658
       }
     ],
     "sleep" : 2,
     "medications" : [
-      {
-        "amount" : 2,
-        "dose" : "Pills",
-        "id" : "D5A26714-BEDF-46C7-B211-0BF277E26BE1",
-        "time" : 701467216.79302704,
-        "sideEffects" : null,
-        "effective" : false,
-        "type" : 0,
-        "name" : "Tylenol"
-      }
+
     ],
     "water" : 3
   }
@@ -144,10 +98,10 @@ struct SettingsView: View {
                                 newDay.sleep = ActivityRanks(rawValue: hcDayData["sleep"] as? Int16 ?? 0)!
                                 newDay.water = ActivityRanks(rawValue: hcDayData["water"] as? Int16 ?? 0)!
                                 newDay.notes = hcDayData["notes"] as! String
+//                                saveData()
                                 if let attacks = hcDayData["attacks"] as? [[String: Any]] {
                                     for attack in attacks {
                                         let newAttack = Attack(context: viewContext)
-                                        newDay.addToAttack(newAttack)
                                         newAttack.id = attack["id"] as? String
                                         newAttack.headacheType = Headaches(rawValue: attack["headacheType"] as? Int16 ?? 0)!
                                         newAttack.otherPainGroup = attack["otherPainGroup"] as! Int16
@@ -158,14 +112,20 @@ struct SettingsView: View {
                                         newAttack.pulsating = attack["pulsating"] as! Bool
                                         newAttack.pulsatingSide = Sides(rawValue: attack["pulsatingSide"] as? Int16 ?? 0)!
                                         newAttack.onPeriod = attack["onPeriod"] as! Bool
-                                        newAttack.startTime = attack["startTime"] as? Date
-                                        newAttack.stopTime = attack["stopTime"] as? Date
+                                        let newStartTime = Date(timeIntervalSince1970: attack["startTime"] as! TimeInterval)
+                                        newAttack.startTime = newStartTime
+//                                        newAttack.startTime = attack["startTime"] as? Date
+                                        let newStopTime = Date(timeIntervalSince1970: attack["stopTime"] as! TimeInterval)
+//                                        newAttack.stopTime = attack["stopTime"] as? Date
+                                        newAttack.stopTime = newStopTime
                                         if let auras = attack["auras"] as? [String] {
                                             newAttack.auras = Set(auras)
                                         }
                                         if let symptoms = attack["symptoms"] as? [String] {
                                             newAttack.symptoms = Set(symptoms)
                                         }
+                                        newDay.addToAttack(newAttack)
+//                                        saveData()
                                     }
                                 }
                                 if let medications = hcDayData["medications"] as? [[String: Any]] {
@@ -180,6 +140,7 @@ struct SettingsView: View {
                                         newMedication.name = medication["name"] as? String
                                         newMedication.sideEffects = medication["sideEffects"] as? String
                                         newMedication.type = MedTypes(rawValue: medication["type"] as? Int16 ?? 0)!
+//                                        saveData()
                                     }
                                 }
                             }
@@ -259,6 +220,28 @@ struct SettingsView: View {
             getData(from: UIColor(Color.green)) ?? Data(),
         ]
         saveData()
+    }
+    
+    private func getDayDataAsJSON() -> URL {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .secondsSince1970
+        encoder.outputFormatting = .prettyPrinted
+        let temporaryDirectory = FileManager.default.temporaryDirectory
+        let todayString : String = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter.string(from: .now)
+        }()
+        let fileURL = temporaryDirectory.appendingPathComponent("HeadacheCompanion-\(todayString).json")
+        do {
+            let jsonData = try encoder.encode(dayData.sorted(by: {$0.date ?? "" < $1.date ?? "" }))
+            try jsonData.write(to: fileURL)
+        } catch {
+            print("Error exporting data: \(error.localizedDescription)")
+        }
+        
+        return fileURL
+//        return try? encoder.encode(dayData.sorted(by: {$0.date ?? "" < $1.date ?? "" }))
     }
 }
 
