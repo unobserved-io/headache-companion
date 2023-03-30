@@ -43,6 +43,10 @@ struct CalendarView: View {
                         getDayData()
                     }
                 }
+                .onAppear {
+                    refreshView()
+                    getDayData()
+                }
                 
                 Section("Attacks") {
                     ForEach(selectedDayData?.attacks ?? []) { attack in
@@ -60,6 +64,8 @@ struct CalendarView: View {
                     if selectedDayData?.attacks.isEmpty ?? true {
                         Text("No attacks")
                     }
+                    
+                    // TODO: Add Attack button
                 }
                 
                 Section("Medication") {
@@ -77,6 +83,8 @@ struct CalendarView: View {
                     if selectedDayData?.medications.isEmpty ?? true {
                         Text("No medication taken")
                     }
+                    
+                    // TODO: Add Medicaiton button
                 }
                 
                 Section(refreshIt ? "Activities" : "Activities") {
@@ -142,11 +150,6 @@ struct CalendarView: View {
                     }
                 }
             }
-        }
-        .onAppear {
-            refreshView()
-            getDayData()
-            print(selectedDayData?.attacks ?? "ERROR")
         }
         .sheet(isPresented: $activitiesSheet, onDismiss: refreshView) {
             ActivitiesView(of: $selectedActivity, for: selectedDay)
