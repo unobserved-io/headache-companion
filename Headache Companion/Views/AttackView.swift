@@ -19,6 +19,8 @@ struct AttackView: View {
     )
     var mAppData: FetchedResults<MAppData>
     @State var nextFrom: Set<String> = []
+    let startDateComps = DateComponents(hour: 0, minute: 0)
+    let stopDateComps = DateComponents(hour: 23, minute: 59)
     let newAttack: Bool
     let inputDate: Date?
     let basicSymptoms = [
@@ -74,11 +76,11 @@ struct AttackView: View {
                 .onChange(of: attack.startTime) { _ in saveData() }
                 
                 // Stop time picker
-                if !newAttack {
+                if !newAttack || !selectedDayIsToday() {
                     DatePicker(
                         "When did the attack end?",
-                        selection: $attack.stopTime.toUnwrapped(defaultValue: Date.now),
-                        in: stopTimeRange(),
+                        selection: $attack.stopTime.toUnwrapped(defaultValue: selectedDayIsToday() ? Date.now : (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)),
+                        in: selectedDayIsToday() ? stopTimeRange() : unlimitedRange(),
                         displayedComponents: [.hourAndMinute]
                     )
                     .onChange(of: attack.stopTime) { _ in saveData() }
@@ -238,12 +240,17 @@ struct AttackView: View {
     
     private func startTimeRange() -> ClosedRange<Date> {
         let startTime = DateComponents(hour: 0, minute: 0)
-        return Calendar.current.date(from: startTime)! ... (attack.stopTime ?? Date.now)
+        return (Calendar.current.date(from: startTime) ?? .now) ... (attack.stopTime ?? Date.now)
     }
     
     private func stopTimeRange() -> ClosedRange<Date> {
         let startTime = DateComponents(hour: 0, minute: 0)
-        return (attack.startTime ?? Calendar.current.date(from: startTime)!) ... Date.now
+        return (attack.startTime ?? Calendar.current.date(from: startTime) ?? .now) ... Date.now
+    }
+    
+    private func unlimitedRange() -> ClosedRange<Date> {
+        let startTime = DateComponents(hour: 0, minute: 0)
+        return (attack.startTime ?? Calendar.current.date(from: startTime) ?? .now)  ... (Calendar.current.date(byAdding: .day, value: 1, to: inputDate ?? .now) ?? .now)
     }
         
     private func nextButton(addToNext: String) -> some View {
@@ -255,6 +262,12 @@ struct AttackView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .buttonStyle(.bordered)
         .tint(.accentColor)
+    }
+    
+    private func selectedDayIsToday() -> Bool {
+        let selectedDate = Calendar.current.dateComponents([.year, .month, .day], from: inputDate ?? .now)
+        let todayDate = Calendar.current.dateComponents([.year, .month, .day], from: .now)
+        return selectedDate == todayDate
     }
 }
 

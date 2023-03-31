@@ -65,7 +65,6 @@ struct CalendarView: View {
                         Text("No attacks")
                     }
                     
-                    // TODO: Add Attack button
                     if !selectedDayIsToday() {
                         NavigationLink(
                             "Add Attack",
