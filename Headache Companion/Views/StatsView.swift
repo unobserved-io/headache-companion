@@ -267,9 +267,9 @@ struct StatsView: View {
     private func dayDataInRange(_ range: DateRange) -> [DayData] {
         var inRange: [DayData] = []
         let stopDate: Date = getStopDate(range)
-        let fromDate = getFromDate(range)
+        let fromDate: Date = getFromDate(range)
         
-        for day in dayData {
+        dayData.forEach { day in
             let dayDate = dateFormatter.date(from: day.date ?? "1970-01-01")
             
             if dayDate?.isBetween(fromDate, and: stopDate) ?? false {
@@ -281,24 +281,22 @@ struct StatsView: View {
     }
     
     private func getFromDate(_ range: DateRange) -> Date {
-        var fromDate: Date = Calendar.current.startOfDay(for: Date.now)
+        let fromDate: Date = Calendar.current.startOfDay(for: Date.now)
         
         switch range {
         case .week:
-            fromDate = Calendar.current.date(byAdding: .day, value: -6, to: fromDate) ?? Date.now
+            return Calendar.current.date(byAdding: .day, value: -6, to: fromDate) ?? Date.now
         case .thirtyDays:
-            fromDate = Calendar.current.date(byAdding: .day, value: -29, to: fromDate) ?? Date.now
+            return Calendar.current.date(byAdding: .day, value: -29, to: fromDate) ?? Date.now
         case .sixMonths:
-            fromDate = Calendar.current.date(byAdding: .day, value: -179, to: fromDate) ?? Date.now
+            return Calendar.current.date(byAdding: .day, value: -179, to: fromDate) ?? Date.now
         case .year:
-            fromDate = Calendar.current.date(byAdding: .day, value: -364, to: fromDate) ?? Date.now
+            return Calendar.current.date(byAdding: .day, value: -364, to: fromDate) ?? Date.now
         case .allTime:
-            fromDate = dateFormatter.date(from: dayData.first?.date ?? "1970-01-01") ?? Date(timeIntervalSince1970: 0)
+            return dateFormatter.date(from: dayData.first?.date ?? "1970-01-01") ?? Date(timeIntervalSince1970: 0)
         case .custom:
-            fromDate = selectedStart
+            return selectedStart
         }
-        
-        return fromDate
     }
     
     private func getStopDate(_ range: DateRange) -> Date {

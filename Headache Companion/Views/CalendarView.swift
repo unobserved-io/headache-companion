@@ -174,6 +174,9 @@ struct CalendarView: View {
                 }
             }
         }
+        .onDisappear() {
+            selectedDayData = nil
+        }
         .sheet(isPresented: $activitiesSheet, onDismiss: selectedDayData != nil ? refreshView : getDayData) {
             ActivitiesView(of: $selectedActivity, for: selectedDay)
                 .presentationDetents([.bar])
