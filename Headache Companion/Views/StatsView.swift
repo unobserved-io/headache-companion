@@ -43,7 +43,7 @@ struct StatsView: View {
 
     @ObservedObject var statsHelper = StatsHelper.sharedInstance
     @State private var dateRange: DateRange = .allTime
-    @State private var selectedStart: Date = Date.now
+    @State private var selectedStart: Date =  Calendar.current.date(byAdding: .day, value: -6, to: Date.now) ?? Date.now
     @State private var selectedStop: Date = Date.now
     @State private var clickedAttacks: Bool = false
     @State private var clickedSymptoms: Bool = false
@@ -73,10 +73,6 @@ struct StatsView: View {
 //                            displayedComponents: [.date],
 //                            label: {}
 //                        )
-//                        .labelsHidden()
-//                        .onChange(of: selectedStart) { range in
-//                            statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
-//                        }
                         TempDatePicker(
                             selection: $selectedStart,
                             range: getStartRange()
