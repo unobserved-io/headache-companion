@@ -17,7 +17,7 @@ struct NewAttackView: View {
     }
     
     var body: some View {
-        AttackView(attack: createNewAttack(), for: inputDate)
+        AttackView(attack: createNewAttack(), for: inputDate, new: true)
     }
     
     private func createNewAttack() -> Attack {

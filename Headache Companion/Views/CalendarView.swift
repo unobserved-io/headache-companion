@@ -50,7 +50,7 @@ struct CalendarView: View {
                 
                 Section("Attacks") {
                     ForEach(selectedDayData?.attacks ?? []) { attack in
-                        NavigationLink (destination: AttackView(attack: attack)) {
+                        NavigationLink (destination: AttackView(attack: attack, for: selectedDay)) {
                             if attack.stopTime != nil {
                                 // TODO: Delete refreshIt here? One in lower section (or this section) may be enough
                                 Text("\(refreshIt ? "" : "")\(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened)) - \(attack.wrappedStopTime.formatted(date: .omitted, time: .shortened))")
@@ -61,7 +61,7 @@ struct CalendarView: View {
                     }
                     .onDelete(perform: deleteAttack)
                     
-                    if selectedDayData?.attacks.isEmpty ?? true {
+                    if selectedDayData?.attacks.isEmpty ?? true && selectedDayIsToday() {
                         Text("No attacks")
                     }
                     
@@ -71,6 +71,7 @@ struct CalendarView: View {
                             destination: NewAttackView(for: selectedDay)
                                 .navigationTitle("Add Attack")
                         )
+                        .foregroundColor(.accentColor)
                     }
                 }
                 

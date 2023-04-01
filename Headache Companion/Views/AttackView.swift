@@ -45,14 +45,15 @@ struct AttackView: View {
         "Visual"
     ]
     
-    init(attack: Attack, for inputDate: Date? = nil) {
+    init(attack: Attack, for inputDate: Date? = nil, new: Bool = false) {
         self.attack = attack
         self.inputDate = inputDate
-        if inputDate == nil {
-            self.newAttack = false
-        } else {
-            self.newAttack = true
-        }
+        self.newAttack = new
+//        if inputDate == nil {
+//            self.newAttack = false
+//        } else {
+//            self.newAttack = true
+//        }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -79,7 +80,7 @@ struct AttackView: View {
                 if !newAttack || !selectedDayIsToday() {
                     DatePicker(
                         "When did the attack end?",
-                        selection: $attack.stopTime.toUnwrapped(defaultValue: selectedDayIsToday() ? Date.now : (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)),
+                        selection: $attack.stopTime.toUnwrapped(defaultValue: selectedDayIsToday() ? .now : (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)),
                         in: selectedDayIsToday() ? stopTimeRange() : unlimitedRange(),
                         displayedComponents: [.hourAndMinute]
                     )
@@ -247,7 +248,8 @@ struct AttackView: View {
     }
     
     private func unlimitedRange() -> ClosedRange<Date> {
-        return (attack.startTime ?? Calendar.current.date(from: startDateComps) ?? .now)  ... (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)
+        // TODO: Fix error
+        return (attack.startTime ?? Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: inputDate ?? .now) ?? .now)  ... (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)
     }
         
     private func nextButton(addToNext: String) -> some View {
