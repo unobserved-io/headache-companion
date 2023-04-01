@@ -94,13 +94,15 @@ class StatsHelper: ObservableObject {
                 exerciseInSelectedDays[Int(dayData[index].exercise.rawValue)] += 1
                 relaxInSelectedDays[Int(dayData[index].relax.rawValue)] += 1
                 sleepInSelectedDays[Int(dayData[index].sleep.rawValue)] += 1
-            } else {
-                waterInSelectedDays[0] += 1
-                dietInSelectedDays[0] += 1
-                exerciseInSelectedDays[0] += 1
-                relaxInSelectedDays[0] += 1
-                sleepInSelectedDays[0] += 1
             }
+            // Only for recording untracked days
+//            else {
+//                waterInSelectedDays[0] += 1
+//                dietInSelectedDays[0] += 1
+//                exerciseInSelectedDays[0] += 1
+//                relaxInSelectedDays[0] += 1
+//                sleepInSelectedDays[0] += 1
+//            }
             
             currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? Date.now
         }

@@ -43,7 +43,7 @@ struct StatsView: View {
 
     @ObservedObject var statsHelper = StatsHelper.sharedInstance
     @State private var dateRange: DateRange = .allTime
-    @State private var selectedStart: Date =  Calendar.current.date(byAdding: .day, value: -6, to: Date.now) ?? Date.now
+    @State private var selectedStart: Date =  Date.now
     @State private var selectedStop: Date = Date.now
     @State private var clickedAttacks: Bool = false
     @State private var clickedSymptoms: Bool = false
@@ -67,31 +67,22 @@ struct StatsView: View {
                 if dateRange == .custom {
                     HStack {
                         // TODO: Replace with DatePicker when bug showing short date format is fixed
-//                        DatePicker(
-//                            selection: $selectedStart,
-//                            in: getStartRange(),
-//                            displayedComponents: [.date],
-//                            label: {}
-//                        )
-                        TempDatePicker(
+                        DatePicker(
                             selection: $selectedStart,
-                            range: getStartRange()
+                            in: Date(timeIntervalSinceReferenceDate: 0) ... selectedStop,
+                            displayedComponents: [.date],
+                            label: {}
                         )
                         .labelsHidden()
                         .onChange(of: selectedStart) { range in
                             statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
                         }
-                        
                         Text("to")
-//                        DatePicker(
-//                            selection: $selectedStop,
-//                            in: getStopRange(),
-//                            displayedComponents: [.date],
-//                            label: {}
-//                        )
-                        TempDatePicker(
+                        DatePicker(
                             selection: $selectedStop,
-                            range: getStopRange()
+                            in: selectedStart ... Date.now,
+                            displayedComponents: [.date],
+                            label: {}
                         )
                         .frame(minHeight: 35)
                         .labelsHidden()
@@ -331,18 +322,6 @@ struct StatsView: View {
         default:
             return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
         }
-    }
-    
-    private func getStartRange() -> ClosedRange<Date> {
-        let min = Date(timeIntervalSinceReferenceDate: 0)
-        let max = selectedStop
-        return min...max
-    }
-    
-    private func getStopRange() -> ClosedRange<Date> {
-        let min = selectedStart
-        let max = Date.now
-        return min...max
     }
 }
 
