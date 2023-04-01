@@ -15,7 +15,7 @@ struct MultiSelector: View {
     var selected: Binding<Set<String>>
 
     private var formattedSelectedListString: String {
-        ListFormatter.localizedString(byJoining: selected.wrappedValue.map { $0 as String })
+        ListFormatter.localizedString(byJoining: selected.wrappedValue.sorted { $0 < $1 }.map { $0 as String })
     }
 
     var body: some View {
