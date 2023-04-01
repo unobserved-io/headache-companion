@@ -72,10 +72,10 @@ struct StatsView: View {
                             displayedComponents: [.date],
                             label: {}
                         )
+                        .labelsHidden()
                         .onChange(of: selectedStart) { range in
                             statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
                         }
-                        .labelsHidden()
                         Text("to")
                         DatePicker(
                             selection: $selectedStop,
@@ -83,10 +83,10 @@ struct StatsView: View {
                             displayedComponents: [.date],
                             label: {}
                         )
+                        .labelsHidden()
                         .onChange(of: selectedStop) { range in
                             statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
                         }
-                        .labelsHidden()
                     }
                     .padding(.bottom)
                 }

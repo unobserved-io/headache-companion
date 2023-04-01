@@ -262,9 +262,7 @@ struct AttackView: View {
     }
     
     private func selectedDayIsToday() -> Bool {
-        let selectedDate = Calendar.current.dateComponents([.year, .month, .day], from: inputDate ?? .now)
-        let todayDate = Calendar.current.dateComponents([.year, .month, .day], from: .now)
-        return selectedDate == todayDate
+        return Calendar.current.isDateInToday(inputDate ?? .now)
     }
 }
 
