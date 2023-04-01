@@ -15,6 +15,11 @@ struct MedicationView: View {
         sortDescriptors: []
     )
     var mAppData: FetchedResults<MAppData>
+    @FetchRequest(
+        entity: Medication.entity(),
+        sortDescriptors: []
+    )
+    var medications: FetchedResults<Medication>
     @StateObject var clickedMedication = ClickedMedication(nil)
     @State private var showingSheet: Bool = false
     @State private var settingsDetent = PresentationDetent.medium
@@ -93,10 +98,12 @@ struct MedicationView: View {
                     clickedMedication.medication = Medication(context: viewContext)
                     showingSheet.toggle()
                 }
-                NavigationLink("Add Previous Medication") {
-                    PreviouslyTakenMedsView()
+                if !medications.isEmpty && medications.contains(where: {$0.date != nil}) {
+                    NavigationLink("Add Previous Medication") {
+                        PreviouslyTakenMedsView()
+                    }
+                    .foregroundColor(.accentColor)
                 }
-                .foregroundColor(.accentColor)
             }
         }
         .onAppear() {
