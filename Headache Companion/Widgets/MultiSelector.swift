@@ -38,7 +38,7 @@ struct MultiSelector: View {
 
     private func multiSelectionView() -> some View {
         MultiSelectionView(
-            options: options,
+            options: options.sorted { $0 < $1 },
             selected: selected
         )
     }
