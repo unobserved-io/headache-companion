@@ -165,11 +165,11 @@ struct CalendarView: View {
                 }
             }
         }
-        .sheet(isPresented: $activitiesSheet, onDismiss: refreshView) {
+        .sheet(isPresented: $activitiesSheet, onDismiss: selectedDayData != nil ? refreshView : getDayData) {
             ActivitiesView(of: $selectedActivity, for: selectedDay)
                 .presentationDetents([.bar])
         }
-        .sheet(isPresented: $showingMedSheet, onDismiss: refreshView) {
+        .sheet(isPresented: $showingMedSheet, onDismiss: selectedDayData != nil ? refreshView : getDayData) {
             if clickedMedication.medication != nil {
                 AddEditMedicationView(dayTaken: selectedDay)
                     .environmentObject(clickedMedication)

@@ -16,6 +16,7 @@ struct ActivitiesView: View {
     )
     var mAppData: FetchedResults<MAppData>
     @Binding var selectedActivity: String
+    let forDateString: String
     @State var currentColor = Color.gray
     @State var badColor = Color.red
     @State var okColor = Color.yellow
@@ -26,10 +27,10 @@ struct ActivitiesView: View {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let today = dateFormatter.string(from: forDate)
+        forDateString = dateFormatter.string(from: forDate)
         _dayData = FetchRequest(
             sortDescriptors: [],
-            predicate: NSPredicate(format: "date = %@", today)
+            predicate: NSPredicate(format: "date = %@", forDateString)
         )
     }
     
@@ -123,17 +124,23 @@ struct ActivitiesView: View {
     }
     
     private func saveSelected(rank: ActivityRanks) {
+        var foundDayData = dayData.first
+        if foundDayData == nil {
+            foundDayData = DayData(context: viewContext)
+            foundDayData?.date = forDateString
+        }
+        
         switch selectedActivity {
         case "sleep":
-            dayData.first?.sleep = rank
+            foundDayData?.sleep = rank
         case "water":
-            dayData.first?.water = rank
+            foundDayData?.water = rank
         case "diet":
-            dayData.first?.diet = rank
+            foundDayData?.diet = rank
         case "exercise":
-            dayData.first?.exercise = rank
+            foundDayData?.exercise = rank
         case "relax":
-            dayData.first?.relax = rank
+            foundDayData?.relax = rank
         default:
             break
         }
