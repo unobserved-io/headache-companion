@@ -49,11 +49,6 @@ struct AttackView: View {
         self.attack = attack
         self.inputDate = inputDate
         self.newAttack = new
-//        if inputDate == nil {
-//            self.newAttack = false
-//        } else {
-//            self.newAttack = true
-//        }
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
