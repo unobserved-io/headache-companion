@@ -60,13 +60,9 @@ struct PreviouslyTakenMedsView: View {
         var uniqueMeds: [Medication] = []
         for day in dayData {
             for medication in day.medications {
-                for uniqueMed in uniqueMeds {
-                    if uniqueMed.name != medication.name && uniqueMed.dose != medication.dose && uniqueMed.amount != medication.amount {
-                        uniqueMeds.append(medication)
-                    }
-                }
-                
                 if uniqueMeds.isEmpty {
+                    uniqueMeds.append(medication)
+                } else if !uniqueMeds.contains(where: { $0.name == medication.name && $0.dose == medication.dose && $0.amount == medication.amount}) {
                     uniqueMeds.append(medication)
                 }
             }
