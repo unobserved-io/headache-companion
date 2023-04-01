@@ -18,10 +18,10 @@ struct AddEditMedicationView: View {
     @State var medTime: Date = .now
     @State var medEffective: Bool = true
     
-    init() {
+    init(dayTaken: Date = .now) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let today = dateFormatter.string(from: .now)
+        let today = dateFormatter.string(from: dayTaken)
         _dayData = FetchRequest(
             sortDescriptors: [],
             predicate: NSPredicate(format: "date = %@", today)

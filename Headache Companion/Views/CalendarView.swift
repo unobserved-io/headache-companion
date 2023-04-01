@@ -27,6 +27,7 @@ struct CalendarView: View {
     @State private var activitiesSheet: Bool = false
     @State private var selectedActivity: String = ""
     @State private var selectedDayData: DayData? = nil
+    // TODO: Use a system like ClickedMedication to better observer selectedDayData
     
     var body: some View {
         NavigationStack {
@@ -67,7 +68,7 @@ struct CalendarView: View {
                     
                     if !selectedDayIsToday() {
                         NavigationLink(
-                            "Add Attack",
+                            "Add attack",
                             destination: NewAttackView(for: selectedDay)
                                 .navigationTitle("Add Attack")
                         )
@@ -87,11 +88,17 @@ struct CalendarView: View {
                     }
                     .onDelete(perform: deleteMedication)
                     
-                    if selectedDayData?.medications.isEmpty ?? true {
+                    if selectedDayData?.medications.isEmpty ?? true && selectedDayIsToday() {
                         Text("No medication taken")
                     }
                     
-                    // TODO: Add Medicaiton button
+                    if !selectedDayIsToday() {
+                        Button("Add medication") {
+                            clickedMedication.medication = Medication(context: viewContext)
+                            showingMedSheet.toggle()
+                        }
+                        .foregroundColor(.accentColor)
+                    }
                 }
                 
                 Section(refreshIt ? "Activities" : "Activities") {
@@ -164,7 +171,7 @@ struct CalendarView: View {
         }
         .sheet(isPresented: $showingMedSheet, onDismiss: refreshView) {
             if clickedMedication.medication != nil {
-                AddEditMedicationView()
+                AddEditMedicationView(dayTaken: selectedDay)
                     .environmentObject(clickedMedication)
                     .navigationTitle("Edit Medication")
                     .presentationDetents([.medium])
@@ -184,9 +191,7 @@ struct CalendarView: View {
     }
     
     private func selectedDayIsToday() -> Bool {
-        let selectedDate = Calendar.current.dateComponents([.year, .month, .day], from: selectedDay)
-        let todayDate = Calendar.current.dateComponents([.year, .month, .day], from: .now)
-        return selectedDate == todayDate
+        return Calendar.current.isDateInToday(selectedDay)
     }
     
     private func deleteMedication(at offsets: IndexSet) {
