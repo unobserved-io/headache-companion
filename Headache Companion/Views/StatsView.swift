@@ -246,8 +246,8 @@ struct StatsView: View {
                     .font(.system(size: 12))
             }
             if clicked {
-                ForEach(Array(list), id: \.self) { symptom in
-                    Text(symptom)
+                ForEach(Array(list).sorted { $0 < $1 }, id: \.self) { listItem in
+                    Text(listItem)
                         .padding(.leading)
                 }
             }
