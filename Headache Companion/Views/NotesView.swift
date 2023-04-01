@@ -12,18 +12,8 @@ struct NotesView: View {
     @ObservedObject var dayData: DayData
     @FocusState private var isNoteFocused: Bool
 
-    init(dayData: DayData?, date: Date = .now) {
-        if dayData != nil {
-            self.dayData = dayData!
-        } else {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            let dateString = dateFormatter.string(from: date)
-            
-            let newDay = DayData(context: PersistenceController.shared.container.viewContext)
-            newDay.date = dateString
-            self.dayData = newDay
-        }
+    init(dayData: DayData) {
+        self.dayData = dayData
     }
 
     var body: some View {

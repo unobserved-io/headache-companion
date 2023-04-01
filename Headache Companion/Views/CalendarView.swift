@@ -165,11 +165,19 @@ struct CalendarView: View {
                 }
                 if !(selectedDayData?.notes.isEmpty ?? true) || !selectedDayIsToday() {
                     Section(refreshIt ? "Notes" : "Notes") {
-                        NavigationLink(
-                            selectedDayData?.notes.isEmpty ?? true ? "Add notes" : (selectedDayData?.notes ?? "Notes"),
-                            destination: NotesView(dayData: selectedDayData, date: selectedDay)
-                                .navigationTitle("Daily Notes")
-                        )
+                        if selectedDayData?.notes.isEmpty ?? true {
+                            NavigationLink(
+                                "Add notes",
+                                destination: NewNoteView(inputDate: selectedDay)
+                                    .navigationTitle("Daily Notes")
+                            )
+                        } else {
+                            NavigationLink(
+                                selectedDayData?.notes ?? "Notes",
+                                destination: NotesView(dayData: selectedDayData!)
+                                    .navigationTitle("Daily Notes")
+                            )
+                        }
                     }
                 }
             }
