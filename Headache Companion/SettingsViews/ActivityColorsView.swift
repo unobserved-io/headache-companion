@@ -23,9 +23,9 @@ struct ActivityColorsView: View {
         List {
             Section {
                 ColorPicker("Not recorded", selection: $notRecorded)
-                ColorPicker("Low", selection: $lowColor)
-                ColorPicker("Middle", selection: $middleColor)
-                ColorPicker("High", selection: $highColor)
+                ColorPicker("Bad", selection: $lowColor)
+                ColorPicker("OK", selection: $middleColor)
+                ColorPicker("Good", selection: $highColor)
             }
             Section {
                 Button("Reset to defaults") {
