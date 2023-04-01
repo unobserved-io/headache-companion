@@ -504,7 +504,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Headache Companion/HeadacheCompanion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Headache Companion/Preview Content\"";
 				DEVELOPMENT_TEAM = Z5MKQX2NCZ;
@@ -547,7 +547,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Headache Companion/HeadacheCompanion.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Headache Companion/Preview Content\"";
 				DEVELOPMENT_TEAM = Z5MKQX2NCZ;
