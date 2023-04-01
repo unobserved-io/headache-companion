@@ -12,7 +12,7 @@ struct PreviouslyTakenMedsView: View {
     @Environment(\.dismiss) var dismiss // TODO: From iOS 15+. Test on iOS 14
     @FetchRequest(
         entity: DayData.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: true)]
+        sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: false)]
     )
     var dayData: FetchedResults<DayData>
     
