@@ -95,17 +95,17 @@ struct StatsView: View {
                 Grid(alignment: .leading, verticalSpacing: 5) {
                     GridRow(alignment: .top) {
                         mainStat(String(statsHelper.daysTracked))
-                        statDescription("Days tracked")
+                        statDescription("\(statsHelper.daysTracked == 1 ? "day" : "days") tracked")
                     }
                     GridRow(alignment: .top) {
                         mainStat(String(statsHelper.daysWithAttack))
-                        statDescription("Days with an attack")
+                        statDescription("\(statsHelper.daysWithAttack == 1 ? "day" : "days") with an attack")
                     }
                     GridRow(alignment: .top) {
                         mainStat(String(statsHelper.numberOfAttacks))
                         VStack(alignment: .leading) {
                             HStack {
-                                Text("Attacks")
+                                Text("\(statsHelper.numberOfAttacks == 1 ? "attack" : "attacks")")
                                     .font(.title3)
                                 Image(systemName: clickedAttacks ? "chevron.down" : "chevron.right")
                                     .font(.system(size: 12))
@@ -134,22 +134,22 @@ struct StatsView: View {
                     if statsHelper.daysWithAttack > 0 {
                         GridRow(alignment: .top) {
                             mainStat("\(statsHelper.percentWithAttack)%")
-                            statDescription("Of days had an attack")
+                            statDescription("of days had an attack")
                         }
                         
                         GridRow(alignment: .top) {
                             mainStat(String(statsHelper.allSymptoms.count))
-                            statDescriptionChevron(for: "Symptoms", clicked: clickedSymptoms, list: statsHelper.allSymptoms)
+                            statDescriptionChevron(for: "\(statsHelper.allSymptoms.count == 1 ? "symptom" : "symptoms")", clicked: clickedSymptoms, list: statsHelper.allSymptoms)
                         }
                         
                         GridRow(alignment: .top) {
                             mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
-                            statDescription("Average pain level")
+                            statDescription("average pain level")
                         }
                         
                         GridRow(alignment: .top) {
                             mainStat(String(statsHelper.allAuras.count))
-                            statDescriptionChevron(for: "Auras", clicked: clickedAuras, list: statsHelper.allAuras)
+                            statDescriptionChevron(for: "\(statsHelper.allAuras.count == 1 ? "aura" : "auras")", clicked: clickedAuras, list: statsHelper.allAuras)
                         }
                         // TODO: Under Auras will be number broken down by type
                         
@@ -181,6 +181,7 @@ struct StatsView: View {
                         Image(systemName: "figure.mind.and.body").tag(ChosenActivity.relax)
                     }
                     .pickerStyle(.segmented)
+                    .labelsHidden()
                     switch chosenActivity {
                     case .water:
                         PieChart(values: statsHelper.waterInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "drop.fill")
@@ -203,7 +204,7 @@ struct StatsView: View {
             
             HStack {
                 mainStat(String(dayData.count))
-                statDescription("Days with recorded data")
+                statDescription("\(dayData.count == 1 ? "day" : "days") with recorded data")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading)
@@ -211,7 +212,7 @@ struct StatsView: View {
             HStack {
                 // TODO: Change to the first date app was used in mAppData, otherwise this will change when a previous date's data is altered
                 mainStat(String((Calendar.current.dateComponents([.day], from: dateFormatter.date(from: dayData.first?.date ?? dateFormatter.string(from: Date.now)) ?? Date.now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
-                statDescription("Days using Headache Companion")
+                statDescription("\((Calendar.current.dateComponents([.day], from: dateFormatter.date(from: dayData.first?.date ?? dateFormatter.string(from: Date.now)) ?? Date.now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? "day" : "days") using Headache Companion")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading)
