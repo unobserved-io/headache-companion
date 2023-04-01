@@ -23,7 +23,7 @@ struct MedicationLabelView: View {
                 HStack {
                     Text("\(medication.name ?? "Unknown")")
                         .bold()
-                    Text("(\(medication.dose ?? ""))")
+                    medication.dose != nil ? Text("(\(medication.dose ?? ""))") : nil
                 }
                 if medication.effective {
                     Text("Effective")
