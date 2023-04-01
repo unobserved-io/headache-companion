@@ -26,7 +26,8 @@ struct NewAttackView: View {
         if selectedDayIsToday() {
             attack.startTime = Date.now
         } else {
-            attack.startTime = inputDate
+            attack.startTime = Calendar.current.date(bySettingHour: 8, minute: 00, second: 00, of: inputDate)
+            attack.stopTime = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate)
         }
         return attack
     }

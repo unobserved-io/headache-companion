@@ -239,18 +239,15 @@ struct AttackView: View {
     }
     
     private func startTimeRange() -> ClosedRange<Date> {
-        let startTime = DateComponents(hour: 0, minute: 0)
-        return (Calendar.current.date(from: startTime) ?? .now) ... (attack.stopTime ?? Date.now)
+        return (Calendar.current.date(from: startDateComps) ?? .now) ... (attack.stopTime ?? Date.now)
     }
     
     private func stopTimeRange() -> ClosedRange<Date> {
-        let startTime = DateComponents(hour: 0, minute: 0)
-        return (attack.startTime ?? Calendar.current.date(from: startTime) ?? .now) ... Date.now
+        return (attack.startTime ?? Calendar.current.date(from: startDateComps) ?? .now) ... Date.now
     }
     
     private func unlimitedRange() -> ClosedRange<Date> {
-        let startTime = DateComponents(hour: 0, minute: 0)
-        return (attack.startTime ?? Calendar.current.date(from: startTime) ?? .now)  ... (Calendar.current.date(byAdding: .day, value: 1, to: inputDate ?? .now) ?? .now)
+        return (attack.startTime ?? Calendar.current.date(from: startDateComps) ?? .now)  ... (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)
     }
         
     private func nextButton(addToNext: String) -> some View {
