@@ -23,19 +23,13 @@ struct NewAttackView: View {
     private func createNewAttack() -> Attack {
         let attack = Attack(context: viewContext)
         attack.id = UUID().uuidString
-        if selectedDayIsToday() {
+        if Calendar.current.isDateInToday(inputDate) {
             attack.startTime = Date.now
         } else {
             attack.startTime = Calendar.current.date(bySettingHour: 8, minute: 00, second: 00, of: inputDate)
             attack.stopTime = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate)
         }
         return attack
-    }
-    
-    private func selectedDayIsToday() -> Bool {
-        let selectedDate = Calendar.current.dateComponents([.year, .month, .day], from: inputDate)
-        let todayDate = Calendar.current.dateComponents([.year, .month, .day], from: .now)
-        return selectedDate == todayDate
     }
 }
 
