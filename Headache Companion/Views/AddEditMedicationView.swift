@@ -12,6 +12,7 @@ struct AddEditMedicationView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var medication: ClickedMedication
     @FetchRequest var dayData: FetchedResults<DayData>
+    let dayTaken: Date
     @State var medName: String = ""
     @State var medDose: String = ""
     @State var medAmount: Int32 = 1
@@ -19,6 +20,7 @@ struct AddEditMedicationView: View {
     @State var medEffective: Bool = true
     
     init(dayTaken: Date = .now) {
+        self.dayTaken = dayTaken
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let today = dateFormatter.string(from: dayTaken)
@@ -80,7 +82,17 @@ struct AddEditMedicationView: View {
                         // New medication, give it an id and add to Day
                         medication.medication?.id = UUID().uuidString
                         if medication.medication != nil {
-                            dayData.first?.addToMedication(medication.medication!)
+                            if !dayData.isEmpty {
+                                dayData.first?.addToMedication(medication.medication!)
+                            } else {
+                                let dateFormatter = DateFormatter()
+                                dateFormatter.dateFormat = "yyyy-MM-dd"
+                                let dateString = dateFormatter.string(from: dayTaken)
+                                
+                                let newDay = DayData(context: viewContext)
+                                newDay.date = dateString
+                                newDay.addToMedication(medication.medication!)
+                            }
                         }
                     }
                     
