@@ -32,6 +32,7 @@
 		9CC2582029BDC36C00E55949 /* StatsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2581F29BDC36C00E55949 /* StatsHelper.swift */; };
 		9CC529CE29BCBEA500DD5491 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC529CD29BCBEA500DD5491 /* StatsView.swift */; };
 		9CC529D029BD02FD00DD5491 /* PreviouslyTakenMedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */; };
+		9CD317C229D84CEC00F88EB1 /* TempDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD317C129D84CEC00F88EB1 /* TempDatePicker.swift */; };
 		9CD3DC0B29CDBD0F004B86E8 /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DC0A29CDBD0F004B86E8 /* PieChart.swift */; };
 		9CD3DC0D29CDBDA8004B86E8 /* PieSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */; };
 		9CE8294F29D5968500010142 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE8294E29D5968500010142 /* JSONDocument.swift */; };
@@ -79,6 +80,7 @@
 		9CC2581F29BDC36C00E55949 /* StatsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsHelper.swift; sourceTree = "<group>"; };
 		9CC529CD29BCBEA500DD5491 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviouslyTakenMedsView.swift; sourceTree = "<group>"; };
+		9CD317C129D84CEC00F88EB1 /* TempDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempDatePicker.swift; sourceTree = "<group>"; };
 		9CD3DC0A29CDBD0F004B86E8 /* PieChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
 		9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSlice.swift; sourceTree = "<group>"; };
 		9CE8294E29D5968500010142 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				9CD3DC0A29CDBD0F004B86E8 /* PieChart.swift */,
 				9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */,
 				9C4891FC29D184D300E1CD42 /* LoadingBars.swift */,
+				9CD317C129D84CEC00F88EB1 /* TempDatePicker.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				9CFCECDE29D076E3001656B5 /* Attack+CoreDataClass.swift in Sources */,
 				9C98449A29B5E3C600ABDC36 /* Globals.swift in Sources */,
 				9C4891FD29D184D300E1CD42 /* LoadingBars.swift in Sources */,
+				9CD317C229D84CEC00F88EB1 /* TempDatePicker.swift in Sources */,
 				9C37EDF529D2E9DB0089DE2B /* NewAttackView.swift in Sources */,
 				9CEAA3C829B535D600240952 /* MedicationView.swift in Sources */,
 				9C682CED29B3B96C00032874 /* Enums.swift in Sources */,

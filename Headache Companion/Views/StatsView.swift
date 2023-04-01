@@ -43,7 +43,7 @@ struct StatsView: View {
 
     @ObservedObject var statsHelper = StatsHelper.sharedInstance
     @State private var dateRange: DateRange = .allTime
-    @State private var selectedStart: Date = Calendar.current.date(byAdding: .day, value: -6, to: Date.now) ?? Date.now
+    @State private var selectedStart: Date = Date.now
     @State private var selectedStop: Date = Date.now
     @State private var clickedAttacks: Bool = false
     @State private var clickedSymptoms: Bool = false
@@ -66,23 +66,38 @@ struct StatsView: View {
                     }
                 if dateRange == .custom {
                     HStack {
-                        DatePicker(
+                        // TODO: Replace with DatePicker when bug showing short date format is fixed
+//                        DatePicker(
+//                            selection: $selectedStart,
+//                            in: getStartRange(),
+//                            displayedComponents: [.date],
+//                            label: {}
+//                        )
+//                        .labelsHidden()
+//                        .onChange(of: selectedStart) { range in
+//                            statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
+//                        }
+                        TempDatePicker(
                             selection: $selectedStart,
-                            in: getStartRange(),
-                            displayedComponents: [.date],
-                            label: {}
+                            range: getStartRange()
                         )
                         .labelsHidden()
                         .onChange(of: selectedStart) { range in
                             statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
                         }
+                        
                         Text("to")
-                        DatePicker(
+//                        DatePicker(
+//                            selection: $selectedStop,
+//                            in: getStopRange(),
+//                            displayedComponents: [.date],
+//                            label: {}
+//                        )
+                        TempDatePicker(
                             selection: $selectedStop,
-                            in: getStopRange(),
-                            displayedComponents: [.date],
-                            label: {}
+                            range: getStopRange()
                         )
+                        .frame(minHeight: 35)
                         .labelsHidden()
                         .onChange(of: selectedStop) { range in
                             statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
