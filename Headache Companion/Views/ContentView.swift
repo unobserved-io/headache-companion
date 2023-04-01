@@ -65,7 +65,7 @@ struct ContentView: View {
                 NavigationLink(
                     "Medication",
                     destination: MedicationView()
-                        .navigationTitle("Medication Taken Today")
+                        .navigationTitle("Medication")
                 )
                 .buttonStyle(.bordered)
                 .controlSize(.large)
