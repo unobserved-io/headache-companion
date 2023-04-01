@@ -255,9 +255,9 @@ struct StatsView: View {
         .containerShape(Rectangle())
         .onTapGesture {
             switch description {
-            case "Symptoms":
+            case "symptom", "symptoms":
                 clickedSymptoms.toggle()
-            case "Auras":
+            case "aura", "auras":
                 clickedAuras.toggle()
             default:
                 break
