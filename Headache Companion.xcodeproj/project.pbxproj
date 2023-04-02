@@ -20,6 +20,7 @@
 		9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE6129AE662E000EB6C2 /* CalendarView.swift */; };
 		9C4891FB29D1802000E1CD42 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4891FA29D1802000E1CD42 /* LoadingView.swift */; };
 		9C4891FD29D184D300E1CD42 /* LoadingBars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4891FC29D184D300E1CD42 /* LoadingBars.swift */; };
+		9C5A89E929D965420047427A /* SelectedDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5A89E829D965420047427A /* SelectedDay.swift */; };
 		9C682CEB29B3962D00032874 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEA29B3962D00032874 /* Extensions.swift */; };
 		9C682CED29B3B96C00032874 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEC29B3B96C00032874 /* Enums.swift */; };
 		9C96928029B497520023A00C /* MultiSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96927F29B497520023A00C /* MultiSelectionView.swift */; };
@@ -68,6 +69,7 @@
 		9C45EE6129AE662E000EB6C2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9C4891FA29D1802000E1CD42 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		9C4891FC29D184D300E1CD42 /* LoadingBars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingBars.swift; sourceTree = "<group>"; };
+		9C5A89E829D965420047427A /* SelectedDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedDay.swift; sourceTree = "<group>"; };
 		9C682CEA29B3962D00032874 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9C682CEC29B3B96C00032874 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		9C96927F29B497520023A00C /* MultiSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionView.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			children = (
 				9C1983AC29B7923D007754AB /* ClickedMedication.swift */,
 				9CE8294E29D5968500010142 /* JSONDocument.swift */,
+				9C5A89E829D965420047427A /* SelectedDay.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				9CFCECD129D07447001656B5 /* HeadacheCompanion.xcdatamodeld in Sources */,
 				9C682CEB29B3962D00032874 /* Extensions.swift in Sources */,
 				9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */,
+				9C5A89E929D965420047427A /* SelectedDay.swift in Sources */,
 				9C96928029B497520023A00C /* MultiSelectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
