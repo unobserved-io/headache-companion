@@ -11,7 +11,9 @@ struct CalendarView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
         entity: DayData.entity(),
-        sortDescriptors: []
+        sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: false)],
+        predicate: NSPredicate(format: "date = %@", dateFormatter.string(from: .now)),
+        animation: .default
     )
     var dayData: FetchedResults<DayData>
     @FetchRequest(
@@ -26,8 +28,6 @@ struct CalendarView: View {
     @State private var showingMedSheet: Bool = false
     @State private var activitiesSheet: Bool = false
     @State private var selectedActivity: String = ""
-    @State private var selectedDayData: DayData? = nil
-    // TODO: Use a system like ClickedMedication to better observer selectedDayData
     
     var body: some View {
         NavigationStack {
@@ -41,16 +41,15 @@ struct CalendarView: View {
                     )
                     .datePickerStyle(.graphical)
                     .onChange(of: selectedDay) { newDay in
-                        getDayData()
+                        dayData.nsPredicate = NSPredicate(format: "date = %@", dateFormatter.string(from: newDay))
                     }
                 }
                 .onAppear {
                     refreshView()
-                    getDayData()
                 }
                 
                 Section("Attacks") {
-                    ForEach(selectedDayData?.attacks ?? []) { attack in
+                    ForEach(dayData.first?.attacks ?? []) { attack in
                         NavigationLink (destination: AttackView(attack: attack, for: selectedDay)) {
                             if attack.stopTime != nil {
                                 // TODO: Delete refreshIt here? One in lower section (or this section) may be enough
@@ -62,7 +61,7 @@ struct CalendarView: View {
                     }
                     .onDelete(perform: deleteAttack)
                     
-                    if selectedDayData?.attacks.isEmpty ?? true && selectedDayIsToday() {
+                    if dayData.first?.attacks.isEmpty ?? true && selectedDayIsToday() {
                         Text("No attacks")
                     }
                     
@@ -77,7 +76,7 @@ struct CalendarView: View {
                 }
                 
                 Section("Medication") {
-                    ForEach(selectedDayData?.medications ?? []) { medication in
+                    ForEach(dayData.first?.medications ?? []) { medication in
                         Button {
                             clickedMedication.medication = medication
                             showingMedSheet.toggle()
@@ -88,7 +87,7 @@ struct CalendarView: View {
                     }
                     .onDelete(perform: deleteMedication)
                     
-                    if selectedDayData?.medications.isEmpty ?? true && selectedDayIsToday() {
+                    if dayData.first?.medications.isEmpty ?? true && selectedDayIsToday() {
                         Text("No medication taken")
                     }
                     
@@ -111,7 +110,7 @@ struct CalendarView: View {
                                 .foregroundColor(.primary)
                             Spacer()
                             Image(systemName: "drop.fill")
-                                .foregroundColor(activityColor(of: selectedDayData?.water ?? .none))
+                                .foregroundColor(activityColor(of: dayData.first?.water ?? .none))
                         }
                     }
                     Button {
@@ -123,7 +122,7 @@ struct CalendarView: View {
                                 .foregroundColor(.primary)
                             Spacer()
                             Image(systemName: "carrot.fill")
-                                .foregroundColor(activityColor(of: selectedDayData?.diet ?? .none))
+                                .foregroundColor(activityColor(of: dayData.first?.diet ?? .none))
                         }
                     }
                     Button {
@@ -135,7 +134,7 @@ struct CalendarView: View {
                                 .foregroundColor(.primary)
                             Spacer()
                             Image(systemName: "bed.double.fill")
-                                .foregroundColor(activityColor(of: selectedDayData?.sleep ?? .none))
+                                .foregroundColor(activityColor(of: dayData.first?.sleep ?? .none))
                         }
                     }
                     Button {
@@ -147,7 +146,7 @@ struct CalendarView: View {
                                 .foregroundColor(.primary)
                             Spacer()
                             Image(systemName: "figure.strengthtraining.functional")
-                                .foregroundColor(activityColor(of: selectedDayData?.exercise ?? .none))
+                                .foregroundColor(activityColor(of: dayData.first?.exercise ?? .none))
                         }
                     }
                     Button {
@@ -159,13 +158,13 @@ struct CalendarView: View {
                                 .foregroundColor(.primary)
                             Spacer()
                             Image(systemName: "figure.mind.and.body")
-                                .foregroundColor(activityColor(of: selectedDayData?.relax ?? .none))
+                                .foregroundColor(activityColor(of: dayData.first?.relax ?? .none))
                         }
                     }
                 }
-                if !(selectedDayData?.notes.isEmpty ?? true) || !selectedDayIsToday() {
+                if !(dayData.first?.notes.isEmpty ?? true) || !selectedDayIsToday() {
                     Section(refreshIt ? "Notes" : "Notes") {
-                        if selectedDayData?.notes.isEmpty ?? true {
+                        if dayData.first?.notes.isEmpty ?? true {
                             NavigationLink(
                                 "Add notes",
                                 destination: NewNoteView(inputDate: selectedDay)
@@ -173,8 +172,8 @@ struct CalendarView: View {
                             )
                         } else {
                             NavigationLink(
-                                selectedDayData?.notes ?? "Notes",
-                                destination: NotesView(dayData: selectedDayData!)
+                                dayData.first?.notes ?? "Notes",
+                                destination: NotesView(dayData: dayData.first!)
                                     .navigationTitle("Daily Notes")
                             )
                         }
@@ -182,14 +181,14 @@ struct CalendarView: View {
                 }
             }
         }
-        .onDisappear() {
-            selectedDayData = nil
-        }
-        .sheet(isPresented: $activitiesSheet, onDismiss: selectedDayData != nil ? refreshView : getDayData) {
+//        .onDisappear() {
+//            dayData.first = nil
+//        }
+        .sheet(isPresented: $activitiesSheet, onDismiss: refreshView) {
             ActivitiesView(of: $selectedActivity, for: selectedDay)
                 .presentationDetents([.bar])
         }
-        .sheet(isPresented: $showingMedSheet, onDismiss: selectedDayData != nil ? refreshView : getDayData) {
+        .sheet(isPresented: $showingMedSheet, onDismiss: refreshView) {
             if clickedMedication.medication != nil {
                 AddEditMedicationView(dayTaken: selectedDay)
                     .environmentObject(clickedMedication)
@@ -203,13 +202,6 @@ struct CalendarView: View {
         refreshIt.toggle()
     }
     
-    private func getDayData() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let selectedDayFormatted = dateFormatter.string(from: selectedDay)
-        selectedDayData = dayData.filter { $0.date == selectedDayFormatted }.first
-    }
-    
     private func selectedDayIsToday() -> Bool {
         return Calendar.current.isDateInToday(selectedDay)
     }
@@ -217,7 +209,7 @@ struct CalendarView: View {
     private func deleteMedication(at offsets: IndexSet) {
         let index = offsets.first
         if index != nil {
-            let medToDelete: Medication? = selectedDayData?.medications[index!]
+            let medToDelete: Medication? = dayData.first?.medications[index!]
             if medToDelete != nil {
                 viewContext.delete(medToDelete!)
                 saveData()
@@ -228,7 +220,7 @@ struct CalendarView: View {
     private func deleteAttack(at offsets: IndexSet) {
         let index = offsets.first
         if index != nil {
-            let attackToDelete: Attack? = selectedDayData?.attacks[index!]
+            let attackToDelete: Attack? = dayData.first?.attacks[index!]
             if attackToDelete != nil {
                 viewContext.delete(attackToDelete!)
                 saveData()
