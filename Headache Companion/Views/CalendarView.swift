@@ -44,13 +44,10 @@ struct CalendarView: View {
                         dayData.nsPredicate = NSPredicate(format: "date = %@", dateFormatter.string(from: newDay))
                     }
                 }
-                .onAppear {
-                    refreshView()
-                }
                 
                 Section(refreshIt ? "Attacks" : "Attacks") {
                     ForEach(dayData.first?.attacks ?? []) { attack in
-                        NavigationLink (destination: AttackView(attack: attack, for: selectedDay)) {
+                        NavigationLink (destination: AttackView(attack: attack, for: selectedDay).onDisappear() { refreshView() }) {
                             if attack.stopTime != nil {
                                 Text("\(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened)) - \(attack.wrappedStopTime.formatted(date: .omitted, time: .shortened))")
                             } else {
@@ -180,7 +177,7 @@ struct CalendarView: View {
                 }
             }
         }
-        .sheet(isPresented: $activitiesSheet, onDismiss: refreshView) {
+        .sheet(isPresented: $activitiesSheet) {
             ActivitiesView(of: $selectedActivity, for: selectedDay)
                 .presentationDetents([.bar])
         }
