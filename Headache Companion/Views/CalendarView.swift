@@ -44,8 +44,11 @@ struct CalendarView: View {
                         dayData.nsPredicate = NSPredicate(format: "date = %@", dateFormatter.string(from: newDay))
                     }
                 }
+                .onAppear() {
+                    refreshView()
+                }
                 
-                Section("Attacks") {
+                Section(refreshIt ? "Attacks" : "Attacks") {
                     ForEach((dayData.first?.attack?.allObjects as? [Attack] ?? []).sorted{$0.wrappedStartTime < $1.wrappedStartTime}) { attack in
                         NavigationLink (destination: AttackView(attack: attack, for: selectedDay).onDisappear() { refreshView() }) {
                             if attack.stopTime != nil {
