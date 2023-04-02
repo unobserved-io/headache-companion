@@ -45,8 +45,8 @@ struct CalendarView: View {
                     }
                 }
                 
-                Section(refreshIt ? "Attacks" : "Attacks") {
-                    ForEach(dayData.first?.attacks ?? []) { attack in
+                Section("Attacks") {
+                    ForEach((dayData.first?.attack?.allObjects as? [Attack] ?? []).sorted{$0.wrappedStartTime < $1.wrappedStartTime}) { attack in
                         NavigationLink (destination: AttackView(attack: attack, for: selectedDay).onDisappear() { refreshView() }) {
                             if attack.stopTime != nil {
                                 Text("\(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened)) - \(attack.wrappedStopTime.formatted(date: .omitted, time: .shortened))")
