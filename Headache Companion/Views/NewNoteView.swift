@@ -17,8 +17,6 @@ struct NewNoteView: View {
     }
     
     private func getDayData() -> DayData{
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: inputDate)
         
         let newDay = DayData(context: viewContext)

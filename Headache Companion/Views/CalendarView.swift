@@ -48,12 +48,11 @@ struct CalendarView: View {
                     refreshView()
                 }
                 
-                Section("Attacks") {
+                Section(refreshIt ? "Attacks" : "Attacks") {
                     ForEach(dayData.first?.attacks ?? []) { attack in
                         NavigationLink (destination: AttackView(attack: attack, for: selectedDay)) {
                             if attack.stopTime != nil {
-                                // TODO: Delete refreshIt here? One in lower section (or this section) may be enough
-                                Text("\(refreshIt ? "" : "")\(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened)) - \(attack.wrappedStopTime.formatted(date: .omitted, time: .shortened))")
+                                Text("\(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened)) - \(attack.wrappedStopTime.formatted(date: .omitted, time: .shortened))")
                             } else {
                                 Text(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened))
                             }
@@ -163,8 +162,8 @@ struct CalendarView: View {
                     }
                 }
                 if !(dayData.first?.notes.isEmpty ?? true) || !selectedDayIsToday() {
-                    Section(refreshIt ? "Notes" : "Notes") {
-                        if dayData.first?.notes.isEmpty ?? true {
+                    Section("Notes") {
+                        if dayData.first?.notes.isEmpty ?? true && dayData.first == nil {
                             NavigationLink(
                                 "Add notes",
                                 destination: NewNoteView(inputDate: selectedDay)
@@ -172,7 +171,7 @@ struct CalendarView: View {
                             )
                         } else {
                             NavigationLink(
-                                dayData.first?.notes ?? "Notes",
+                                dayData.first?.notes.isEmpty ?? true ? "Add notes" : dayData.first?.notes ?? "Notes",
                                 destination: NotesView(dayData: dayData.first!)
                                     .navigationTitle("Daily Notes")
                             )
@@ -181,9 +180,6 @@ struct CalendarView: View {
                 }
             }
         }
-//        .onDisappear() {
-//            dayData.first = nil
-//        }
         .sheet(isPresented: $activitiesSheet, onDismiss: refreshView) {
             ActivitiesView(of: $selectedActivity, for: selectedDay)
                 .presentationDetents([.bar])
