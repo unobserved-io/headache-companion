@@ -72,7 +72,7 @@ struct CalendarView: View {
                 }
                 
                 Section("Medication") {
-                    ForEach(dayData.first?.medications ?? []) { medication in
+                    ForEach((dayData.first?.medication?.allObjects as? [Medication] ?? []).sorted{$0.wrappedTime < $1.wrappedTime}) { medication in
                         Button {
                             clickedMedication.medication = medication
                             showingMedSheet.toggle()
