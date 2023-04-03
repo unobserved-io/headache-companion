@@ -22,6 +22,7 @@ struct AttackView: View {
     let startDateComps = DateComponents(hour: 0, minute: 0)
     let stopDateComps = DateComponents(hour: 23, minute: 59)
     let newAttack: Bool
+    let editCurrent: Bool
     let inputDate: Date?
     let basicSymptoms = [
         "Nausea",
@@ -45,10 +46,11 @@ struct AttackView: View {
         "Visual"
     ]
     
-    init(attack: Attack, for inputDate: Date? = nil, new: Bool = false) {
+    init(attack: Attack, for inputDate: Date? = nil, new: Bool = false, edit: Bool = false) {
         self.attack = attack
         self.inputDate = inputDate
         self.newAttack = new
+        self.editCurrent = edit
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -215,20 +217,22 @@ struct AttackView: View {
         }
         .onAppear() {
             if newAttack {
-                if !dayData.isEmpty {
-                    if !(dayData.first?.attacks.contains(attack) ?? true) {
-                        dayData.first?.addToAttack(attack)
+                if !editCurrent {
+                    if !dayData.isEmpty {
+                        if !(dayData.first?.attacks.contains(attack) ?? true) {
+                            dayData.first?.addToAttack(attack)
+                            saveData()
+                        }
+                    } else {
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                        let dateString = dateFormatter.string(from: inputDate ?? Date.now)
+                        
+                        let newDay = DayData(context: viewContext)
+                        newDay.date = dateString
+                        newDay.addToAttack(attack)
                         saveData()
                     }
-                } else {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                    let dateString = dateFormatter.string(from: inputDate ?? Date.now)
-                    
-                    let newDay = DayData(context: viewContext)
-                    newDay.date = dateString
-                    newDay.addToAttack(attack)
-                    saveData()
                 }
             }
         }

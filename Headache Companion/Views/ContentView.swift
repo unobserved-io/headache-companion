@@ -37,15 +37,28 @@ struct ContentView: View {
             VStack {
                 // Top two buttons
                 if currentAttackOngoing() {
-                    Button(refreshIt ? "End Attack" : "End Attack") {
-                        attackEndTime = .now
-                        endAttackConfirmation.toggle()
+                    HStack {
+                        NavigationLink(
+                            "Edit Attack",
+                            destination: AttackView(attack: (dayData.first?.attacks.last)!, for: .now, new: true, edit: true)
+                                .navigationTitle("Edit Attack")
+                        )
+                        .buttonStyle(.bordered)
+                        .controlSize(.large)
+                        .tint(.accentColor)
+                        .font(.title2)
+                        .disabled(dayData.isEmpty)
+                        
+                        Button(refreshIt ? "End Attack" : "End Attack") {
+                            attackEndTime = .now
+                            endAttackConfirmation.toggle()
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                        .tint(.accentColor)
+                        .font(.title2)
+                        .disabled(dayData.isEmpty)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                    .tint(.accentColor)
-                    .font(.title2)
-                    .disabled(dayData.isEmpty)
                 } else {
                     NavigationLink(
                         "Attack",
