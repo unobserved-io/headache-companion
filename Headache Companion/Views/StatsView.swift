@@ -35,11 +35,6 @@ struct StatsView: View {
         case relax
         case sleep
     }
-    private let dateFormatter: DateFormatter = {
-        let dateformat = DateFormatter()
-        dateformat.dateFormat = "yyyy-MM-dd"
-        return dateformat
-    }()
 
     @ObservedObject var statsHelper = StatsHelper.sharedInstance
     @State private var dateRange: DateRange = .allTime
@@ -211,8 +206,8 @@ struct StatsView: View {
             
             HStack {
                 // TODO: Change to the first date app was used in mAppData, otherwise this will change when a previous date's data is altered
-                mainStat(String((Calendar.current.dateComponents([.day], from: dateFormatter.date(from: dayData.first?.date ?? dateFormatter.string(from: Date.now)) ?? Date.now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
-                statDescription("\((Calendar.current.dateComponents([.day], from: dateFormatter.date(from: dayData.first?.date ?? dateFormatter.string(from: Date.now)) ?? Date.now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? "day" : "days") using Headache Companion")
+                mainStat(String((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
+                statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? "day" : "days") using Headache Companion")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading)

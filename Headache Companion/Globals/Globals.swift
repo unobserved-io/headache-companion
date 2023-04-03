@@ -45,6 +45,7 @@ func initializeMAppData() {
         getData(from: UIColor(Color.yellow)) ?? Data(),
         getData(from: UIColor(Color.green)) ?? Data(),
     ]
+    newMAppData.launchDay = Calendar.current.startOfDay(for: .now)
     saveData()
 }
 

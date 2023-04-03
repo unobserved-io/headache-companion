@@ -13,13 +13,9 @@ struct LoadingView: View {
     var dayData: FetchedResults<DayData>
     @FetchRequest(entity: MAppData.entity(), sortDescriptors: [])
     var mAppData: FetchedResults<MAppData>
-    @AppStorage("lastLaunch") private var lastLaunch = ""
+    @AppStorage("lastLaunch") private var lastLaunch: String = ""
     @State var isAnimated: Bool = false
-    let todayString : String = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.string(from: .now)
-    }()
+    let todayString: String = dateFormatter.string(from: .now)
     
     var body: some View {
         if lastLaunch == todayString {
@@ -55,7 +51,7 @@ struct LoadingView: View {
     private func initializeDataInThree() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             if mAppData.isEmpty {
-                initializeMApp()
+                initializeMAppData()
             }
             if !dayData.contains(where: { $0.date == todayString}) {
                 initNewDay()
@@ -70,24 +66,25 @@ struct LoadingView: View {
         saveData()
     }
     
-    private func initializeMApp() {
-        let newMAppData = MAppData(context: viewContext)
-        newMAppData.doctorNotes = ""
-        newMAppData.customSymptoms = []
-        newMAppData.activityColors = [
-            getData(from: UIColor(Color.gray)) ?? Data(),
-            getData(from: UIColor(Color.red)) ?? Data(),
-            getData(from: UIColor(Color.yellow)) ?? Data(),
-            getData(from: UIColor(Color.green)) ?? Data(),
-        ]
-        
-        // Double check that it does not exist before saving
-        if !mAppData.contains(where: { $0.doctorNotes == "" }) {
-            saveData()
-        } else {
-            viewContext.delete(newMAppData)
-        }
-    }
+//    private func initializeMApp() {
+//        let newMAppData = MAppData(context: viewContext)
+//        newMAppData.doctorNotes = ""
+//        newMAppData.customSymptoms = []
+//        newMAppData.activityColors = [
+//            getData(from: UIColor(Color.gray)) ?? Data(),
+//            getData(from: UIColor(Color.red)) ?? Data(),
+//            getData(from: UIColor(Color.yellow)) ?? Data(),
+//            getData(from: UIColor(Color.green)) ?? Data(),
+//        ]
+//        newMAppData.launchDay = Calendar.current.startOfDay(for: .now)
+//        
+//        // Double check that it does not exist before saving
+//        if !mAppData.contains(where: { $0.doctorNotes == "" }) {
+//            saveData()
+//        } else {
+//            viewContext.delete(newMAppData)
+//        }
+//    }
 }
 
 struct LoadingView_Previews: PreviewProvider {

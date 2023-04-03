@@ -33,6 +33,7 @@
         <attribute name="customSymptoms" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="doctorNotes" attributeType="String" defaultValueString=""/>
         <attribute name="getsPeriod" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="launchDay" attributeType="Date" defaultDateTimeInterval="694249200" usesScalarValueType="NO"/>
         <relationship name="regularMedications" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medication" inverseName="mAppData" inverseEntity="Medication"/>
     </entity>
     <entity name="Medication" representedClassName="Medication" syncable="YES">
