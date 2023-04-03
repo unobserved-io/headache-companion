@@ -43,6 +43,7 @@ struct StatsView: View {
     @State private var clickedAttacks: Bool = false
     @State private var clickedSymptoms: Bool = false
     @State private var clickedAuras: Bool = false
+    @State private var clickedMedNames: Bool = false
     @State private var chosenActivity: ChosenActivity = .water
 
     var body: some View {
@@ -146,7 +147,11 @@ struct StatsView: View {
                             mainStat(String(statsHelper.allAuras.count))
                             statDescriptionChevron(for: "\(statsHelper.allAuras.count == 1 ? "aura" : "auras")", clicked: clickedAuras, list: statsHelper.allAuras)
                         }
-                        // TODO: Under Auras will be number broken down by type
+                        
+                        GridRow(alignment: .top) {
+                            mainStat(String(statsHelper.allMedicationNames.count))
+                            statDescriptionChevron(for: "\(statsHelper.allMedicationNames.count == 1 ? "type" : "types") of medication taken", clicked: clickedMedNames, list: statsHelper.allMedicationNames)
+                        }
                         
                         //                        GridRow {
                         //                            Image(systemName: "sunrise")
@@ -154,17 +159,13 @@ struct StatsView: View {
                         //                                .foregroundColor(.accentColor)
                         //                                .bold()
                         //                                .padding(.trailing)
-                        //                            Text("Most common time of day")
+                        //                            Text("most common time of day")
                         //                                .font(.title3)
                         //                        }
-                        // TODO: Add most common type of headache
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.bottom)
-                
-                //                mainStat(String(statsHelper.mostCommonTypeOfHeadache))
-                //                statDescription("Most common type")
                 
                 // MARK: Activities Stats
                 VStack {
@@ -194,8 +195,6 @@ struct StatsView: View {
             }
             .padding()
             .addBorder(Color.accentColor, width: 4, cornerRadius: 15)
-//            .background(colorScheme == .light ? .gray.opacity(0.20) : .white.opacity(0.10))
-//            .cornerRadius(15)
             .padding(.bottom)
             
             HStack {
@@ -250,10 +249,12 @@ struct StatsView: View {
         .containerShape(Rectangle())
         .onTapGesture {
             switch description {
-            case "symptom", "symptoms":
+            case let str where str.contains("symptom"):
                 clickedSymptoms.toggle()
-            case "aura", "auras":
+            case let str where str.contains("aura"):
                 clickedAuras.toggle()
+            case let str where str.contains("type"):
+                clickedMedNames.toggle()
             default:
                 break
             }

@@ -18,6 +18,7 @@ class StatsHelper: ObservableObject {
     @Published var allSymptoms = Set<String>()
     @Published var allAuras = Set<String>()
     @Published var allTypesOfHeadache: [(key: String, value: Int)] = []
+    @Published var allMedicationNames = Set<String>()
     @Published var mostCommonTypeOfHeadache: String = ""
     @Published var averagePainLevel: Double = 0.0
     @Published var percentWithAttack: Int = 0
@@ -51,7 +52,7 @@ class StatsHelper: ObservableObject {
                 numberOfAttacks += day.attacks.count
                 
                 var painLevels: [Double] = []
-                for attack in day.attacks {
+                day.attacks.forEach { attack in
                     if !attack.symptoms.isEmpty {
                         for symptom in attack.symptoms {
                             allSymptoms.insert(symptom)
@@ -72,6 +73,17 @@ class StatsHelper: ObservableObject {
                     }
                 }
                 painLevelsPerDay.append(painLevels.reduce(0,+) / Double(painLevels.count))
+            }
+            
+            // Medication stats
+            if !day.medications.isEmpty {
+                day.medications.forEach { medication in
+                    if medication.name != nil && !(medication.name?.isEmpty ?? true) {
+                        if !allMedicationNames.contains(medication.name ?? "") {
+                            allMedicationNames.insert(medication.name ?? "")
+                        }
+                    }
+                }
             }
         }
         

@@ -216,23 +216,21 @@ struct AttackView: View {
             .padding()
         }
         .onAppear() {
-            if newAttack {
-                if !editCurrent {
-                    if !dayData.isEmpty {
-                        if !(dayData.first?.attacks.contains(attack) ?? true) {
-                            dayData.first?.addToAttack(attack)
-                            saveData()
-                        }
-                    } else {
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "yyyy-MM-dd"
-                        let dateString = dateFormatter.string(from: inputDate ?? Date.now)
-                        
-                        let newDay = DayData(context: viewContext)
-                        newDay.date = dateString
-                        newDay.addToAttack(attack)
+            if newAttack && !editCurrent {
+                if !dayData.isEmpty {
+                    if !(dayData.first?.attacks.contains(attack) ?? true) {
+                        dayData.first?.addToAttack(attack)
                         saveData()
                     }
+                } else {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    let dateString = dateFormatter.string(from: inputDate ?? Date.now)
+                    
+                    let newDay = DayData(context: viewContext)
+                    newDay.date = dateString
+                    newDay.addToAttack(attack)
+                    saveData()
                 }
             }
         }
