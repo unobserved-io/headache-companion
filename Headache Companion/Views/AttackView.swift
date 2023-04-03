@@ -40,9 +40,11 @@ struct AttackView: View {
         "Memory issues"
     ]
     let auraTypes = [
-        "Numbness",
-        "Smell",
-        "Tingling",
+        "Brainstem",
+        "Motor",
+        "Retinal",
+        "Sensory",
+        "Speech",
         "Visual"
     ]
     
@@ -188,13 +190,6 @@ struct AttackView: View {
                         Picker("Type of headache", selection: $attack.headacheType) {
                             Text("Migraine").tag(Headaches.migraine)
                             Text("Tension").tag(Headaches.tension)
-                            Text("Cluster").tag(Headaches.cluster)
-                            Text("Exertional").tag(Headaches.exertional)
-                            Text("Hypnic").tag(Headaches.hypnic)
-                            Text("Sinus").tag(Headaches.sinus)
-                            Text("Caffeine").tag(Headaches.caffeine)
-                            Text("Injury").tag(Headaches.injury)
-                            Text("Menstrual").tag(Headaches.menstrual)
                             Text("Other").tag(Headaches.other)
                         }
                         .onChange(of: attack.headacheType) { _ in saveData() }

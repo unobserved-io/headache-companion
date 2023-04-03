@@ -18,13 +18,6 @@ public enum Sides: Int16 {
 public enum Headaches: Int16 {
     case migraine
     case tension
-    case cluster
-    case exertional
-    case hypnic
-    case sinus
-    case caffeine
-    case injury
-    case menstrual
     case other
 }
 
