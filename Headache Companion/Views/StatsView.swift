@@ -205,7 +205,6 @@ struct StatsView: View {
             .padding(.leading)
             
             HStack {
-                // TODO: Change to the first date app was used in mAppData, otherwise this will change when a previous date's data is altered
                 mainStat(String((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
                 statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? "day" : "days") using Headache Companion")
             }
