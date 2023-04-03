@@ -193,8 +193,9 @@ struct StatsView: View {
                 
             }
             .padding()
-            .background(colorScheme == .light ? .gray.opacity(0.20) : .white.opacity(0.10))
-            .cornerRadius(15)
+            .addBorder(Color.accentColor, width: 4, cornerRadius: 15)
+//            .background(colorScheme == .light ? .gray.opacity(0.20) : .white.opacity(0.10))
+//            .cornerRadius(15)
             .padding(.bottom)
             
             HStack {
