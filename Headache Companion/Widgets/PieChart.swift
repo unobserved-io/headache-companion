@@ -35,9 +35,6 @@ struct PieChart: View {
             Circle()
                 .fill(colorScheme == .light ? .white : .black)
                 .frame(width: 100, height: 100)
-            Circle()
-                .fill(colorScheme == .light ? .gray.opacity(0.20) : .white.opacity(0.10))
-                .frame(width: 100, height: 100)
             
             Image(systemName: icon)
                 .font(.system(size: 40))
