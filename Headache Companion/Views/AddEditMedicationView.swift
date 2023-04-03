@@ -33,10 +33,20 @@ struct AddEditMedicationView: View {
     var body: some View {
         Form {
             // Type field
-            TextField("Name", text: $medName, prompt: Text("Ibuprofen, Aspirin, etc."))
+            LabeledContent {
+                TextField("Name", text: $medName, prompt: Text("Ibuprofen, Aspirin, etc."))
+            } label: {
+                Text("Name")
+                    .padding(.trailing)
+            }
             
             // Dose field
-            TextField("Dose", text: $medDose, prompt: Text("Pills, 20 mg, etc."))
+            LabeledContent {
+                TextField("Dose", text: $medDose, prompt: Text("20 mg, 50 ml, etc."))
+            } label: {
+                Text("Dose")
+                    .padding(.trailing)
+            }
 
             // Amount stepper
             HStack {
