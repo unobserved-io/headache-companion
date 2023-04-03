@@ -22,17 +22,14 @@ struct ContentView: View {
     @State private var attackEndTime: Date = .now
     @State private var refreshIt: Bool = false
     @State private var attackOngoing: Bool = false
-    let todayString : String = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.string(from: .now)
-    }()
+    let todayString: String = dateFormatter.string(from: .now)
     
     init() {
         _dayData = FetchRequest(
             sortDescriptors: [],
             predicate: NSPredicate(format: "date = %@", todayString)
         )
+        scheduleMidnightTimer()
     }
 
     var body: some View {
@@ -217,6 +214,30 @@ struct ContentView: View {
         let newDay = DayData(context: viewContext)
         newDay.date = todayString
         saveData()
+    }
+    
+    private func scheduleMidnightTimer() {
+        /// Schedule a timer to change the day at midnight
+        let midnight = Calendar.current.startOfDay(for: .now).addingTimeInterval(86400)
+        let timer = Timer(fire: midnight, interval: 0, repeats: true) { _ in
+            // Code to be executed at midnight
+            let newDayString = dateFormatter.string(from: .now)
+            dayData.nsPredicate = NSPredicate(format: "date = %@", newDayString)
+            if dayData.isEmpty {
+                let newDay = DayData(context: viewContext)
+                newDay.date = newDayString
+                saveData()
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    if dayData.isEmpty {
+                        let newDay = DayData(context: viewContext)
+                        newDay.date = newDayString
+                        saveData()
+                    }
+                }
+            }
+        }
+        RunLoop.current.add(timer, forMode: .common)
     }
     
     private func currentAttackOngoing() -> Bool {
