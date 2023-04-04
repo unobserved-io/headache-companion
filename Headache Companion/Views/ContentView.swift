@@ -10,7 +10,13 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest var dayData: FetchedResults<DayData>
+    @FetchRequest(
+        entity: DayData.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: false)],
+        predicate: NSPredicate(format: "date = %@", dateFormatter.string(from: .now)),
+        animation: .default
+    )
+    var dayData: FetchedResults<DayData>
     @FetchRequest(
         entity: MAppData.entity(),
         sortDescriptors: []
@@ -23,14 +29,6 @@ struct ContentView: View {
     @State private var refreshIt: Bool = false
     @State private var attackOngoing: Bool = false
     let todayString: String = dateFormatter.string(from: .now)
-    
-    init() {
-        _dayData = FetchRequest(
-            sortDescriptors: [],
-            predicate: NSPredicate(format: "date = %@", todayString)
-        )
-        scheduleMidnightTimer()
-    }
 
     var body: some View {
         NavigationStack {
@@ -40,7 +38,7 @@ struct ContentView: View {
                     HStack {
                         NavigationLink(
                             "Edit Attack",
-                            destination: AttackView(attack: (dayData.first?.attacks.last)!, for: .now, new: true, edit: true)
+                            destination: AttackView(attack: dayData.first?.attacks.last ?? makeTempAttack(), for: .now, new: true, edit: true)
                                 .navigationTitle("Edit Attack")
                         )
                         .buttonStyle(.bordered)
@@ -160,7 +158,7 @@ struct ContentView: View {
                     HStack {
                         NavigationLink(
                             "Daily Notes",
-                            destination: NotesView(dayData: dayData.first!)
+                            destination: NotesView(dayData: dayData.first ?? makeTempDayData())
                                 .navigationTitle("Daily Notes")
                         )
                             .buttonStyle(.bordered)
@@ -179,6 +177,28 @@ struct ContentView: View {
         }
         .onAppear() {
             refreshIt.toggle()
+            
+            // Timer to change day at midnight
+            let midnight = Calendar.current.startOfDay(for: .now).addingTimeInterval(86400)
+            let timer = Timer(fire: midnight, interval: 0, repeats: false) { _ in
+                // Code to be executed at midnight
+                let newDayString = dateFormatter.string(from: .now)
+                dayData.nsPredicate = NSPredicate(format: "date = %@", newDayString)
+                if dayData.isEmpty {
+                    let newDay = DayData(context: viewContext)
+                    newDay.date = newDayString
+                    saveData()
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        if dayData.isEmpty {
+                            let newDay = DayData(context: viewContext)
+                            newDay.date = newDayString
+                            saveData()
+                        }
+                    }
+                }
+            }
+            RunLoop.current.add(timer, forMode: .common)
         }
         .sheet(isPresented: $activitiesSheet) {
             ActivitiesView(of: $selectedActivity, for: .now)
@@ -223,34 +243,18 @@ struct ContentView: View {
         
     }
     
-    private func initNewDay() {
-        let newDay = DayData(context: viewContext)
-        newDay.date = todayString
-        saveData()
+    private func makeTempDayData() -> DayData {
+        /// Create an empty DayData object not associated with the context
+        let itemEntity = NSEntityDescription.entity(forEntityName: "DayData",
+            in: viewContext)!
+        return DayData(entity: itemEntity, insertInto:nil)
     }
     
-    private func scheduleMidnightTimer() {
-        /// Schedule a timer to change the day at midnight
-        let midnight = Calendar.current.startOfDay(for: .now).addingTimeInterval(86400)
-        let timer = Timer(fire: midnight, interval: 0, repeats: true) { _ in
-            // Code to be executed at midnight
-            let newDayString = dateFormatter.string(from: .now)
-            dayData.nsPredicate = NSPredicate(format: "date = %@", newDayString)
-            if dayData.isEmpty {
-                let newDay = DayData(context: viewContext)
-                newDay.date = newDayString
-                saveData()
-            } else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    if dayData.isEmpty {
-                        let newDay = DayData(context: viewContext)
-                        newDay.date = newDayString
-                        saveData()
-                    }
-                }
-            }
-        }
-        RunLoop.current.add(timer, forMode: .common)
+    private func makeTempAttack() -> Attack {
+        /// Create an empty DayData object not associated with the context
+        let itemEntity = NSEntityDescription.entity(forEntityName: "Attack",
+            in: viewContext)!
+        return Attack(entity: itemEntity, insertInto:nil)
     }
     
     private func currentAttackOngoing() -> Bool {

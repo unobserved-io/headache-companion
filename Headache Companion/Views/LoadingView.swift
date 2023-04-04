@@ -65,26 +65,6 @@ struct LoadingView: View {
         newDay.date = todayString
         saveData()
     }
-    
-//    private func initializeMApp() {
-//        let newMAppData = MAppData(context: viewContext)
-//        newMAppData.doctorNotes = ""
-//        newMAppData.customSymptoms = []
-//        newMAppData.activityColors = [
-//            getData(from: UIColor(Color.gray)) ?? Data(),
-//            getData(from: UIColor(Color.red)) ?? Data(),
-//            getData(from: UIColor(Color.yellow)) ?? Data(),
-//            getData(from: UIColor(Color.green)) ?? Data(),
-//        ]
-//        newMAppData.launchDay = Calendar.current.startOfDay(for: .now)
-//        
-//        // Double check that it does not exist before saving
-//        if !mAppData.contains(where: { $0.doctorNotes == "" }) {
-//            saveData()
-//        } else {
-//            viewContext.delete(newMAppData)
-//        }
-//    }
 }
 
 struct LoadingView_Previews: PreviewProvider {

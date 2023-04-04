@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AttackView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.dismiss) var dismiss // TODO: From iOS 15+. Test on iOS 14
+    @Environment(\.dismiss) var dismiss
     @FetchRequest var dayData: FetchedResults<DayData>
     @ObservedObject var attack: Attack
     @FetchRequest(
