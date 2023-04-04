@@ -74,20 +74,6 @@ func headacheTypeString(_ type: Headaches) -> String {
         return "Migraine"
     case .tension:
         return "Tension"
-    case .cluster:
-        return "Cluster"
-    case .exertional:
-        return "Exertional"
-    case .hypnic:
-        return "Hypnic"
-    case .sinus:
-        return "Sinus"
-    case .caffeine:
-        return "Caffeine"
-    case .injury:
-        return "Inuury"
-    case .menstrual:
-        return "Menstrual"
     case .other:
         return "Other"
     }
