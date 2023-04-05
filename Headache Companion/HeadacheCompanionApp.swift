@@ -10,11 +10,17 @@ import SwiftUI
 @main
 struct HeadacheCompanionApp: App {
     let persistenceController = PersistenceController.shared
+    @ObservedObject var storeModel = StoreModel.sharedInstance
 
     var body: some Scene {
         WindowGroup {
             LoadingView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .onAppear() {
+                    Task {
+                        try await storeModel.fetchProducts()
+                    }
+                }
         }
     }
 }

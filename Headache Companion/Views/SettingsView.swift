@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import StoreKit
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -21,28 +22,65 @@ struct SettingsView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: true)]
     )
     var dayData: FetchedResults<DayData>
+    @ObservedObject var storeModel = StoreModel.sharedInstance
     @State private var showingDeleteAlert: Bool = false
     @State private var showingResetAlert: Bool = false
     @State private var showingImportAlert: Bool = false
     @State private var showingFilePicker: Bool = false
     @State private var showingFileExporter: Bool = false
+    @State private var showingPurchaseAlert: Bool = false
+    @State private var path: [String] = []
     @AppStorage("lastLaunch") private var lastLaunch = ""
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             Form {
                 Section("Custom Inputs") {
-                    NavigationLink(destination: RegularMedicationsView()) {
-                        Label("Regular Medications", systemImage: "pill.fill")
+                    Button {
+                        if storeModel.purchasedIds.isEmpty {
+                            showingPurchaseAlert.toggle()
+                        } else {
+                            path.append("RegularMedicationsView")
+                        }
+                    } label: {
+                        Label {
+                            Text(storeModel.purchasedIds.isEmpty ? "Regular Medications (Pro)" : "Regular Medications")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "pill.fill")
+                        }
                     }
-                    NavigationLink(destination: CustomSymptomsView()) {
-                        Label("Add Symptoms", systemImage: "medical.thermometer.fill")
+                    
+                    Button {
+                        if storeModel.purchasedIds.isEmpty {
+                            showingPurchaseAlert.toggle()
+                        } else {
+                            path.append("CustomSymptomsView")
+                        }
+                    } label: {
+                        Label {
+                            Text(storeModel.purchasedIds.isEmpty ? "Add Symptoms (Pro)" : "Add Symptoms")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "medical.thermometer.fill")
+                        }
                     }
                 }
                 
                 Section("Appearance") {
-                    NavigationLink(destination: ActivityColorsView()) {
-                        Label("Activity Colors", systemImage: "paintpalette.fill")
+                    Button {
+                        if storeModel.purchasedIds.isEmpty {
+                            showingPurchaseAlert.toggle()
+                        } else {
+                            path.append("ActivityColorsView")
+                        }
+                    } label: {
+                        Label {
+                            Text(storeModel.purchasedIds.isEmpty ? "Activity Colors (Pro)" : "Activity Colors")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "paintpalette.fill")
+                        }
                     }
                 }
                 
@@ -101,6 +139,15 @@ struct SettingsView: View {
                     }
                 }
             }
+            .navigationDestination(for: String.self) { view in
+                if view == "RegularMedicationsView" {
+                    RegularMedicationsView()
+                } else if view == "CustomSymptomsView" {
+                    CustomSymptomsView()
+                } else if view == "ActivityColorsView" {
+                    ActivityColorsView()
+                }
+            }
         }
         .alert("Delete everything?", isPresented: $showingDeleteAlert) {
             Button("Delete") {
@@ -125,6 +172,23 @@ struct SettingsView: View {
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("Importing data will delete all current data. Do you still want to import?")
+        }
+        .alert("Go Pro?", isPresented: $showingPurchaseAlert) {
+            if let product = storeModel.products.first {
+                Button("Upgrade (\(product.displayPrice))") {
+                    Task {
+                        try await storeModel.purchase()
+                    }
+                }
+                Button("Restore purchase") {
+                    Task {
+                        try await AppStore.sync()
+                    }
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This feature is only availble in the Pro version. Upgrade now to access it.")
         }
         .fileImporter(isPresented: $showingFilePicker, allowedContentTypes: [.json]) { result in
             do {
@@ -210,6 +274,11 @@ struct SettingsView: View {
                 }
             } catch {
                 print("Failed to import data: \(error.localizedDescription)")
+            }
+        }
+        .onAppear() {
+            Task {
+                try await storeModel.fetchProducts()
             }
         }
     }
