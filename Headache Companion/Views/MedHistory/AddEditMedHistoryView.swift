@@ -27,6 +27,7 @@ struct AddEditMedHistoryView: View {
             // Name field
             LabeledContent {
                 TextField("Name", text: $medHistory.name, prompt: Text("Aspirin, Paracetamol, etc."))
+                    .multilineTextAlignment(.trailing)
             } label: {
                 Text("Name")
                     .padding(.trailing)
@@ -44,6 +45,7 @@ struct AddEditMedHistoryView: View {
             // Dose field
             LabeledContent {
                 TextField("Dose", text: $medHistory.dose, prompt: Text("20 mg, 50 ml, etc."))
+                    .multilineTextAlignment(.trailing)
             } label: {
                 Text("Dose")
                     .padding(.trailing)
