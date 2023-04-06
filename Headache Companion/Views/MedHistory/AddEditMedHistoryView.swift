@@ -61,7 +61,7 @@ struct AddEditMedHistoryView: View {
             .pickerStyle(.segmented)
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
-            // Symptoms selector
+            // Side Effects selector
             NavigationLink (destination: MedicationSideEffectsView(sideEffects: $medHistory.sideEffects.toUnwrapped(defaultValue: [])).navigationTitle("Add Symptoms")) {
                 Text("Side Effects")
                     .foregroundColor(.primary)
