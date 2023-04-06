@@ -37,7 +37,7 @@
         <relationship name="regularMedications" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medication" inverseName="mAppData" inverseEntity="Medication"/>
     </entity>
     <entity name="MedHistory" representedClassName="MedHistory" syncable="YES">
-        <attribute name="amount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="amount" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="dose" attributeType="String" defaultValueString=""/>
         <attribute name="effective" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
@@ -49,7 +49,7 @@
         <attribute name="type" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
     </entity>
     <entity name="Medication" representedClassName="Medication" syncable="YES">
-        <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="dose" optional="YES" attributeType="String"/>
         <attribute name="effective" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
