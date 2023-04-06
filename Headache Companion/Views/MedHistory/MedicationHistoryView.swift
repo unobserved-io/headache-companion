@@ -35,19 +35,29 @@ struct MedicationHistoryView: View {
                 Section {
                     ForEach(medHistory) { med in
                         DisclosureGroup(med.name) {
-                            Text("\(DateFormatter.localizedString(from: med.startDate ?? .now, dateStyle: .short, timeStyle: .none)) to \(med.stopDate != nil ? DateFormatter.localizedString(from: med.stopDate!, dateStyle: .short, timeStyle: .none) : "Present")")
+                            if Calendar.current.isDateInToday(med.startDate ?? Date.distantPast) {
+                                Text("Started today")
+                                    .foregroundColor(.gray)
+                            } else {
+                                Text("\(DateFormatter.localizedString(from: med.startDate ?? .now, dateStyle: .short, timeStyle: .none)) to \(med.stopDate != nil ? DateFormatter.localizedString(from: med.stopDate!, dateStyle: .short, timeStyle: .none) : "Present")")
+                                    .foregroundColor(.gray)
+                            }
+                            
                             if !(med.sideEffects?.isEmpty ?? true) {
                                 HStack {
-                                    Text("Side Effects")
+                                    Text("Side Effects:")
                                     Spacer()
                                     Text(ListFormatter.localizedString(byJoining: med.sideEffects!.sorted { $0 < $1 }.map { $0 as String }))
                                         .foregroundColor(.gray)
                                         .multilineTextAlignment(.trailing)
                                 }
+                                .foregroundColor(.gray)
                             }
                             Text(med.effective ? "Effective" : "Ineffective")
+                                .foregroundColor(.gray)
                             if !(med.notes?.isEmpty ?? true) {
                                 Text(med.notes!)
+                                    .foregroundColor(.gray)
                             }
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
