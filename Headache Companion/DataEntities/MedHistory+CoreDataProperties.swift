@@ -21,7 +21,7 @@ extension MedHistory {
     @NSManaged public var amount: Int32
     @NSManaged public var dose: String
     @NSManaged public var effective: Bool
-    @NSManaged public var notes: String?
+    @NSManaged public var notes: String
     @NSManaged public var type: MedTypes
     @NSManaged public var sideEffects: Set<String>?
     @NSManaged public var startDate: Date?

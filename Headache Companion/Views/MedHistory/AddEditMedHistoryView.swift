@@ -118,6 +118,24 @@ struct AddEditMedHistoryView: View {
                 )
                 .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             }
+            
+            // Notes
+            NavigationLink {
+                MedHistoryNotesView(note: $medHistory.notes)
+                    .navigationTitle("Daily Notes")
+            } label: {
+                if medHistory.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Text("Notes")
+                } else {
+                    VStack(alignment: .leading) {
+                        Text("Notes: ")
+                        Text(medHistory.notes)
+                            .foregroundColor(.gray)
+                    }
+                }
+            }
+            .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
+            
         }
         .toolbar {
             Button("Save") {

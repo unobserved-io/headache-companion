@@ -35,6 +35,7 @@ struct MedicationHistoryView: View {
                 Section {
                     ForEach(medHistory) { med in
                         DisclosureGroup(med.name) {
+                            // Start/stop times
                             if Calendar.current.isDateInToday(med.startDate ?? Date.distantPast) {
                                 Text("Started today")
                                     .foregroundColor(.gray)
@@ -43,6 +44,11 @@ struct MedicationHistoryView: View {
                                     .foregroundColor(.gray)
                             }
                             
+                            // Dose & amount
+                            Text("\(med.amount) x \(med.dose)")
+                                .foregroundColor(.gray)
+                            
+                            // Side effects
                             if !(med.sideEffects?.isEmpty ?? true) {
                                 HStack {
                                     Text("Side Effects:")
@@ -53,10 +59,14 @@ struct MedicationHistoryView: View {
                                 }
                                 .foregroundColor(.gray)
                             }
+                            
+                            // Effective/ineffective
                             Text(med.effective ? "Effective" : "Ineffective")
                                 .foregroundColor(.gray)
-                            if !(med.notes?.isEmpty ?? true) {
-                                Text(med.notes!)
+                            
+                            // Notes
+                            if !med.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                Text(med.notes)
                                     .foregroundColor(.gray)
                             }
                         }

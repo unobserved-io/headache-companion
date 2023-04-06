@@ -42,7 +42,7 @@
         <attribute name="effective" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
-        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="notes" attributeType="String" defaultValueString=""/>
         <attribute name="sideEffects" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="Set&lt;String&gt;"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="stopDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

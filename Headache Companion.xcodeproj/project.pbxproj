@@ -36,6 +36,7 @@
 		9C98449E29B5FC9F00ABDC36 /* DoctorNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C98449D29B5FC9F00ABDC36 /* DoctorNotesView.swift */; };
 		9CA81F0C29C74DD200EDBCEF /* CustomSymptomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA81F0B29C74DD200EDBCEF /* CustomSymptomsView.swift */; };
 		9CA81F0E29C7755D00EDBCEF /* ActivityColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA81F0D29C7755D00EDBCEF /* ActivityColorsView.swift */; };
+		9CBBB41C29DF25A5007E933B /* MedHistoryNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBBB41B29DF25A5007E933B /* MedHistoryNotesView.swift */; };
 		9CC2582029BDC36C00E55949 /* StatsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2581F29BDC36C00E55949 /* StatsHelper.swift */; };
 		9CC529CE29BCBEA500DD5491 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC529CD29BCBEA500DD5491 /* StatsView.swift */; };
 		9CC529D029BD02FD00DD5491 /* PreviouslyTakenMedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */; };
@@ -92,6 +93,7 @@
 		9C98449D29B5FC9F00ABDC36 /* DoctorNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorNotesView.swift; sourceTree = "<group>"; };
 		9CA81F0B29C74DD200EDBCEF /* CustomSymptomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSymptomsView.swift; sourceTree = "<group>"; };
 		9CA81F0D29C7755D00EDBCEF /* ActivityColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityColorsView.swift; sourceTree = "<group>"; };
+		9CBBB41B29DF25A5007E933B /* MedHistoryNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedHistoryNotesView.swift; sourceTree = "<group>"; };
 		9CC2581F29BDC36C00E55949 /* StatsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsHelper.swift; sourceTree = "<group>"; };
 		9CC529CD29BCBEA500DD5491 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviouslyTakenMedsView.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				9C4A398E29DD7FEE00C9EDA1 /* NewMedHistoryView.swift */,
 				9C4A399029DD80A300C9EDA1 /* AddEditMedHistoryView.swift */,
 				9C4A399229DDA16900C9EDA1 /* MedicationSideEffectsView.swift */,
+				9CBBB41B29DF25A5007E933B /* MedHistoryNotesView.swift */,
 			);
 			path = MedHistory;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				9C682CED29B3B96C00032874 /* Enums.swift in Sources */,
 				9CF7308029ACD93800D91F99 /* HeadacheCompanionApp.swift in Sources */,
 				9C98449E29B5FC9F00ABDC36 /* DoctorNotesView.swift in Sources */,
+				9CBBB41C29DF25A5007E933B /* MedHistoryNotesView.swift in Sources */,
 				9CC2582029BDC36C00E55949 /* StatsHelper.swift in Sources */,
 				9CFCECDA29D076E3001656B5 /* Medication+CoreDataClass.swift in Sources */,
 				9CFCECE129D076E3001656B5 /* MAppData+CoreDataProperties.swift in Sources */,
