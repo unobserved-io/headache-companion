@@ -30,41 +30,46 @@ struct MedicationHistoryView: View {
             )
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
-            Section {
-                ForEach(medHistory) { med in
-                    DisclosureGroup(med.name) {
-                        Text("\(DateFormatter.localizedString(from: med.startDate ?? .now, dateStyle: .short, timeStyle: .none)) to \(med.stopDate != nil ? DateFormatter.localizedString(from: med.stopDate!, dateStyle: .short, timeStyle: .none) : "Present")")
-                        if !(med.sideEffects?.isEmpty ?? true) {
-                            HStack {
-                                Text("Side Effects")
-                                Spacer()
-                                Text(ListFormatter.localizedString(byJoining: med.sideEffects!.sorted { $0 < $1 }.map { $0 as String }))
-                                    .foregroundColor(.gray)
-                                    .multilineTextAlignment(.trailing)
+            // Preventive
+            if medHistory.contains(where: {$0.type == MedTypes.preventive}) {
+                Section {
+                    ForEach(medHistory) { med in
+                        DisclosureGroup(med.name) {
+                            Text("\(DateFormatter.localizedString(from: med.startDate ?? .now, dateStyle: .short, timeStyle: .none)) to \(med.stopDate != nil ? DateFormatter.localizedString(from: med.stopDate!, dateStyle: .short, timeStyle: .none) : "Present")")
+                            if !(med.sideEffects?.isEmpty ?? true) {
+                                HStack {
+                                    Text("Side Effects")
+                                    Spacer()
+                                    Text(ListFormatter.localizedString(byJoining: med.sideEffects!.sorted { $0 < $1 }.map { $0 as String }))
+                                        .foregroundColor(.gray)
+                                        .multilineTextAlignment(.trailing)
+                                }
+                            }
+                            Text(med.effective ? "Effective" : "Ineffective")
+                            if !(med.notes?.isEmpty ?? true) {
+                                Text(med.notes!)
                             }
                         }
-                        Text(med.effective ? "Effective" : "Ineffective")
-                        if !(med.notes?.isEmpty ?? true) {
-                            Text(med.notes!)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button("Delete", role: .destructive) {
+                                viewContext.delete(med)
+                                saveData()
+                            }
+                        }
+                        .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                            NavigationLink(
+                                "Edit",
+                                destination: AddEditMedHistoryView(medHistory: med)
+                            )
                         }
                     }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button("Delete", role: .destructive) {
-                            viewContext.delete(med)
-                            saveData()
-                        }
-                    }
-                    .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                        NavigationLink(
-                            "Edit",
-                            destination: AddEditMedHistoryView(medHistory: med)
-                        )
-                    }
+                } header: {
+                    Text("Preventive")
+                } footer: {
+                    medHistory.isEmpty ? nil : Text("Swipe items right to edit, left to delete.")
                 }
-            } footer: {
-                medHistory.isEmpty ? nil : Text("Swipe items right to edit, left to delete.")
+                .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             }
-            .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
         }
     }
     
