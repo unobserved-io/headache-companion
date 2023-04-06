@@ -33,6 +33,14 @@ struct AddEditMedHistoryView: View {
             }
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
+            // Type picker
+            Picker("Type", selection: $medHistory.type) {
+                Text("Other").tag(MedTypes.other)
+                Text("Preventive").tag(MedTypes.preventive)
+                Text("Symptom Relieving").tag(MedTypes.symptomRelieving)
+            }
+            .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
+            
             // Dose field
             LabeledContent {
                 TextField("Dose", text: $medHistory.dose, prompt: Text("20 mg, 50 ml, etc."))
