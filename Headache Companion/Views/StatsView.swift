@@ -47,173 +47,187 @@ struct StatsView: View {
     @State private var chosenActivity: ChosenActivity = .water
 
     var body: some View {
-        ScrollView {
-            VStack {
-                    Picker("", selection: $dateRange) {
-                        dayData.count > 6 ? Text("Past week").tag(DateRange.week) : nil
-                        dayData.count > 15 ? Text("Past 30 days").tag(DateRange.thirtyDays) : nil
-                        dayData.count > 90 ? Text("Past 6 months").tag(DateRange.sixMonths) : nil
-                        dayData.count > 200 ? Text("Past year").tag(DateRange.year) : nil
-                        Text("All time").tag(DateRange.allTime)
-                        Text("Date Range").tag(DateRange.custom)
-                    }
-                    .onChange(of: dateRange) { range in
-                        statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range), stopDate: getStopDate(range))
-                    }
-                if dateRange == .custom {
-                    HStack {
-                        // TODO: Replace with DatePicker when bug showing short date format is fixed
-                        DatePicker(
-                            selection: $selectedStart,
-                            in: Date(timeIntervalSinceReferenceDate: 0) ... selectedStop,
-                            displayedComponents: [.date],
-                            label: {}
-                        )
-                        .labelsHidden()
-                        .onChange(of: selectedStart) { range in
-                            statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
+        NavigationStack {
+            ScrollView {
+                VStack {
+                        Picker("", selection: $dateRange) {
+                            dayData.count > 6 ? Text("Past week").tag(DateRange.week) : nil
+                            dayData.count > 15 ? Text("Past 30 days").tag(DateRange.thirtyDays) : nil
+                            dayData.count > 90 ? Text("Past 6 months").tag(DateRange.sixMonths) : nil
+                            dayData.count > 200 ? Text("Past year").tag(DateRange.year) : nil
+                            Text("All time").tag(DateRange.allTime)
+                            Text("Date Range").tag(DateRange.custom)
                         }
-                        Text("to")
-                        DatePicker(
-                            selection: $selectedStop,
-                            in: selectedStart ... Date.now,
-                            displayedComponents: [.date],
-                            label: {}
-                        )
-                        .frame(minHeight: 35)
-                        .labelsHidden()
-                        .onChange(of: selectedStop) { range in
-                            statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
+                        .onChange(of: dateRange) { range in
+                            statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range), stopDate: getStopDate(range))
                         }
-                    }
-                    .padding(.bottom)
-                }
-                Grid(alignment: .leading, verticalSpacing: 5) {
-                    GridRow(alignment: .top) {
-                        mainStat(String(statsHelper.daysTracked))
-                        statDescription("\(statsHelper.daysTracked == 1 ? "day" : "days") tracked")
-                    }
-                    GridRow(alignment: .top) {
-                        mainStat(String(statsHelper.daysWithAttack))
-                        statDescription("\(statsHelper.daysWithAttack == 1 ? "day" : "days") with an attack")
-                    }
-                    GridRow(alignment: .top) {
-                        mainStat(String(statsHelper.numberOfAttacks))
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text("\(statsHelper.numberOfAttacks == 1 ? "attack" : "attacks")")
-                                    .font(.title3)
-                                Image(systemName: clickedAttacks ? "chevron.down" : "chevron.right")
-                                    .font(.system(size: 12))
+                    if dateRange == .custom {
+                        HStack {
+                            // TODO: Replace with DatePicker when bug showing short date format is fixed
+                            DatePicker(
+                                selection: $selectedStart,
+                                in: Date(timeIntervalSinceReferenceDate: 0) ... selectedStop,
+                                displayedComponents: [.date],
+                                label: {}
+                            )
+                            .labelsHidden()
+                            .onChange(of: selectedStart) { range in
+                                statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
                             }
-                            if clickedAttacks {
-                                Grid(alignment: .leading, verticalSpacing: 5) {
-                                    ForEach(statsHelper.allTypesOfHeadache, id: \.key) { type, num in
-                                        GridRow {
-                                            Text(String(num))
-                                                .foregroundColor(.accentColor)
-                                                .bold()
-                                                .padding(.trailing)
-                                            Text(type)
+                            Text("to")
+                            DatePicker(
+                                selection: $selectedStop,
+                                in: selectedStart ... Date.now,
+                                displayedComponents: [.date],
+                                label: {}
+                            )
+                            .frame(minHeight: 35)
+                            .labelsHidden()
+                            .onChange(of: selectedStop) { range in
+                                statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
+                            }
+                        }
+                        .padding(.bottom)
+                    }
+                    Grid(alignment: .leading, verticalSpacing: 5) {
+                        GridRow(alignment: .top) {
+                            mainStat(String(statsHelper.daysTracked))
+                            statDescription("\(statsHelper.daysTracked == 1 ? "day" : "days") tracked")
+                        }
+                        GridRow(alignment: .top) {
+                            mainStat(String(statsHelper.daysWithAttack))
+                            statDescription("\(statsHelper.daysWithAttack == 1 ? "day" : "days") with an attack")
+                        }
+                        GridRow(alignment: .top) {
+                            mainStat(String(statsHelper.numberOfAttacks))
+                            VStack(alignment: .leading) {
+                                HStack {
+                                    Text("\(statsHelper.numberOfAttacks == 1 ? "attack" : "attacks")")
+                                        .font(.title3)
+                                    Image(systemName: clickedAttacks ? "chevron.down" : "chevron.right")
+                                        .font(.system(size: 12))
+                                }
+                                if clickedAttacks {
+                                    Grid(alignment: .leading, verticalSpacing: 5) {
+                                        ForEach(statsHelper.allTypesOfHeadache, id: \.key) { type, num in
+                                            GridRow {
+                                                Text(String(num))
+                                                    .foregroundColor(.accentColor)
+                                                    .bold()
+                                                    .padding(.trailing)
+                                                Text(type)
+                                            }
                                         }
                                     }
+                                    .padding(.leading)
                                 }
-                                .padding(.leading)
+                            }
+                            .containerShape(Rectangle())
+                            .onTapGesture {
+                                clickedAttacks.toggle()
                             }
                         }
-                        .containerShape(Rectangle())
-                        .onTapGesture {
-                            clickedAttacks.toggle()
+                        //TODO: Only show all others if attacks > 0
+                        if statsHelper.daysWithAttack > 0 {
+                            GridRow(alignment: .top) {
+                                mainStat("\(statsHelper.percentWithAttack)%")
+                                statDescription("of days had an attack")
+                            }
+                            
+                            GridRow(alignment: .top) {
+                                mainStat(String(statsHelper.allSymptoms.count))
+                                statDescriptionChevron(for: "\(statsHelper.allSymptoms.count == 1 ? "symptom" : "symptoms")", clicked: clickedSymptoms, list: statsHelper.allSymptoms)
+                            }
+                            
+                            GridRow(alignment: .top) {
+                                mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
+                                statDescription("average pain level")
+                            }
+                            
+                            GridRow(alignment: .top) {
+                                mainStat(String(statsHelper.allAuras.count))
+                                statDescriptionChevron(for: "\(statsHelper.allAuras.count == 1 ? "aura" : "auras")", clicked: clickedAuras, list: statsHelper.allAuras)
+                            }
+                            
+                            GridRow(alignment: .top) {
+                                mainStat(String(statsHelper.allMedicationNames.count))
+                                statDescriptionChevron(for: "\(statsHelper.allMedicationNames.count == 1 ? "type" : "types") of medication taken", clicked: clickedMedNames, list: statsHelper.allMedicationNames)
+                            }
+                            
+                            //                        GridRow {
+                            //                            Image(systemName: "sunrise")
+                            //                                .font(.title2)
+                            //                                .foregroundColor(.accentColor)
+                            //                                .bold()
+                            //                                .padding(.trailing)
+                            //                            Text("most common time of day")
+                            //                                .font(.title3)
+                            //                        }
                         }
                     }
-                    //TODO: Only show all others if attacks > 0
-                    if statsHelper.daysWithAttack > 0 {
-                        GridRow(alignment: .top) {
-                            mainStat("\(statsHelper.percentWithAttack)%")
-                            statDescription("of days had an attack")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.bottom)
+                    
+                    // MARK: Activities Stats
+                    VStack {
+                        Picker("Activity", selection: $chosenActivity) {
+                            Image(systemName: "drop.fill").tag(ChosenActivity.water)
+                            Image(systemName: "carrot.fill").tag(ChosenActivity.diet)
+                            Image(systemName: "bed.double.fill").tag(ChosenActivity.sleep)
+                            Image(systemName: "figure.strengthtraining.functional").tag(ChosenActivity.exercise)
+                            Image(systemName: "figure.mind.and.body").tag(ChosenActivity.relax)
                         }
-                        
-                        GridRow(alignment: .top) {
-                            mainStat(String(statsHelper.allSymptoms.count))
-                            statDescriptionChevron(for: "\(statsHelper.allSymptoms.count == 1 ? "symptom" : "symptoms")", clicked: clickedSymptoms, list: statsHelper.allSymptoms)
+                        .pickerStyle(.segmented)
+                        .labelsHidden()
+                        switch chosenActivity {
+                        case .water:
+                            PieChart(values: statsHelper.waterInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "drop.fill")
+                        case .diet:
+                            PieChart(values: statsHelper.dietInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "carrot.fill")
+                        case .exercise:
+                            PieChart(values: statsHelper.exerciseInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "figure.strengthtraining.functional")
+                        case .relax:
+                            PieChart(values: statsHelper.relaxInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "figure.mind.and.body")
+                        case .sleep:
+                            PieChart(values: statsHelper.sleepInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "bed.double.fill")
                         }
-                        
-                        GridRow(alignment: .top) {
-                            mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
-                            statDescription("average pain level")
-                        }
-                        
-                        GridRow(alignment: .top) {
-                            mainStat(String(statsHelper.allAuras.count))
-                            statDescriptionChevron(for: "\(statsHelper.allAuras.count == 1 ? "aura" : "auras")", clicked: clickedAuras, list: statsHelper.allAuras)
-                        }
-                        
-                        GridRow(alignment: .top) {
-                            mainStat(String(statsHelper.allMedicationNames.count))
-                            statDescriptionChevron(for: "\(statsHelper.allMedicationNames.count == 1 ? "type" : "types") of medication taken", clicked: clickedMedNames, list: statsHelper.allMedicationNames)
-                        }
-                        
-                        //                        GridRow {
-                        //                            Image(systemName: "sunrise")
-                        //                                .font(.title2)
-                        //                                .foregroundColor(.accentColor)
-                        //                                .bold()
-                        //                                .padding(.trailing)
-                        //                            Text("most common time of day")
-                        //                                .font(.title3)
-                        //                        }
                     }
+                    
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                .addBorder(Color.accentColor, width: 4, cornerRadius: 15)
                 .padding(.bottom)
                 
-                // MARK: Activities Stats
-                VStack {
-                    Picker("Activity", selection: $chosenActivity) {
-                        Image(systemName: "drop.fill").tag(ChosenActivity.water)
-                        Image(systemName: "carrot.fill").tag(ChosenActivity.diet)
-                        Image(systemName: "bed.double.fill").tag(ChosenActivity.sleep)
-                        Image(systemName: "figure.strengthtraining.functional").tag(ChosenActivity.exercise)
-                        Image(systemName: "figure.mind.and.body").tag(ChosenActivity.relax)
-                    }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
-                    switch chosenActivity {
-                    case .water:
-                        PieChart(values: statsHelper.waterInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "drop.fill")
-                    case .diet:
-                        PieChart(values: statsHelper.dietInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "carrot.fill")
-                    case .exercise:
-                        PieChart(values: statsHelper.exerciseInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "figure.strengthtraining.functional")
-                    case .relax:
-                        PieChart(values: statsHelper.relaxInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "figure.mind.and.body")
-                    case .sleep:
-                        PieChart(values: statsHelper.sleepInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "bed.double.fill")
-                    }
+                HStack {
+                    mainStat(String(dayData.count))
+                    statDescription("\(dayData.count == 1 ? "day" : "days") with recorded data")
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading)
                 
+                HStack {
+                    mainStat(String((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
+                    statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? "day" : "days") using Headache Companion")
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading)
+                
+                // MARK: Medication History button
+                NavigationLink(
+                    "Medication History",
+                    destination: MedicationHistoryView()
+                        .navigationTitle("Medication History")
+                )
+                .buttonStyle(.bordered)
+                .tint(.accentColor)
+                .font(.title2)
+                
+                Spacer()
             }
-            .padding()
-            .addBorder(Color.accentColor, width: 4, cornerRadius: 15)
-            .padding(.bottom)
-            
-            HStack {
-                mainStat(String(dayData.count))
-                statDescription("\(dayData.count == 1 ? "day" : "days") with recorded data")
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading)
-            
-            HStack {
-                mainStat(String((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
-                statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? "day" : "days") using Headache Companion")
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading)
-            
-            Spacer()
         }
-        .padding()
+        .scrollContentBackground(.hidden)
+        .padding(.horizontal)
+        .padding(.top)
         .onAppear() {
             statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
         }
