@@ -20,7 +20,6 @@ struct MedicationHistoryView: View {
         formatter.dateFormat = "MMM d, 'yy"
         return formatter
     }()
-    @State private var topExpanded: Bool = true
         
     var body: some View {
         List {
@@ -33,7 +32,7 @@ struct MedicationHistoryView: View {
             
             Section {
                 ForEach(medHistory) { med in
-                    DisclosureGroup(med.name, isExpanded: $topExpanded) {
+                    DisclosureGroup(med.name) {
                         Text("\(DateFormatter.localizedString(from: med.startDate ?? .now, dateStyle: .short, timeStyle: .none)) to \(med.stopDate != nil ? DateFormatter.localizedString(from: med.stopDate!, dateStyle: .short, timeStyle: .none) : "Present")")
                         if !(med.sideEffects?.isEmpty ?? true) {
                             HStack {

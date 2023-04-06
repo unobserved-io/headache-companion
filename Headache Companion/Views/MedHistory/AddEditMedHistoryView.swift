@@ -14,6 +14,7 @@ struct AddEditMedHistoryView: View {
     @ObservedObject var medHistory: MedHistory
     @State var stopDateOngoing: Bool = false
     @State var cancelClicked: Bool = false
+    @State var showingNameAlert: Bool = false
     var cancelBtn : some View {
         Button("Cancel") {
             cancelClicked = true
@@ -112,17 +113,26 @@ struct AddEditMedHistoryView: View {
         }
         .toolbar {
             Button("Save") {
-                if medHistory.id == nil {
-                    medHistory.id = UUID().uuidString
+                if medHistory.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    showingNameAlert.toggle()
+                } else {
+                    if medHistory.id == nil {
+                        medHistory.id = UUID().uuidString
+                    }
+                    saveData()
+                    dismiss()
                 }
-                saveData()
-                dismiss()
             }
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: cancelBtn)
         .onAppear() {
             stopDateOngoing = medHistory.stopDate == nil
+        }
+        .alert("Name is empty", isPresented: $showingNameAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("The \"Name\" field cannot be empty.")
         }
         .onDisappear() {
             if cancelClicked && medHistory.id == nil {
