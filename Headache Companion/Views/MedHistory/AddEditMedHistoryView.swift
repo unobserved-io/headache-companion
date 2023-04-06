@@ -63,12 +63,20 @@ struct AddEditMedHistoryView: View {
             
             // Side Effects selector
             NavigationLink (destination: MedicationSideEffectsView(sideEffects: $medHistory.sideEffects.toUnwrapped(defaultValue: [])).navigationTitle("Add Symptoms")) {
-                Text("Side Effects")
-                    .foregroundColor(.primary)
-                Spacer()
-                Text(ListFormatter.localizedString(byJoining: medHistory.sideEffects?.sorted { $0 < $1 }.map { $0 as String } ?? []))
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.trailing)
+                HStack{
+                    Text("Side Effects")
+                        .foregroundColor(.primary)
+                    Spacer()
+                    if (medHistory.sideEffects?.isEmpty ?? true) {
+                        Text("None")
+                            .foregroundColor(.gray)
+                            .multilineTextAlignment(.trailing)
+                    } else {
+                        Text(ListFormatter.localizedString(byJoining: medHistory.sideEffects?.sorted { $0 < $1 }.map { $0 as String } ?? []))
+                            .foregroundColor(.gray)
+                            .multilineTextAlignment(.trailing)
+                    }
+                }
             }
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
