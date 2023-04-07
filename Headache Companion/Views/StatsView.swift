@@ -154,6 +154,11 @@ struct StatsView: View {
                                 statDescriptionChevron(for: "\(statsHelper.allMedicationNames.count == 1 ? "type" : "types") of medication taken", clicked: clickedMedNames, list: statsHelper.allMedicationNames)
                             }
                             
+                            GridRow(alignment: .top) {
+                                mainStat("\(statsHelper.percentWithMedication)%")
+                                statDescription("of days you took medication")
+                            }
+                            
                             //                        GridRow {
                             //                            Image(systemName: "sunrise")
                             //                                .font(.title2)

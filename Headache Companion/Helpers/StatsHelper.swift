@@ -14,6 +14,7 @@ class StatsHelper: ObservableObject {
     
     @Published var daysTracked: Int = 0
     @Published var daysWithAttack: Int = 0
+    @Published var daysWithMedication: Int = 0
     @Published var numberOfAttacks: Int = 0
     @Published var allSymptoms = Set<String>()
     @Published var allAuras = Set<String>()
@@ -22,6 +23,7 @@ class StatsHelper: ObservableObject {
     @Published var mostCommonTypeOfHeadache: String = ""
     @Published var averagePainLevel: Double = 0.0
     @Published var percentWithAttack: Int = 0
+    @Published var percentWithMedication: Int = 0
     @Published var waterInSelectedDays: [Double] = [0, 0, 0, 0]
     @Published var dietInSelectedDays: [Double] = [0, 0, 0, 0]
     @Published var exerciseInSelectedDays: [Double] = [0, 0, 0, 0]
@@ -77,6 +79,7 @@ class StatsHelper: ObservableObject {
             
             // Medication stats
             if !day.medications.isEmpty {
+                daysWithMedication += 1
                 day.medications.forEach { medication in
                     if medication.name != nil && !(medication.name?.isEmpty ?? true) {
                         if !allMedicationNames.contains(medication.name ?? "") {
@@ -94,6 +97,7 @@ class StatsHelper: ObservableObject {
         }
         averagePainLevel = daysWithAttack == 0 ? 0 : painLevelsPerDay.reduce(0,+) / Double(daysWithAttack)
         getPercentWithAttack()
+        getPercentWithMedication()
     }
     
     private func calculateActivityStats(_ dayData: [DayData], startDate: Date, stopDate: Date) {
@@ -123,6 +127,7 @@ class StatsHelper: ObservableObject {
     private func resetAllStats() {
         daysTracked = 0
         daysWithAttack = 0
+        daysWithMedication = 0
         numberOfAttacks = 0
         allSymptoms.removeAll()
         allAuras.removeAll()
@@ -141,6 +146,14 @@ class StatsHelper: ObservableObject {
             percentWithAttack = 0
         } else {
             percentWithAttack = Int((Double(daysWithAttack) / Double(daysTracked)) * 100)
+        }
+    }
+    
+    private func getPercentWithMedication() {
+        if daysTracked == 0 {
+            percentWithMedication = 0
+        } else {
+            percentWithMedication = Int((Double(daysWithMedication) / Double(daysTracked)) * 100)
         }
     }
 }
