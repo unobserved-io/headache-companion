@@ -127,7 +127,7 @@ struct StatsView: View {
                                 clickedAttacks.toggle()
                             }
                         }
-                        //TODO: Only show all others if attacks > 0
+
                         if statsHelper.daysWithAttack > 0 {
                             GridRow(alignment: .top) {
                                 mainStat("\(statsHelper.percentWithAttack)%")
@@ -146,9 +146,11 @@ struct StatsView: View {
                             
                             GridRow(alignment: .top) {
                                 mainStat(String(statsHelper.allAuras.count))
-                                statDescriptionChevron(for: "\(statsHelper.allAuras.count == 1 ? "aura" : "auras")", clicked: clickedAuras, list: statsHelper.allAuras)
+                                statDescriptionChevron(for: "types of aura", clicked: clickedAuras, list: statsHelper.allAuras)
                             }
-                            
+                        }
+                        
+                        if statsHelper.daysWithMedication > 0 {
                             GridRow(alignment: .top) {
                                 mainStat(String(statsHelper.allMedicationNames.count))
                                 statDescriptionChevron(for: "\(statsHelper.allMedicationNames.count == 1 ? "type" : "types") of medication taken", clicked: clickedMedNames, list: statsHelper.allMedicationNames)
@@ -158,16 +160,6 @@ struct StatsView: View {
                                 mainStat("\(statsHelper.percentWithMedication)%")
                                 statDescription("of days you took medication")
                             }
-                            
-                            //                        GridRow {
-                            //                            Image(systemName: "sunrise")
-                            //                                .font(.title2)
-                            //                                .foregroundColor(.accentColor)
-                            //                                .bold()
-                            //                                .padding(.trailing)
-                            //                            Text("most common time of day")
-                            //                                .font(.title3)
-                            //                        }
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
