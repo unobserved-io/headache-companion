@@ -42,7 +42,8 @@ struct StatsView: View {
     @State private var selectedStop: Date = Date.now
     @State private var clickedAttacks: Bool = false
     @State private var clickedSymptoms: Bool = false
-    @State private var clickedAuras: Bool = false
+    @State private var clickedAuraTypes: Bool = false
+    @State private var clickedAuraTotals: Bool = false
     @State private var clickedMedNames: Bool = false
     @State private var chosenActivity: ChosenActivity = .water
 
@@ -146,14 +147,7 @@ struct StatsView: View {
                             
                             GridRow(alignment: .top) {
                                 mainStat(String(statsHelper.attacksWithAura))
-                                statDescriptionChevron(for: "\(statsHelper.attacksWithAura == 1 ? "attack" : "attacks") with an aura", clicked: clickedAuras, list: statsHelper.allAuras)
-                            }
-                            
-                            if statsHelper.attacksWithAura > 0 {
-                                GridRow(alignment: .top) {
-                                    mainStat(String(statsHelper.allAuras.count))
-                                    statDescriptionChevron(for: "types of aura", clicked: clickedAuras, list: statsHelper.allAuras)
-                                }
+                                statDescriptionDictionary(for: "\(statsHelper.attacksWithAura == 1 ? "attack" : "attacks") with an aura", clicked: clickedAuraTotals, dict: statsHelper.allAuras)
                             }
                         }
                         
@@ -269,9 +263,45 @@ struct StatsView: View {
             case let str where str.contains("symptom"):
                 clickedSymptoms.toggle()
             case let str where str.contains("aura"):
-                clickedAuras.toggle()
+                clickedAuraTypes.toggle()
             case let str where str.contains("type"):
                 clickedMedNames.toggle()
+            default:
+                break
+            }
+        }
+    }
+    
+    private func statDescriptionDictionary(for description: String, clicked: Bool, dict: [(key: String, value: Int)]) -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(description)
+                    .font(.title3)
+                Image(systemName: clicked ? "chevron.down" : "chevron.right")
+                    .font(.system(size: 12))
+            }
+            if clicked {
+                Grid(alignment: .leading, verticalSpacing: 5) {
+                    ForEach(dict, id: \.key) { type, num in
+                        GridRow {
+                            Text(String(num))
+                                .foregroundColor(.accentColor)
+                                .bold()
+                                .padding(.trailing)
+                            Text(type)
+                        }
+                    }
+                }
+                .padding(.leading)
+            }
+        }
+        .containerShape(Rectangle())
+        .onTapGesture {
+            switch description {
+            case let str where str.contains("aura"):
+                clickedAuraTotals.toggle()
+            case let str where str.contains("attack"):
+                clickedAttacks.toggle()
             default:
                 break
             }

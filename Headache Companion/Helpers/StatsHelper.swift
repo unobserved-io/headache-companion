@@ -18,7 +18,7 @@ class StatsHelper: ObservableObject {
     @Published var numberOfAttacks: Int = 0
     @Published var attacksWithAura: Int = 0
     @Published var allSymptoms = Set<String>()
-    @Published var allAuras = Set<String>()
+    @Published var allAuras: [(key: String, value: Int)] = []
     @Published var allTypesOfHeadache: [(key: String, value: Int)] = []
     @Published var allMedicationNames = Set<String>()
     @Published var mostCommonTypeOfHeadache: String = ""
@@ -66,7 +66,11 @@ class StatsHelper: ObservableObject {
                     }
                     if !attack.auras.isEmpty {
                         for aura in attack.auras {
-                            allAuras.insert(aura)
+                            if let index = allAuras.firstIndex(where: {$0.key == aura}) {
+                                allAuras[index].value += 1
+                            } else {
+                                allAuras.append((aura, 1))
+                            }
                         }
                     }
                     
@@ -115,15 +119,6 @@ class StatsHelper: ObservableObject {
                 relaxInSelectedDays[Int(dayData[index].relax.rawValue)] += 1
                 sleepInSelectedDays[Int(dayData[index].sleep.rawValue)] += 1
             }
-            // Only for recording untracked days
-//            else {
-//                waterInSelectedDays[0] += 1
-//                dietInSelectedDays[0] += 1
-//                exerciseInSelectedDays[0] += 1
-//                relaxInSelectedDays[0] += 1
-//                sleepInSelectedDays[0] += 1
-//            }
-            
             currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) ?? Date.now
         }
     }
