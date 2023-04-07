@@ -135,6 +135,11 @@ struct StatsView: View {
                                 statDescription("of days had an attack")
                             }
                             
+                            Divider()
+                                .background(Color.accentColor)
+                                .frame(minHeight: 1)
+                                .overlay(Color.accentColor)
+                            
                             GridRow(alignment: .top) {
                                 mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
                                 statDescription("average pain level")
@@ -150,6 +155,11 @@ struct StatsView: View {
                                 statDescriptionDictionary(for: "\(statsHelper.attacksWithAura == 1 ? "attack" : "attacks") with an aura", clicked: clickedAuraTotals, dict: statsHelper.allAuras)
                             }
                         }
+                        
+                        Divider()
+                            .background(Color.accentColor)
+                            .frame(minHeight: 1)
+                            .overlay(Color.accentColor)
                         
                         if statsHelper.daysWithMedication > 0 {
                             GridRow(alignment: .top) {
