@@ -36,9 +36,9 @@ struct AddEditMedHistoryView: View {
             
             // Type picker
             Picker("Type", selection: $medHistory.type) {
-                Text("Other").tag(MedTypes.other)
                 Text("Preventive").tag(MedTypes.preventive)
                 Text("Symptom Relieving").tag(MedTypes.symptomRelieving)
+                Text("Other").tag(MedTypes.other)
             }
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
