@@ -72,7 +72,7 @@ struct MedicationHistoryView: View {
     private func sectionCreator(medType: MedTypes) -> some View {
         return ForEach(medHistory) { med in
             if med.type == medType {
-                DisclosureGroup(med.name) {
+                DisclosureGroup {
                     // Start/stop times
                     if Calendar.current.isDateInToday(med.startDate ?? Date.distantPast) {
                         Text("Started today")
@@ -117,6 +117,16 @@ struct MedicationHistoryView: View {
                     if !med.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                         Text(med.notes)
                             .foregroundColor(.gray)
+                    }
+                } label: {
+                    if med.dose.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        Text(med.name)
+                    } else {
+                        HStack {
+                            Text(med.name)
+                            Text("(\(med.dose))")
+                                .foregroundColor(.gray)
+                        }
                     }
                 }
                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
