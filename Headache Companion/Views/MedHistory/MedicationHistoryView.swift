@@ -15,6 +15,7 @@ struct MedicationHistoryView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \MedHistory.stopDate, ascending: true)]
     )
     var medHistory: FetchedResults<MedHistory>
+    @State var showingInfo: Bool = false
     let medDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d, 'yy"
@@ -55,14 +56,16 @@ struct MedicationHistoryView: View {
             }
         }
         .toolbar {
-            if !medHistory.isEmpty {
-                ToolbarItemGroup(placement: .bottomBar) {
-                    Text("Swipe items right to edit, left to delete.")
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity)
-                }
+            Button {
+                showingInfo.toggle()
+            } label: {
+                Image(systemName: "info.circle")
             }
+        }
+        .alert("Medication History", isPresented: $showingInfo) {
+            Button("OK"){}
+        } message: {
+            Text("This page is for you to keep track of the medications you are taking now or have taken in the past. It is not automatically generated.\n\nSwipe items right to edit them, or left to delete them.")
         }
     }
     
