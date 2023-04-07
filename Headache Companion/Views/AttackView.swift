@@ -184,25 +184,13 @@ struct AttackView: View {
                 }
 
                 // Type of headache
-                if !attack.auras.isEmpty || nextFrom.contains("auras") || !newAttack {
-                    HStack {
-                        Text("Type of headache")
-                        Spacer()
-                        Picker("Type of headache", selection: $attack.headacheType) {
-                            Text("Migraine").tag(Headaches.migraine)
-                            Text("Tension").tag(Headaches.tension)
-                            Text("Other").tag(Headaches.other)
-                        }
-                    }
-
-                    if newAttack {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Text("Done")
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.accentColor)
+                HStack {
+                    Text("Type of headache")
+                    Spacer()
+                    Picker("Type of headache", selection: $attack.headacheType) {
+                        Text("Migraine").tag(Headaches.migraine)
+                        Text("Tension").tag(Headaches.tension)
+                        Text("Other").tag(Headaches.other)
                     }
                 }
 
