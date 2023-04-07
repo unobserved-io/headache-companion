@@ -198,6 +198,16 @@ struct StatsView: View {
                 .addBorder(Color.accentColor, width: 4, cornerRadius: 15)
                 .padding(.bottom)
                 
+                // MARK: Medication History button
+                NavigationLink(
+                    "Medication History",
+                    destination: MedicationHistoryView()
+                        .navigationTitle("Medication History")
+                )
+                .buttonStyle(.bordered)
+                .tint(.accentColor)
+                .font(.title2)
+                
                 HStack {
                     mainStat(String(dayData.count))
                     statDescription("\(dayData.count == 1 ? "day" : "days") with recorded data")
@@ -211,16 +221,6 @@ struct StatsView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading)
-                
-                // MARK: Medication History button
-                NavigationLink(
-                    "Medication History",
-                    destination: MedicationHistoryView()
-                        .navigationTitle("Medication History")
-                )
-                .buttonStyle(.bordered)
-                .tint(.accentColor)
-                .font(.title2)
                 
                 Spacer()
             }
