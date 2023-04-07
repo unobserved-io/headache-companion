@@ -208,19 +208,18 @@ struct StatsView: View {
                 .tint(.accentColor)
                 .font(.title2)
                 
-                HStack {
-                    mainStat(String(dayData.count))
-                    statDescription("\(dayData.count == 1 ? "day" : "days") with recorded data")
+                Grid(alignment: .leading, verticalSpacing: 5) {
+                    GridRow(alignment: .top) {
+                        mainStat(String(dayData.count))
+                        statDescription("\(dayData.count == 1 ? "day" : "days") with recorded data")
+                    }
+                    
+                    GridRow(alignment: .top) {
+                        mainStat(String((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
+                        statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? "day" : "days") using Headache Companion")
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading)
-                
-                HStack {
-                    mainStat(String((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
-                    statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? "day" : "days") using Headache Companion")
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading)
                 
                 Spacer()
             }
