@@ -19,6 +19,7 @@ struct AttackView: View {
     )
     var mAppData: FetchedResults<MAppData>
     @State var nextFrom: Set<String> = []
+    @State var cancelClicked: Bool = false
     let startDateComps = DateComponents(hour: 0, minute: 0)
     let stopDateComps = DateComponents(hour: 23, minute: 59)
     let newAttack: Bool
@@ -47,6 +48,12 @@ struct AttackView: View {
         "Speech",
         "Visual"
     ]
+    var cancelBtn : some View {
+        Button("Cancel") {
+            cancelClicked = true
+            dismiss()
+        }
+    }
     
     init(attack: Attack, for inputDate: Date? = nil, new: Bool = false, edit: Bool = false) {
         self.attack = attack
@@ -73,7 +80,6 @@ struct AttackView: View {
                     in: startTimeRange(),
                     displayedComponents: [.hourAndMinute]
                 )
-                .onChange(of: attack.startTime) { _ in saveData() }
                 
                 // Stop time picker
                 if !newAttack || !selectedDayIsToday() {
@@ -83,7 +89,6 @@ struct AttackView: View {
                         in: selectedDayIsToday() ? stopTimeRange() : unlimitedRange(),
                         displayedComponents: [.hourAndMinute]
                     )
-                    .onChange(of: attack.stopTime) { _ in saveData() }
                 }
 
                 // Pain level slider
@@ -104,8 +109,6 @@ struct AttackView: View {
                         Text("0")
                     } maximumValueLabel: {
                         Text("10")
-                    } onEditingChanged: { _ in
-                        saveData()
                     }
                 }
 
@@ -122,13 +125,12 @@ struct AttackView: View {
                             Toggle(isOn: $attack.pressing) {
                                 Text("Pressure / pressing")
                             }
-                            .onChange(of: attack.pressing) { _ in saveData() }
+
                             if attack.pressing {
                                 Picker("Where?", selection: $attack.pressingSide) {
                                     Text("One side").tag(Sides.one)
                                     Text("Both sides").tag(Sides.both)
                                 }
-                                .onChange(of: attack.pressingSide) { _ in saveData() }
                             }
                         }
                         .padding(.leading)
@@ -136,13 +138,12 @@ struct AttackView: View {
                             Toggle(isOn: $attack.pulsating) {
                                 Text("Pulsating / throbbing")
                             }
-                            .onChange(of: attack.pulsating) { _ in saveData() }
+
                             if attack.pulsating {
                                 Picker("Where?", selection: $attack.pulsatingSide) {
                                     Text("One side").tag(Sides.one)
                                     Text("Both sides").tag(Sides.both)
                                 }
-                                .onChange(of: attack.pulsatingSide) { _ in saveData() }
                             }
                         }
                         .padding(.leading)
@@ -192,7 +193,6 @@ struct AttackView: View {
                             Text("Tension").tag(Headaches.tension)
                             Text("Other").tag(Headaches.other)
                         }
-                        .onChange(of: attack.headacheType) { _ in saveData() }
                     }
 
                     if newAttack {
@@ -210,23 +210,38 @@ struct AttackView: View {
             }
             .padding()
         }
-        .onAppear() {
-            if newAttack && !editCurrent {
-                if !dayData.isEmpty {
-                    if !(dayData.first?.attacks.contains(attack) ?? true) {
-                        dayData.first?.addToAttack(attack)
-                        saveData()
+        .toolbar {
+            Button("Save") {
+                if newAttack && !editCurrent {
+                    if !dayData.isEmpty {
+                        if !(dayData.first?.attacks.contains(attack) ?? true) {
+                            dayData.first?.addToAttack(attack)
+                        }
+                    } else {
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                        let dateString = dateFormatter.string(from: inputDate ?? Date.now)
+                        
+                        let newDay = DayData(context: viewContext)
+                        newDay.date = dateString
+                        newDay.addToAttack(attack)
                     }
-                } else {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                    let dateString = dateFormatter.string(from: inputDate ?? Date.now)
-                    
-                    let newDay = DayData(context: viewContext)
-                    newDay.date = dateString
-                    newDay.addToAttack(attack)
-                    saveData()
                 }
+                saveData()
+                dismiss()
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: cancelBtn)
+        .onAppear() {
+
+        }
+        .onDisappear() {
+            if cancelClicked && attack.id == nil {
+                viewContext.delete(attack)
+                saveData()
+            } else if cancelClicked {
+                viewContext.rollback()
             }
         }
     }
