@@ -145,8 +145,15 @@ struct StatsView: View {
                             }
                             
                             GridRow(alignment: .top) {
-                                mainStat(String(statsHelper.allAuras.count))
-                                statDescriptionChevron(for: "types of aura", clicked: clickedAuras, list: statsHelper.allAuras)
+                                mainStat(String(statsHelper.attacksWithAura))
+                                statDescriptionChevron(for: "\(statsHelper.attacksWithAura == 1 ? "attack" : "attacks") with an aura", clicked: clickedAuras, list: statsHelper.allAuras)
+                            }
+                            
+                            if statsHelper.attacksWithAura > 0 {
+                                GridRow(alignment: .top) {
+                                    mainStat(String(statsHelper.allAuras.count))
+                                    statDescriptionChevron(for: "types of aura", clicked: clickedAuras, list: statsHelper.allAuras)
+                                }
                             }
                         }
                         

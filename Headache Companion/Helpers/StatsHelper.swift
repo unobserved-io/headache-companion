@@ -16,6 +16,7 @@ class StatsHelper: ObservableObject {
     @Published var daysWithAttack: Int = 0
     @Published var daysWithMedication: Int = 0
     @Published var numberOfAttacks: Int = 0
+    @Published var attacksWithAura: Int = 0
     @Published var allSymptoms = Set<String>()
     @Published var allAuras = Set<String>()
     @Published var allTypesOfHeadache: [(key: String, value: Int)] = []
@@ -55,6 +56,9 @@ class StatsHelper: ObservableObject {
                 
                 var painLevels: [Double] = []
                 day.attacks.forEach { attack in
+                    if !attack.auras.isEmpty {
+                        attacksWithAura += 1
+                    }
                     if !attack.symptoms.isEmpty {
                         for symptom in attack.symptoms {
                             allSymptoms.insert(symptom)
@@ -129,6 +133,7 @@ class StatsHelper: ObservableObject {
         daysWithAttack = 0
         daysWithMedication = 0
         numberOfAttacks = 0
+        attacksWithAura = 0
         allSymptoms.removeAll()
         allAuras.removeAll()
         allTypesOfHeadache.removeAll()
