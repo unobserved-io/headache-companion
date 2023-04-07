@@ -40,6 +40,7 @@
         <attribute name="amount" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="dose" attributeType="String" defaultValueString=""/>
         <attribute name="effective" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="frequency" attributeType="String" defaultValueString=""/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
         <attribute name="notes" attributeType="String" defaultValueString=""/>

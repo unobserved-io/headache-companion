@@ -15,6 +15,7 @@ struct AddEditMedHistoryView: View {
     @State var stopDateOngoing: Bool = false
     @State var cancelClicked: Bool = false
     @State var showingNameAlert: Bool = false
+    @State var newStopDate: Date = .now
     var cancelBtn : some View {
         Button("Cancel") {
             cancelClicked = true
@@ -42,27 +43,29 @@ struct AddEditMedHistoryView: View {
             }
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
-            // Dose field
-            LabeledContent {
-                TextField("Dose", text: $medHistory.dose, prompt: Text("20 mg, 50 ml, etc."))
-                    .multilineTextAlignment(.trailing)
-            } label: {
-                Text("Dose")
-                    .padding(.trailing)
+            Group {
+                // Dose field
+                LabeledContent {
+                    TextField("Dose", text: $medHistory.dose, prompt: Text("20 mg, 50 ml, etc."))
+                        .multilineTextAlignment(.trailing)
+                } label: {
+                    Text("Dose")
+                        .padding(.trailing)
+                }
+                .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
+                
+                // Amount stepper
+                HStack {
+                    Text("Amount")
+                    Spacer()
+                    Text("\(medHistory.amount)")
+                        .bold()
+                        .padding(.trailing)
+                    Stepper("\(medHistory.amount)", value: $medHistory.amount, in: 1...25)
+                        .labelsHidden()
+                }
+                .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             }
-            .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
-            
-            // Amount stepper
-            HStack {
-                Text("Amount")
-                Spacer()
-                Text("\(medHistory.amount)")
-                    .bold()
-                    .padding(.trailing)
-                Stepper("\(medHistory.amount)", value: $medHistory.amount, in: 1...25)
-                    .labelsHidden()
-            }
-            .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
             // Effective picker
             Picker("Effective", selection: $medHistory.effective) {
@@ -70,6 +73,16 @@ struct AddEditMedHistoryView: View {
                 Text("Ineffective").tag(false)
             }
             .pickerStyle(.segmented)
+            .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
+            
+            // Frequency field
+            LabeledContent {
+                TextField("Frequency", text: $medHistory.frequency, prompt: Text("Daily, 2x/day, etc."))
+                    .multilineTextAlignment(.trailing)
+            } label: {
+                Text("Frequency")
+                    .padding(.trailing)
+            }
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
             // Side Effects selector
@@ -108,17 +121,24 @@ struct AddEditMedHistoryView: View {
             .pickerStyle(.segmented)
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             .onChange(of: stopDateOngoing) { newVal in
-                if newVal { medHistory.stopDate = nil }
+                if newVal {
+                    medHistory.stopDate = nil
+                } else {
+                    medHistory.stopDate = newStopDate
+                }
             }
             
             if !stopDateOngoing {
                 DatePicker(
                     "Stop",
-                    selection: $medHistory.stopDate.toUnwrapped(defaultValue: Date.now),
+                    selection: $newStopDate,
                     in: (medHistory.startDate ?? Date.distantPast) ... Date.now,
                     displayedComponents: [.date]
                 )
                 .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
+                .onChange(of: newStopDate) { newVal in
+                    medHistory.stopDate = newVal
+                }
             }
             
             // Notes

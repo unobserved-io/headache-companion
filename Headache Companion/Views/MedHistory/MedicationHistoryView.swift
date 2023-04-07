@@ -80,8 +80,19 @@ struct MedicationHistoryView: View {
                     }
                     
                     // Dose & amount
-                    Text("\(med.amount) x \(med.dose)")
-                        .foregroundColor(.gray)
+                    if med.dose.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && med.frequency.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        Text("\(med.amount)")
+                            .foregroundColor(.gray)
+                    } else if med.dose.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        Text("\(med.amount), \(med.frequency)")
+                            .foregroundColor(.gray)
+                    } else if med.frequency.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        Text("\(med.amount) x \(med.dose)")
+                            .foregroundColor(.gray)
+                    } else {
+                        Text("\(med.amount) x \(med.dose), \(med.frequency)")
+                            .foregroundColor(.gray)
+                    }
                     
                     // Side effects
                     if !(med.sideEffects?.isEmpty ?? true) {
