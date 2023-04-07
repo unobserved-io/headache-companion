@@ -64,7 +64,6 @@ struct StatsView: View {
                         }
                     if dateRange == .custom {
                         HStack {
-                            // TODO: Replace with DatePicker when bug showing short date format is fixed
                             DatePicker(
                                 selection: $selectedStart,
                                 in: Date(timeIntervalSinceReferenceDate: 0) ... selectedStop,
