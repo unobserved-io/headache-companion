@@ -90,6 +90,17 @@ struct AttackView: View {
                         displayedComponents: [.hourAndMinute]
                     )
                 }
+                
+                // Type of headache
+                HStack {
+                    Text("Type of headache")
+                    Spacer()
+                    Picker("Type of headache", selection: $attack.headacheType) {
+                        Text("Migraine").tag(Headaches.migraine)
+                        Text("Tension").tag(Headaches.tension)
+                        Text("Other").tag(Headaches.other)
+                    }
+                }
 
                 // Pain level slider
                 VStack {
@@ -177,21 +188,6 @@ struct AttackView: View {
                         options: auraTypes,
                         selected: $attack.auras
                     )
-
-                    if newAttack && attack.auras.isEmpty && !nextFrom.contains("auras") {
-                        nextButton(addToNext: "auras")
-                    }
-                }
-
-                // Type of headache
-                HStack {
-                    Text("Type of headache")
-                    Spacer()
-                    Picker("Type of headache", selection: $attack.headacheType) {
-                        Text("Migraine").tag(Headaches.migraine)
-                        Text("Tension").tag(Headaches.tension)
-                        Text("Other").tag(Headaches.other)
-                    }
                 }
 
                 Spacer()
