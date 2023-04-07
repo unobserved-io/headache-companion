@@ -17,6 +17,8 @@ extension MAppData {
     }
 
     @NSManaged public var doctorNotes: String?
+    @NSManaged public var customAuras: [String]?
+    @NSManaged public var customSideEffects: [String]?
     @NSManaged public var customSymptoms: [String]?
     @NSManaged public var activityColors: [Data]?
     @NSManaged public var getsPeriod: Bool
