@@ -135,13 +135,13 @@ struct StatsView: View {
                             }
                             
                             GridRow(alignment: .top) {
-                                mainStat(String(statsHelper.allSymptoms.count))
-                                statDescriptionChevron(for: "\(statsHelper.allSymptoms.count == 1 ? "symptom" : "symptoms")", clicked: clickedSymptoms, list: statsHelper.allSymptoms)
+                                mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
+                                statDescription("average pain level")
                             }
                             
                             GridRow(alignment: .top) {
-                                mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
-                                statDescription("average pain level")
+                                mainStat(String(statsHelper.allSymptoms.count))
+                                statDescriptionChevron(for: "\(statsHelper.allSymptoms.count == 1 ? "symptom" : "symptoms")", clicked: clickedSymptoms, list: statsHelper.allSymptoms)
                             }
                             
                             GridRow(alignment: .top) {
