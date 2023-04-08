@@ -146,7 +146,28 @@ struct StatsView: View {
                             
                             GridRow(alignment: .top) {
                                 mainStat(String(statsHelper.allSymptoms.count))
-                                statDescriptionChevron(for: "\(statsHelper.allSymptoms.count == 1 ? "symptom" : "symptoms")", clicked: clickedSymptoms, list: statsHelper.allSymptoms)
+                                VStack(alignment: .leading, spacing: 5) {
+                                    HStack {
+                                        Text("\(statsHelper.allSymptoms.count == 1 ? "symptom" : "symptoms")")
+                                            .font(.title3)
+                                        Image(systemName: clickedSymptoms ? "chevron.down" : "chevron.right")
+                                            .font(.system(size: 12))
+                                    }
+                                    if clickedSymptoms {
+                                        ForEach(statsHelper.symptomsByHeadache, id: \.key) { type, symptoms in
+                                            Text(headacheTypeString(type))
+                                            ForEach(Array(symptoms), id: \.self) { symptom in
+                                                Text(symptom)
+                                            }
+                                            .padding(.leading)
+                                        }
+                                        .padding(.leading)
+                                    }
+                                }
+                                .containerShape(Rectangle())
+                                .onTapGesture {
+                                    clickedSymptoms.toggle()
+                                }
                             }
                             
                             GridRow(alignment: .top) {

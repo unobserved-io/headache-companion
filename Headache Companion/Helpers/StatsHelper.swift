@@ -18,6 +18,7 @@ class StatsHelper: ObservableObject {
     @Published var numberOfAttacks: Int = 0
     @Published var attacksWithAura: Int = 0
     @Published var allSymptoms = Set<String>()
+    @Published var symptomsByHeadache: [(key: Headaches, value: Set<String>)] = []
     @Published var allAuras: [(key: String, value: Int)] = []
     @Published var allTypesOfHeadache: [(key: String, value: Int)] = []
     @Published var allMedicationNames = Set<String>()
@@ -62,6 +63,11 @@ class StatsHelper: ObservableObject {
                     if !attack.symptoms.isEmpty {
                         for symptom in attack.symptoms {
                             allSymptoms.insert(symptom)
+                            if let index = symptomsByHeadache.firstIndex(where: {$0.key == attack.headacheType}) {
+                                symptomsByHeadache[index].value.insert(symptom)
+                            } else {
+                                symptomsByHeadache.append((attack.headacheType, [symptom]))
+                            }
                         }
                     }
                     if !attack.auras.isEmpty {
