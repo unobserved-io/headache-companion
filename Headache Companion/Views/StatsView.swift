@@ -188,8 +188,8 @@ struct StatsView: View {
                             }
                             
                             GridRow(alignment: .top) {
-                                mainStat("\(statsHelper.percentWithMedication)%")
-                                statDescription("of days you took medication")
+                                mainStat("\(statsHelper.daysWithMedication)")
+                                statDescription("\(statsHelper.daysWithMedication == 1 ? "day" : "day") you took medication")
                             }
                         }
                     }
