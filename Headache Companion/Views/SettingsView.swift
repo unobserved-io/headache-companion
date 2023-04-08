@@ -26,6 +26,7 @@ struct SettingsView: View {
     @State private var showingDeleteAlert: Bool = false
     @State private var showingResetAlert: Bool = false
     @State private var showingImportAlert: Bool = false
+    @State private var showingExportAlert: Bool = false
     @State private var showingFilePicker: Bool = false
     @State private var showingFileExporter: Bool = false
     @State private var showingPurchaseAlert: Bool = false
@@ -86,7 +87,7 @@ struct SettingsView: View {
                 
                 Section("Data") {
                     Button {
-                        showingFileExporter.toggle()
+                        showingExportAlert.toggle()
                     } label: {
                         Label {
                             Text("Export Data")
@@ -189,6 +190,11 @@ struct SettingsView: View {
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("This feature is only availble in the Pro version. Upgrade now to access it.")
+        }
+        .alert("Warning", isPresented: $showingExportAlert) {
+            Button("OK") { showingFileExporter.toggle() }
+        } message: {
+            Text("This only exports the data you've saved for each day. Medication History and any settings you've changed are not exported.")
         }
         .fileImporter(isPresented: $showingFilePicker, allowedContentTypes: [.json]) { result in
             do {
