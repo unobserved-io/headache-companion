@@ -179,6 +179,7 @@ struct ContentView: View {
             refreshIt.toggle()
             
             // Timer to change day at midnight
+            // TODO: Continue ongoing attack
             let midnight = Calendar.current.startOfDay(for: .now).addingTimeInterval(86400)
             let timer = Timer(fire: midnight, interval: 0, repeats: false) { _ in
                 // Code to be executed at midnight

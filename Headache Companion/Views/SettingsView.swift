@@ -30,12 +30,28 @@ struct SettingsView: View {
     @State private var showingFilePicker: Bool = false
     @State private var showingFileExporter: Bool = false
     @State private var showingPurchaseAlert: Bool = false
+    @AppStorage("attacksEndWithDay") private var attacksEndWithDay: Bool = true
     @State private var path: [String] = []
     @AppStorage("lastLaunch") private var lastLaunch = ""
     
     var body: some View {
         NavigationStack(path: $path) {
             Form {
+                Section("General") {
+                    Toggle(isOn: $attacksEndWithDay) {
+                        Label {
+                            Text("Attacks end at end of day")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "pill.fill")
+                        }
+                    }
+                    .onChange(of: attacksEndWithDay) { newVal in
+                        mAppData.first?.attacksEndWithDay = newVal
+                        saveData()
+                    }
+                }
+                
                 Section("Custom Inputs") {
                     Button {
                         if storeModel.purchasedIds.isEmpty {

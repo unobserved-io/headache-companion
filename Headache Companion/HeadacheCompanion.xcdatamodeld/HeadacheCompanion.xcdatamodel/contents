@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E252" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Attack" representedClassName="Attack" syncable="YES">
         <attribute name="auras" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="Set&lt;String&gt;"/>
         <attribute name="headacheType" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -30,6 +30,7 @@
     </entity>
     <entity name="MAppData" representedClassName="MAppData" syncable="YES">
         <attribute name="activityColors" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Data]"/>
+        <attribute name="attacksEndWithDay" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="customAuras" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="customSideEffects" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="customSymptoms" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
