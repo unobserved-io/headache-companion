@@ -123,6 +123,37 @@ extension DayData: Encodable {
     }
 }
 
+extension MedHistory: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case amount
+        case dose
+        case frequency
+        case effective
+        case notes
+        case type
+        case sideEffects
+        case startDate
+        case stopDate
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        try container.encode(amount, forKey: .amount)
+        try container.encode(dose, forKey: .dose)
+        try container.encode(frequency, forKey: .frequency)
+        try container.encode(effective, forKey: .effective)
+        try container.encode(notes, forKey: .notes)
+        try container.encode(type.rawValue, forKey: .type)
+        try container.encode(sideEffects, forKey: .sideEffects)
+        try container.encode(startDate, forKey: .startDate)
+        try container.encode(stopDate, forKey: .stopDate)
+    }
+}
+
 extension CodingUserInfoKey {
     static let context = CodingUserInfoKey(rawValue: "context")!
 }
