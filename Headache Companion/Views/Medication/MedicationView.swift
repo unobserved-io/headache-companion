@@ -64,7 +64,9 @@ struct MedicationView: View {
                                 HStack {
                                     Text("\(medication.name ?? "Unknown")")
                                         .bold()
-                                    Text("(\(medication.dose ?? ""))")
+                                    if !(medication.dose?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) {
+                                        Text("(\(medication.dose ?? ""))")
+                                    }
                                 }
                                 
                                 Spacer()
