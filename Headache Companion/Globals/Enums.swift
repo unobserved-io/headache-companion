@@ -22,6 +22,13 @@ public enum Headaches: Int16 {
 }
 
 @objc
+public enum Effectiveness: Int16 {
+    case effective
+    case ineffective
+    case neither
+}
+
+@objc
 public enum MedTypes: Int16 {
     case other
     case preventive

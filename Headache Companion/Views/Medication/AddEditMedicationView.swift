@@ -79,6 +79,14 @@ struct AddEditMedicationView: View {
                 }
                 .pickerStyle(.segmented)
             }
+//            HStack {
+//                Picker("Effective", selection: $medEffective) {
+//                    Text("Effective").tag(true)
+//                    Text("Ineffective").tag(false)
+//                    Image(systemName: "minus.circle").tag(nil as Bool?)
+//                }
+//                .pickerStyle(.segmented)
+//            }
             
             // Save & Cancel buttons
             Section {
