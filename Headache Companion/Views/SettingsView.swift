@@ -22,13 +22,21 @@ struct SettingsView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: true)]
     )
     var dayData: FetchedResults<DayData>
+    @FetchRequest(
+        entity: MedHistory.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \MedHistory.stopDate, ascending: true)]
+    )
+    var medHistory: FetchedResults<MedHistory>
     @ObservedObject var storeModel = StoreModel.sharedInstance
     @State private var showingDeleteAlert: Bool = false
     @State private var showingResetAlert: Bool = false
-    @State private var showingImportAlert: Bool = false
-    @State private var showingExportAlert: Bool = false
-    @State private var showingFilePicker: Bool = false
-    @State private var showingFileExporter: Bool = false
+    @State private var showingDayImportAlert: Bool = false
+    @State private var showingMedImportAlert: Bool = false
+    @State private var showingDayFilePicker: Bool = false
+    @State private var showingMedFilePicker: Bool = false
+    @State private var overwriteMedHistory: Bool = false
+    @State private var showingDayExporter: Bool = false
+    @State private var showingMedExporter: Bool = false
     @State private var showingPurchaseAlert: Bool = false
     @AppStorage("attacksEndWithDay") private var attacksEndWithDay: Bool = true
     @State private var path: [String] = []
@@ -102,32 +110,68 @@ struct SettingsView: View {
                 }
                 
                 Section("Data") {
+                    // Export DayData
                     Button {
-                        showingExportAlert.toggle()
+                        showingDayExporter.toggle()
                     } label: {
                         Label {
-                            Text("Export Data")
+                            Text("Export Daily Data")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "square.and.arrow.up.fill")
                         }
                     }
                     .fileExporter(
-                        isPresented: $showingFileExporter,
+                        isPresented: $showingDayExporter,
                         document: JSONDocument(data: getDayDataAsJSON() ?? "[]".data(using: .utf8)!),
                         contentType: .json,
-                        defaultFilename: "HeadacheCompanion.json"
+                        defaultFilename: "HC-DailyData"
                     ) { _ in }
                     
+                    // Export MedHistory data
+                    Button {
+                        showingMedExporter.toggle()
+                    } label: {
+                        Label {
+                            Text("Export Medication History")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "square.and.arrow.up.fill")
+                        }
+                    }
+                    .fileExporter(
+                        isPresented: $showingMedExporter,
+                        document: JSONDocument(data: getMedHistoryAsJSON() ?? "[]".data(using: .utf8)!),
+                        contentType: .json,
+                        defaultFilename: "HC-MedHistory"
+                    ) { _ in }
+                    
+                    // Import DayData
                     Button {
                         if dayData.count > 1 {
-                            showingImportAlert.toggle()
+                            showingDayImportAlert.toggle()
                         } else {
-                            showingFilePicker.toggle()
+                            showingDayFilePicker.toggle()
                         }
                     } label: {
                         Label {
-                            Text("Import Data")
+                            Text("Import Daily Data")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "square.and.arrow.down.fill")
+                        }
+                    }
+                    
+                    // Import MedHistory
+                    Button {
+                        if !medHistory.isEmpty {
+                            showingMedImportAlert.toggle()
+                        } else {
+                            showingMedFilePicker.toggle()
+                        }
+                    } label: {
+                        Label {
+                            Text("Import Medication History")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "square.and.arrow.down.fill")
@@ -182,13 +226,25 @@ struct SettingsView: View {
         } message: {
             Text("Are you sure you want to reset all settings? This is irreversible.")
         }
-        .alert("Delete all data?", isPresented: $showingImportAlert) {
+        .alert("Delete all data?", isPresented: $showingDayImportAlert) {
             Button("Import") {
-                showingFilePicker.toggle()
+                showingDayFilePicker.toggle()
             }
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("Importing data will delete all current data. Do you still want to import?")
+        }
+        .alert("Merge or Overwrite?", isPresented: $showingMedImportAlert) {
+            Button("Overwrite") {
+                overwriteMedHistory = true
+                showingMedFilePicker.toggle()
+            }
+            Button("Merge") {
+                overwriteMedHistory = false
+                showingMedFilePicker.toggle()
+            }
+        } message: {
+            Text("Do you want the imported data to merge with or overwrite your current medication history?")
         }
         .alert("Go Pro?", isPresented: $showingPurchaseAlert) {
             if let product = storeModel.products.first {
@@ -207,12 +263,7 @@ struct SettingsView: View {
         } message: {
             Text("This feature is only availble in the Pro version. Upgrade now to access it.")
         }
-        .alert("Warning", isPresented: $showingExportAlert) {
-            Button("OK") { showingFileExporter.toggle() }
-        } message: {
-            Text("This only exports the data you've saved for each day. Medication History and any settings you've changed are not exported.")
-        }
-        .fileImporter(isPresented: $showingFilePicker, allowedContentTypes: [.json]) { result in
+        .fileImporter(isPresented: $showingDayFilePicker, allowedContentTypes: [.json]) { result in
             do {
                 let fileURL = try result.get()
                 if let allDayData = try? JSONSerialization.jsonObject(with: Data(contentsOf: fileURL), options: .allowFragments) as? [[String: Any]]
@@ -221,11 +272,7 @@ struct SettingsView: View {
                     deleteAllDayData()
                     
                     // Variables to check for today in imported data
-                    let todayString : String = {
-                        let formatter = DateFormatter()
-                        formatter.dateFormat = "yyyy-MM-dd"
-                        return formatter.string(from: .now)
-                    }()
+                    let todayString : String = dateFormatter.string(from: .now)
                     var todayFound: Bool = false
                     
                     for hcDayData in allDayData {
@@ -298,6 +345,52 @@ struct SettingsView: View {
                 print("Failed to import data: \(error.localizedDescription)")
             }
         }
+        .fileImporter(isPresented: $showingMedFilePicker, allowedContentTypes: [.json]) { result in
+            do {
+                let fileURL = try result.get()
+                if let allMedImportData = try? JSONSerialization.jsonObject(with: Data(contentsOf: fileURL), options: .allowFragments) as? [[String: Any]]
+                {
+                    // Delete all current data if user requested
+                    if overwriteMedHistory {
+                        deleteAllMedHistory()
+                    }
+                    
+                    for hcMedHistory in allMedImportData {
+                        var newStartDate: Date? = nil
+                        var newStopDate: Date? = nil
+                        if hcMedHistory["startDate"] as? TimeInterval != nil {
+                            newStartDate = Date(timeIntervalSince1970: hcMedHistory["startDate"] as! TimeInterval)
+                        }
+                        if hcMedHistory["stopDate"] as? TimeInterval != nil {
+                            newStopDate = Date(timeIntervalSince1970: hcMedHistory["stopDate"] as! TimeInterval)
+                        }
+                        
+                        // Check if the MedHistory being imported already exists
+                        if !overwriteMedHistory {
+                            if let duplicateData = medHistory.first(where: { $0.id == hcMedHistory["id"] as? String }) {
+                                viewContext.delete(duplicateData)
+                            }
+                        }
+                        
+                        var newMedHistory = MedHistory(context: viewContext)
+                        newMedHistory.startDate = newStartDate
+                        newMedHistory.startDate = newStopDate
+                        newMedHistory.id = hcMedHistory["id"] as? String
+                        newMedHistory.name = hcMedHistory["name"] as! String
+                        newMedHistory.amount = hcMedHistory["amount"] as! Int32
+                        newMedHistory.dose = hcMedHistory["dose"] as! String
+                        newMedHistory.frequency = hcMedHistory["frequency"] as! String
+                        newMedHistory.effective = hcMedHistory["effective"] as! Bool
+                        newMedHistory.notes = hcMedHistory["notes"] as! String
+                        newMedHistory.type = MedTypes(rawValue: hcMedHistory["type"] as? Int16 ?? 0)!
+                        newMedHistory.sideEffects = hcMedHistory["sideEffects"] as? Set<String>
+                    }
+                    saveData()
+                }
+            } catch {
+                print("Failed to import data: \(error.localizedDescription)")
+            }
+        }
         .onAppear() {
             Task {
                 try await storeModel.fetchProducts()
@@ -332,6 +425,13 @@ struct SettingsView: View {
         saveData()
     }
     
+    private func deleteAllMedHistory() {
+        medHistory.forEach { medication in
+            viewContext.delete(medication)
+        }
+        saveData()
+    }
+    
     private func resetSettings() {
         mAppData.first?.getsPeriod = false
         mAppData.first?.customSymptoms = []
@@ -349,6 +449,13 @@ struct SettingsView: View {
         encoder.dateEncodingStrategy = .secondsSince1970
         encoder.outputFormatting = .prettyPrinted
         return try? encoder.encode(dayData.sorted(by: { $0.date ?? "" < $1.date ?? "" }))
+    }
+    
+    private func getMedHistoryAsJSON() -> Data? {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .secondsSince1970
+        encoder.outputFormatting = .prettyPrinted
+        return try? encoder.encode(medHistory.sorted(by: { $0.stopDate ?? Date.now > $1.stopDate ?? Date.now }))
     }
 }
 
