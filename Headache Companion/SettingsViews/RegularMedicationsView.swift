@@ -37,7 +37,7 @@ struct RegularMedicationsView: View {
                                 HStack {
                                     Text("\(medication.name ?? "Unknown")")
                                         .bold()
-                                    Text("(\(medication.dose ?? ""))")
+                                    medication.dose != nil ? Text("(\(medication.dose ?? ""))") : nil
                                 }
                             }
                         }
