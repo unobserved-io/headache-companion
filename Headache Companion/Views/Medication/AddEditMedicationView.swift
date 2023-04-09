@@ -35,6 +35,7 @@ struct AddEditMedicationView: View {
             // Type field
             LabeledContent {
                 TextField("Name", text: $medName, prompt: Text("Ibuprofen, Aspirin, etc."))
+                    .multilineTextAlignment(.trailing)
             } label: {
                 Text("Name")
                     .padding(.trailing)
@@ -43,6 +44,7 @@ struct AddEditMedicationView: View {
             // Dose field
             LabeledContent {
                 TextField("Dose", text: $medDose, prompt: Text("20 mg, 50 ml, etc."))
+                    .multilineTextAlignment(.trailing)
             } label: {
                 Text("Dose")
                     .padding(.trailing)

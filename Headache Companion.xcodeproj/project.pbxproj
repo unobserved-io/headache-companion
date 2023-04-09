@@ -165,20 +165,17 @@
 		9C45EE5B29AE5E04000EB6C2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9C9F0DC929E2BBF00049F429 /* Medication */,
 				9CBE455329E2093000723A01 /* Overviews */,
 				9C89471029DEFC3F000E0606 /* MedHistory */,
 				9C057CF329B0ECAE00DA8920 /* ActivitiesView.swift */,
-				9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */,
 				9C45EE5F29AE6626000EB6C2 /* AttackView.swift */,
 				9C45EE6129AE662E000EB6C2 /* CalendarView.swift */,
 				9C98449D29B5FC9F00ABDC36 /* DoctorNotesView.swift */,
-				9CEAA3C729B535D600240952 /* MedicationView.swift */,
 				9CF7308629ACD93800D91F99 /* ContentView.swift */,
 				9C98449B29B5F3E300ABDC36 /* NotesView.swift */,
 				9C18C06E29BB6A04008084E2 /* SettingsView.swift */,
-				9C18C07729BB753C008084E2 /* MedicationLabelView.swift */,
 				9CC529CD29BCBEA500DD5491 /* StatsView.swift */,
-				9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */,
 				9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */,
 				9CD317C329D8988900F88EB1 /* NewNoteView.swift */,
 			);
@@ -259,6 +256,17 @@
 				9C98449929B5E3C600ABDC36 /* Globals.swift */,
 			);
 			path = Globals;
+			sourceTree = "<group>";
+		};
+		9C9F0DC929E2BBF00049F429 /* Medication */ = {
+			isa = PBXGroup;
+			children = (
+				9CEAA3C929B53A5C00240952 /* AddEditMedicationView.swift */,
+				9CEAA3C729B535D600240952 /* MedicationView.swift */,
+				9C18C07729BB753C008084E2 /* MedicationLabelView.swift */,
+				9CC529CF29BD02FD00DD5491 /* PreviouslyTakenMedsView.swift */,
+			);
+			path = Medication;
 			sourceTree = "<group>";
 		};
 		9CBE455329E2093000723A01 /* Overviews */ = {
