@@ -14,18 +14,19 @@ class StatsHelper: ObservableObject {
     
     @Published var daysTracked: Int = 0
     @Published var daysWithAttack: Int = 0
-    @Published var daysWithMedication: Int = 0
     @Published var numberOfAttacks: Int = 0
     @Published var attacksWithAura: Int = 0
     @Published var allSymptoms = Set<String>()
     @Published var symptomsByHeadache: [(key: Headaches, value: Set<String>)] = []
     @Published var allAuras: [(key: String, value: Int)] = []
     @Published var allTypesOfHeadache: [(key: String, value: Int)] = []
-    @Published var allMedicationNames = Set<String>()
+    @Published var daysWithMedication: Int = 0
+    @Published var daysByMedType: [(key: MedTypes, value: Int)] = []
+    @Published var medicationByMedType: [(key: MedTypes, value: Set<String>)] = []
+    @Published var percentWithMedication: Int = 0
     @Published var mostCommonTypeOfHeadache: String = ""
     @Published var averagePainLevel: Double = 0.0
     @Published var percentWithAttack: Int = 0
-    @Published var percentWithMedication: Int = 0
     @Published var waterInSelectedDays: [Double] = [0, 0, 0, 0]
     @Published var dietInSelectedDays: [Double] = [0, 0, 0, 0]
     @Published var exerciseInSelectedDays: [Double] = [0, 0, 0, 0]
@@ -93,12 +94,23 @@ class StatsHelper: ObservableObject {
             
             // Medication stats
             if !day.medications.isEmpty {
+                var medTypesThisDay: Set<MedTypes> = []
                 daysWithMedication += 1
+                
                 day.medications.forEach { medication in
-                    if medication.name != nil && !(medication.name?.isEmpty ?? true) {
-                        if !allMedicationNames.contains(medication.name ?? "") {
-                            allMedicationNames.insert(medication.name ?? "")
-                        }
+                    medTypesThisDay.insert(medication.type)
+                    if let index = medicationByMedType.firstIndex(where: {$0.key == medication.type}) {
+                        medicationByMedType[index].value.insert(medication.name ?? "Unknown")
+                    } else {
+                        medicationByMedType.append((medication.type, [medication.name ?? "Unknown"]))
+                    }
+                }
+                
+                medTypesThisDay.forEach { medType in
+                    if let index = daysByMedType.firstIndex(where: {$0.key == medType}) {
+                        daysByMedType[index].value += 1
+                    } else {
+                        daysByMedType.append((medType, 1))
                     }
                 }
             }
@@ -133,6 +145,8 @@ class StatsHelper: ObservableObject {
         daysTracked = 0
         daysWithAttack = 0
         daysWithMedication = 0
+        daysByMedType = []
+        medicationByMedType = []
         numberOfAttacks = 0
         attacksWithAura = 0
         allSymptoms.removeAll()

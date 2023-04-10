@@ -23,7 +23,7 @@ struct AddEditRegularMedsView: View {
     
     var body: some View {
         Form {
-            // Type field
+            // Name field
             LabeledContent {
                 TextField("Name", text: $medName, prompt: Text("Ibuprofen, Aspirin, etc."))
                     .multilineTextAlignment(.trailing)

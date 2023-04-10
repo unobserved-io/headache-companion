@@ -42,6 +42,10 @@ struct StatsView: View {
     @State private var selectedStop: Date = Date.now
     @State private var clickedAttacks: Bool = false
     @State private var clickedSymptoms: Bool = false
+    @State private var clickedDaysWithMeds: Bool = false
+    @State private var clickedPreventiveMeds: Bool = false
+    @State private var clickedSRMeds: Bool = false
+    @State private var clickedOtherMeds: Bool = false
     @State private var clickedAuraTypes: Bool = false
     @State private var clickedAuraTotals: Bool = false
     @State private var clickedMedNames: Bool = false
@@ -183,13 +187,25 @@ struct StatsView: View {
                         
                         if statsHelper.daysWithMedication > 0 {
                             GridRow(alignment: .top) {
-                                mainStat(String(statsHelper.allMedicationNames.count))
-                                statDescriptionChevron(for: "\(statsHelper.allMedicationNames.count == 1 ? "type" : "types") of medication taken", clicked: clickedMedNames, list: statsHelper.allMedicationNames)
-                            }
-                            
-                            GridRow(alignment: .top) {
                                 mainStat("\(statsHelper.daysWithMedication)")
-                                statDescription("\(statsHelper.daysWithMedication == 1 ? "day" : "day") you took medication")
+                                VStack(alignment: .leading, spacing: 5) {
+                                    HStack {
+                                        Text("\(statsHelper.daysWithMedication == 1 ? "day" : "days") you took medication")
+                                            .font(.title3)
+                                        Image(systemName: clickedDaysWithMeds ? "chevron.down" : "chevron.right")
+                                            .font(.system(size: 12))
+                                    }
+                                    if clickedDaysWithMeds {
+                                        ForEach(statsHelper.daysByMedType, id: \.key) { type, amount in
+                                            medTypeRow(for: type, amount: amount)
+                                        }
+                                        .padding(.leading)
+                                    }
+                                }
+                                .containerShape(Rectangle())
+                                .onTapGesture {
+                                    clickedDaysWithMeds.toggle()
+                                }
                             }
                         }
                     }
@@ -335,6 +351,52 @@ struct StatsView: View {
             default:
                 break
             }
+        }
+    }
+    
+    private func medTypeRow(for medType: MedTypes, amount: Int) -> some View {
+        let clicked: Bool = {
+            switch medType {
+            case .preventive:
+                return clickedPreventiveMeds
+            case .symptomRelieving:
+                return clickedSRMeds
+            case .other:
+                return clickedOtherMeds
+            }
+        }()
+        let theTuple = statsHelper.medicationByMedType.first(where: { $0.key == medType })
+        
+        return VStack(alignment: .leading) {
+            HStack {
+                Text(String(amount))
+                    .foregroundColor(.accentColor)
+                    .bold()
+                    .padding(.trailing)
+                Text(medTypeString(medType))
+                Image(systemName: clicked ? "chevron.down" : "chevron.right")
+                    .font(.system(size: 12))
+            }
+            .containerShape(Rectangle())
+            .onTapGesture {
+                switch medType {
+                case .preventive:
+                    clickedPreventiveMeds.toggle()
+                case .symptomRelieving:
+                    clickedSRMeds.toggle()
+                case .other:
+                    clickedOtherMeds.toggle()
+                }
+            }
+            if clicked && theTuple != nil {
+                VStack(alignment: .leading) {
+                    ForEach(Array(theTuple!.value), id: \.self) { name in
+                        Text(name)
+                            .padding(.leading, 40)
+                    }
+                }
+            }
+            
         }
     }
     

@@ -14,6 +14,7 @@ struct AddEditMedicationView: View {
     @FetchRequest var dayData: FetchedResults<DayData>
     let dayTaken: Date
     @State var medName: String = ""
+    @State var medType: MedTypes = .symptomRelieving
     @State var medDose: String = ""
     @State var medAmount: Int32 = 1
     @State var medTime: Date = .now
@@ -61,6 +62,13 @@ struct AddEditMedicationView: View {
                     .labelsHidden()
             }
             
+            // Type picker
+            Picker("Type", selection: $medType) {
+                Text("Symptom Relieving").tag(MedTypes.symptomRelieving)
+                Text("Preventive").tag(MedTypes.preventive)
+                Text("Other").tag(MedTypes.other)
+            }
+            
             // Time picker
             DatePicker(
                 "Time",
@@ -82,6 +90,7 @@ struct AddEditMedicationView: View {
                 // Save
                 Button {
                     medication.medication?.name = medName
+                    medication.medication?.type = medType
                     medication.medication?.dose = medDose
                     medication.medication?.amount = medAmount
                     medication.medication?.time = medTime

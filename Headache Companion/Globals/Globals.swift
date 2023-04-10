@@ -78,3 +78,14 @@ func headacheTypeString(_ type: Headaches) -> String {
         return "Other"
     }
 }
+
+func medTypeString(_ type: MedTypes) -> String {
+    switch type {
+    case .preventive:
+        return "Preventive"
+    case .symptomRelieving:
+        return "Symptom Relieving"
+    case .other:
+        return "Other"
+    }
+}
