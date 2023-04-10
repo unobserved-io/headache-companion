@@ -160,7 +160,7 @@ struct StatsView: View {
                                     if clickedSymptoms {
                                         ForEach(statsHelper.symptomsByHeadache, id: \.key) { type, symptoms in
                                             Text(headacheTypeString(type))
-                                            ForEach(Array(symptoms), id: \.self) { symptom in
+                                            ForEach(symptoms.sorted(), id: \.self) { symptom in
                                                 Text(symptom)
                                             }
                                             .padding(.leading)
