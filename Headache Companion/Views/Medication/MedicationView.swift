@@ -49,7 +49,7 @@ struct MedicationView: View {
                             newMedication.dose = medication.dose
                             newMedication.amount = medication.amount
                             newMedication.type = medication.type
-                            newMedication.effective = true
+                            newMedication.effective = .effective
                             newMedication.time = Date.now
                             dayData.first?.addToMedication(newMedication)
                             saveData()

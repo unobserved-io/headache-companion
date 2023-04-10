@@ -27,10 +27,10 @@ struct MedicationLabelView: View {
                         Text("(\(medication.dose ?? ""))")
                     }
                 }
-                if medication.effective {
+                if medication.effective == .effective {
                     Text("Effective")
                         .font(.footnote)
-                } else {
+                } else if medication.effective == .ineffective {
                     Text("Ineffective")
                         .font(.footnote)
                 }

@@ -17,7 +17,7 @@ struct AddEditMedicationView: View {
     @State var medDose: String = ""
     @State var medAmount: Int32 = 1
     @State var medTime: Date = .now
-    @State var medEffective: Bool = true
+    @State var medEffective: Effectiveness = .none
     
     init(dayTaken: Date = .now) {
         self.dayTaken = dayTaken
@@ -70,23 +70,12 @@ struct AddEditMedicationView: View {
             )
             
             // Effective picker
-            HStack {
-                Text("Effective")
-                Spacer().padding(.trailing)
-                Picker("Effective", selection: $medEffective) {
-                    Text("Yes").tag(true)
-                    Text("No").tag(false)
-                }
-                .pickerStyle(.segmented)
+            Picker("Effective", selection: $medEffective) {
+                Text("Effective").tag(Effectiveness.effective)
+                Text("Ineffective").tag(Effectiveness.ineffective)
+                Image(systemName: "minus.circle").tag(Effectiveness.none)
             }
-//            HStack {
-//                Picker("Effective", selection: $medEffective) {
-//                    Text("Effective").tag(true)
-//                    Text("Ineffective").tag(false)
-//                    Image(systemName: "minus.circle").tag(nil as Bool?)
-//                }
-//                .pickerStyle(.segmented)
-//            }
+            .pickerStyle(.segmented)
             
             // Save & Cancel buttons
             Section {
@@ -142,7 +131,7 @@ struct AddEditMedicationView: View {
                 medDose = medication.medication?.dose ?? ""
                 medAmount = medication.medication?.amount ?? 0
                 medTime = medication.medication?.time ?? Date.now
-                medEffective = medication.medication?.effective ?? false
+                medEffective = medication.medication?.effective ?? .none
             }
         }
     }

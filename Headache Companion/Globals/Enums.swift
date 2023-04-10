@@ -23,9 +23,9 @@ public enum Headaches: Int16 {
 
 @objc
 public enum Effectiveness: Int16 {
-    case effective
     case ineffective
-    case neither
+    case effective
+    case none
 }
 
 @objc

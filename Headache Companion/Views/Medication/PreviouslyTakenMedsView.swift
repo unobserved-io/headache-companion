@@ -26,7 +26,7 @@ struct PreviouslyTakenMedsView: View {
                     newMedication.dose = uniqueMed.dose
                     newMedication.amount = uniqueMed.amount
                     newMedication.type = uniqueMed.type
-                    newMedication.effective = true
+                    newMedication.effective = .none
                     newMedication.time = Date.now
                     dayData.first?.addToMedication(newMedication)
                     saveData()

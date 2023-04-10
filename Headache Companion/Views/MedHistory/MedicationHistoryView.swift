@@ -110,8 +110,13 @@ struct MedicationHistoryView: View {
                     }
                     
                     // Effective/ineffective
-                    Text(med.effective ? "Effective" : "Ineffective")
-                        .foregroundColor(.gray)
+                    if med.effective == .effective {
+                        Text("Effective")
+                            .foregroundColor(.gray)
+                    } else if med.effective == .ineffective {
+                        Text("Ineffective")
+                            .foregroundColor(.gray)
+                    }
                     
                     // Notes
                     if !med.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {

@@ -69,8 +69,9 @@ struct AddEditMedHistoryView: View {
             
             // Effective picker
             Picker("Effective", selection: $medHistory.effective) {
-                Text("Effective").tag(true)
-                Text("Ineffective").tag(false)
+                Text("Effective").tag(Effectiveness.effective)
+                Text("Ineffective").tag(Effectiveness.ineffective)
+                Image(systemName: "minus.circle").tag(Effectiveness.none)
             }
             .pickerStyle(.segmented)
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))

@@ -42,7 +42,7 @@
     <entity name="MedHistory" representedClassName="MedHistory" syncable="YES">
         <attribute name="amount" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="dose" attributeType="String" defaultValueString=""/>
-        <attribute name="effective" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="effective" attributeType="Integer 16" defaultValueString="2" usesScalarValueType="YES"/>
         <attribute name="frequency" attributeType="String" defaultValueString=""/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
@@ -55,7 +55,7 @@
     <entity name="Medication" representedClassName="Medication" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="dose" optional="YES" attributeType="String"/>
-        <attribute name="effective" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="effective" attributeType="Integer 16" defaultValueString="2" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="sideEffects" optional="YES" attributeType="String"/>

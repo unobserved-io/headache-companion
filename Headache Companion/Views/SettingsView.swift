@@ -326,7 +326,7 @@ struct SettingsView: View {
                                 newMedication.id = medication["id"] as? String
                                 newMedication.amount = medication["amount"] as! Int32
                                 newMedication.dose = medication["dose"] as? String
-                                newMedication.effective = medication["effective"] as! Bool
+                                newMedication.effective = Effectiveness(rawValue: medication["effective"] as? Int16 ?? 2)!
                                 newMedication.time = medication["time"] as? Date
                                 newMedication.name = medication["name"] as? String
                                 newMedication.sideEffects = medication["sideEffects"] as? String
@@ -372,7 +372,7 @@ struct SettingsView: View {
                             }
                         }
                         
-                        var newMedHistory = MedHistory(context: viewContext)
+                        let newMedHistory = MedHistory(context: viewContext)
                         newMedHistory.startDate = newStartDate
                         newMedHistory.startDate = newStopDate
                         newMedHistory.id = hcMedHistory["id"] as? String
@@ -380,7 +380,7 @@ struct SettingsView: View {
                         newMedHistory.amount = hcMedHistory["amount"] as! Int32
                         newMedHistory.dose = hcMedHistory["dose"] as! String
                         newMedHistory.frequency = hcMedHistory["frequency"] as! String
-                        newMedHistory.effective = hcMedHistory["effective"] as! Bool
+                        newMedHistory.effective = Effectiveness(rawValue: hcMedHistory["effective"] as? Int16 ?? 2)!
                         newMedHistory.notes = hcMedHistory["notes"] as! String
                         newMedHistory.type = MedTypes(rawValue: hcMedHistory["type"] as? Int16 ?? 0)!
                         newMedHistory.sideEffects = hcMedHistory["sideEffects"] as? Set<String>
