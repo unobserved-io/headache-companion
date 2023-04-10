@@ -13,6 +13,7 @@ struct AddEditMedicationView: View {
     @EnvironmentObject var medication: ClickedMedication
     @FetchRequest var dayData: FetchedResults<DayData>
     let dayTaken: Date
+    let dayTakenString: String
     @State var medName: String = ""
     @State var medType: MedTypes = .symptomRelieving
     @State var medDose: String = ""
@@ -23,12 +24,10 @@ struct AddEditMedicationView: View {
     
     init(dayTaken: Date = .now) {
         self.dayTaken = dayTaken
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let today = dateFormatter.string(from: dayTaken)
+        dayTakenString = dateFormatter.string(from: dayTaken)
         _dayData = FetchRequest(
             sortDescriptors: [],
-            predicate: NSPredicate(format: "date = %@", today)
+            predicate: NSPredicate(format: "date = %@", dayTakenString)
         )
     }
     
@@ -107,12 +106,8 @@ struct AddEditMedicationView: View {
                                 if !dayData.isEmpty {
                                     dayData.first?.addToMedication(medication.medication!)
                                 } else {
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                    let dateString = dateFormatter.string(from: dayTaken)
-                                    
                                     let newDay = DayData(context: viewContext)
-                                    newDay.date = dateString
+                                    newDay.date = dayTakenString
                                     newDay.addToMedication(medication.medication!)
                                 }
                             }
@@ -146,6 +141,12 @@ struct AddEditMedicationView: View {
                 medAmount = medication.medication?.amount ?? 0
                 medTime = medication.medication?.time ?? Date.now
                 medEffective = medication.medication?.effective ?? .none
+            } else {
+                if !Calendar.current.isDateInToday(dayTaken) {
+                    DispatchQueue.main.async {
+                        self.medTime = Calendar.current.date(bySettingHour: 11, minute: 00, second: 00, of: dayTaken) ?? .now
+                    }
+                }
             }
         }
         .alert("Name is empty", isPresented: $showingNameAlert) {
@@ -156,8 +157,14 @@ struct AddEditMedicationView: View {
     }
     
     private func timeRange() -> ClosedRange<Date> {
-        let startTime = DateComponents(hour: 0, minute: 0)
-        return Calendar.current.date(from: startTime)! ... Date.now
+        let startTime = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: dayTaken)
+        let stopTime = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: dayTaken)
+        // Time should only go up to now if setting a medication for today
+        if Calendar.current.isDateInToday(dayTaken) {
+            return (startTime ?? .now) ... Date.now
+        } else {
+            return (startTime ?? .now) ... (stopTime ?? .now)
+        }
     }
 }
 
