@@ -194,6 +194,7 @@ struct StatsView: View {
                                             .font(.title3)
                                         Image(systemName: clickedDaysWithMeds ? "chevron.down" : "chevron.right")
                                             .font(.system(size: 12))
+                                        Spacer() // Stops other text from jumping when expanded
                                     }
                                     if clickedDaysWithMeds {
                                         ForEach(statsHelper.daysByMedType, id: \.key) { type, amount in
