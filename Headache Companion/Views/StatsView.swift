@@ -374,7 +374,7 @@ struct StatsView: View {
                     .foregroundColor(.accentColor)
                     .bold()
                     .padding(.trailing)
-                Text(medTypeString(medType))
+                Text("\(amount == 1 ? "day" : "days") \(medTypeString(medType).lowercased())")
                 Image(systemName: clicked ? "chevron.down" : "chevron.right")
                     .font(.system(size: 12))
             }
