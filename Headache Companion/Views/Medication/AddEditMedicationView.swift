@@ -19,6 +19,7 @@ struct AddEditMedicationView: View {
     @State var medAmount: Int32 = 1
     @State var medTime: Date = .now
     @State var medEffective: Effectiveness = .none
+    @State var showingNameAlert: Bool = false
     
     init(dayTaken: Date = .now) {
         self.dayTaken = dayTaken
@@ -89,33 +90,37 @@ struct AddEditMedicationView: View {
             Section {
                 // Save
                 Button {
-                    medication.medication?.name = medName
-                    medication.medication?.type = medType
-                    medication.medication?.dose = medDose
-                    medication.medication?.amount = medAmount
-                    medication.medication?.time = medTime
-                    medication.medication?.effective = medEffective
-                    
-                    if medication.medication?.id == nil {
-                        // New medication, give it an id and add to Day
-                        medication.medication?.id = UUID().uuidString
-                        if medication.medication != nil {
-                            if !dayData.isEmpty {
-                                dayData.first?.addToMedication(medication.medication!)
-                            } else {
-                                let dateFormatter = DateFormatter()
-                                dateFormatter.dateFormat = "yyyy-MM-dd"
-                                let dateString = dateFormatter.string(from: dayTaken)
-                                
-                                let newDay = DayData(context: viewContext)
-                                newDay.date = dateString
-                                newDay.addToMedication(medication.medication!)
+                    if medName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        showingNameAlert.toggle()
+                    } else {
+                        medication.medication?.name = medName
+                        medication.medication?.type = medType
+                        medication.medication?.dose = medDose
+                        medication.medication?.amount = medAmount
+                        medication.medication?.time = medTime
+                        medication.medication?.effective = medEffective
+                        
+                        if medication.medication?.id == nil {
+                            // New medication, give it an id and add to Day
+                            medication.medication?.id = UUID().uuidString
+                            if medication.medication != nil {
+                                if !dayData.isEmpty {
+                                    dayData.first?.addToMedication(medication.medication!)
+                                } else {
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                                    let dateString = dateFormatter.string(from: dayTaken)
+                                    
+                                    let newDay = DayData(context: viewContext)
+                                    newDay.date = dateString
+                                    newDay.addToMedication(medication.medication!)
+                                }
                             }
                         }
+                        
+                        saveData()
+                        dismiss()
                     }
-                    
-                    saveData()
-                    dismiss()
                 } label: {
                     Text("Save")
                 }
@@ -142,6 +147,11 @@ struct AddEditMedicationView: View {
                 medTime = medication.medication?.time ?? Date.now
                 medEffective = medication.medication?.effective ?? .none
             }
+        }
+        .alert("Name is empty", isPresented: $showingNameAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("The \"Name\" field cannot be empty.")
         }
     }
     

@@ -20,6 +20,7 @@ struct AddEditRegularMedsView: View {
     @State var medDose: String = ""
     @State var medType: MedTypes = .preventive
     @State var medAmount: Int32 = 1
+    @State var showingNameAlert: Bool = false
     
     var body: some View {
         Form {
@@ -62,21 +63,25 @@ struct AddEditRegularMedsView: View {
             Section {
                 // Save
                 Button {
-                    medication.medication?.name = medName
-                    medication.medication?.dose = medDose
-                    medication.medication?.amount = medAmount
-                    medication.medication?.type = medType
-                    
-                    if medication.medication?.id == nil {
-                        // New medication, give it an id and add to Common Meds
-                        medication.medication?.id = UUID().uuidString
-                        if medication.medication != nil {
-                            mAppData.first?.addToRegularMedications(medication.medication!)
+                    if medName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        showingNameAlert.toggle()
+                    } else {
+                        medication.medication?.name = medName
+                        medication.medication?.dose = medDose
+                        medication.medication?.amount = medAmount
+                        medication.medication?.type = medType
+                        
+                        if medication.medication?.id == nil {
+                            // New medication, give it an id and add to Common Meds
+                            medication.medication?.id = UUID().uuidString
+                            if medication.medication != nil {
+                                mAppData.first?.addToRegularMedications(medication.medication!)
+                            }
                         }
+                        
+                        saveData()
+                        dismiss()
                     }
-                    
-                    saveData()
-                    dismiss()
                 } label: {
                     Text("Save")
                 }
@@ -101,6 +106,11 @@ struct AddEditRegularMedsView: View {
                 medDose = medication.medication?.dose ?? ""
                 medAmount = medication.medication?.amount ?? 0
             }
+        }
+        .alert("Name is empty", isPresented: $showingNameAlert) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text("The \"Name\" field cannot be empty.")
         }
     }
     
