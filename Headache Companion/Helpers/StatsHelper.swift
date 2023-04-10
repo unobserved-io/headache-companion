@@ -17,7 +17,7 @@ class StatsHelper: ObservableObject {
     @Published var numberOfAttacks: Int = 0
     @Published var attacksWithAura: Int = 0
     @Published var allSymptoms = Set<String>()
-    @Published var symptomsByHeadache: [(key: Headaches, value: Set<String>)] = []
+    @Published var symptomsByHeadache: [(key: String, value: Set<String>)] = []
     @Published var allAuras: [(key: String, value: Int)] = []
     @Published var allTypesOfHeadache: [(key: String, value: Int)] = []
     @Published var daysWithMedication: Int = 0
@@ -83,10 +83,10 @@ class StatsHelper: ObservableObject {
                     
                     painLevels.append(attack.painLevel)
                     
-                    if let index = allTypesOfHeadache.firstIndex(where: {$0.key == headacheTypeString(attack.headacheType)}) {
+                    if let index = allTypesOfHeadache.firstIndex(where: {$0.key == attack.headacheType}) {
                         allTypesOfHeadache[index].value += 1
                     } else {
-                        allTypesOfHeadache.append((headacheTypeString(attack.headacheType), 1))
+                        allTypesOfHeadache.append((attack.headacheType, 1))
                     }
                 }
                 painLevelsPerDay.append(painLevels.reduce(0,+) / Double(painLevels.count))

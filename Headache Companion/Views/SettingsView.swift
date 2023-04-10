@@ -61,6 +61,7 @@ struct SettingsView: View {
                 }
                 
                 Section("Custom Inputs") {
+                    // Add common medications
                     Button {
                         if storeModel.purchasedIds.isEmpty {
                             showingPurchaseAlert.toggle()
@@ -76,6 +77,7 @@ struct SettingsView: View {
                         }
                     }
                     
+                    // Add custom symptoms
                     Button {
                         if storeModel.purchasedIds.isEmpty {
                             showingPurchaseAlert.toggle()
@@ -88,6 +90,22 @@ struct SettingsView: View {
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "medical.thermometer.fill")
+                        }
+                    }
+                    
+                    // Add custom headache types
+                    Button {
+                        if storeModel.purchasedIds.isEmpty {
+                            showingPurchaseAlert.toggle()
+                        } else {
+                            path.append("CustomHeadacheTypesView")
+                        }
+                    } label: {
+                        Label {
+                            Text(storeModel.purchasedIds.isEmpty ? "Add Headache Types (Pro)" : "Add Headache Types")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "brain.head.profile")
                         }
                     }
                 }
@@ -207,6 +225,8 @@ struct SettingsView: View {
                     CustomSymptomsView()
                 } else if view == "ActivityColorsView" {
                     ActivityColorsView()
+                } else if view == "CustomHeadacheTypesView" {
+                    CustomHeadacheTypesView()
                 }
             }
         }
@@ -297,7 +317,7 @@ struct SettingsView: View {
                             for attack in attacks {
                                 let newAttack = Attack(context: viewContext)
                                 newAttack.id = attack["id"] as? String
-                                newAttack.headacheType = Headaches(rawValue: attack["headacheType"] as? Int16 ?? 0)!
+                                newAttack.headacheType = attack["headacheType"] as! String
                                 newAttack.otherPainGroup = attack["otherPainGroup"] as! Int16
                                 newAttack.otherPainText = attack["otherPainText"] as? String
                                 newAttack.painLevel = attack["painLevel"] as! Double

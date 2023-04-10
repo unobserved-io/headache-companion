@@ -267,19 +267,6 @@ struct ContentView: View {
         return false
     }
     
-    private func initializeMApp() {
-        let newMAppData = MAppData(context: viewContext)
-        newMAppData.doctorNotes = ""
-        newMAppData.customSymptoms = []
-        newMAppData.activityColors = [
-            getData(from: UIColor(Color.gray)) ?? Data(),
-            getData(from: UIColor(Color.red)) ?? Data(),
-            getData(from: UIColor(Color.yellow)) ?? Data(),
-            getData(from: UIColor(Color.green)) ?? Data(),
-        ]
-        saveData()
-    }
-    
     private func activityColor(of i: ActivityRanks) -> Color {
         switch i {
         case .none:

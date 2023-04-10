@@ -14,6 +14,8 @@ let dateFormatter: DateFormatter = {
     return formatter
 }()
 
+let defaultHeadacheTypes: [String] = ["migraine", "tension", "other"]
+
 func ??<T>(lhs: Binding<Optional<T>>, rhs: T) -> Binding<T> {
     Binding(
         get: { lhs.wrappedValue ?? rhs },
@@ -39,6 +41,9 @@ func initializeMAppData() {
     newMAppData.doctorNotes = ""
     newMAppData.getsPeriod = false
     newMAppData.customSymptoms = []
+    newMAppData.customAuras = []
+    newMAppData.customHeadacheTypes = []
+    newMAppData.customSideEffects = []
     newMAppData.activityColors = [
         getData(from: UIColor(Color.gray)) ?? Data(),
         getData(from: UIColor(Color.red)) ?? Data(),
@@ -68,16 +73,16 @@ func getColor(from data: Data, default defaultColor: Color) -> Color {
     return defaultColor
 }
 
-func headacheTypeString(_ type: Headaches) -> String {
-    switch type {
-    case .migraine:
-        return "Migraine"
-    case .tension:
-        return "Tension"
-    case .other:
-        return "Other"
-    }
-}
+//func headacheTypeString(_ type: Headaches) -> String {
+//    switch type {
+//    case .migraine:
+//        return "Migraine"
+//    case .tension:
+//        return "Tension"
+//    case .other:
+//        return "Other"
+//    }
+//}
 
 func medTypeString(_ type: MedTypes) -> String {
     switch type {

@@ -17,7 +17,7 @@ extension Attack {
     }
 
     @NSManaged public var id: String?
-    @NSManaged public var headacheType: Headaches
+    @NSManaged public var headacheType: String
     @NSManaged public var otherPainGroup: Int16
     @NSManaged public var otherPainText: String?
     @NSManaged public var painLevel: Double

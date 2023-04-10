@@ -14,12 +14,12 @@ public enum Sides: Int16 {
     case both
 }
 
-@objc
-public enum Headaches: Int16 {
-    case migraine
-    case tension
-    case other
-}
+//@objc
+//public enum Headaches: Int16 {
+//    case migraine
+//    case tension
+//    case other
+//}
 
 @objc
 public enum Effectiveness: Int16 {

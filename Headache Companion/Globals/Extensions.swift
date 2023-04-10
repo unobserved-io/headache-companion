@@ -55,7 +55,7 @@ extension Attack: Encodable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
-        try container.encode(headacheType.rawValue, forKey: .headacheType)
+        try container.encode(headacheType, forKey: .headacheType)
         try container.encode(otherPainGroup, forKey: .otherPainGroup)
         try container.encode(otherPainText, forKey: .otherPainText)
         try container.encode(painLevel, forKey: .painLevel)

@@ -96,9 +96,9 @@ struct AttackView: View {
                     Text("Type of headache")
                     Spacer()
                     Picker("Type of headache", selection: $attack.headacheType) {
-                        Text("Migraine").tag(Headaches.migraine)
-                        Text("Tension").tag(Headaches.tension)
-                        Text("Other").tag(Headaches.other)
+                        ForEach(defaultHeadacheTypes + (mAppData.first?.customHeadacheTypes ?? []), id: \.self) { type in
+                            Text(type.capitalized)
+                        }
                     }
                 }
 
