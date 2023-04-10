@@ -124,6 +124,7 @@ class StatsHelper: ObservableObject {
         averagePainLevel = daysWithAttack == 0 ? 0 : painLevelsPerDay.reduce(0,+) / Double(daysWithAttack)
         getPercentWithAttack()
         getPercentWithMedication()
+        daysByMedType.sort(by: {$0.key.rawValue > $1.key.rawValue})
     }
     
     private func calculateActivityStats(_ dayData: [DayData], startDate: Date, stopDate: Date) {
