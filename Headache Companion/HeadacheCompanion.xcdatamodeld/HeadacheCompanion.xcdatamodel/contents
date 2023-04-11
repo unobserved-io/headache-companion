@@ -35,6 +35,7 @@
         <attribute name="customHeadacheTypes" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="customSideEffects" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="customSymptoms" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="defaultEffectiveness" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="doctorNotes" attributeType="String" defaultValueString=""/>
         <attribute name="getsPeriod" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="launchDay" attributeType="Date" defaultDateTimeInterval="694249200" usesScalarValueType="NO"/>

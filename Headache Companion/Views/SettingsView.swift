@@ -41,27 +41,39 @@ struct SettingsView: View {
     @AppStorage("attacksEndWithDay") private var attacksEndWithDay: Bool = true
     @State private var path: [String] = []
     @AppStorage("lastLaunch") private var lastLaunch = ""
+    private var effectiveBinding: Binding<Effectiveness> {
+        Binding {
+            mAppData.first?.defaultEffectiveness ?? Effectiveness.effective
+        } set: {
+            mAppData.first?.defaultEffectiveness = $0
+            saveData()
+        }
+    }
     
     var body: some View {
         NavigationStack(path: $path) {
             Form {
                 Section("General") {
                     Toggle(isOn: $attacksEndWithDay) {
-                        Label {
-                            Text("Attacks end at end of day")
-                                .foregroundColor(.primary)
-                        } icon: {
-                            Image(systemName: "pill.fill")
-                        }
+                        Text("Attacks end at end of day")
                     }
                     .onChange(of: attacksEndWithDay) { newVal in
                         mAppData.first?.attacksEndWithDay = newVal
                         saveData()
                     }
+                    
+                    // Default effectiveness
+                    Picker(selection: effectiveBinding) {
+                        Text("Effective").tag(Effectiveness.effective)
+                        Text("Ineffective").tag(Effectiveness.ineffective)
+                        Text("—").tag(Effectiveness.none)
+                    } label: {
+                        Text("Default Effectiveness")
+                    }
                 }
                 
                 Section("Custom Inputs") {
-                    // Add common medications
+                    // Add regular medications
                     Button {
                         if storeModel.purchasedIds.isEmpty {
                             showingPurchaseAlert.toggle()
