@@ -45,7 +45,7 @@ struct AttackView: View {
         "Motor",
         "Retinal",
         "Sensory",
-        "Speech",
+        "Speech/Language",
         "Visual"
     ]
     var cancelBtn : some View {
