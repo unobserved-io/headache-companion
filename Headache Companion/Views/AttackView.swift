@@ -158,8 +158,6 @@ struct AttackView: View {
                             }
                         }
                         .padding(.leading)
-
-                        // TODO: Add an 'Other' section
                     }
                     .pickerStyle(.segmented)
 
@@ -172,7 +170,7 @@ struct AttackView: View {
                 if !attack.symptoms.isEmpty || attack.pressing || attack.pulsating || nextFrom.contains("painType") || nextFrom.contains("painLevel") || !newAttack {
                     MultiSelector(
                         label: "Symptoms",
-                        options: basicSymptoms + (mAppData.first?.customSymptoms ?? []), // TODO: basicSymptoms + customSymptoms
+                        options: basicSymptoms + (mAppData.first?.customSymptoms ?? []),
                         selected: $attack.symptoms
                     )
 
