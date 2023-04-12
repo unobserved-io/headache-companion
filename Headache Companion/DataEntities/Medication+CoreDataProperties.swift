@@ -22,7 +22,7 @@ extension Medication {
     @NSManaged public var time: Date?
     @NSManaged public var name: String?
     @NSManaged public var sideEffects: String?
-    @NSManaged public var type: MedTypes
+    @NSManaged public var type: String
     @NSManaged public var date: DayData?
     
     public var wrappedTime: Date {

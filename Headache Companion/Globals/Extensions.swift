@@ -92,7 +92,7 @@ extension Medication: Encodable {
         try container.encode(time, forKey: .time)
         try container.encode(name, forKey: .name)
         try container.encode(sideEffects, forKey: .sideEffects)
-        try container.encode(type.rawValue, forKey: .type)
+        try container.encode(type, forKey: .type)
     }
 }
 
@@ -147,7 +147,7 @@ extension MedHistory: Encodable {
         try container.encode(frequency, forKey: .frequency)
         try container.encode(effective.rawValue, forKey: .effective)
         try container.encode(notes, forKey: .notes)
-        try container.encode(type.rawValue, forKey: .type)
+        try container.encode(type, forKey: .type)
         try container.encode(sideEffects, forKey: .sideEffects)
         try container.encode(startDate, forKey: .startDate)
         try container.encode(stopDate, forKey: .stopDate)

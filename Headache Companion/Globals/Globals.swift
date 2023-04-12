@@ -16,6 +16,8 @@ let dateFormatter: DateFormatter = {
 
 let defaultHeadacheTypes: [String] = ["migraine", "tension", "other"]
 
+let defaultMedicationTypes: [String] = ["preventive", "symptom relieving", "other"]
+
 func ??<T>(lhs: Binding<Optional<T>>, rhs: T) -> Binding<T> {
     Binding(
         get: { lhs.wrappedValue ?? rhs },
@@ -71,26 +73,4 @@ func getColor(from data: Data, default defaultColor: Color) -> Color {
     }
 
     return defaultColor
-}
-
-//func headacheTypeString(_ type: Headaches) -> String {
-//    switch type {
-//    case .migraine:
-//        return "Migraine"
-//    case .tension:
-//        return "Tension"
-//    case .other:
-//        return "Other"
-//    }
-//}
-
-func medTypeString(_ type: MedTypes) -> String {
-    switch type {
-    case .preventive:
-        return "Preventive"
-    case .symptomRelieving:
-        return "Symptom Relieving"
-    case .other:
-        return "Other"
-    }
 }

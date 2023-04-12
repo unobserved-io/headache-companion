@@ -23,7 +23,7 @@ extension MedHistory {
     @NSManaged public var frequency: String
     @NSManaged public var effective: Effectiveness
     @NSManaged public var notes: String
-    @NSManaged public var type: MedTypes
+    @NSManaged public var type: String
     @NSManaged public var sideEffects: Set<String>?
     @NSManaged public var startDate: Date?
     @NSManaged public var stopDate: Date?

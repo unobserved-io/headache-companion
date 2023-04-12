@@ -52,7 +52,7 @@
         <attribute name="sideEffects" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="Set&lt;String&gt;"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="stopDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="type" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="type" attributeType="String" defaultValueString="preventive"/>
     </entity>
     <entity name="Medication" representedClassName="Medication" syncable="YES">
         <attribute name="amount" optional="YES" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
@@ -62,7 +62,7 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="sideEffects" optional="YES" attributeType="String"/>
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="type" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="type" attributeType="String" defaultValueString="symptom relieving"/>
         <relationship name="date" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DayData" inverseName="medication" inverseEntity="DayData"/>
         <relationship name="mAppData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MAppData" inverseName="regularMedications" inverseEntity="MAppData"/>
     </entity>

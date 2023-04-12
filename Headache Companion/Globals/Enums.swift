@@ -22,13 +22,6 @@ public enum Effectiveness: Int16 {
 }
 
 @objc
-public enum MedTypes: Int16 {
-    case other
-    case preventive
-    case symptomRelieving
-}
-
-@objc
 public enum ActivityRanks: Int16, Identifiable {
     public var id: UUID {
         switch self {

@@ -362,7 +362,7 @@ struct SettingsView: View {
                                 newMedication.time = medication["time"] as? Date
                                 newMedication.name = medication["name"] as? String
                                 newMedication.sideEffects = medication["sideEffects"] as? String
-                                newMedication.type = MedTypes(rawValue: medication["type"] as? Int16 ?? 0)!
+                                newMedication.type = medication["type"] as! String
                             }
                         }
                     }
@@ -414,7 +414,7 @@ struct SettingsView: View {
                         newMedHistory.frequency = hcMedHistory["frequency"] as! String
                         newMedHistory.effective = Effectiveness(rawValue: hcMedHistory["effective"] as? Int16 ?? 2)!
                         newMedHistory.notes = hcMedHistory["notes"] as! String
-                        newMedHistory.type = MedTypes(rawValue: hcMedHistory["type"] as? Int16 ?? 0)!
+                        newMedHistory.type = hcMedHistory["type"] as! String
                         newMedHistory.sideEffects = hcMedHistory["sideEffects"] as? Set<String>
                     }
                     saveData()

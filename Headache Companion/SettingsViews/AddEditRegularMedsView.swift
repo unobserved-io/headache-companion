@@ -18,7 +18,7 @@ struct AddEditRegularMedsView: View {
     var mAppData: FetchedResults<MAppData>
     @State var medName: String = ""
     @State var medDose: String = ""
-    @State var medType: MedTypes = .preventive
+    @State var medType: String = "preventive"
     @State var medAmount: Int32 = 1
     @State var showingNameAlert: Bool = false
     
@@ -54,9 +54,9 @@ struct AddEditRegularMedsView: View {
             }
             
             Picker("Type", selection: $medType) {
-                Text("Preventive").tag(MedTypes.preventive)
-                Text("Symptom Relieving").tag(MedTypes.symptomRelieving)
-                Text("Other").tag(MedTypes.other)
+                ForEach(defaultMedicationTypes, id: \.self) { type in
+                    Text(type.localizedCapitalized)
+                }
             }
             
             // Save & Cancel buttons

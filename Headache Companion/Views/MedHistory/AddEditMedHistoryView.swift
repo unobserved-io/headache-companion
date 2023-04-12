@@ -61,9 +61,9 @@ struct AddEditMedHistoryView: View {
             
             // Type picker
             Picker("Type", selection: $medHistory.type) {
-                Text("Preventive").tag(MedTypes.preventive)
-                Text("Symptom Relieving").tag(MedTypes.symptomRelieving)
-                Text("Other").tag(MedTypes.other)
+                ForEach(defaultMedicationTypes, id: \.self) { type in
+                    Text(type.localizedCapitalized)
+                }
             }
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             

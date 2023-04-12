@@ -21,8 +21,8 @@ class StatsHelper: ObservableObject {
     @Published var allAuras: [(key: String, value: Int)] = []
     @Published var allTypesOfHeadache: [(key: String, value: Int)] = []
     @Published var daysWithMedication: Int = 0
-    @Published var daysByMedType: [(key: MedTypes, value: Int)] = []
-    @Published var medicationByMedType: [(key: MedTypes, value: Set<String>)] = []
+    @Published var daysByMedType: [(key: String, value: Int)] = []
+    @Published var medicationByMedType: [(key: String, value: Set<String>)] = []
     @Published var percentWithMedication: Int = 0
     @Published var mostCommonTypeOfHeadache: String = ""
     @Published var averagePainLevel: Double = 0.0
@@ -94,7 +94,7 @@ class StatsHelper: ObservableObject {
             
             // Medication stats
             if !day.medications.isEmpty {
-                var medTypesThisDay: Set<MedTypes> = []
+                var medTypesThisDay: Set<String> = []
                 daysWithMedication += 1
                 
                 day.medications.forEach { medication in
@@ -124,7 +124,7 @@ class StatsHelper: ObservableObject {
         averagePainLevel = daysWithAttack == 0 ? 0 : painLevelsPerDay.reduce(0,+) / Double(daysWithAttack)
         getPercentWithAttack()
         getPercentWithMedication()
-        daysByMedType.sort(by: {$0.key.rawValue > $1.key.rawValue})
+        daysByMedType.sort(by: {$0.key > $1.key})
     }
     
     private func calculateActivityStats(_ dayData: [DayData], startDate: Date, stopDate: Date) {

@@ -50,6 +50,7 @@ struct StatsView: View {
     @State private var clickedAuraTotals: Bool = false
     @State private var clickedMedNames: Bool = false
     @State private var chosenActivity: ChosenActivity = .water
+    @State private var dictOfTriggers: [String:Bool] = [:]
 
     var body: some View {
         NavigationStack {
@@ -355,17 +356,10 @@ struct StatsView: View {
         }
     }
     
-    private func medTypeRow(for medType: MedTypes, amount: Int) -> some View {
-        let clicked: Bool = {
-            switch medType {
-            case .preventive:
-                return clickedPreventiveMeds
-            case .symptomRelieving:
-                return clickedSRMeds
-            case .other:
-                return clickedOtherMeds
-            }
-        }()
+    private func medTypeRow(for medType: String, amount: Int) -> some View {
+        if dictOfTriggers[medType] == nil {
+            dictOfTriggers[medType] = false
+        }
         let theTuple = statsHelper.medicationByMedType.first(where: { $0.key == medType })
         
         return VStack(alignment: .leading) {
@@ -374,22 +368,15 @@ struct StatsView: View {
                     .foregroundColor(.accentColor)
                     .bold()
                     .padding(.trailing)
-                Text("\(amount == 1 ? "day" : "days") \(medTypeString(medType).lowercased())")
-                Image(systemName: clicked ? "chevron.down" : "chevron.right")
+                Text("\(amount == 1 ? "day" : "days") \(medType.localizedLowercase)")
+                Image(systemName: dictOfTriggers[medType] ?? false ? "chevron.down" : "chevron.right")
                     .font(.system(size: 12))
             }
             .containerShape(Rectangle())
             .onTapGesture {
-                switch medType {
-                case .preventive:
-                    clickedPreventiveMeds.toggle()
-                case .symptomRelieving:
-                    clickedSRMeds.toggle()
-                case .other:
-                    clickedOtherMeds.toggle()
-                }
+                dictOfTriggers[medType]?.toggle()
             }
-            if clicked && theTuple != nil {
+            if dictOfTriggers[medType] ?? false && theTuple != nil {
                 VStack(alignment: .leading) {
                     ForEach(Array(theTuple!.value), id: \.self) { name in
                         Text(name)
