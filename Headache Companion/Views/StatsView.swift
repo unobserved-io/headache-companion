@@ -120,7 +120,7 @@ struct StatsView: View {
                                                     .foregroundColor(.accentColor)
                                                     .bold()
                                                     .padding(.trailing)
-                                                Text(type)
+                                                Text(type.localizedCapitalized)
                                             }
                                         }
                                     }
@@ -160,7 +160,7 @@ struct StatsView: View {
                                     }
                                     if clickedSymptoms {
                                         ForEach(statsHelper.symptomsByHeadache, id: \.key) { type, symptoms in
-                                            Text(type.capitalized)
+                                            Text(type.localizedCapitalized)
                                             ForEach(symptoms.sorted(), id: \.self) { symptom in
                                                 Text(symptom)
                                             }

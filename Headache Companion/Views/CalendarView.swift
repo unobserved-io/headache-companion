@@ -57,7 +57,7 @@ struct CalendarView: View {
                                 } else {
                                     Text(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened))
                                 }
-                                Text("(\(attack.headacheType.capitalized))")
+                                Text("(\(attack.headacheType.localizedCapitalized))")
                                     .foregroundColor(.gray)
                             }
                         }
