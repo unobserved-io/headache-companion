@@ -103,68 +103,73 @@ struct CalendarView: View {
                     }
                 }
                 
-                Section(refreshIt ? "Activities" : "Activities") {
-                    Button {
-                        selectedActivity = "water"
-                        activitiesSheet.toggle()
-                    } label: {
-                        HStack {
-                            Text("Water")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Image(systemName: "drop.fill")
-                                .foregroundColor(activityColor(of: dayData.first?.water ?? .none))
+                // Activities
+                if !selectedDayIsToday() {
+                    Section(refreshIt ? "Activities" : "Activities") {
+                        Button {
+                            selectedActivity = "water"
+                            activitiesSheet.toggle()
+                        } label: {
+                            HStack {
+                                Text("Water")
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Image(systemName: "drop.fill")
+                                    .foregroundColor(activityColor(of: dayData.first?.water ?? .none))
+                            }
                         }
-                    }
-                    Button {
-                        selectedActivity = "diet"
-                        activitiesSheet.toggle()
-                    } label: {
-                        HStack {
-                            Text("Diet")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Image(systemName: "carrot.fill")
-                                .foregroundColor(activityColor(of: dayData.first?.diet ?? .none))
+                        Button {
+                            selectedActivity = "diet"
+                            activitiesSheet.toggle()
+                        } label: {
+                            HStack {
+                                Text("Diet")
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Image(systemName: "carrot.fill")
+                                    .foregroundColor(activityColor(of: dayData.first?.diet ?? .none))
+                            }
                         }
-                    }
-                    Button {
-                        selectedActivity = "sleep"
-                        activitiesSheet.toggle()
-                    } label: {
-                        HStack {
-                            Text("Sleep")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Image(systemName: "bed.double.fill")
-                                .foregroundColor(activityColor(of: dayData.first?.sleep ?? .none))
+                        Button {
+                            selectedActivity = "sleep"
+                            activitiesSheet.toggle()
+                        } label: {
+                            HStack {
+                                Text("Sleep")
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Image(systemName: "bed.double.fill")
+                                    .foregroundColor(activityColor(of: dayData.first?.sleep ?? .none))
+                            }
                         }
-                    }
-                    Button {
-                        selectedActivity = "exercise"
-                        activitiesSheet.toggle()
-                    } label: {
-                        HStack {
-                            Text("Exercise")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Image(systemName: "figure.strengthtraining.functional")
-                                .foregroundColor(activityColor(of: dayData.first?.exercise ?? .none))
+                        Button {
+                            selectedActivity = "exercise"
+                            activitiesSheet.toggle()
+                        } label: {
+                            HStack {
+                                Text("Exercise")
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Image(systemName: "figure.strengthtraining.functional")
+                                    .foregroundColor(activityColor(of: dayData.first?.exercise ?? .none))
+                            }
                         }
-                    }
-                    Button {
-                        selectedActivity = "relax"
-                        activitiesSheet.toggle()
-                    } label: {
-                        HStack {
-                            Text("Relax")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Image(systemName: "figure.mind.and.body")
-                                .foregroundColor(activityColor(of: dayData.first?.relax ?? .none))
+                        Button {
+                            selectedActivity = "relax"
+                            activitiesSheet.toggle()
+                        } label: {
+                            HStack {
+                                Text("Relax")
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Image(systemName: "figure.mind.and.body")
+                                    .foregroundColor(activityColor(of: dayData.first?.relax ?? .none))
+                            }
                         }
                     }
                 }
+                
+                // Notes
                 if !(dayData.first?.notes.isEmpty ?? true) || !selectedDayIsToday() {
                     Section("Notes") {
                         if dayData.first?.notes.isEmpty ?? true && dayData.first == nil {
