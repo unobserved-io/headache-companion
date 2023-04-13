@@ -28,7 +28,7 @@ struct ContentView: View {
     @State private var attackEndTime: Date = .now
     @State private var refreshIt: Bool = false
     @State private var attackOngoing: Bool = false
-    let todayString: String = dateFormatter.string(from: .now)
+    @State var todayString: String = dateFormatter.string(from: .now)
 
     var body: some View {
         NavigationStack {
@@ -179,25 +179,33 @@ struct ContentView: View {
             refreshIt.toggle()
             
             // Timer to change day at midnight
-            // TODO: Continue ongoing attack
             let midnight = Calendar.current.startOfDay(for: .now).addingTimeInterval(86400)
+            // Code to be executed at midnight
             let timer = Timer(fire: midnight, interval: 0, repeats: false) { _ in
-                // Code to be executed at midnight
-                let newDayString = dateFormatter.string(from: .now)
-                dayData.nsPredicate = NSPredicate(format: "date = %@", newDayString)
+                // Check for an ongoing attack and end or don't depending on user setting
+                var ongoingAttack: Attack? = nil
+                if let index = dayData.first?.attacks.firstIndex(where: { $0.stopTime == nil }) {
+                    dayData.first?.attacks[index].stopTime = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: dateFormatter.date(from: todayString) ?? (Calendar.current.date(byAdding: .day, value: -1, to: .now) ?? .now))
+                    // If user set to not end with day, store the attack
+                    if !(mAppData.first?.attacksEndWithDay ?? true) {
+                        ongoingAttack = dayData.first?.attacks[index]
+                    }
+                }
+                
+                // Change to new day
+                todayString = dateFormatter.string(from: .now)
+                dayData.nsPredicate = NSPredicate(format: "date = %@", todayString)
                 if dayData.isEmpty {
-                    let newDay = DayData(context: viewContext)
-                    newDay.date = newDayString
-                    saveData()
+                    createNewDayWithAttack(ongoingAttack: ongoingAttack)
                 } else {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                         if dayData.isEmpty {
-                            let newDay = DayData(context: viewContext)
-                            newDay.date = newDayString
-                            saveData()
+                            createNewDayWithAttack(ongoingAttack: ongoingAttack)
                         }
                     }
                 }
+                
+                
             }
             RunLoop.current.add(timer, forMode: .common)
         }
@@ -249,6 +257,30 @@ struct ContentView: View {
         let itemEntity = NSEntityDescription.entity(forEntityName: "DayData",
             in: viewContext)!
         return DayData(entity: itemEntity, insertInto:nil)
+    }
+    
+    private func createNewDayWithAttack(ongoingAttack: Attack?) {
+        let newDay = DayData(context: viewContext)
+        newDay.date = todayString
+        if ongoingAttack != nil {
+            let newAttack = Attack(context: viewContext)
+            newAttack.id = UUID().uuidString
+            newAttack.headacheType = ongoingAttack!.headacheType
+            newAttack.otherPainText = ongoingAttack!.otherPainText
+            newAttack.otherPainGroup = ongoingAttack!.otherPainGroup
+            newAttack.painLevel = ongoingAttack!.painLevel
+            newAttack.pressing = ongoingAttack!.pressing
+            newAttack.pressingSide = ongoingAttack!.pressingSide
+            newAttack.pulsating = ongoingAttack!.pulsating
+            newAttack.pulsatingSide = ongoingAttack!.pulsatingSide
+            newAttack.auras = ongoingAttack!.auras
+            newAttack.symptoms = ongoingAttack!.symptoms
+            newAttack.onPeriod = ongoingAttack!.onPeriod
+            newAttack.startTime = Calendar.current.startOfDay(for: .now)
+            newAttack.stopTime = nil
+            newDay.addToAttack(newAttack)
+        }
+        saveData()
     }
     
     private func makeTempAttack() -> Attack {
