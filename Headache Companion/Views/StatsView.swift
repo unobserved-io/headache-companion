@@ -378,10 +378,18 @@ struct StatsView: View {
             }
             if dictOfTriggers[medType] ?? false && theTuple != nil {
                 VStack(alignment: .leading) {
-                    ForEach(Array(theTuple!.value), id: \.self) { name in
-                        Text(name)
-                            .padding(.leading, 40)
+                    Grid(alignment: .leading, verticalSpacing: 5) {
+                        ForEach(theTuple!.value, id: \.key) { name, days in
+                            GridRow {
+                                Text(String(days))
+                                    .foregroundColor(.accentColor)
+                                    .bold()
+                                    .padding(.trailing)
+                                Text("\(days == 1 ? "day" : "days") \(name.localizedLowercase)")
+                            }
+                        }
                     }
+                    .padding(.leading)
                 }
             }
             

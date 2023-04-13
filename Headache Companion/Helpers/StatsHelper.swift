@@ -22,7 +22,7 @@ class StatsHelper: ObservableObject {
     @Published var allTypesOfHeadache: [(key: String, value: Int)] = []
     @Published var daysWithMedication: Int = 0
     @Published var daysByMedType: [(key: String, value: Int)] = []
-    @Published var medicationByMedType: [(key: String, value: Set<String>)] = []
+    @Published var medicationByMedType: [(key: String, value: [(key: String, value: Int)])] = []
     @Published var percentWithMedication: Int = 0
     @Published var mostCommonTypeOfHeadache: String = ""
     @Published var averagePainLevel: Double = 0.0
@@ -94,23 +94,45 @@ class StatsHelper: ObservableObject {
             
             // Medication stats
             if !day.medications.isEmpty {
-                var medTypesThisDay: Set<String> = []
+//                var medTypesThisDay: Set<String> = []
+                var medNamesThisDayByType: [(key: String, value: Set<String>)] = []
                 daysWithMedication += 1
                 
                 day.medications.forEach { medication in
-                    medTypesThisDay.insert(medication.type)
-                    if let index = medicationByMedType.firstIndex(where: {$0.key == medication.type}) {
-                        medicationByMedType[index].value.insert(medication.name ?? "Unknown")
+//                    medTypesThisDay.insert(medication.type)
+                    if let index = medNamesThisDayByType.firstIndex(where: {$0.key == medication.type}) {
+                        medNamesThisDayByType[index].value.insert(medication.name ?? "Unknown")
                     } else {
-                        medicationByMedType.append((medication.type, [medication.name ?? "Unknown"]))
+                        medNamesThisDayByType.append((medication.type, [medication.name ?? "Unknown"]))
                     }
                 }
                 
-                medTypesThisDay.forEach { medType in
+                medNamesThisDayByType.forEach { medType, medNames in
                     if let index = daysByMedType.firstIndex(where: {$0.key == medType}) {
                         daysByMedType[index].value += 1
                     } else {
                         daysByMedType.append((medType, 1))
+                    }
+                    
+                    if let index = medicationByMedType.firstIndex(where: {$0.key == medType}) {
+                        medNames.forEach { medName in
+                            if let index2 = medicationByMedType[index].value.firstIndex(where: {$0.key == medName}) {
+                                medicationByMedType[index].value[index2].value += 1
+                            } else {
+                                medicationByMedType[index].value.append((medName, 1))
+                            }
+                        }
+                    } else {
+                        medicationByMedType.append((medType, []))
+                        if let index = medicationByMedType.firstIndex(where: {$0.key == medType}) {
+                            medNames.forEach { medName in
+                                if let index2 = medicationByMedType[index].value.firstIndex(where: {$0.key == medName}) {
+                                    medicationByMedType[index].value[index2].value += 1
+                                } else {
+                                    medicationByMedType[index].value.append((medName, 1))
+                                }
+                            }
+                        }
                     }
                 }
             }
