@@ -244,7 +244,6 @@ struct AttackView: View {
     }
     
     private func unlimitedRange() -> ClosedRange<Date> {
-        // TODO: Fix error
         return (attack.startTime ?? Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: inputDate ?? .now) ?? .now)  ... (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)
     }
         
