@@ -34,7 +34,7 @@ struct LoadingView: View {
                         if dayData.isEmpty {
                             initializeDataInThree()
                         } else {
-                            continueOngoingAttack()
+                            continueOrEndOngoingAttack()
                             
                             // Double check that dayData doesn't contain date before creating
                             if !dayData.contains(where: { $0.date == todayString}) {
@@ -48,7 +48,7 @@ struct LoadingView: View {
         } else {
             MainView()
                 .onAppear() {
-                    continueOngoingAttack()
+                    continueOrEndOngoingAttack()
                     lastLaunch = todayString
                 }
         }
@@ -72,14 +72,14 @@ struct LoadingView: View {
         saveData()
     }
     
-    private func continueOngoingAttack() {
+    private func continueOrEndOngoingAttack() {
         // Create ongoing attack on every day if !attacksEndWithDay
-        if !(mAppData.first?.attacksEndWithDay ?? true) {
-            let today = Calendar.current.startOfDay(for: .now)
-            var lastRecorded = Calendar.current.startOfDay(for: dateFormatter.date(from: lastLaunch) ?? Calendar.current.startOfDay(for: .now))
-            
-            if let index = dayData.firstIndex(where: { $0.date == lastLaunch }) {
-                if let attackIndex = dayData[index].attacks.firstIndex(where: { $0.stopTime == nil }) {
+        let today = Calendar.current.startOfDay(for: .now)
+        var lastRecorded = Calendar.current.startOfDay(for: dateFormatter.date(from: lastLaunch) ?? Calendar.current.startOfDay(for: .now))
+        
+        if let index = dayData.firstIndex(where: { $0.date == lastLaunch }) {
+            if let attackIndex = dayData[index].attacks.firstIndex(where: { $0.stopTime == nil }) {
+                if !(mAppData.first?.attacksEndWithDay ?? true) { // Continue ongoing attack
                     let modelAttack = dayData[index].attacks[attackIndex]
                     modelAttack.stopTime = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: lastRecorded)
                     lastRecorded = Calendar.current.date(byAdding: .day, value: 1, to: lastRecorded) ?? Date.now
@@ -131,6 +131,9 @@ struct LoadingView: View {
                         }
                         lastRecorded = Calendar.current.date(byAdding: .day, value: 1, to: lastRecorded) ?? Date.now
                     }
+                } else { // End ongoing attack
+                    let lastUnendedAttack = dayData[index].attacks[attackIndex]
+                    lastUnendedAttack.stopTime = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: lastRecorded)
                 }
             }
         }
