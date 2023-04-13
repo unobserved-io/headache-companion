@@ -216,7 +216,13 @@ struct AttackView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: cancelBtn)
         .onAppear() {
-
+            if !newAttack && !editCurrent && attack.stopTime == nil {
+                if selectedDayIsToday() {
+                    attack.stopTime = .now
+                } else {
+                    attack.stopTime = (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)
+                }
+            }
         }
         .onDisappear() {
             if cancelClicked && attack.id == nil {
