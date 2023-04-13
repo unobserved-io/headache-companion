@@ -253,6 +253,7 @@ struct StatsView: View {
                 .buttonStyle(.bordered)
                 .tint(.accentColor)
                 .font(.title2)
+                .padding(.bottom)
                 
                 Grid(alignment: .leading, verticalSpacing: 5) {
                     GridRow(alignment: .top) {
@@ -266,6 +267,7 @@ struct StatsView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.bottom)
                 
                 Spacer()
             }
