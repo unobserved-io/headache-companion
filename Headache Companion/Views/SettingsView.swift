@@ -120,6 +120,22 @@ struct SettingsView: View {
                             Image(systemName: "brain.head.profile")
                         }
                     }
+                    
+                    // Add custom medication types
+                    Button {
+                        if storeModel.purchasedIds.isEmpty {
+                            showingPurchaseAlert.toggle()
+                        } else {
+                            path.append("CustomMedicationTypesView")
+                        }
+                    } label: {
+                        Label {
+                            Text(storeModel.purchasedIds.isEmpty ? "Add Medication Types (Pro)" : "Add Medication Types")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "pills.fill")
+                        }
+                    }
                 }
                 
                 Section("Appearance") {
@@ -239,6 +255,8 @@ struct SettingsView: View {
                     ActivityColorsView()
                 } else if view == "CustomHeadacheTypesView" {
                     CustomHeadacheTypesView()
+                } else if view == "CustomMedicationTypesView" {
+                    CustomMedicationTypesView()
                 }
             }
         }

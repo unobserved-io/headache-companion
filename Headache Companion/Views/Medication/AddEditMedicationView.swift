@@ -12,6 +12,11 @@ struct AddEditMedicationView: View {
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var medication: ClickedMedication
     @FetchRequest var dayData: FetchedResults<DayData>
+    @FetchRequest(
+        entity: MAppData.entity(),
+        sortDescriptors: []
+    )
+    var mAppData: FetchedResults<MAppData>
     let dayTaken: Date
     let dayTakenString: String
     @State var medName: String = ""
@@ -64,7 +69,7 @@ struct AddEditMedicationView: View {
             
             // Type picker
             Picker("Type", selection: $medType) {
-                ForEach(defaultMedicationTypes, id: \.self) { type in
+                ForEach(defaultMedicationTypes + (mAppData.first?.customMedTypes ?? []), id: \.self) { type in
                     Text(type.localizedCapitalized)
                 }
             }

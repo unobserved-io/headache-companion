@@ -11,6 +11,11 @@ struct AddEditMedHistoryView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
+    @FetchRequest(
+        entity: MAppData.entity(),
+        sortDescriptors: []
+    )
+    var mAppData: FetchedResults<MAppData>
     @ObservedObject var medHistory: MedHistory
     @State var stopDateOngoing: Bool = false
     @State var cancelClicked: Bool = false
@@ -61,7 +66,7 @@ struct AddEditMedHistoryView: View {
             
             // Type picker
             Picker("Type", selection: $medHistory.type) {
-                ForEach(defaultMedicationTypes, id: \.self) { type in
+                ForEach(defaultMedicationTypes + (mAppData.first?.customMedTypes ?? []), id: \.self) { type in
                     Text(type.localizedCapitalized)
                 }
             }

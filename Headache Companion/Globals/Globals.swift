@@ -45,6 +45,7 @@ func initializeMAppData() {
     newMAppData.customSymptoms = []
     newMAppData.customAuras = []
     newMAppData.customHeadacheTypes = []
+    newMAppData.customMedTypes = []
     newMAppData.customSideEffects = []
     newMAppData.activityColors = [
         getData(from: UIColor(Color.gray)) ?? Data(),

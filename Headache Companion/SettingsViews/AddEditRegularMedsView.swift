@@ -54,7 +54,7 @@ struct AddEditRegularMedsView: View {
             }
             
             Picker("Type", selection: $medType) {
-                ForEach(defaultMedicationTypes, id: \.self) { type in
+                ForEach(defaultMedicationTypes + (mAppData.first?.customMedTypes ?? []), id: \.self) { type in
                     Text(type.localizedCapitalized)
                 }
             }
