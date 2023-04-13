@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PreviouslyTakenMedsView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.dismiss) var dismiss // TODO: From iOS 15+. Test on iOS 14
+    @Environment(\.dismiss) var dismiss
     @FetchRequest(
         entity: DayData.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: false)]
