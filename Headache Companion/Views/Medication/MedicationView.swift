@@ -24,9 +24,7 @@ struct MedicationView: View {
     @State private var showingSheet: Bool = false
     @State private var settingsDetent = PresentationDetent.medium
     @State private var refreshIt: Bool = true
-    
-    // TODO: Fix layout constraint issue when clicking off of DatePicker. May have to do with shortening the sheet
-    
+        
     init() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
