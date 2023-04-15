@@ -99,7 +99,6 @@ class StatsHelper: ObservableObject {
                 daysWithMedication += 1
                 
                 day.medications.forEach { medication in
-//                    medTypesThisDay.insert(medication.type)
                     if let index = medNamesThisDayByType.firstIndex(where: {$0.key == medication.type}) {
                         medNamesThisDayByType[index].value.insert(medication.name ?? "Unknown")
                     } else {
