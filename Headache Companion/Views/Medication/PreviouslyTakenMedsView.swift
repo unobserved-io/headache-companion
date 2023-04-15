@@ -42,7 +42,9 @@ struct PreviouslyTakenMedsView: View {
                         HStack {
                             Text("\(uniqueMed.name ?? "Unknown")")
                                 .bold()
-                            Text("(\(uniqueMed.dose ?? ""))")
+                            if !(uniqueMed.dose?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) {
+                                Text("(\(uniqueMed.dose ?? ""))")
+                            }
                         }
                         
                         Spacer()
