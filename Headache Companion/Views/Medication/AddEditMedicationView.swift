@@ -143,6 +143,7 @@ struct AddEditMedicationView: View {
                 // Medication not nil - get values
                 medName = medication.medication?.name ?? ""
                 medDose = medication.medication?.dose ?? ""
+                medType = medication.medication?.type ?? "symptom relieving"
                 medAmount = medication.medication?.amount ?? 0
                 medTime = medication.medication?.time ?? Date.now
                 medEffective = medication.medication?.effective ?? .none
