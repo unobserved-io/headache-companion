@@ -21,31 +21,33 @@ struct RegularMedicationsView: View {
     var body: some View {
         Form {
             if !(mAppData.first?.regularMeds.isEmpty ?? true) {
-                Section {
-                    ForEach(mAppData.first?.regularMeds ?? []) { medication in
-                        Button {
-                            clickedMedication.medication = medication
-                            showingSheet.toggle()
-                        } label: {
-                            HStack {
-                                // Amount number
-                                Text("\(refreshIt ? "" : "")\(medication.amount)")
-                                    .font(Font.system(.title).monospacedDigit())
-                                    .padding(.trailing)
-                                    
-                                // Med details
-                                HStack {
-                                    Text("\(medication.name ?? "Unknown")")
-                                        .bold()
-                                    if !(medication.dose?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) {
-                                        Text("(\(medication.dose ?? ""))")
+                ForEach(getMedsSorted(), id: \.key) { medType, medications in
+                    Section(medType) {
+                        ForEach(medications) { medication in
+                                Button {
+                                    clickedMedication.medication = medication
+                                    showingSheet.toggle()
+                                } label: {
+                                    HStack {
+                                        // Amount number
+                                        Text("\(refreshIt ? "" : "")\(medication.amount)")
+                                            .font(Font.system(.title).monospacedDigit())
+                                            .padding(.trailing)
+                                            
+                                        // Med details
+                                        HStack {
+                                            Text("\(medication.name ?? "Unknown")")
+                                                .bold()
+                                            if !(medication.dose?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) {
+                                                Text("(\(medication.dose ?? ""))")
+                                            }
+                                        }
                                     }
                                 }
-                            }
+                                .tint(.primary)
                         }
-                        .tint(.primary)
+                        .onDelete(perform: deleteMedication)
                     }
-                    .onDelete(perform: deleteMedication)
                 }
             }
             
@@ -66,6 +68,19 @@ struct RegularMedicationsView: View {
     
     private func refreshView() {
         refreshIt.toggle()
+    }
+    
+    private func getMedsSorted() -> [(key: String, value: [Medication])] {
+        var uniqueMedsSorted: [(key: String, value: [Medication])] = []
+        mAppData.first?.regularMeds.forEach { uniqueMed in
+            if let index = uniqueMedsSorted.firstIndex(where: {$0.key == uniqueMed.type}) {
+                uniqueMedsSorted[index].value.append(uniqueMed)
+            } else {
+                uniqueMedsSorted.append((uniqueMed.type, [uniqueMed]))
+            }
+        }
+        uniqueMedsSorted.sort(by: { $0.key > $1.key })
+        return uniqueMedsSorted
     }
     
     private func deleteMedication(at offsets: IndexSet) {
