@@ -25,7 +25,10 @@ struct MultiSelectionView: View {
                     }
                 }
             }
-        }.listStyle(GroupedListStyle())
+        }
+        #if os(iOS)
+        .listStyle(GroupedListStyle())
+        #endif
     }
 
     private func toggleSelection(selectable: String) {
