@@ -30,7 +30,7 @@ struct DoctorNotesView: View {
                 .focused($isNoteFocused)
             if !isNoteFocused && mAppData.first?.doctorNotes?.isEmpty ?? true {
                 Text("Type notes for your doctor...")
-                    .foregroundColor(Color(uiColor: .placeholderText))
+                    .foregroundColor(.gray)
                     .padding(.top, 10)
                     .padding(.leading, 5)
                     .allowsHitTesting(false)

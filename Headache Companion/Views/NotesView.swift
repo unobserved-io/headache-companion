@@ -22,7 +22,7 @@ struct NotesView: View {
                 .focused($isNoteFocused)
             if !isNoteFocused && dayData.notes.isEmpty {
                 Text("Type your notes...")
-                    .foregroundColor(Color(uiColor: .placeholderText))
+                    .foregroundColor(.gray)
                     .padding(.top, 10)
                     .padding(.leading, 5)
                     .allowsHitTesting(false)
