@@ -483,14 +483,20 @@ struct SettingsView: View {
     }
     
     private func resetSettings() {
+        mAppData.first?.doctorNotes = ""
         mAppData.first?.getsPeriod = false
         mAppData.first?.customSymptoms = []
+        mAppData.first?.customAuras = []
+        mAppData.first?.customHeadacheTypes = []
+        mAppData.first?.customMedTypes = []
+        mAppData.first?.customSideEffects = []
         mAppData.first?.activityColors = [
             getData(from: UIColor(Color.gray)) ?? Data(),
             getData(from: UIColor(Color.red)) ?? Data(),
             getData(from: UIColor(Color.yellow)) ?? Data(),
             getData(from: UIColor(Color.green)) ?? Data(),
         ]
+        mAppData.first?.launchDay = Calendar.current.startOfDay(for: .now)
         saveData()
     }
     
