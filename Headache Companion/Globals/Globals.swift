@@ -8,6 +8,14 @@
 import Foundation
 import SwiftUI
 
+/*
+ COLOR HEX
+ Gray: 8E8E93FF
+ Red: EB4E3DFF
+ Yellow: F7CE46FF
+ Green: 65C466FF
+ */
+
 let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"

@@ -17,7 +17,6 @@
 		9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983AC29B7923D007754AB /* ClickedMedication.swift */; };
 		9C20B5DA29E7E9730011748A /* CustomMedicationTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C20B5D929E7E9730011748A /* CustomMedicationTypesView.swift */; };
 		9C26604029EE8F250037612C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C26604229EE8F250037612C /* Localizable.strings */; };
-		9C26604729EEA8360037612C /* ColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C26604629EEA8360037612C /* ColorHex.swift */; };
 		9C37EDF529D2E9DB0089DE2B /* NewAttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */; };
 		9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE5F29AE6626000EB6C2 /* AttackView.swift */; };
 		9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE6129AE662E000EB6C2 /* CalendarView.swift */; };
@@ -46,6 +45,7 @@
 		9CD317C429D8988900F88EB1 /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD317C329D8988900F88EB1 /* NewNoteView.swift */; };
 		9CD3DC0B29CDBD0F004B86E8 /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DC0A29CDBD0F004B86E8 /* PieChart.swift */; };
 		9CD3DC0D29CDBDA8004B86E8 /* PieSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */; };
+		9CD46F2A29EEAE8C006ECA7A /* ColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD46F2929EEAE8C006ECA7A /* ColorHex.swift */; };
 		9CE27D9229E4BF6400D4646D /* CustomHeadacheTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE27D9129E4BF6400D4646D /* CustomHeadacheTypesView.swift */; };
 		9CE8294F29D5968500010142 /* JSONDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CE8294E29D5968500010142 /* JSONDocument.swift */; };
 		9CEAA3C829B535D600240952 /* MedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEAA3C729B535D600240952 /* MedicationView.swift */; };
@@ -77,7 +77,6 @@
 		9C1983AC29B7923D007754AB /* ClickedMedication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickedMedication.swift; sourceTree = "<group>"; };
 		9C20B5D929E7E9730011748A /* CustomMedicationTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMedicationTypesView.swift; sourceTree = "<group>"; };
 		9C26604129EE8F250037612C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9C26604629EEA8360037612C /* ColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHex.swift; sourceTree = "<group>"; };
 		9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAttackView.swift; sourceTree = "<group>"; };
 		9C45EE5F29AE6626000EB6C2 /* AttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackView.swift; sourceTree = "<group>"; };
 		9C45EE6129AE662E000EB6C2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -107,6 +106,7 @@
 		9CD317C329D8988900F88EB1 /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
 		9CD3DC0A29CDBD0F004B86E8 /* PieChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
 		9CD3DC0C29CDBDA8004B86E8 /* PieSlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSlice.swift; sourceTree = "<group>"; };
+		9CD46F2929EEAE8C006ECA7A /* ColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHex.swift; sourceTree = "<group>"; };
 		9CE27D9129E4BF6400D4646D /* CustomHeadacheTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeadacheTypesView.swift; sourceTree = "<group>"; };
 		9CE8294E29D5968500010142 /* JSONDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDocument.swift; sourceTree = "<group>"; };
 		9CEAA3C729B535D600240952 /* MedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationView.swift; sourceTree = "<group>"; };
@@ -300,7 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				9CC2581F29BDC36C00E55949 /* StatsHelper.swift */,
-				9C26604629EEA8360037612C /* ColorHex.swift */,
+				9CD46F2929EEAE8C006ECA7A /* ColorHex.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -460,7 +460,7 @@
 				9CA81F0E29C7755D00EDBCEF /* ActivityColorsView.swift in Sources */,
 				9CFCECE029D076E3001656B5 /* MAppData+CoreDataClass.swift in Sources */,
 				9C18C06F29BB6A04008084E2 /* SettingsView.swift in Sources */,
-				9C26604729EEA8360037612C /* ColorHex.swift in Sources */,
+				9CD46F2A29EEAE8C006ECA7A /* ColorHex.swift in Sources */,
 				9CC529D029BD02FD00DD5491 /* PreviouslyTakenMedsView.swift in Sources */,
 				9CFCECDC29D076E3001656B5 /* DayData+CoreDataClass.swift in Sources */,
 				9C48B26D29DD6C7400EBC9BC /* MedicationHistoryView.swift in Sources */,
