@@ -16,6 +16,8 @@
 		9C1983AA29B73DD2007754AB /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983A929B73DD2007754AB /* MainView.swift */; };
 		9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983AC29B7923D007754AB /* ClickedMedication.swift */; };
 		9C20B5DA29E7E9730011748A /* CustomMedicationTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C20B5D929E7E9730011748A /* CustomMedicationTypesView.swift */; };
+		9C26604029EE8F250037612C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C26604229EE8F250037612C /* Localizable.strings */; };
+		9C26604729EEA8360037612C /* ColorHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C26604629EEA8360037612C /* ColorHex.swift */; };
 		9C37EDF529D2E9DB0089DE2B /* NewAttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */; };
 		9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE5F29AE6626000EB6C2 /* AttackView.swift */; };
 		9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE6129AE662E000EB6C2 /* CalendarView.swift */; };
@@ -74,6 +76,8 @@
 		9C1983A929B73DD2007754AB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9C1983AC29B7923D007754AB /* ClickedMedication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickedMedication.swift; sourceTree = "<group>"; };
 		9C20B5D929E7E9730011748A /* CustomMedicationTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMedicationTypesView.swift; sourceTree = "<group>"; };
+		9C26604129EE8F250037612C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9C26604629EEA8360037612C /* ColorHex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorHex.swift; sourceTree = "<group>"; };
 		9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAttackView.swift; sourceTree = "<group>"; };
 		9C45EE5F29AE6626000EB6C2 /* AttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackView.swift; sourceTree = "<group>"; };
 		9C45EE6129AE662E000EB6C2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -166,6 +170,14 @@
 				9CE8294E29D5968500010142 /* JSONDocument.swift */,
 			);
 			path = Objects;
+			sourceTree = "<group>";
+		};
+		9C26603D29EE8E750037612C /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				9C26604229EE8F250037612C /* Localizable.strings */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		9C45EE5B29AE5E04000EB6C2 /* Views */ = {
@@ -288,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				9CC2581F29BDC36C00E55949 /* StatsHelper.swift */,
+				9C26604629EEA8360037612C /* ColorHex.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -312,6 +325,7 @@
 		9CF7307E29ACD93800D91F99 /* Headache Companion */ = {
 			isa = PBXGroup;
 			children = (
+				9C26603D29EE8E750037612C /* Localization */,
 				9C66875929DC637E00AABD58 /* Store */,
 				9CFCECE229D08248001656B5 /* Headache-Companion-Info.plist */,
 				9CC2581E29BDC35300E55949 /* Helpers */,
@@ -402,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CF7308D29ACD93800D91F99 /* Preview Assets.xcassets in Resources */,
+				9C26604029EE8F250037612C /* Localizable.strings in Resources */,
 				9CF7308929ACD93800D91F99 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,6 +460,7 @@
 				9CA81F0E29C7755D00EDBCEF /* ActivityColorsView.swift in Sources */,
 				9CFCECE029D076E3001656B5 /* MAppData+CoreDataClass.swift in Sources */,
 				9C18C06F29BB6A04008084E2 /* SettingsView.swift in Sources */,
+				9C26604729EEA8360037612C /* ColorHex.swift in Sources */,
 				9CC529D029BD02FD00DD5491 /* PreviouslyTakenMedsView.swift in Sources */,
 				9CFCECDC29D076E3001656B5 /* DayData+CoreDataClass.swift in Sources */,
 				9C48B26D29DD6C7400EBC9BC /* MedicationHistoryView.swift in Sources */,
@@ -469,6 +485,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		9C26604229EE8F250037612C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9C26604129EE8F250037612C /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9CF7308E29ACD93800D91F99 /* Debug */ = {
@@ -528,6 +555,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -582,6 +610,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
