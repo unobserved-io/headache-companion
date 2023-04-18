@@ -111,15 +111,15 @@ struct ActivitiesView: View {
     private func correspondingColor(of activityRank: ActivityRanks) -> Color {
         switch activityRank {
         case .none:
-            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+            return Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
         case .bad:
-            return getColor(from: mAppData.first?.activityColors?[1] ?? Data(), default: Color.red)
+            return Color(hex: mAppData.first?.activityColors?[1]) ?? Color.red
         case .ok:
-            return getColor(from: mAppData.first?.activityColors?[2] ?? Data(), default: Color.yellow)
+            return Color(hex: mAppData.first?.activityColors?[2]) ?? Color.yellow
         case .good:
-            return getColor(from: mAppData.first?.activityColors?[3] ?? Data(), default: Color.green)
+            return Color(hex: mAppData.first?.activityColors?[3]) ?? Color.green
         default:
-            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+            return Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
         }
     }
     

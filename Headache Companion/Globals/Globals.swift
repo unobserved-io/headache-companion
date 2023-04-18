@@ -8,14 +8,6 @@
 import Foundation
 import SwiftUI
 
-/*
- COLOR HEX
- Gray: 8E8E93FF
- Red: EB4E3DFF
- Yellow: F7CE46FF
- Green: 65C466FF
- */
-
 let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
@@ -56,30 +48,11 @@ func initializeMAppData() {
     newMAppData.customMedTypes = []
     newMAppData.customSideEffects = []
     newMAppData.activityColors = [
-        getData(from: UIColor(Color.gray)) ?? Data(),
-        getData(from: UIColor(Color.red)) ?? Data(),
-        getData(from: UIColor(Color.yellow)) ?? Data(),
-        getData(from: UIColor(Color.green)) ?? Data(),
+        "8E8E93FF", // Gray
+        "EB4E3DFF", // Red
+        "F7CE46FF", // Yellow
+        "65C466FF", // Green
     ]
     newMAppData.launchDay = Calendar.current.startOfDay(for: .now)
     saveData()
-}
-
-func getData(from color: UIColor) -> Data? {
-    do {
-        return try NSKeyedArchiver.archivedData(withRootObject: color, requiringSecureCoding: false)
-    } catch {
-        print(error)
-    }
-    return nil
-}
-
-func getColor(from data: Data, default defaultColor: Color) -> Color {
-    do {
-        return try Color(NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data)!)
-    } catch {
-        print(error)
-    }
-
-    return defaultColor
 }

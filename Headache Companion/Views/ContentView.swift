@@ -91,7 +91,7 @@ struct ContentView: View {
                             Image(systemName: "drop")
                         }
                         .font(.system(size: 60))
-                        .foregroundColor(activityColor(of: dayData.first?.water ?? .none))
+                        .foregroundColor(correspondingColor(of: dayData.first?.water ?? .none))
                         .disabled(dayData.isEmpty)
                         Text("Water").padding(.top, 1)
                     }
@@ -104,7 +104,7 @@ struct ContentView: View {
                             Image(systemName: "carrot")
                         }
                         .font(.system(size: 60))
-                        .foregroundColor(activityColor(of: dayData.first?.diet ?? .none))
+                        .foregroundColor(correspondingColor(of: dayData.first?.diet ?? .none))
                         .disabled(dayData.isEmpty)
                         Text("Diet").padding(.top, 1)
                     }
@@ -119,7 +119,7 @@ struct ContentView: View {
                             Image(systemName: "bed.double")
                         }
                         .font(.system(size: 60))
-                        .foregroundColor(activityColor(of: dayData.first?.sleep ?? .none))
+                        .foregroundColor(correspondingColor(of: dayData.first?.sleep ?? .none))
                         .disabled(dayData.isEmpty)
                         Text("Sleep").padding(.top, 4)
                     }
@@ -133,7 +133,7 @@ struct ContentView: View {
                             Image(systemName: "figure.strengthtraining.functional")
                         }
                         .font(.system(size: 60))
-                        .foregroundColor(activityColor(of: dayData.first?.exercise ?? .none))
+                        .foregroundColor(correspondingColor(of: dayData.first?.exercise ?? .none))
                         .disabled(dayData.isEmpty)
                         Text("Excercise").padding(.top, 4)
                     }
@@ -146,7 +146,7 @@ struct ContentView: View {
                             Image(systemName: "figure.mind.and.body")
                         }
                         .font(.system(size: 60))
-                        .foregroundColor(activityColor(of: dayData.first?.relax ?? .none))
+                        .foregroundColor(correspondingColor(of: dayData.first?.relax ?? .none))
                         .disabled(dayData.isEmpty)
                         Text("Relax").padding(.top, 4)
                     }
@@ -299,18 +299,18 @@ struct ContentView: View {
         return false
     }
     
-    private func activityColor(of i: ActivityRanks) -> Color {
-        switch i {
+    private func correspondingColor(of activityRank: ActivityRanks) -> Color {
+        switch activityRank {
         case .none:
-            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+            return Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
         case .bad:
-            return getColor(from: mAppData.first?.activityColors?[1] ?? Data(), default: Color.red)
+            return Color(hex: mAppData.first?.activityColors?[1]) ?? Color.red
         case .ok:
-            return getColor(from: mAppData.first?.activityColors?[2] ?? Data(), default: Color.yellow)
+            return Color(hex: mAppData.first?.activityColors?[2]) ?? Color.yellow
         case .good:
-            return getColor(from: mAppData.first?.activityColors?[3] ?? Data(), default: Color.green)
+            return Color(hex: mAppData.first?.activityColors?[3]) ?? Color.green
         default:
-            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+            return Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
         }
     }
 }

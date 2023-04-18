@@ -115,7 +115,7 @@ struct CalendarView: View {
                                     .foregroundColor(.primary)
                                 Spacer()
                                 Image(systemName: "drop.fill")
-                                    .foregroundColor(activityColor(of: dayData.first?.water ?? .none))
+                                    .foregroundColor(correspondingColor(of: dayData.first?.water ?? .none))
                             }
                         }
                         Button {
@@ -127,7 +127,7 @@ struct CalendarView: View {
                                     .foregroundColor(.primary)
                                 Spacer()
                                 Image(systemName: "carrot.fill")
-                                    .foregroundColor(activityColor(of: dayData.first?.diet ?? .none))
+                                    .foregroundColor(correspondingColor(of: dayData.first?.diet ?? .none))
                             }
                         }
                         Button {
@@ -139,7 +139,7 @@ struct CalendarView: View {
                                     .foregroundColor(.primary)
                                 Spacer()
                                 Image(systemName: "bed.double.fill")
-                                    .foregroundColor(activityColor(of: dayData.first?.sleep ?? .none))
+                                    .foregroundColor(correspondingColor(of: dayData.first?.sleep ?? .none))
                             }
                         }
                         Button {
@@ -151,7 +151,7 @@ struct CalendarView: View {
                                     .foregroundColor(.primary)
                                 Spacer()
                                 Image(systemName: "figure.strengthtraining.functional")
-                                    .foregroundColor(activityColor(of: dayData.first?.exercise ?? .none))
+                                    .foregroundColor(correspondingColor(of: dayData.first?.exercise ?? .none))
                             }
                         }
                         Button {
@@ -163,7 +163,7 @@ struct CalendarView: View {
                                     .foregroundColor(.primary)
                                 Spacer()
                                 Image(systemName: "figure.mind.and.body")
-                                    .foregroundColor(activityColor(of: dayData.first?.relax ?? .none))
+                                    .foregroundColor(correspondingColor(of: dayData.first?.relax ?? .none))
                             }
                         }
                     }
@@ -233,18 +233,18 @@ struct CalendarView: View {
         }
     }
     
-    private func activityColor(of i: ActivityRanks) -> Color {
-        switch i {
+    private func correspondingColor(of activityRank: ActivityRanks) -> Color {
+        switch activityRank {
         case .none:
-            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+            return Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
         case .bad:
-            return getColor(from: mAppData.first?.activityColors?[1] ?? Data(), default: Color.red)
+            return Color(hex: mAppData.first?.activityColors?[1]) ?? Color.red
         case .ok:
-            return getColor(from: mAppData.first?.activityColors?[2] ?? Data(), default: Color.yellow)
+            return Color(hex: mAppData.first?.activityColors?[2]) ?? Color.yellow
         case .good:
-            return getColor(from: mAppData.first?.activityColors?[3] ?? Data(), default: Color.green)
+            return Color(hex: mAppData.first?.activityColors?[3]) ?? Color.green
         default:
-            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+            return Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
         }
     }
 }

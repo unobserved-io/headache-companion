@@ -23,7 +23,7 @@ extension MAppData {
     @NSManaged public var customMedTypes: [String]?
     @NSManaged public var customSymptoms: [String]?
     @NSManaged public var defaultEffectiveness: Effectiveness
-    @NSManaged public var activityColors: [Data]?
+    @NSManaged public var activityColors: [String]?
     @NSManaged public var getsPeriod: Bool
     @NSManaged public var attacksEndWithDay: Bool
     @NSManaged public var launchDay: Date

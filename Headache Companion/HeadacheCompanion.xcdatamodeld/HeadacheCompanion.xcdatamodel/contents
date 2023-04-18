@@ -29,7 +29,7 @@
         <relationship name="medication" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Medication" inverseName="date" inverseEntity="Medication"/>
     </entity>
     <entity name="MAppData" representedClassName="MAppData" syncable="YES">
-        <attribute name="activityColors" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Data]"/>
+        <attribute name="activityColors" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="attacksEndWithDay" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="customAuras" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
         <attribute name="customHeadacheTypes" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>

@@ -490,10 +490,10 @@ struct SettingsView: View {
         mAppData.first?.customMedTypes = []
         mAppData.first?.customSideEffects = []
         mAppData.first?.activityColors = [
-            getData(from: UIColor(Color.gray)) ?? Data(),
-            getData(from: UIColor(Color.red)) ?? Data(),
-            getData(from: UIColor(Color.yellow)) ?? Data(),
-            getData(from: UIColor(Color.green)) ?? Data(),
+            "8E8E93FF", // Gray
+            "EB4E3DFF", // Red
+            "F7CE46FF", // Yellow
+            "65C466FF", // Green
         ]
         mAppData.first?.launchDay = Calendar.current.startOfDay(for: .now)
         saveData()

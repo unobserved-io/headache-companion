@@ -227,15 +227,15 @@ struct StatsView: View {
                         .labelsHidden()
                         switch chosenActivity {
                         case .water:
-                            PieChart(values: statsHelper.waterInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "drop.fill")
+                            PieChart(values: statsHelper.waterInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "drop.fill")
                         case .diet:
-                            PieChart(values: statsHelper.dietInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "carrot.fill")
+                            PieChart(values: statsHelper.dietInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "carrot.fill")
                         case .exercise:
-                            PieChart(values: statsHelper.exerciseInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "figure.strengthtraining.functional")
+                            PieChart(values: statsHelper.exerciseInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "figure.strengthtraining.functional")
                         case .relax:
-                            PieChart(values: statsHelper.relaxInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "figure.mind.and.body")
+                            PieChart(values: statsHelper.relaxInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "figure.mind.and.body")
                         case .sleep:
-                            PieChart(values: statsHelper.sleepInSelectedDays, colors: [activityColor(of: .none), activityColor(of: .bad), activityColor(of: .ok), activityColor(of: .good)], icon: "bed.double.fill")
+                            PieChart(values: statsHelper.sleepInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "bed.double.fill")
                         }
                     }
                     
@@ -441,18 +441,18 @@ struct StatsView: View {
         }
     }
     
-    private func activityColor(of activityRank: ActivityRanks) -> Color {
+    private func correspondingColor(of activityRank: ActivityRanks) -> Color {
         switch activityRank {
         case .none:
-            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+            return Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
         case .bad:
-            return getColor(from: mAppData.first?.activityColors?[1] ?? Data(), default: Color.red)
+            return Color(hex: mAppData.first?.activityColors?[1]) ?? Color.red
         case .ok:
-            return getColor(from: mAppData.first?.activityColors?[2] ?? Data(), default: Color.yellow)
+            return Color(hex: mAppData.first?.activityColors?[2]) ?? Color.yellow
         case .good:
-            return getColor(from: mAppData.first?.activityColors?[3] ?? Data(), default: Color.green)
+            return Color(hex: mAppData.first?.activityColors?[3]) ?? Color.green
         default:
-            return getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
+            return Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
         }
     }
 }

@@ -34,17 +34,17 @@ struct ActivityColorsView: View {
             }
         }
         .onAppear() {
-            notRecorded = getColor(from: mAppData.first?.activityColors?[0] ?? Data(), default: Color.gray)
-            lowColor = getColor(from: mAppData.first?.activityColors?[1] ?? Data(), default: Color.red)
-            middleColor = getColor(from: mAppData.first?.activityColors?[2] ?? Data(), default: Color.yellow)
-            highColor = getColor(from: mAppData.first?.activityColors?[3] ?? Data(), default: Color.green)
+            notRecorded = Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
+            lowColor = Color(hex: mAppData.first?.activityColors?[1]) ?? Color.red
+            middleColor = Color(hex: mAppData.first?.activityColors?[2]) ?? Color.yellow
+            highColor = Color(hex: mAppData.first?.activityColors?[3]) ?? Color.green
         }
         .onDisappear() {
             mAppData.first?.activityColors? = [
-                getData(from: UIColor(notRecorded)) ?? Data(),
-                getData(from: UIColor(lowColor)) ?? Data(),
-                getData(from: UIColor(middleColor)) ?? Data(),
-                getData(from: UIColor(highColor)) ?? Data()
+                notRecorded.hex ?? "8E8E93FF",
+                lowColor.hex ?? "EB4E3DFF",
+                middleColor.hex ?? "F7CE46FF",
+                highColor.hex ?? "65C466FF"
             ]
             saveData()
         }
