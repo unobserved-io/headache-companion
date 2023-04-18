@@ -179,7 +179,9 @@ struct AddEditMedHistoryView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        #if os(iOS)
         .navigationBarItems(leading: cancelBtn)
+        #endif
         .onAppear() {
             stopDateOngoing = medHistory.stopDate == nil
         }

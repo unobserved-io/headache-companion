@@ -214,7 +214,9 @@ struct AttackView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        #if os(iOS)
         .navigationBarItems(leading: cancelBtn)
+        #endif
         .onAppear() {
             // Make sure the stopTime gets set when editing a previous attack without a stopTime
             if !newAttack && !editCurrent && attack.stopTime == nil {

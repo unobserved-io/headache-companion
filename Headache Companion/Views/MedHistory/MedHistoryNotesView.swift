@@ -30,7 +30,6 @@ struct MedHistoryNotesView: View {
 
 struct MedHistoryNotesView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewContext = PersistenceController.shared.container.viewContext
         MedHistoryNotesView(note: .constant(""))
     }
 }
