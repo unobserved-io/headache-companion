@@ -483,7 +483,6 @@ struct SettingsView: View {
     }
     
     private func resetSettings() {
-        mAppData.first?.doctorNotes = ""
         mAppData.first?.getsPeriod = false
         mAppData.first?.customSymptoms = []
         mAppData.first?.customAuras = []
