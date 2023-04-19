@@ -93,8 +93,13 @@ struct MedicationHistoryView: View {
                             } else {
                                 HStack {
                                     Text(med.name)
-                                    Text("(\(med.dose))")
-                                        .foregroundColor(.gray)
+                                    if med.amount > 1 {
+                                        Text("(\(med.amount) x \(med.dose))")
+                                            .foregroundColor(.gray)
+                                    } else {
+                                        Text("(\(med.dose))")
+                                            .foregroundColor(.gray)
+                                    }
                                 }
                             }
                         }
