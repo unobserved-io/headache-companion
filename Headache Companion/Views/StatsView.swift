@@ -117,6 +117,7 @@ struct StatsView: View {
                                         ForEach(statsHelper.allTypesOfHeadache, id: \.key) { type, num in
                                             GridRow {
                                                 Text(String(num))
+                                                    .font(Font.monospacedDigit(.body)())
                                                     .foregroundColor(.accentColor)
                                                     .bold()
                                                     .padding(.trailing)
