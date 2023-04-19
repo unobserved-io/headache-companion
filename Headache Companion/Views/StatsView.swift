@@ -282,7 +282,7 @@ struct StatsView: View {
     
     private func mainStat(_ stat: String) -> some View {
         return Text(stat)
-            .font(.title2)
+            .font(Font.monospacedDigit(.title2)())
             .foregroundColor(.accentColor)
             .bold()
     }
@@ -367,6 +367,7 @@ struct StatsView: View {
         return VStack(alignment: .leading) {
             HStack {
                 Text(String(amount))
+                    .font(Font.monospacedDigit(.body)())
                     .foregroundColor(.accentColor)
                     .bold()
                     .padding(.trailing)
@@ -384,6 +385,7 @@ struct StatsView: View {
                         ForEach(theTuple!.value, id: \.key) { name, days in
                             GridRow {
                                 Text(String(days))
+                                    .font(Font.monospacedDigit(.body)())
                                     .foregroundColor(.accentColor)
                                     .bold()
                                     .padding(.trailing)
