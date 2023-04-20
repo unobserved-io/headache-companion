@@ -26,27 +26,27 @@ struct AttackView: View {
     let editCurrent: Bool
     let inputDate: Date?
     let basicSymptoms = [
-        "Nausea",
-        "Vomiting",
-        "Dizziness",
-        "Sensitivity to light",
-        "Sensitivity to sound",
-        "Sensitivity to smell",
-        "Neck pain",
-        "Jaw pain",
-        "Ringing in ears",
-        "Issues speaking",
-        "Concentration problems",
-        "Brain fog",
-        "Memory issues"
+        String(localized: "Nausea"),
+        String(localized: "Vomiting"),
+        String(localized: "Dizziness"),
+        String(localized: "Sensitivity to light"),
+        String(localized: "Sensitivity to sound"),
+        String(localized: "Sensitivity to smell"),
+        String(localized: "Neck pain"),
+        String(localized: "Jaw pain"),
+        String(localized: "Ringing in ears"),
+        String(localized: "Issues speaking"),
+        String(localized: "Concentration problems"),
+        String(localized: "Brain fog"),
+        String(localized: "Memory issues")
     ]
     let auraTypes = [
-        "Brainstem",
-        "Motor",
-        "Retinal",
-        "Sensory",
-        "Speech/Language",
-        "Visual"
+        String(localized: "Brainstem"),
+        String(localized: "Motor"),
+        String(localized: "Retinal"),
+        String(localized: "Sensory"),
+        String(localized: "Speech/Language"),
+        String(localized: "Visual"),
     ]
     var cancelBtn : some View {
         Button("Cancel") {
