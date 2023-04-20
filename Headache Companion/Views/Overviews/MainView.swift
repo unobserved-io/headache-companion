@@ -14,7 +14,7 @@ struct MainView: View {
         TabView {
             ContentView()
                 .tabItem {
-                    Label("Home", systemImage: "house")
+                    Label(String(localized: "Home"), systemImage: "house")
                 }
             
             CalendarView()

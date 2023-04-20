@@ -50,7 +50,12 @@ struct StatsView: View {
     @State private var clickedAuraTotals: Bool = false
     @State private var clickedMedNames: Bool = false
     @State private var chosenActivity: ChosenActivity = .water
-    @State private var dictOfTriggers: [String:Bool] = [:]
+    @State private var medTypeTriggers: [String:Bool] = [:]
+    @State private var chevronTriggers: [String:Bool] = [:]
+    private let daySingular = String(localized: "day")
+    private let dayPlural = String(localized: "days")
+    private let attackSingular = String(localized: "attack")
+    private let attackPlural = String(localized: "attacks")
 
     var body: some View {
         NavigationStack {
@@ -97,17 +102,18 @@ struct StatsView: View {
                     Grid(alignment: .leading, verticalSpacing: 5) {
                         GridRow(alignment: .top) {
                             mainStat(String(statsHelper.daysTracked))
-                            statDescription("\(statsHelper.daysTracked == 1 ? "day" : "days") tracked")
+                            statDescription("\(statsHelper.daysTracked == 1 ? daySingular : dayPlural) tracked")
+//                            Text("^[\(statsHelper.daysTracked) \("day")](inflect: true) tracked")
                         }
                         GridRow(alignment: .top) {
                             mainStat(String(statsHelper.daysWithAttack))
-                            statDescription("\(statsHelper.daysWithAttack == 1 ? "day" : "days") with an attack")
+                            statDescription("\(statsHelper.daysWithAttack == 1 ? daySingular : dayPlural) with an attack")
                         }
                         GridRow(alignment: .top) {
                             mainStat(String(statsHelper.numberOfAttacks))
                             VStack(alignment: .leading) {
                                 HStack {
-                                    Text("\(statsHelper.numberOfAttacks == 1 ? "attack" : "attacks")")
+                                    Text("\(statsHelper.numberOfAttacks == 1 ? attackSingular : attackPlural)")
                                         .font(.title3)
                                     Image(systemName: clickedAttacks ? "chevron.down" : "chevron.right")
                                         .font(.system(size: 12))
@@ -154,7 +160,7 @@ struct StatsView: View {
                                 mainStat(String(statsHelper.allSymptoms.count))
                                 VStack(alignment: .leading, spacing: 5) {
                                     HStack {
-                                        Text("\(statsHelper.allSymptoms.count == 1 ? "symptom" : "symptoms")")
+                                        Text("\(statsHelper.allSymptoms.count == 1 ? String(localized: "symptom") : String(localized: "symptoms"))")
                                             .font(.title3)
                                         Image(systemName: clickedSymptoms ? "chevron.down" : "chevron.right")
                                             .font(.system(size: 12))
@@ -163,7 +169,7 @@ struct StatsView: View {
                                         ForEach(statsHelper.symptomsByHeadache, id: \.key) { type, symptoms in
                                             Text(type.localizedCapitalized)
                                             ForEach(symptoms.sorted(), id: \.self) { symptom in
-                                                Text(symptom)
+                                                Text(LocalizedStringKey(symptom))
                                             }
                                             .padding(.leading)
                                         }
@@ -178,7 +184,32 @@ struct StatsView: View {
                             
                             GridRow(alignment: .top) {
                                 mainStat(String(statsHelper.attacksWithAura))
-                                statDescriptionDictionary(for: "\(statsHelper.attacksWithAura == 1 ? "attack" : "attacks") with an aura", clicked: clickedAuraTotals, dict: statsHelper.allAuras)
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Text("\(statsHelper.attacksWithAura == 1 ? attackSingular : attackPlural) with an aura")
+                                            .font(.title3)
+                                        Image(systemName: clickedAuraTotals ? "chevron.down" : "chevron.right")
+                                            .font(.system(size: 12))
+                                    }
+                                    if clickedAuraTotals {
+                                        Grid(alignment: .leading, verticalSpacing: 5) {
+                                            ForEach(statsHelper.allAuras, id: \.key) { type, num in
+                                                GridRow {
+                                                    Text(String(num))
+                                                        .foregroundColor(.accentColor)
+                                                        .bold()
+                                                        .padding(.trailing)
+                                                    Text(type)
+                                                }
+                                            }
+                                        }
+                                        .padding(.leading)
+                                    }
+                                }
+                                .containerShape(Rectangle())
+                                .onTapGesture {
+                                    clickedAuraTotals.toggle()
+                                }
                             }
                         }
                         
@@ -192,7 +223,7 @@ struct StatsView: View {
                                 mainStat("\(statsHelper.daysWithMedication)")
                                 VStack(alignment: .leading, spacing: 5) {
                                     HStack {
-                                        Text("\(statsHelper.daysWithMedication == 1 ? "day" : "days") you took medication")
+                                        Text("\(statsHelper.daysWithMedication == 1 ? daySingular : dayPlural) you took medication")
                                             .font(.title3)
                                         Image(systemName: clickedDaysWithMeds ? "chevron.down" : "chevron.right")
                                             .font(.system(size: 12))
@@ -259,12 +290,12 @@ struct StatsView: View {
                 Grid(alignment: .leading, verticalSpacing: 5) {
                     GridRow(alignment: .top) {
                         mainStat(String(dayData.count))
-                        statDescription("\(dayData.count == 1 ? "day" : "days") with recorded data")
+                        statDescription("\(dayData.count == 1 ? daySingular : dayPlural) with recorded data")
                     }
                     
                     GridRow(alignment: .top) {
                         mainStat(String((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
-                        statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? "day" : "days") using Headache Companion")
+                        statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? daySingular : dayPlural) using Headache Companion")
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -288,80 +319,14 @@ struct StatsView: View {
             .bold()
     }
     
-    private func statDescription(_ description: String) -> some View {
+    private func statDescription(_ description: LocalizedStringKey) -> some View {
         return Text(description)
                 .font(.title3)
     }
     
-    private func statDescriptionChevron(for description: String, clicked: Bool, list: Set<String>) -> some View {
-        VStack(alignment: .leading, spacing: 5) {
-            HStack {
-                Text(description)
-                    .font(.title3)
-                Image(systemName: clicked ? "chevron.down" : "chevron.right")
-                    .font(.system(size: 12))
-            }
-            if clicked {
-                ForEach(Array(list).sorted { $0 < $1 }, id: \.self) { listItem in
-                    Text(listItem)
-                        .padding(.leading)
-                }
-            }
-        }
-        .containerShape(Rectangle())
-        .onTapGesture {
-            switch description {
-            case let str where str.contains("symptom"):
-                clickedSymptoms.toggle()
-            case let str where str.contains("aura"):
-                clickedAuraTypes.toggle()
-            case let str where str.contains("type"):
-                clickedMedNames.toggle()
-            default:
-                break
-            }
-        }
-    }
-    
-    private func statDescriptionDictionary(for description: String, clicked: Bool, dict: [(key: String, value: Int)]) -> some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text(description)
-                    .font(.title3)
-                Image(systemName: clicked ? "chevron.down" : "chevron.right")
-                    .font(.system(size: 12))
-            }
-            if clicked {
-                Grid(alignment: .leading, verticalSpacing: 5) {
-                    ForEach(dict, id: \.key) { type, num in
-                        GridRow {
-                            Text(String(num))
-                                .foregroundColor(.accentColor)
-                                .bold()
-                                .padding(.trailing)
-                            Text(type)
-                        }
-                    }
-                }
-                .padding(.leading)
-            }
-        }
-        .containerShape(Rectangle())
-        .onTapGesture {
-            switch description {
-            case let str where str.contains("aura"):
-                clickedAuraTotals.toggle()
-            case let str where str.contains("attack"):
-                clickedAttacks.toggle()
-            default:
-                break
-            }
-        }
-    }
-    
     private func medTypeRow(for medType: String, amount: Int) -> some View {
-        if dictOfTriggers[medType] == nil {
-            dictOfTriggers[medType] = false
+        if medTypeTriggers[medType] == nil {
+            medTypeTriggers[medType] = false
         }
         let theTuple = statsHelper.medicationByMedType.first(where: { $0.key == medType })
         
@@ -372,15 +337,15 @@ struct StatsView: View {
                     .foregroundColor(.accentColor)
                     .bold()
                     .padding(.trailing)
-                Text("\(amount == 1 ? "day" : "days") \(medType.localizedLowercase)")
-                Image(systemName: dictOfTriggers[medType] ?? false ? "chevron.down" : "chevron.right")
+                Text("\(amount == 1 ? daySingular : dayPlural) \(medType.localizedLowercase)")
+                Image(systemName: medTypeTriggers[medType] ?? false ? "chevron.down" : "chevron.right")
                     .font(.system(size: 12))
             }
             .containerShape(Rectangle())
             .onTapGesture {
-                dictOfTriggers[medType]?.toggle()
+                medTypeTriggers[medType]?.toggle()
             }
-            if dictOfTriggers[medType] ?? false && theTuple != nil {
+            if medTypeTriggers[medType] ?? false && theTuple != nil {
                 VStack(alignment: .leading) {
                     Grid(alignment: .leading, verticalSpacing: 5) {
                         ForEach(theTuple!.value, id: \.key) { name, days in
@@ -390,7 +355,7 @@ struct StatsView: View {
                                     .foregroundColor(.accentColor)
                                     .bold()
                                     .padding(.trailing)
-                                Text("\(days == 1 ? "day" : "days") \(name.localizedLowercase)")
+                                Text("\(days == 1 ? daySingular : dayPlural) \(name.localizedLowercase)")
                             }
                         }
                     }
