@@ -135,7 +135,7 @@ struct ContentView: View {
                         .font(.system(size: 60))
                         .foregroundColor(correspondingColor(of: dayData.first?.exercise ?? .none))
                         .disabled(dayData.isEmpty)
-                        Text("Excercise").padding(.top, 4)
+                        Text("Exercise").padding(.top, 4)
                     }
                     .padding(.trailing, 100)
                     VStack {
