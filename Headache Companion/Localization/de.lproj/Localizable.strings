@@ -1,0 +1,426 @@
+/* No comment provided by engineer. */
+"%@ - %@" = "%@ - %@";
+
+/* No comment provided by engineer. */
+"%@ %@" = "%@ %@";
+
+/* No comment provided by engineer. */
+"%@ to %@" = "%@ bis %@";
+
+/* No comment provided by engineer. */
+"%@ you took medication" = "%@ hast du Medikamente eingenommen";
+
+/* No comment provided by engineer. */
+"Activities" = "Tätigkeiten";
+
+/* No comment provided by engineer. */
+"Activity" = "Tätigkeit";
+
+/* No comment provided by engineer. */
+"Activity Colors" = "Tätigkeitsfarben";
+
+/* No comment provided by engineer. */
+"Activity Colors (Pro)" = "Tätigkeitsfarben (Pro)";
+
+/* No comment provided by engineer. */
+"Add" = "Hinzufügen";
+
+/* No comment provided by engineer. */
+"Add %@" = "%@ hinzufügen";
+
+/* No comment provided by engineer. */
+"Add a side effect" = "Nebenwirkung eintragen";
+
+/* No comment provided by engineer. */
+"Add attack" = "Attacke eintragen";
+
+/* No comment provided by engineer. */
+"Add Attack" = "Attacke eintragen";
+
+/* No comment provided by engineer. */
+"Add Common Medication" = "Regelmäßiges Medikament hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Custom Headache Type" = "Benutzerdefinierte Kopfschmerzart hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Custom Medication Type" = "Benutzerdefinierte Medikamentenart hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Custom Symptom" = "Benutzerdefiniertes Symptom hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Headache Type" = "Kopfschmerzart hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Headache Types" = "Kopfschmerzarten hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Headache Types (Pro)" = "Kopfschmerzarten hinzufügen (Pro)";
+
+/* No comment provided by engineer. */
+"Add medication" = "Medikament eintragen";
+
+/* No comment provided by engineer. */
+"Add Medication" = "Medikament hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Medication Type" = "Medikamentenart hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Medication Types" = "Medikamentenarten hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Medication Types (Pro)" = "Medikamentenarten hinzufügen (Pro)";
+
+/* No comment provided by engineer. */
+"Add notes" = "Notiz eintragen";
+
+/* No comment provided by engineer. */
+"Add Previous Medication" = "Vorheriges Medikament hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Symptom" = "Symptom hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Symptoms" = "Symptome hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Symptoms (Pro)" = "Symptome hinzufügen (Pro)";
+
+/* No comment provided by engineer. */
+"All time" = "Ganze Zeit";
+
+/* No comment provided by engineer. */
+"Amount" = "Menge";
+
+/* No comment provided by engineer. */
+"Appearance" = "Aussehen";
+
+/* No comment provided by engineer. */
+"Are you sure you want to erase all of your data? This is irreversible." = "Bist du dir sicher, dass du deine kompletten Daten löschen möchtest? Du kannst dies nicht rückgängig machen.";
+
+/* No comment provided by engineer. */
+"Are you sure you want to reset all colors to defaults?" = "Bist du dir sicher, dass du alle Farben auf die Standardeinstellung zurücksetzen möchtest?";
+
+/* No comment provided by engineer. */
+"Are you sure you want to reset all settings? This is irreversible." = "Bist du dir sicher, dass du alle Einstellungen zurücksetzen willst? Du kannst dies nicht rückgängig machen.";
+
+/* No comment provided by engineer. */
+"Aspirin, Paracetamol, etc." = "";
+
+/* No comment provided by engineer. */
+"Attack" = "Attacke";
+
+/* No comment provided by engineer. */
+"Attacks" = "Attacken";
+
+/* No comment provided by engineer. */
+"Attacks end at end of day" = "Attacken enden am Tagesende";
+
+/* No comment provided by engineer. */
+"Bad" = "Schlecht";
+
+/* No comment provided by engineer. */
+"Both sides" = "Beidseitig";
+
+/* No comment provided by engineer. */
+"Calendar" = "Kalender";
+
+/* No comment provided by engineer. */
+"Cancel" = "Abbrechen";
+
+/* No comment provided by engineer. */
+"Custom Inputs" = "Benutzerdefinierte Einträge";
+
+/* No comment provided by engineer. */
+"Daily Notes" = "Tägliche Notizen";
+
+/* No comment provided by engineer. */
+"Daily, 2x/day, etc." = "Täglich, 2x/Tag, etc.";
+
+/* No comment provided by engineer. */
+"Data" = "Daten";
+
+/* No comment provided by engineer. */
+"Date Range" = "Zeitraum";
+
+/* No comment provided by engineer. */
+"Default Effectiveness" = "Voreingestellte Wirksamkeit";
+
+/* No comment provided by engineer. */
+"Delete" = "Löschen";
+
+/* No comment provided by engineer. */
+"Delete all data?" = "Sollen alle Daten gelöscht werden?";
+
+/* No comment provided by engineer. */
+"Delete Data" = "Daten löschen";
+
+/* No comment provided by engineer. */
+"Delete everything?" = "Soll alles gelöscht werden?";
+
+/* No comment provided by engineer. */
+"Diet" = "Ernährung";
+
+/* No comment provided by engineer. */
+"Do you want the imported data to merge with or overwrite your current medication history?" = "Soll die bestehende Medikamentenübersicht mit den importierten Daten zusammengeführt werden oder überschrieben werden?";
+
+/* No comment provided by engineer. */
+"Dose" = "Dosis";
+
+/* No comment provided by engineer. */
+"Edit" = "Bearbeiten";
+
+/* No comment provided by engineer. */
+"Edit Attack" = "Attacke bearbeiten";
+
+/* No comment provided by engineer. */
+"Edit Medication" = "Medikament bearbeiten";
+
+/* No comment provided by engineer. */
+"Effective" = "Wirksam";
+
+/* No comment provided by engineer. */
+"End" = "Ende";
+
+/* No comment provided by engineer. */
+"End attack" = "Attacke beenden";
+
+/* No comment provided by engineer. */
+"End Attack" = "Attacke beenden";
+
+/* No comment provided by engineer. */
+"End time" = "Endzeitpunkt";
+
+/* No comment provided by engineer. */
+"Excercise" = "Sport";
+
+/* No comment provided by engineer. */
+"Exercise" = "Sport";
+
+/* No comment provided by engineer. */
+"Export Daily Data" = "Tägliche Daten exportieren";
+
+/* No comment provided by engineer. */
+"Export Medication History" = "Medikamentenübersicht exportieren";
+
+/* No comment provided by engineer. */
+"Finished" = "Beendet";
+
+/* No comment provided by engineer. */
+"Frequency" = "Häufigkeit";
+
+/* No comment provided by engineer. */
+"General" = "Allgemein";
+
+/* No comment provided by engineer. */
+"Go Pro?" = "Möchtest du die Pro Version?";
+
+/* No comment provided by engineer. */
+"Good" = "Gut";
+
+/* No comment provided by engineer. */
+"Headache Type" = "Kopfschmerzarzt";
+
+/* No comment provided by engineer. */
+"Import" = "Importieren";
+
+/* No comment provided by engineer. */
+"Import Daily Data" = "Tägliche Daten importieren";
+
+/* No comment provided by engineer. */
+"Import Medication History" = "Medikamentenübersicht importieren";
+
+/* No comment provided by engineer. */
+"Importing data will delete all current data. Do you still want to import?" = "Bestehende Daten werden durch den Import der Daten gelöscht. Möchtest du die Daten trotzdem importieren?";
+
+/* No comment provided by engineer. */
+"Ineffective" = "Nicht wirksam";
+
+/* No comment provided by engineer. */
+"Medication" = "Medikament";
+
+/* No comment provided by engineer. */
+"Medication History" = "Medikamentenübersicht";
+
+/* No comment provided by engineer. */
+"Medication Taken" = "Eingenommene Medikamente";
+
+/* No comment provided by engineer. */
+"Medication Type" = "Medikamentenart";
+
+/* No comment provided by engineer. */
+"Merge" = "Zusammenführen";
+
+/* No comment provided by engineer. */
+"Merge or Overwrite?" = "Zusammenführen oder überschreiben?";
+
+/* No comment provided by engineer. */
+"Name" = "Name";
+
+/* No comment provided by engineer. */
+"Name is empty" = "Name ist leer";
+
+/* No comment provided by engineer. */
+"New Medication" = "Neues Medikament";
+
+/* No comment provided by engineer. */
+"New Side Effect" = "Neue Nebenwirkung";
+
+/* No comment provided by engineer. */
+"Next" = "Weiter";
+
+/* No comment provided by engineer. */
+"No attacks" = "Keine Attacken";
+
+/* No comment provided by engineer. */
+"No medication taken" = "Keine eingenommenen Medikamente";
+
+/* No comment provided by engineer. */
+"Not recorded" = "Nicht erfasst";
+
+/* No comment provided by engineer. */
+"Notes" = "Notizen";
+
+/* No comment provided by engineer. */
+"Notes for Doctor" = "Notizen für Behandlungstermin";
+
+/* No comment provided by engineer. */
+"Notes: " = "Notizen:";
+
+/* No comment provided by engineer. */
+"OK" = "Okay";
+
+/* No comment provided by engineer. */
+"One side" = "Einseitig";
+
+/* No comment provided by engineer. */
+"Ongoing" = "Andauernd";
+
+/* No comment provided by engineer. */
+"Overwrite" = "Überschreiben";
+
+/* No comment provided by engineer. */
+"Past 6 months" = "Letzte 6 Monate";
+
+/* No comment provided by engineer. */
+"Past 30 days" = "Letzte 30 Tage";
+
+/* No comment provided by engineer. */
+"Past week" = "Letzte Woche";
+
+/* No comment provided by engineer. */
+"Past year" = "Letztes Jahr";
+
+/* No comment provided by engineer. */
+"Pressure / pressing" = "Drückend";
+
+/* No comment provided by engineer. */
+"Pulsating / throbbing" = "Pulsierend/ pochend";
+
+/* No comment provided by engineer. */
+"Regular Medications" = "Regelmäßige Medikamente";
+
+/* No comment provided by engineer. */
+"Regular Medications (Pro)" = "Regelmäßige Medikamente (Pro)";
+
+/* No comment provided by engineer. */
+"Relax" = "Entspannung";
+
+/* No comment provided by engineer. */
+"Reset" = "Zurücksetzen";
+
+/* No comment provided by engineer. */
+"Reset Settings" = "Einstellungen zurücksetzen";
+
+/* No comment provided by engineer. */
+"Reset settings?" = "Einstellungen zurücksetzen?";
+
+/* No comment provided by engineer. */
+"Reset to defaults" = "Zur Standardeinstellung zurücksetzen";
+
+/* No comment provided by engineer. */
+"Reset?" = "Zurücksetzen?";
+
+/* No comment provided by engineer. */
+"Restore purchase" = "Kauf wiederherstellen";
+
+/* No comment provided by engineer. */
+"Save" = "Sichern";
+
+/* No comment provided by engineer. */
+"Settings" = "Einstellungen";
+
+/* No comment provided by engineer. */
+"Side Effects" = "Nebenwirkungen";
+
+/* No comment provided by engineer. */
+"Side Effects:" = "Nebenwirkungen:";
+
+/* No comment provided by engineer. */
+"Sleep" = "Schlaf";
+
+/* No comment provided by engineer. */
+"Start" = "Beginn";
+
+/* No comment provided by engineer. */
+"Started today" = "Heute begonnen";
+
+/* No comment provided by engineer. */
+"Stats" = "Statistik";
+
+/* No comment provided by engineer. */
+"Stop" = "Beenden";
+
+/* No comment provided by engineer. */
+"Symptom" = "Symptom";
+
+/* No comment provided by engineer. */
+"The \"Name\" field cannot be empty." = "Der Bereich \"Name\" darf nicht leer bleiben.";
+
+/* No comment provided by engineer. */
+"This feature is only availble in the Pro version. Upgrade now to access it." = "Diese Funktion ist nur in der Pro Version verfügbar. Upgrade jetzt, um darauf zugreifen zu können.";
+
+/* No comment provided by engineer. */
+"This page is for you to keep track of the medications you are taking now or have taken in the past. It is not automatically generated.\n\nSwipe items right to edit them, or left to delete them." = "Auf dieser Seite hast du einen Überblick über alle Medikamente, die du jetzt nimmst oder in der Vergangenheit genommen hast. Die Liste wird nicht automatisch erstellt. Zum Bearbeiten wische nach rechts, zum Löschen wische nach links. ";
+
+/* No comment provided by engineer. */
+"Time" = "Uhrzeit";
+
+/* No comment provided by engineer. */
+"to" = "bis";
+
+/* No comment provided by engineer. */
+"Type" = "Art";
+
+/* No comment provided by engineer. */
+"Type notes for your doctor..." = "Schreibe Notizen für deinen nächsten Behandlungstermin...";
+
+/* No comment provided by engineer. */
+"Type of headache" = "Kopfschmerzart";
+
+/* No comment provided by engineer. */
+"Type your notes..." = "Schreibe deine Notizen...";
+
+/* No comment provided by engineer. */
+"Upgrade (%@)" = "";
+
+/* No comment provided by engineer. */
+"Water" = "Wasser";
+
+/* No comment provided by engineer. */
+"What is your pain level?" = "Wie hoch ist dein Schmerzlevel?";
+
+/* No comment provided by engineer. */
+"What type of pain are you experiencing?" = "Wir äußern sich die Schmerzen?";
+
+/* No comment provided by engineer. */
+"When did the attack end?" = "Wann hat die Attacke aufgehört?";
+
+/* No comment provided by engineer. */
+"When did the attack start?" = "Wann hat die Attacke begonnen?";
+
+/* No comment provided by engineer. */
+"Where?" = "Wo?";
+
