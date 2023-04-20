@@ -92,7 +92,7 @@ struct AddEditMedHistoryView: View {
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
             // Side Effects selector
-            NavigationLink (destination: MedicationSideEffectsView(sideEffects: $medHistory.sideEffects.toUnwrapped(defaultValue: [])).navigationTitle("Add Symptoms")) {
+            NavigationLink (destination: MedicationSideEffectsView(sideEffects: $medHistory.sideEffects.toUnwrapped(defaultValue: [])).navigationTitle("Add Side Effects")) {
                 HStack{
                     Text("Side Effects")
                         .foregroundColor(.primary)
@@ -136,6 +136,7 @@ struct AddEditMedHistoryView: View {
             
             if !stopDateOngoing {
                 DatePicker(
+                    "Stop",
                     "Stop",
                     selection: $newStopDate,
                     in: (medHistory.startDate ?? Date.distantPast) ... Date.now,
