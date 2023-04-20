@@ -23,7 +23,7 @@ let defaultHeadacheTypes: [String] = [
 let defaultMedicationTypes: [String] = [
     String(localized: "preventive"),
     String(localized: "symptom relieving"),
-    String(localized: "migraine")
+    String(localized: "other")
 ]
 
 func ??<T>(lhs: Binding<Optional<T>>, rhs: T) -> Binding<T> {
