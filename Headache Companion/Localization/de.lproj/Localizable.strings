@@ -23,7 +23,7 @@
 "%@ tracked" = "%@ aufgezeichnet";
 
 /* No comment provided by engineer. */
-"%@ using Headache Companion" = "%@, an denen Headache Companion genutzt wurde";
+"%@ using Headache Companion" = "%@ an denen Headache Companion genutzt wurde";
 
 /* No comment provided by engineer. */
 "%@ with an attack" = "%@ mit Attacke";
@@ -137,6 +137,9 @@
 "Add Previous Medication" = "Vorheriges Medikament hinzufügen";
 
 /* No comment provided by engineer. */
+"Add Side Effects" = "Nebenwirkungen hinzufügen";
+
+/* No comment provided by engineer. */
 "Add Symptom" = "Symptom hinzufügen";
 
 /* No comment provided by engineer. */
@@ -146,7 +149,7 @@
 "Add Symptoms (Pro)" = "Symptome hinzufügen (Pro)";
 
 /* No comment provided by engineer. */
-"All time" = "Ganze Zeit";
+"All time" = "Ganzer Zeitraum";
 
 /* No comment provided by engineer. */
 "Amount" = "Menge";
@@ -239,7 +242,7 @@
 "Delete Data" = "Daten löschen";
 
 /* No comment provided by engineer. */
-"Delete everything?" = "Soll alles gelöscht werden?";
+"Delete everything?" = "Alles löschen?";
 
 /* No comment provided by engineer. */
 "Diet" = "Ernährung";
@@ -512,7 +515,7 @@
 "Stats" = "Statistik";
 
 /* No comment provided by engineer. */
-"Stop" = "Beenden";
+"Stop" = "Ende";
 
 /* No comment provided by engineer. */
 "symptom" = "Symptom";
@@ -539,7 +542,7 @@
 "This feature is only availble in the Pro version. Upgrade now to access it." = "Diese Funktion ist nur in der Pro Version verfügbar. Upgrade jetzt, um darauf zugreifen zu können.";
 
 /* No comment provided by engineer. */
-"This page is for you to keep track of the medications you are taking now or have taken in the past. It is not automatically generated.\n\nSwipe items right to edit them, or left to delete them." = "Auf dieser Seite hast du einen Überblick über alle Medikamente, die du jetzt nimmst oder in der Vergangenheit genommen hast. Die Liste wird nicht automatisch erstellt. Zum Bearbeiten wische nach rechts, zum Löschen wische nach links. ";
+"This page is for you to keep track of the medications you are taking now or have taken in the past. It is not automatically generated.\n\nSwipe items right to edit them, or left to delete them." = "Auf dieser Seite hast du einen Überblick über alle Medikamente, die du zurzeit einnimmst oder in der Vergangenheit eingenommen hast. Die Liste wird nicht automatisch erstellt.\n\nZum Bearbeiten wische nach rechts, zum Löschen wische nach links. ";
 
 /* No comment provided by engineer. */
 "Time" = "Uhrzeit";
@@ -551,7 +554,7 @@
 "Type" = "Art";
 
 /* No comment provided by engineer. */
-"Type notes for your doctor..." = "Schreibe Notizen für deinen nächsten Behandlungstermin...";
+"Type notes for your doctor..." = "Schreibe hier Notizen für deinen nächsten Behandlungstermin auf...";
 
 /* No comment provided by engineer. */
 "Type of headache" = "Kopfschmerzart";
@@ -575,7 +578,7 @@
 "What is your pain level?" = "Wie hoch ist dein Schmerzlevel?";
 
 /* No comment provided by engineer. */
-"What type of pain are you experiencing?" = "Wir äußern sich die Schmerzen?";
+"What type of pain are you experiencing?" = "Wie äußern sich die Schmerzen?";
 
 /* No comment provided by engineer. */
 "When did the attack end?" = "Wann hat die Attacke aufgehört?";
