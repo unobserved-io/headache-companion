@@ -137,7 +137,6 @@ struct AddEditMedHistoryView: View {
             if !stopDateOngoing {
                 DatePicker(
                     "Stop",
-                    "Stop",
                     selection: $newStopDate,
                     in: (medHistory.startDate ?? Date.distantPast) ... Date.now,
                     displayedComponents: [.date]
