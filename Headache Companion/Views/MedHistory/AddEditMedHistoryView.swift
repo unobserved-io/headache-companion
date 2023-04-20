@@ -32,7 +32,7 @@ struct AddEditMedHistoryView: View {
         Form {
             // Name field
             LabeledContent {
-                TextField("Name", text: $medHistory.name, prompt: Text("Aspirin, Paracetamol, etc."))
+                TextField("Name", text: $medHistory.name, prompt: Text(String(localized: "Aspirin, Paracetamol, etc.")))
                     .multilineTextAlignment(.trailing)
             } label: {
                 Text("Name")
@@ -43,7 +43,7 @@ struct AddEditMedHistoryView: View {
             Group {
                 // Dose field
                 LabeledContent {
-                    TextField("Dose", text: $medHistory.dose, prompt: Text("20 mg, 50 ml, etc."))
+                    TextField("Dose", text: $medHistory.dose, prompt: Text(String(localized: "20 mg, 50 ml, etc.")))
                         .multilineTextAlignment(.trailing)
                 } label: {
                     Text("Dose")

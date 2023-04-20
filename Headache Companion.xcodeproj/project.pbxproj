@@ -38,6 +38,7 @@
 		9C98449E29B5FC9F00ABDC36 /* DoctorNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C98449D29B5FC9F00ABDC36 /* DoctorNotesView.swift */; };
 		9CA81F0C29C74DD200EDBCEF /* CustomSymptomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA81F0B29C74DD200EDBCEF /* CustomSymptomsView.swift */; };
 		9CA81F0E29C7755D00EDBCEF /* ActivityColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA81F0D29C7755D00EDBCEF /* ActivityColorsView.swift */; };
+		9CAD795529F148A0008EE8FD /* Headache-Companion-InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9CAD795329F148A0008EE8FD /* Headache-Companion-InfoPlist.strings */; };
 		9CBBB41C29DF25A5007E933B /* MedHistoryNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBBB41B29DF25A5007E933B /* MedHistoryNotesView.swift */; };
 		9CC2582029BDC36C00E55949 /* StatsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC2581F29BDC36C00E55949 /* StatsHelper.swift */; };
 		9CC529CE29BCBEA500DD5491 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC529CD29BCBEA500DD5491 /* StatsView.swift */; };
@@ -100,6 +101,7 @@
 		9C98449D29B5FC9F00ABDC36 /* DoctorNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorNotesView.swift; sourceTree = "<group>"; };
 		9CA81F0B29C74DD200EDBCEF /* CustomSymptomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSymptomsView.swift; sourceTree = "<group>"; };
 		9CA81F0D29C7755D00EDBCEF /* ActivityColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityColorsView.swift; sourceTree = "<group>"; };
+		9CAD795429F148A0008EE8FD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "de.lproj/Headache-Companion-InfoPlist.strings"; sourceTree = "<group>"; };
 		9CBBB41B29DF25A5007E933B /* MedHistoryNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedHistoryNotesView.swift; sourceTree = "<group>"; };
 		9CC2581F29BDC36C00E55949 /* StatsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsHelper.swift; sourceTree = "<group>"; };
 		9CC529CD29BCBEA500DD5491 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
@@ -329,6 +331,7 @@
 				9C599FE629EEB528001D658A /* Localization */,
 				9C66875929DC637E00AABD58 /* Store */,
 				9CFCECE229D08248001656B5 /* Headache-Companion-Info.plist */,
+				9CAD795329F148A0008EE8FD /* Headache-Companion-InfoPlist.strings */,
 				9CC2581E29BDC35300E55949 /* Helpers */,
 				9CF7308829ACD93800D91F99 /* Assets.xcassets */,
 				9C86238C29AE8CA0006DA6C6 /* DataEntities */,
@@ -418,6 +421,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CF7308D29ACD93800D91F99 /* Preview Assets.xcassets in Resources */,
+				9CAD795529F148A0008EE8FD /* Headache-Companion-InfoPlist.strings in Resources */,
 				9C599FE929EEB54E001D658A /* Localizable.strings in Resources */,
 				9CF7308929ACD93800D91F99 /* Assets.xcassets in Resources */,
 			);
@@ -496,6 +500,15 @@
 				9C90376329EFD2EB00C2C50F /* de */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		9CAD795329F148A0008EE8FD /* Headache-Companion-InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9CAD795429F148A0008EE8FD /* de */,
+			);
+			name = "Headache-Companion-InfoPlist.strings";
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

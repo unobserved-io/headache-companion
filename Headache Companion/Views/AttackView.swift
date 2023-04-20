@@ -169,7 +169,7 @@ struct AttackView: View {
                 // Accompanying symptoms
                 if !attack.symptoms.isEmpty || attack.pressing || attack.pulsating || nextFrom.contains("painType") || nextFrom.contains("painLevel") || !newAttack {
                     MultiSelector(
-                        label: "Symptoms",
+                        label: String(localized: "Symptoms"),
                         options: basicSymptoms + (mAppData.first?.customSymptoms ?? []),
                         selected: $attack.symptoms
                     )

@@ -1,4 +1,16 @@
 /* No comment provided by engineer. */
+"—" = "—";
+
+/* No comment provided by engineer. */
+"(%@)" = "(%@)";
+
+/* No comment provided by engineer. */
+"(%d x %@)" = "(%d x %@)";
+
+/* No comment provided by engineer. */
+"%@" = "%@";
+
+/* No comment provided by engineer. */
 "%@ - %@" = "%@ - %@";
 
 /* No comment provided by engineer. */
@@ -8,7 +20,52 @@
 "%@ to %@" = "%@ bis %@";
 
 /* No comment provided by engineer. */
+"%@ tracked" = "%@ aufgezeichnet";
+
+/* No comment provided by engineer. */
+"%@ using Headache Companion" = "%@, an denen Headache Companion genutzt wurde";
+
+/* No comment provided by engineer. */
+"%@ with an attack" = "%@ mit Attacke";
+
+/* No comment provided by engineer. */
+"%@ with an aura" = "%@ mit Aura";
+
+/* No comment provided by engineer. */
+"%@ with recorded data" = "%@ mit aufgezeichneten Daten";
+
+/* No comment provided by engineer. */
 "%@ you took medication" = "%@ hast du Medikamente eingenommen";
+
+/* No comment provided by engineer. */
+"%@%@" = "%@%@";
+
+/* No comment provided by engineer. */
+"%@%d" = "%@%d";
+
+/* No comment provided by engineer. */
+"%d" = "%d";
+
+/* No comment provided by engineer. */
+"%d x %@" = "%d x %@";
+
+/* No comment provided by engineer. */
+"%d x %@, %@" = "%d x %@, %@";
+
+/* No comment provided by engineer. */
+"%d, %@" = "%d, %@";
+
+/* No comment provided by engineer. */
+"%lld" = "%lld";
+
+/* No comment provided by engineer. */
+"0" = "0";
+
+/* No comment provided by engineer. */
+"10" = "10";
+
+/* No comment provided by engineer. */
+"20 mg, 50 ml, etc." = "20 mg, 50 ml, etc.";
 
 /* No comment provided by engineer. */
 "Activities" = "Tätigkeiten";
@@ -107,10 +164,16 @@
 "Are you sure you want to reset all settings? This is irreversible." = "Bist du dir sicher, dass du alle Einstellungen zurücksetzen willst? Du kannst dies nicht rückgängig machen.";
 
 /* No comment provided by engineer. */
-"Aspirin, Paracetamol, etc." = "";
+"Aspirin, Paracetamol, etc." = "Aspirin, Paracetamol, etc.";
+
+/* No comment provided by engineer. */
+"attack" = "Attacke";
 
 /* No comment provided by engineer. */
 "Attack" = "Attacke";
+
+/* No comment provided by engineer. */
+"attacks" = "Attacken";
 
 /* No comment provided by engineer. */
 "Attacks" = "Attacken";
@@ -119,16 +182,28 @@
 "Attacks end at end of day" = "Attacken enden am Tagesende";
 
 /* No comment provided by engineer. */
+"average pain level" = "Durchschnittliches Schmerzlevel";
+
+/* No comment provided by engineer. */
 "Bad" = "Schlecht";
 
 /* No comment provided by engineer. */
 "Both sides" = "Beidseitig";
 
 /* No comment provided by engineer. */
+"Brain fog" = "Brain Fog";
+
+/* No comment provided by engineer. */
+"Brainstem" = "Hirnstamm";
+
+/* No comment provided by engineer. */
 "Calendar" = "Kalender";
 
 /* No comment provided by engineer. */
 "Cancel" = "Abbrechen";
+
+/* No comment provided by engineer. */
+"Concentration problems" = "Konzentrationsschwierigkeiten";
 
 /* No comment provided by engineer. */
 "Custom Inputs" = "Benutzerdefinierte Einträge";
@@ -144,6 +219,12 @@
 
 /* No comment provided by engineer. */
 "Date Range" = "Zeitraum";
+
+/* No comment provided by engineer. */
+"day" = "Tag";
+
+/* No comment provided by engineer. */
+"days" = "Tage";
 
 /* No comment provided by engineer. */
 "Default Effectiveness" = "Voreingestellte Wirksamkeit";
@@ -162,6 +243,9 @@
 
 /* No comment provided by engineer. */
 "Diet" = "Ernährung";
+
+/* No comment provided by engineer. */
+"Dizziness" = "Schwindel";
 
 /* No comment provided by engineer. */
 "Do you want the imported data to merge with or overwrite your current medication history?" = "Soll die bestehende Medikamentenübersicht mit den importierten Daten zusammengeführt werden oder überschrieben werden?";
@@ -194,9 +278,6 @@
 "End time" = "Endzeitpunkt";
 
 /* No comment provided by engineer. */
-"Excercise" = "Sport";
-
-/* No comment provided by engineer. */
 "Exercise" = "Sport";
 
 /* No comment provided by engineer. */
@@ -224,6 +305,12 @@
 "Headache Type" = "Kopfschmerzarzt";
 
 /* No comment provided by engineer. */
+"Home" = "Home";
+
+/* No comment provided by engineer. */
+"Ibuprofen, Aspirin, etc." = "Ibuprofen, Aspirin, etc.";
+
+/* No comment provided by engineer. */
 "Import" = "Importieren";
 
 /* No comment provided by engineer. */
@@ -239,6 +326,12 @@
 "Ineffective" = "Nicht wirksam";
 
 /* No comment provided by engineer. */
+"Issues speaking" = "Probleme beim Sprechen";
+
+/* No comment provided by engineer. */
+"Jaw pain" = "Kieferschmerzen";
+
+/* No comment provided by engineer. */
 "Medication" = "Medikament";
 
 /* No comment provided by engineer. */
@@ -251,16 +344,31 @@
 "Medication Type" = "Medikamentenart";
 
 /* No comment provided by engineer. */
+"Memory issues" = "Gedächtnisprobleme";
+
+/* No comment provided by engineer. */
 "Merge" = "Zusammenführen";
 
 /* No comment provided by engineer. */
 "Merge or Overwrite?" = "Zusammenführen oder überschreiben?";
 
 /* No comment provided by engineer. */
+"migraine" = "Migräne";
+
+/* No comment provided by engineer. */
+"Motor" = "Motorisch";
+
+/* No comment provided by engineer. */
 "Name" = "Name";
 
 /* No comment provided by engineer. */
 "Name is empty" = "Name ist leer";
+
+/* No comment provided by engineer. */
+"Nausea" = "Übelkeit";
+
+/* No comment provided by engineer. */
+"Neck pain" = "Nackenschmerzen";
 
 /* No comment provided by engineer. */
 "New Medication" = "Neues Medikament";
@@ -278,6 +386,9 @@
 "No medication taken" = "Keine eingenommenen Medikamente";
 
 /* No comment provided by engineer. */
+"None" = "Keine";
+
+/* No comment provided by engineer. */
 "Not recorded" = "Nicht erfasst";
 
 /* No comment provided by engineer. */
@@ -290,6 +401,9 @@
 "Notes: " = "Notizen:";
 
 /* No comment provided by engineer. */
+"of days had an attack" = "der Tage waren mit Attacke";
+
+/* No comment provided by engineer. */
 "OK" = "Okay";
 
 /* No comment provided by engineer. */
@@ -297,6 +411,9 @@
 
 /* No comment provided by engineer. */
 "Ongoing" = "Andauernd";
+
+/* No comment provided by engineer. */
+"other" = "andere";
 
 /* No comment provided by engineer. */
 "Overwrite" = "Überschreiben";
@@ -315,6 +432,9 @@
 
 /* No comment provided by engineer. */
 "Pressure / pressing" = "Drückend";
+
+/* No comment provided by engineer. */
+"preventive" = "Prophylaxe";
 
 /* No comment provided by engineer. */
 "Pulsating / throbbing" = "Pulsierend/ pochend";
@@ -347,7 +467,25 @@
 "Restore purchase" = "Kauf wiederherstellen";
 
 /* No comment provided by engineer. */
+"Retinal" = "Retinal";
+
+/* No comment provided by engineer. */
+"Ringing in ears" = "Ohrgeräusche";
+
+/* No comment provided by engineer. */
 "Save" = "Sichern";
+
+/* No comment provided by engineer. */
+"Sensitivity to light" = "Lichtempfindlichkeit";
+
+/* No comment provided by engineer. */
+"Sensitivity to smell" = "Geruchsempfindlichkeit";
+
+/* No comment provided by engineer. */
+"Sensitivity to sound" = "Lärmempfindlichkeit";
+
+/* No comment provided by engineer. */
+"Sensory" = "Sensorisch";
 
 /* No comment provided by engineer. */
 "Settings" = "Einstellungen";
@@ -362,6 +500,9 @@
 "Sleep" = "Schlaf";
 
 /* No comment provided by engineer. */
+"Speech/Language" = "Sprechen/ Sprache";
+
+/* No comment provided by engineer. */
 "Start" = "Beginn";
 
 /* No comment provided by engineer. */
@@ -374,7 +515,22 @@
 "Stop" = "Beenden";
 
 /* No comment provided by engineer. */
+"symptom" = "Symptom";
+
+/* No comment provided by engineer. */
 "Symptom" = "Symptom";
+
+/* No comment provided by engineer. */
+"symptom relieving" = "Akutmedikation";
+
+/* No comment provided by engineer. */
+"symptoms" = "Symptome";
+
+/* No comment provided by engineer. */
+"Symptoms" = "Symptome";
+
+/* No comment provided by engineer. */
+"tension" = "Spannungskopfschmerz";
 
 /* No comment provided by engineer. */
 "The \"Name\" field cannot be empty." = "Der Bereich \"Name\" darf nicht leer bleiben.";
@@ -404,7 +560,13 @@
 "Type your notes..." = "Schreibe deine Notizen...";
 
 /* No comment provided by engineer. */
-"Upgrade (%@)" = "";
+"Upgrade (%@)" = "Upgrade (%@)";
+
+/* No comment provided by engineer. */
+"Visual" = "Visuell";
+
+/* No comment provided by engineer. */
+"Vomiting" = "Erbrechen";
 
 /* No comment provided by engineer. */
 "Water" = "Wasser";

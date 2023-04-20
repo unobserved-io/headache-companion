@@ -40,7 +40,7 @@ struct AddEditMedicationView: View {
         Form {
             // Type field
             LabeledContent {
-                TextField("Name", text: $medName, prompt: Text("Ibuprofen, Aspirin, etc."))
+                TextField("Name", text: $medName, prompt: Text(String(localized: "Aspirin, Paracetamol, etc.")))
                     .multilineTextAlignment(.trailing)
             } label: {
                 Text("Name")
@@ -49,7 +49,7 @@ struct AddEditMedicationView: View {
             
             // Dose field
             LabeledContent {
-                TextField("Dose", text: $medDose, prompt: Text("20 mg, 50 ml, etc."))
+                TextField("Dose", text: $medDose, prompt: Text(String(localized: "20 mg, 50 ml, etc.")))
                     .multilineTextAlignment(.trailing)
             } label: {
                 Text("Dose")
