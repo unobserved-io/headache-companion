@@ -28,6 +28,11 @@ struct AddEditMedHistoryView: View {
         }
     }
     
+    init(medHistory: MedHistory) {
+        self.medHistory = medHistory
+        UISegmentedControl.appearance().apportionsSegmentWidthsByContent = true
+    }
+    
     var body: some View {
         Form {
             // Name field
