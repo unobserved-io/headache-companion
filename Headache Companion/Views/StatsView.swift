@@ -99,17 +99,17 @@ struct StatsView: View {
                         }
                         .padding(.bottom)
                     }
-                    Grid(alignment: .leading, verticalSpacing: 5) {
-                        GridRow(alignment: .top) {
+                    Grid(alignment: .topLeading, verticalSpacing: 5) {
+                        GridRow {
                             mainStat(String(statsHelper.daysTracked))
                             statDescription("\(statsHelper.daysTracked == 1 ? daySingular : dayPlural) tracked")
 //                            Text("^[\(statsHelper.daysTracked) \("day")](inflect: true) tracked")
                         }
-                        GridRow(alignment: .top) {
+                        GridRow {
                             mainStat(String(statsHelper.daysWithAttack))
                             statDescription("\(statsHelper.daysWithAttack == 1 ? daySingular : dayPlural) with an attack")
                         }
-                        GridRow(alignment: .top) {
+                        GridRow {
                             mainStat(String(statsHelper.numberOfAttacks))
                             VStack(alignment: .leading) {
                                 HStack {
@@ -141,7 +141,7 @@ struct StatsView: View {
                         }
 
                         if statsHelper.daysWithAttack > 0 {
-                            GridRow(alignment: .top) {
+                            GridRow {
                                 mainStat("\(statsHelper.percentWithAttack)%")
                                 statDescription("of days had an attack")
                             }
@@ -151,12 +151,12 @@ struct StatsView: View {
                                 .frame(minHeight: 1)
                                 .overlay(Color.accentColor)
                             
-                            GridRow(alignment: .top) {
+                            GridRow {
                                 mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
                                 statDescription("average pain level")
                             }
                             
-                            GridRow(alignment: .top) {
+                            GridRow {
                                 mainStat(String(statsHelper.allSymptoms.count))
                                 VStack(alignment: .leading, spacing: 5) {
                                     HStack {
@@ -182,7 +182,7 @@ struct StatsView: View {
                                 }
                             }
                             
-                            GridRow(alignment: .top) {
+                            GridRow {
                                 mainStat(String(statsHelper.attacksWithAura))
                                 VStack(alignment: .leading) {
                                     HStack {
@@ -219,7 +219,7 @@ struct StatsView: View {
                             .overlay(Color.accentColor)
                         
                         if statsHelper.daysWithMedication > 0 {
-                            GridRow(alignment: .top) {
+                            GridRow {
                                 mainStat("\(statsHelper.daysWithMedication)")
                                 VStack(alignment: .leading, spacing: 5) {
                                     HStack {
@@ -287,13 +287,13 @@ struct StatsView: View {
                 .font(.title2)
                 .padding(.bottom)
                 
-                Grid(alignment: .leading, verticalSpacing: 5) {
-                    GridRow(alignment: .top) {
+                Grid(alignment: .topLeading, verticalSpacing: 5) {
+                    GridRow {
                         mainStat(String(dayData.count))
                         statDescription("\(dayData.count == 1 ? daySingular : dayPlural) with recorded data")
                     }
                     
-                    GridRow(alignment: .top) {
+                    GridRow {
                         mainStat(String((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
                         statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? daySingular : dayPlural) using Headache Companion")
                     }
@@ -314,7 +314,7 @@ struct StatsView: View {
     
     private func mainStat(_ stat: String) -> some View {
         return Text(stat)
-            .font(Font.monospacedDigit(.title2)())
+            .font(Font.monospacedDigit(.title3)())
             .foregroundColor(.accentColor)
             .bold()
     }
