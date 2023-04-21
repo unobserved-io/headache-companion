@@ -37,14 +37,16 @@ struct CustomSymptomsView: View {
             TextField("Symptom", text: $symptomName)
             
             Button("Add", action: {
-                if mAppData.first?.customSymptoms == nil {
-                    mAppData.first?.customSymptoms = []
-                }
-                if !(mAppData.first?.customSymptoms?.contains(symptomName) ?? true) {
-                    mAppData.first?.customSymptoms?.append(symptomName)
-                    saveData()
-                    symptomName = ""
-                    refreshView()
+                if !symptomName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    if mAppData.first?.customSymptoms == nil {
+                        mAppData.first?.customSymptoms = []
+                    }
+                    if !(mAppData.first?.customSymptoms?.contains(symptomName) ?? true) {
+                        mAppData.first?.customSymptoms?.append(symptomName)
+                        saveData()
+                        symptomName = ""
+                        refreshView()
+                    }
                 }
             })
             Button("Cancel", role: .cancel, action: {})

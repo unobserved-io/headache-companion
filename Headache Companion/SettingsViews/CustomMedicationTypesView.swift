@@ -37,14 +37,16 @@ struct CustomMedicationTypesView: View {
             TextField("Medication Type", text: $medType)
             
             Button("Add", action: {
-                if mAppData.first?.customMedTypes == nil {
-                    mAppData.first?.customMedTypes = []
-                }
-                if !(mAppData.first?.customMedTypes?.contains(medType) ?? true) {
-                    mAppData.first?.customMedTypes?.append(medType)
-                    saveData()
-                    medType = ""
-                    refreshView()
+                if !medType.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    if mAppData.first?.customMedTypes == nil {
+                        mAppData.first?.customMedTypes = []
+                    }
+                    if !(mAppData.first?.customMedTypes?.contains(medType) ?? true) {
+                        mAppData.first?.customMedTypes?.append(medType)
+                        saveData()
+                        medType = ""
+                        refreshView()
+                    }
                 }
             })
             Button("Cancel", role: .cancel, action: {})

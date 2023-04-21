@@ -37,14 +37,16 @@ struct CustomHeadacheTypesView: View {
             TextField("Headache Type", text: $headacheType)
             
             Button("Add", action: {
-                if mAppData.first?.customHeadacheTypes == nil {
-                    mAppData.first?.customHeadacheTypes = []
-                }
-                if !(mAppData.first?.customHeadacheTypes?.contains(headacheType) ?? true) {
-                    mAppData.first?.customHeadacheTypes?.append(headacheType)
-                    saveData()
-                    headacheType = ""
-                    refreshView()
+                if !headacheType.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    if mAppData.first?.customHeadacheTypes == nil {
+                        mAppData.first?.customHeadacheTypes = []
+                    }
+                    if !(mAppData.first?.customHeadacheTypes?.contains(headacheType) ?? true) {
+                        mAppData.first?.customHeadacheTypes?.append(headacheType)
+                        saveData()
+                        headacheType = ""
+                        refreshView()
+                    }
                 }
             })
             Button("Cancel", role: .cancel, action: {})
