@@ -169,7 +169,7 @@ struct StatsView: View {
                                         ForEach(statsHelper.symptomsByHeadache, id: \.key) { type, symptoms in
                                             Text(LocalizedStringKey(type.localizedCapitalized))
                                             ForEach(symptoms.sorted(), id: \.self) { symptom in
-                                                Text(symptom)
+                                                Text(LocalizedStringKey(symptom))
                                             }
                                             .padding(.leading)
                                         }
@@ -199,7 +199,7 @@ struct StatsView: View {
                                                         .foregroundColor(.accentColor)
                                                         .bold()
                                                         .padding(.trailing)
-                                                    Text(type)
+                                                    Text(LocalizedStringKey(type))
                                                 }
                                             }
                                         }

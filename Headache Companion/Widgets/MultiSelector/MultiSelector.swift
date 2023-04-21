@@ -5,17 +5,19 @@
 //  Created by Ricky Kresslein on 3/5/23.
 //
 
-import SwiftUI
 import CoreData
+import SwiftUI
 
 struct MultiSelector: View {
     let label: String
     let options: [String]
-    
+
     var selected: Binding<Set<String>>
 
     private var formattedSelectedListString: String {
-        ListFormatter.localizedString(byJoining: selected.wrappedValue.sorted { $0 < $1 }.map { $0 as String })
+        ListFormatter.localizedString(byJoining: selected.wrappedValue.sorted { $0 < $1 }.map {
+            String(localized: String.LocalizationValue($0))
+        })
     }
 
     var body: some View {
@@ -46,7 +48,7 @@ struct MultiSelector: View {
 
 struct MultiSelector_Previews: PreviewProvider {
     @State static var selected: Set<String> = Set(["A", "C"].map { $0 })
-    
+
     static var previews: some View {
         MultiSelector(
             label: "MultiSelector",
