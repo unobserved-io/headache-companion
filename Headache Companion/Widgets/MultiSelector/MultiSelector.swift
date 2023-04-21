@@ -40,7 +40,7 @@ struct MultiSelector: View {
 
     private func multiSelectionView() -> some View {
         MultiSelectionView(
-            options: options.sorted { $0 < $1 },
+            options: options.sorted { String(localized: String.LocalizationValue($0)) < String(localized: String.LocalizationValue($1)) },
             selected: selected
         )
     }
