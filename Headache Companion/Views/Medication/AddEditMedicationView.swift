@@ -70,7 +70,7 @@ struct AddEditMedicationView: View {
             // Type picker
             Picker("Type", selection: $medType) {
                 ForEach(defaultMedicationTypes + (mAppData.first?.customMedTypes ?? []), id: \.self) { type in
-                    Text(type.localizedCapitalized)
+                    Text(LocalizedStringKey(type.localizedCapitalized))
                 }
             }
             

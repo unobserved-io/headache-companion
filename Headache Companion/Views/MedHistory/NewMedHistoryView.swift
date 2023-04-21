@@ -22,7 +22,6 @@ struct NewMedHistoryView: View {
     private func createMedHistory() -> MedHistory {
         let medHistory = MedHistory(context: viewContext)
         medHistory.startDate = Calendar.current.startOfDay(for: .now)
-        medHistory.type = defaultMedicationTypes[0]
         return medHistory
     }
 }

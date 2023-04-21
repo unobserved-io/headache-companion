@@ -57,9 +57,11 @@ struct CalendarView: View {
                                 } else {
                                     Text(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened))
                                 }
-                                Text("(\(attack.headacheType.localizedCapitalized))")
-                                    .foregroundColor(.gray)
+                                Text("(").foregroundColor(.gray) +
+                                Text(LocalizedStringKey(attack.headacheType.localizedCapitalized)).foregroundColor(.gray) +
+                                Text(")").foregroundColor(.gray)
                             }
+                            .lineLimit(1)
                         }
                     }
                     .onDelete(perform: deleteAttack)

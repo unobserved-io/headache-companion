@@ -97,7 +97,7 @@ struct AttackView: View {
                     Spacer()
                     Picker("Type of headache", selection: $attack.headacheType) {
                         ForEach(defaultHeadacheTypes + (mAppData.first?.customHeadacheTypes ?? []), id: \.self) { type in
-                            Text(type.localizedCapitalized)
+                            Text(LocalizedStringKey(type.localizedCapitalized))
                         }
                     }
                 }

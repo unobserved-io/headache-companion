@@ -355,8 +355,11 @@
 /* No comment provided by engineer. */
 "Merge or Overwrite?" = "Zusammenführen oder überschreiben?";
 
-/* No comment provided by engineer. */
+/* Migraine headache type */
 "migraine" = "Migräne";
+
+/* Migraine headache type */
+"Migraine" = "Migräne";
 
 /* No comment provided by engineer. */
 "Motor" = "Motorisch";
@@ -415,8 +418,11 @@
 /* No comment provided by engineer. */
 "Ongoing" = "Andauernd";
 
-/* No comment provided by engineer. */
+/* Some other type of symptom, headache type, etc. */
 "other" = "andere";
+
+/* Some other type of symptom, headache type, etc. */
+"Other" = "Andere";
 
 /* No comment provided by engineer. */
 "Overwrite" = "Überschreiben";
@@ -436,8 +442,11 @@
 /* No comment provided by engineer. */
 "Pressure / pressing" = "Drückend";
 
-/* No comment provided by engineer. */
+/* Preventive type of medication */
 "preventive" = "Prophylaxe";
+
+/* Preventive type of medication */
+"Preventive" = "Prophylaxe";
 
 /* No comment provided by engineer. */
 "Pulsating / throbbing" = "Pulsierend/ pochend";
@@ -523,8 +532,11 @@
 /* No comment provided by engineer. */
 "Symptom" = "Symptom";
 
-/* No comment provided by engineer. */
+/* Symptom relieving type of medication */
 "symptom relieving" = "Akutmedikation";
+
+/* Symptom relieving type of medication */
+"Symptom Relieving" = "Akutmedikation";
 
 /* No comment provided by engineer. */
 "symptoms" = "Symptome";
@@ -532,8 +544,11 @@
 /* No comment provided by engineer. */
 "Symptoms" = "Symptome";
 
-/* No comment provided by engineer. */
+/* Tension headache type */
 "tension" = "Spannungskopfschmerz";
+
+/* Tension headache type */
+"Tension" = "Spannungskopfschmerz";
 
 /* No comment provided by engineer. */
 "The \"Name\" field cannot be empty." = "Der Bereich \"Name\" darf nicht leer bleiben.";
@@ -588,3 +603,4 @@
 
 /* No comment provided by engineer. */
 "Where?" = "Wo?";
+

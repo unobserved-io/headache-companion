@@ -34,7 +34,7 @@ struct MedicationHistoryView: View {
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
             ForEach(medHistory) { section in
-                Section(section.id.localizedCapitalized) {
+                Section(LocalizedStringKey(section.id)) {
                     ForEach(section) { med in
                         DisclosureGroup {
                             // Start/stop times

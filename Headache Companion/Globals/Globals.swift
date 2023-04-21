@@ -15,15 +15,15 @@ let dateFormatter: DateFormatter = {
 }()
 
 let defaultHeadacheTypes: [String] = [
-    String(localized: "migraine"),
-    String(localized: "tension"),
-    String(localized: "other")
+    "migraine",
+    "tension",
+    "other"
 ]
 
 let defaultMedicationTypes: [String] = [
-    String(localized: "preventive"),
-    String(localized: "symptom relieving"),
-    String(localized: "other")
+    "preventive",
+    "symptom relieving",
+    "other"
 ]
 
 func ??<T>(lhs: Binding<Optional<T>>, rhs: T) -> Binding<T> {

@@ -1,1 +1,29 @@
+/* Migraine headache type */
+"migraine" = "migraine";
 
+/* Migraine headache type */
+"Migraine" = "Migraine";
+
+/* Tension headache type */
+"tension" = "tension";
+
+/* Tension headache type */
+"Tension" = "Tension";
+
+/* Some other type of symptom, headache type, etc. */
+"other" = "other";
+
+/* Some other type of symptom, headache type, etc. */
+"Other" = "Other";
+
+/* Preventive type of medication */
+"preventive" = "preventive";
+
+/* Preventive type of medication */
+"Preventive" = "Preventive";
+
+/* Symptom relieving type of medication */
+"symptom relieving" = "symptom relieving";
+
+/* Symptom relieving type of medication */
+"Symptom Relieving" = "Symptom Relieving";

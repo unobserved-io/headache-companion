@@ -30,7 +30,7 @@ struct AddEditMedHistoryView: View {
     
     init(medHistory: MedHistory) {
         self.medHistory = medHistory
-        UISegmentedControl.appearance().apportionsSegmentWidthsByContent = true
+//        UISegmentedControl.appearance().apportionsSegmentWidthsByContent = true
     }
     
     var body: some View {
@@ -72,7 +72,7 @@ struct AddEditMedHistoryView: View {
             // Type picker
             Picker("Type", selection: $medHistory.type) {
                 ForEach(defaultMedicationTypes + (mAppData.first?.customMedTypes ?? []), id: \.self) { type in
-                    Text(type.localizedCapitalized)
+                    Text(LocalizedStringKey(type.localizedCapitalized))
                 }
             }
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))

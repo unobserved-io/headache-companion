@@ -127,7 +127,7 @@ struct StatsView: View {
                                                     .foregroundColor(.accentColor)
                                                     .bold()
                                                     .padding(.trailing)
-                                                Text(type.localizedCapitalized)
+                                                Text(LocalizedStringKey(type.localizedCapitalized))
                                             }
                                         }
                                     }
@@ -167,7 +167,7 @@ struct StatsView: View {
                                     }
                                     if clickedSymptoms {
                                         ForEach(statsHelper.symptomsByHeadache, id: \.key) { type, symptoms in
-                                            Text(type.localizedCapitalized)
+                                            Text(LocalizedStringKey(type.localizedCapitalized))
                                             ForEach(symptoms.sorted(), id: \.self) { symptom in
                                                 Text(symptom)
                                             }
@@ -338,7 +338,7 @@ struct StatsView: View {
                     .foregroundColor(.accentColor)
                     .bold()
                     .padding(.trailing)
-                Text("\(amount == 1 ? daySingular : dayPlural) \(medType.localizedLowercase)")
+                Text("\(amount == 1 ? daySingular : dayPlural) ") + Text(LocalizedStringKey(medType))
                 Image(systemName: medTypeTriggers[medType] ?? false ? "chevron.down" : "chevron.right")
                     .font(.system(size: 12))
             }

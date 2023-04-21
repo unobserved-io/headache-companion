@@ -22,7 +22,7 @@ struct RegularMedicationsView: View {
         Form {
             if !(mAppData.first?.regularMeds.isEmpty ?? true) {
                 ForEach(getMedsSorted(), id: \.key) { medType, medications in
-                    Section(medType) {
+                    Section(LocalizedStringKey(medType)) {
                         ForEach(medications) { medication in
                                 Button {
                                     clickedMedication.medication = medication
