@@ -322,6 +322,7 @@ struct StatsView: View {
     private func statDescription(_ description: LocalizedStringKey) -> some View {
         return Text(description)
                 .font(.title3)
+                .fixedSize(horizontal: false, vertical: true)
     }
     
     private func medTypeRow(for medType: String, amount: Int) -> some View {
