@@ -82,81 +82,83 @@ struct ContentView: View {
                 .disabled(dayData.isEmpty)
                 
                 // Lifestyle buttons
-                HStack {
-                    VStack {
-                        Button {
-                            selectedActivity = "water"
-                            activitiesSheet.toggle()
-                        } label: {
-                            Image(systemName: "drop")
+                Grid {
+                    GridRow {
+                        VStack {
+                            Button {
+                                selectedActivity = "water"
+                                activitiesSheet.toggle()
+                            } label: {
+                                Image(systemName: "drop")
+                            }
+                            .font(.system(size: 60))
+                            .frame(height: 70)
+                            .foregroundColor(correspondingColor(of: dayData.first?.water ?? .none))
+                            .disabled(dayData.isEmpty)
+                            Text("Water").padding(.top, 1)
                         }
-                        .font(.system(size: 60))
-                        .frame(height: 70)
-                        .foregroundColor(correspondingColor(of: dayData.first?.water ?? .none))
-                        .disabled(dayData.isEmpty)
-                        Text("Water").padding(.top, 1)
-                    }
-                    .padding(.trailing, 100)
-                    VStack {
-                        Button {
-                            selectedActivity = "diet"
-                            activitiesSheet.toggle()
-                        } label: {
-                            Image(systemName: "carrot")
+                        .padding(.trailing, 100)
+                        VStack {
+                            Button {
+                                selectedActivity = "diet"
+                                activitiesSheet.toggle()
+                            } label: {
+                                Image(systemName: "carrot")
+                            }
+                            .font(.system(size: 60))
+                            .frame(height: 70)
+                            .foregroundColor(correspondingColor(of: dayData.first?.diet ?? .none))
+                            .disabled(dayData.isEmpty)
+                            Text("Diet").padding(.top, 1)
                         }
-                        .font(.system(size: 60))
-                        .frame(height: 70)
-                        .foregroundColor(correspondingColor(of: dayData.first?.diet ?? .none))
-                        .disabled(dayData.isEmpty)
-                        Text("Diet").padding(.top, 1)
                     }
+                    .padding(.bottom)
+                    HStack {
+                        VStack {
+                            Button {
+                                selectedActivity = "sleep"
+                                activitiesSheet.toggle()
+                            } label: {
+                                Image(systemName: "bed.double")
+                            }
+                            .font(.system(size: 60))
+                            .frame(height: 70)
+                            .foregroundColor(correspondingColor(of: dayData.first?.sleep ?? .none))
+                            .disabled(dayData.isEmpty)
+                            Text("Sleep").padding(.top, 4)
+                        }
+                    }
+                    GridRow {
+                        VStack {
+                            Button {
+                                selectedActivity = "exercise"
+                                activitiesSheet.toggle()
+                            } label: {
+                                Image(systemName: "figure.strengthtraining.functional")
+                            }
+                            .font(.system(size: 60))
+                            .frame(height: 70)
+                            .foregroundColor(correspondingColor(of: dayData.first?.exercise ?? .none))
+                            .disabled(dayData.isEmpty)
+                            Text("Exercise").padding(.top, 4)
+                        }
+                        .padding(.trailing, 100)
+                        VStack {
+                            Button {
+                                selectedActivity = "relax"
+                                activitiesSheet.toggle()
+                            } label: {
+                                Image(systemName: "figure.mind.and.body")
+                            }
+                            .font(.system(size: 60))
+                            .frame(height: 70)
+                            .foregroundColor(correspondingColor(of: dayData.first?.relax ?? .none))
+                            .disabled(dayData.isEmpty)
+                            Text("Relax").padding(.top, 4)
+                        }
+                    }
+                    .padding(.top)
                 }
-                .padding()
-                HStack {
-                    VStack {
-                        Button {
-                            selectedActivity = "sleep"
-                            activitiesSheet.toggle()
-                        } label: {
-                            Image(systemName: "bed.double")
-                        }
-                        .font(.system(size: 60))
-                        .frame(height: 70)
-                        .foregroundColor(correspondingColor(of: dayData.first?.sleep ?? .none))
-                        .disabled(dayData.isEmpty)
-                        Text("Sleep").padding(.top, 4)
-                    }
-                }
-                HStack {
-                    VStack {
-                        Button {
-                            selectedActivity = "exercise"
-                            activitiesSheet.toggle()
-                        } label: {
-                            Image(systemName: "figure.strengthtraining.functional")
-                        }
-                        .font(.system(size: 60))
-                        .frame(height: 70)
-                        .foregroundColor(correspondingColor(of: dayData.first?.exercise ?? .none))
-                        .disabled(dayData.isEmpty)
-                        Text("Exercise").padding(.top, 4)
-                    }
-                    .padding(.trailing, 100)
-                    VStack {
-                        Button {
-                            selectedActivity = "relax"
-                            activitiesSheet.toggle()
-                        } label: {
-                            Image(systemName: "figure.mind.and.body")
-                        }
-                        .font(.system(size: 60))
-                        .frame(height: 70)
-                        .foregroundColor(correspondingColor(of: dayData.first?.relax ?? .none))
-                        .disabled(dayData.isEmpty)
-                        Text("Relax").padding(.top, 4)
-                    }
-                }
-                .padding()
                 
                 // Notes buttons
                 if dayData.first != nil {
