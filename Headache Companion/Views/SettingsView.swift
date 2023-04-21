@@ -212,7 +212,7 @@ struct SettingsView: View {
                             let fileURL = try result.get()
                             if fileURL.startAccessingSecurityScopedResource() {
                                 let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
-                                if let allDayData = try? JSONSerialization.jsonObject(with: Data(contentsOf: fileURL), options: .allowFragments) as? [[String: Any]]
+                                if let allDayData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [[String: Any]]
                                 {
                                     // First, delete all current data
                                     deleteAllDayData()
