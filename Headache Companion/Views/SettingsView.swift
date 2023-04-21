@@ -313,7 +313,8 @@ struct SettingsView: View {
                         do {
                             let fileURL = try result.get()
                             if fileURL.startAccessingSecurityScopedResource() {
-                                if let allMedImportData = try? JSONSerialization.jsonObject(with: Data(contentsOf: fileURL), options: .allowFragments) as? [[String: Any]]
+                                let data = try Data(contentsOf: fileURL, options: .mappedIfSafe)
+                                if let allMedImportData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [[String: Any]]
                                 {
                                     // Delete all current data if user requested
                                     if overwriteMedHistory {
