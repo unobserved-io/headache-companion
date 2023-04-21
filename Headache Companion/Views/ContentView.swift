@@ -91,6 +91,7 @@ struct ContentView: View {
                             Image(systemName: "drop")
                         }
                         .font(.system(size: 60))
+                        .frame(height: 70)
                         .foregroundColor(correspondingColor(of: dayData.first?.water ?? .none))
                         .disabled(dayData.isEmpty)
                         Text("Water").padding(.top, 1)
@@ -104,6 +105,7 @@ struct ContentView: View {
                             Image(systemName: "carrot")
                         }
                         .font(.system(size: 60))
+                        .frame(height: 70)
                         .foregroundColor(correspondingColor(of: dayData.first?.diet ?? .none))
                         .disabled(dayData.isEmpty)
                         Text("Diet").padding(.top, 1)
@@ -119,6 +121,7 @@ struct ContentView: View {
                             Image(systemName: "bed.double")
                         }
                         .font(.system(size: 60))
+                        .frame(height: 70)
                         .foregroundColor(correspondingColor(of: dayData.first?.sleep ?? .none))
                         .disabled(dayData.isEmpty)
                         Text("Sleep").padding(.top, 4)
@@ -133,6 +136,7 @@ struct ContentView: View {
                             Image(systemName: "figure.strengthtraining.functional")
                         }
                         .font(.system(size: 60))
+                        .frame(height: 70)
                         .foregroundColor(correspondingColor(of: dayData.first?.exercise ?? .none))
                         .disabled(dayData.isEmpty)
                         Text("Exercise").padding(.top, 4)
@@ -146,6 +150,7 @@ struct ContentView: View {
                             Image(systemName: "figure.mind.and.body")
                         }
                         .font(.system(size: 60))
+                        .frame(height: 70)
                         .foregroundColor(correspondingColor(of: dayData.first?.relax ?? .none))
                         .disabled(dayData.isEmpty)
                         Text("Relax").padding(.top, 4)
