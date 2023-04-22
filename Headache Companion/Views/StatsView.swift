@@ -358,7 +358,7 @@ struct StatsView: View {
                                     .foregroundColor(.accentColor)
                                     .bold()
                                     .padding(.trailing)
-                                Text("\(days == 1 ? daySingular : dayPlural) \(name.localizedLowercase)")
+                                Text("\(days == 1 ? daySingular : dayPlural) \(name.localizedCapitalized)")
                             }
                         }
                     }
