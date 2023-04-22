@@ -28,6 +28,7 @@ struct StatsView: View {
         case allTime
         case custom
     }
+
     private enum ChosenActivity: String {
         case water
         case diet
@@ -38,8 +39,8 @@ struct StatsView: View {
 
     @ObservedObject var statsHelper = StatsHelper.sharedInstance
     @State private var dateRange: DateRange = .allTime
-    @State private var selectedStart: Date =  Date.now
-    @State private var selectedStop: Date = Date.now
+    @State private var selectedStart: Date = .now
+    @State private var selectedStop: Date = .now
     @State private var clickedAttacks: Bool = false
     @State private var clickedSymptoms: Bool = false
     @State private var clickedDaysWithMeds: Bool = false
@@ -50,8 +51,8 @@ struct StatsView: View {
     @State private var clickedAuraTotals: Bool = false
     @State private var clickedMedNames: Bool = false
     @State private var chosenActivity: ChosenActivity = .water
-    @State private var medTypeTriggers: [String:Bool] = [:]
-    @State private var chevronTriggers: [String:Bool] = [:]
+    @State private var medTypeTriggers: [String: Bool] = [:]
+    @State private var chevronTriggers: [String: Bool] = [:]
     private let daySingular = String(localized: "day")
     private let dayPlural = String(localized: "days")
     private let attackSingular = String(localized: "attack")
@@ -61,17 +62,17 @@ struct StatsView: View {
         NavigationStack {
             ScrollView {
                 VStack {
-                        Picker("", selection: $dateRange) {
-                            dayData.count > 6 ? Text("Past week").tag(DateRange.week) : nil
-                            dayData.count > 15 ? Text("Past 30 days").tag(DateRange.thirtyDays) : nil
-                            dayData.count > 90 ? Text("Past 6 months").tag(DateRange.sixMonths) : nil
-                            dayData.count > 200 ? Text("Past year").tag(DateRange.year) : nil
-                            Text("All time").tag(DateRange.allTime)
-                            Text("Date Range").tag(DateRange.custom)
-                        }
-                        .onChange(of: dateRange) { range in
-                            statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range), stopDate: getStopDate(range))
-                        }
+                    Picker("", selection: $dateRange) {
+                        dayData.count > 6 ? Text("Past week").tag(DateRange.week) : nil
+                        dayData.count > 15 ? Text("Past 30 days").tag(DateRange.thirtyDays) : nil
+                        dayData.count > 90 ? Text("Past 6 months").tag(DateRange.sixMonths) : nil
+                        dayData.count > 200 ? Text("Past year").tag(DateRange.year) : nil
+                        Text("All time").tag(DateRange.allTime)
+                        Text("Date Range").tag(DateRange.custom)
+                    }
+                    .onChange(of: dateRange) { range in
+                        statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range), stopDate: getStopDate(range))
+                    }
                     if dateRange == .custom {
                         HStack {
                             DatePicker(
@@ -81,7 +82,7 @@ struct StatsView: View {
                                 label: {}
                             )
                             .labelsHidden()
-                            .onChange(of: selectedStart) { range in
+                            .onChange(of: selectedStart) { _ in
                                 statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
                             }
                             Text("to")
@@ -93,7 +94,7 @@ struct StatsView: View {
                             )
                             .frame(minHeight: 35)
                             .labelsHidden()
-                            .onChange(of: selectedStop) { range in
+                            .onChange(of: selectedStop) { _ in
                                 statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
                             }
                         }
@@ -101,8 +102,8 @@ struct StatsView: View {
                     }
                     Grid(alignment: .topLeading, verticalSpacing: 5) {
                         GridRow {
-                            mainStat(String(statsHelper.daysTracked))
-                            statDescription("\(statsHelper.daysTracked == 1 ? daySingular : dayPlural) tracked")
+                            mainStat(String(statsHelper.daysTrackedInRange))
+                            statDescription("\(statsHelper.daysTrackedInRange == 1 ? daySingular : dayPlural) tracked")
 //                            Text("^[\(statsHelper.daysTracked) \("day")](inflect: true) tracked")
                         }
                         GridRow {
@@ -247,6 +248,7 @@ struct StatsView: View {
                     .padding(.bottom)
                     
                     // MARK: Activities Stats
+
                     VStack {
                         Picker("Activity", selection: $chosenActivity) {
                             Image(systemName: "drop.fill").tag(ChosenActivity.water)
@@ -270,13 +272,13 @@ struct StatsView: View {
                             PieChart(values: statsHelper.sleepInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "bed.double.fill")
                         }
                     }
-                    
                 }
                 .padding()
                 .addBorder(Color.accentColor, width: 4, cornerRadius: 15)
                 .padding(.bottom)
                 
                 // MARK: Medication History button
+
                 NavigationLink(
                     "Medication History",
                     destination: MedicationHistoryView()
@@ -289,8 +291,8 @@ struct StatsView: View {
                 
                 Grid(alignment: .topLeading, verticalSpacing: 5) {
                     GridRow {
-                        mainStat(String(dayData.count))
-                        statDescription("\(dayData.count == 1 ? daySingular : dayPlural) with recorded data")
+                        mainStat(String(statsHelper.daysTrackedTotal))
+                        statDescription("\(statsHelper.daysTrackedTotal == 1 ? daySingular : dayPlural) with recorded data")
                     }
                     
                     GridRow {
@@ -307,7 +309,7 @@ struct StatsView: View {
         .scrollContentBackground(.hidden)
         .padding(.horizontal)
         .padding(.top)
-        .onAppear() {
+        .onAppear {
             statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
         }
     }
@@ -321,8 +323,8 @@ struct StatsView: View {
     
     private func statDescription(_ description: LocalizedStringKey) -> some View {
         return Text(description)
-                .font(.title3)
-                .fixedSize(horizontal: false, vertical: true)
+            .font(.title3)
+            .fixedSize(horizontal: false, vertical: true)
     }
     
     private func medTypeRow(for medType: String, amount: Int) -> some View {
@@ -363,7 +365,6 @@ struct StatsView: View {
                     .padding(.leading)
                 }
             }
-            
         }
     }
     

@@ -5,14 +5,15 @@
 //  Created by Ricky Kresslein on 3/12/23.
 //
 
+import CoreData
 import Foundation
 import SwiftUI
-import CoreData
 
 class StatsHelper: ObservableObject {
     static let sharedInstance = StatsHelper()
     
-    @Published var daysTracked: Int = 0
+    @Published var daysTrackedInRange: Int = 0
+    @Published var daysTrackedTotal: Int = 0
     @Published var daysWithAttack: Int = 0
     @Published var numberOfAttacks: Int = 0
     @Published var attacksWithAura: Int = 0
@@ -49,7 +50,18 @@ class StatsHelper: ObservableObject {
         var painLevelsPerDay: [Double] = []
         
         for day in dayData {
-            daysTracked += 1
+            // Check if the day has any data
+            if !day.attacks.isEmpty ||
+                !day.medications.isEmpty ||
+                day.diet != .none ||
+                day.water != .none ||
+                day.sleep != .none ||
+                day.relax != .none ||
+                day.exercise != .none
+            {
+                daysTrackedInRange += 1
+                daysTrackedTotal += 1
+            }
             
             // Attack stats
             if !day.attacks.isEmpty {
@@ -64,7 +76,7 @@ class StatsHelper: ObservableObject {
                     if !attack.symptoms.isEmpty {
                         for symptom in attack.symptoms {
                             allSymptoms.insert(symptom)
-                            if let index = symptomsByHeadache.firstIndex(where: {$0.key == attack.headacheType}) {
+                            if let index = symptomsByHeadache.firstIndex(where: { $0.key == attack.headacheType }) {
                                 symptomsByHeadache[index].value.insert(symptom)
                             } else {
                                 symptomsByHeadache.append((attack.headacheType, [symptom]))
@@ -73,7 +85,7 @@ class StatsHelper: ObservableObject {
                     }
                     if !attack.auras.isEmpty {
                         for aura in attack.auras {
-                            if let index = allAuras.firstIndex(where: {$0.key == aura}) {
+                            if let index = allAuras.firstIndex(where: { $0.key == aura }) {
                                 allAuras[index].value += 1
                             } else {
                                 allAuras.append((aura, 1))
@@ -83,7 +95,7 @@ class StatsHelper: ObservableObject {
                     
                     painLevels.append(attack.painLevel)
                     
-                    if let index = allTypesOfHeadache.firstIndex(where: {$0.key == attack.headacheType}) {
+                    if let index = allTypesOfHeadache.firstIndex(where: { $0.key == attack.headacheType }) {
                         allTypesOfHeadache[index].value += 1
                     } else {
                         allTypesOfHeadache.append((attack.headacheType, 1))
@@ -94,12 +106,11 @@ class StatsHelper: ObservableObject {
             
             // Medication stats
             if !day.medications.isEmpty {
-//                var medTypesThisDay: Set<String> = []
                 var medNamesThisDayByType: [(key: String, value: Set<String>)] = []
                 daysWithMedication += 1
                 
                 day.medications.forEach { medication in
-                    if let index = medNamesThisDayByType.firstIndex(where: {$0.key == medication.type}) {
+                    if let index = medNamesThisDayByType.firstIndex(where: { $0.key == medication.type }) {
                         medNamesThisDayByType[index].value.insert(medication.name ?? "Unknown")
                     } else {
                         medNamesThisDayByType.append((medication.type, [medication.name ?? "Unknown"]))
@@ -107,15 +118,15 @@ class StatsHelper: ObservableObject {
                 }
                 
                 medNamesThisDayByType.forEach { medType, medNames in
-                    if let index = daysByMedType.firstIndex(where: {$0.key == medType}) {
+                    if let index = daysByMedType.firstIndex(where: { $0.key == medType }) {
                         daysByMedType[index].value += 1
                     } else {
                         daysByMedType.append((medType, 1))
                     }
                     
-                    if let index = medicationByMedType.firstIndex(where: {$0.key == medType}) {
+                    if let index = medicationByMedType.firstIndex(where: { $0.key == medType }) {
                         medNames.forEach { medName in
-                            if let index2 = medicationByMedType[index].value.firstIndex(where: {$0.key == medName}) {
+                            if let index2 = medicationByMedType[index].value.firstIndex(where: { $0.key == medName }) {
                                 medicationByMedType[index].value[index2].value += 1
                             } else {
                                 medicationByMedType[index].value.append((medName, 1))
@@ -123,9 +134,9 @@ class StatsHelper: ObservableObject {
                         }
                     } else {
                         medicationByMedType.append((medType, []))
-                        if let index = medicationByMedType.firstIndex(where: {$0.key == medType}) {
+                        if let index = medicationByMedType.firstIndex(where: { $0.key == medType }) {
                             medNames.forEach { medName in
-                                if let index2 = medicationByMedType[index].value.firstIndex(where: {$0.key == medName}) {
+                                if let index2 = medicationByMedType[index].value.firstIndex(where: { $0.key == medName }) {
                                     medicationByMedType[index].value[index2].value += 1
                                 } else {
                                     medicationByMedType[index].value.append((medName, 1))
@@ -145,7 +156,7 @@ class StatsHelper: ObservableObject {
         averagePainLevel = daysWithAttack == 0 ? 0 : painLevelsPerDay.reduce(0,+) / Double(daysWithAttack)
         getPercentWithAttack()
         getPercentWithMedication()
-        daysByMedType.sort(by: {$0.key > $1.key})
+        daysByMedType.sort(by: { $0.key > $1.key })
     }
     
     private func calculateActivityStats(_ dayData: [DayData], startDate: Date, stopDate: Date) {
@@ -164,7 +175,8 @@ class StatsHelper: ObservableObject {
     }
     
     private func resetAllStats() {
-        daysTracked = 0
+        daysTrackedInRange = 0
+        daysTrackedTotal = 0
         daysWithAttack = 0
         daysWithMedication = 0
         daysByMedType = []
@@ -184,18 +196,18 @@ class StatsHelper: ObservableObject {
     }
     
     private func getPercentWithAttack() {
-        if daysTracked == 0 {
+        if daysTrackedInRange == 0 {
             percentWithAttack = 0
         } else {
-            percentWithAttack = Int((Double(daysWithAttack) / Double(daysTracked)) * 100)
+            percentWithAttack = Int((Double(daysWithAttack) / Double(daysTrackedInRange)) * 100)
         }
     }
     
     private func getPercentWithMedication() {
-        if daysTracked == 0 {
+        if daysTrackedInRange == 0 {
             percentWithMedication = 0
         } else {
-            percentWithMedication = Int((Double(daysWithMedication) / Double(daysTracked)) * 100)
+            percentWithMedication = Int((Double(daysWithMedication) / Double(daysTrackedInRange)) * 100)
         }
     }
 }
