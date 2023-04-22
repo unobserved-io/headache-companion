@@ -1,14 +1,38 @@
+/* No comment provided by engineer. */
+"Brainstem" = "Brainstem";
+
+/* No comment provided by engineer. */
+"Brain fog" = "Brain fog";
+
+/* No comment provided by engineer. */
+"Concentration problems" = "Concentration problems";
+
+/* No comment provided by engineer. */
+"Dizziness" = "Dizziness";
+
+/* No comment provided by engineer. */
+"Issues speaking" = "Issues speaking";
+
+/* No comment provided by engineer. */
+"Jaw pain" = "Jaw pain";
+
+/* No comment provided by engineer. */
+"Memory issues" = "Memory issues";
+
 /* Migraine headache type */
 "migraine" = "migraine";
 
 /* Migraine headache type */
 "Migraine" = "Migraine";
 
-/* Tension headache type */
-"tension" = "tension";
+/* No comment provided by engineer. */
+"Motor" = "Motor";
 
-/* Tension headache type */
-"Tension" = "Tension";
+/* No comment provided by engineer. */
+"Nausea" = "Nausea";
+
+/* No comment provided by engineer. */
+"Neck pain" = "Neck pain";
 
 /* Some other type of symptom, headache type, etc. */
 "other" = "other";
@@ -22,8 +46,41 @@
 /* Preventive type of medication */
 "Preventive" = "Preventive";
 
+/* No comment provided by engineer. */
+"Retinal" = "Retinal";
+
+/* No comment provided by engineer. */
+"Ringing in ears" = "Ringing in ears";
+
+/* No comment provided by engineer. */
+"Sensory" = "Sensory";
+
+/* No comment provided by engineer. */
+"Sensitivity to light" = "Sensitivity to light";
+
+/* No comment provided by engineer. */
+"Sensitivity to smell" = "Sensitivity to smell";
+
+/* No comment provided by engineer. */
+"Sensitivity to sound" = "Sensitivity to sound";
+
+/* No comment provided by engineer. */
+"Speech/Language" = "Speech/Language";
+
 /* Symptom relieving type of medication */
 "symptom relieving" = "symptom relieving";
 
 /* Symptom relieving type of medication */
 "Symptom Relieving" = "Symptom Relieving";
+
+/* Tension headache type */
+"tension" = "tension";
+
+/* Tension headache type */
+"Tension" = "Tension";
+
+/* No comment provided by engineer. */
+"Visual" = "Visual";
+
+/* No comment provided by engineer. */
+"Vomiting" = "Vomiting";
