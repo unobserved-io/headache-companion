@@ -33,6 +33,13 @@ public extension View {
     }
 }
 
+// Number of digits in an Int
+extension BinaryInteger {
+    var digits: [Int] {
+        return String(describing: self).compactMap { Int(String($0)) }
+    }
+}
+
 // JSON Encodables
 extension Attack: Encodable {
     enum CodingKeys: String, CodingKey {

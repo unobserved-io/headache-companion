@@ -104,7 +104,6 @@ struct StatsView: View {
                         GridRow {
                             mainStat(String(statsHelper.daysTrackedInRange))
                             statDescription("\(statsHelper.daysTrackedInRange == 1 ? daySingular : dayPlural) tracked")
-//                            Text("^[\(statsHelper.daysTracked) \("day")](inflect: true) tracked")
                         }
                         GridRow {
                             mainStat(String(statsHelper.daysWithAttack))
@@ -333,14 +332,22 @@ struct StatsView: View {
         }
         let theTuple = statsHelper.medicationByMedType.first(where: { $0.key == medType })
         
+        let sortedDaysByAmount = statsHelper.daysByMedType.sorted(by: { $0.value > $1.value })
+        let biggestAmount = sortedDaysByAmount[0].value
+        let numOfDigitsInBiggest = biggestAmount.digits.count - 1
+
         return VStack(alignment: .leading) {
             HStack {
                 Text(String(amount))
                     .font(Font.monospacedDigit(.body)())
                     .foregroundColor(.accentColor)
                     .bold()
-                    .padding(.trailing)
-                Text(amount == 1 ? daySingular : dayPlural) + Text(" ") + Text(LocalizedStringKey(medType))
+                // This adds
+                if amount.digits.count - 1 < numOfDigitsInBiggest {
+                    Text(String(repeating: " ", count: numOfDigitsInBiggest))
+                }
+                Text("\(amount == 1 ? daySingular : dayPlural) \(String(localized: String.LocalizationValue(medType)))")
+                    .padding(.leading)
                 Image(systemName: medTypeTriggers[medType] ?? false ? "chevron.down" : "chevron.right")
                     .font(.system(size: 12))
             }
