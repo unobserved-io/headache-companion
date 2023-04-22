@@ -31,7 +31,6 @@ struct PieSliceView: View {
                         startAngle: Angle(degrees: -90.0) + pieSliceData.startAngle,
                         endAngle: Angle(degrees: -90.0) + pieSliceData.endAngle,
                         clockwise: false)
-                    
                 }
 //                .fill(pieSliceData.color)
 //                .fill(RadialGradient(gradient: Gradient(colors: [pieSliceData.color.opacity(0.60), pieSliceData.color]), center: .center, startRadius: 50, endRadius: 60))
@@ -41,8 +40,7 @@ struct PieSliceView: View {
                     Text(pieSliceData.text)
                         .position(
                             x: geometry.size.width * 0.5 * CGFloat(1.0 + 0.78 * cos(self.midRadians)),
-                            y: geometry.size.height * 0.5 * CGFloat(1.0 - 0.78 * sin(self.midRadians))
-                        )
+                            y: geometry.size.height * 0.5 * CGFloat(1.0 - 0.78 * sin(self.midRadians)))
                         .bold()
                         .foregroundColor(Color.white)
                 }
@@ -62,9 +60,9 @@ struct PieSliceData {
 struct PieSliceView_Previews: PreviewProvider {
     static var previews: some View {
         PieSliceView(pieSliceData: PieSliceData(
-                      startAngle: Angle(degrees: 0.0),
-                      endAngle: Angle(degrees: 220.0),
-                      text: "65%",
-                      color: Color.black))
+            startAngle: Angle(degrees: 0.0),
+            endAngle: Angle(degrees: 220.0),
+            text: "65%",
+            color: Color.black))
     }
 }

@@ -21,7 +21,7 @@ struct AddEditMedHistoryView: View {
     @State var cancelClicked: Bool = false
     @State var showingNameAlert: Bool = false
     @State var newStopDate: Date = .now
-    var cancelBtn : some View {
+    var cancelBtn: some View {
         Button("Cancel") {
             cancelClicked = true
             dismiss()
@@ -63,7 +63,7 @@ struct AddEditMedHistoryView: View {
                     Text("\(medHistory.amount)")
                         .bold()
                         .padding(.trailing)
-                    Stepper("\(medHistory.amount)", value: $medHistory.amount, in: 1...25)
+                    Stepper("\(medHistory.amount)", value: $medHistory.amount, in: 1 ... 25)
                         .labelsHidden()
                 }
                 .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
@@ -97,12 +97,12 @@ struct AddEditMedHistoryView: View {
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
             // Side Effects selector
-            NavigationLink (destination: MedicationSideEffectsView(sideEffects: $medHistory.sideEffects.toUnwrapped(defaultValue: [])).navigationTitle("Add Side Effects")) {
-                HStack{
+            NavigationLink(destination: MedicationSideEffectsView(sideEffects: $medHistory.sideEffects.toUnwrapped(defaultValue: [])).navigationTitle("Add Side Effects")) {
+                HStack {
                     Text("Side Effects")
                         .foregroundColor(.primary)
                     Spacer()
-                    if (medHistory.sideEffects?.isEmpty ?? true) {
+                    if medHistory.sideEffects?.isEmpty ?? true {
                         Text("None")
                             .foregroundColor(.gray)
                             .multilineTextAlignment(.trailing)
@@ -119,7 +119,7 @@ struct AddEditMedHistoryView: View {
             DatePicker(
                 "Start",
                 selection: $medHistory.startDate.toUnwrapped(defaultValue: Date.now),
-                in: Date.init(timeIntervalSince1970: 0) ... (medHistory.stopDate ?? Date.now),
+                in: Date(timeIntervalSince1970: 0) ... (medHistory.stopDate ?? Date.now),
                 displayedComponents: [.date]
             )
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
@@ -168,7 +168,6 @@ struct AddEditMedHistoryView: View {
                 }
             }
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
-            
         }
         .toolbar {
             Button("Save") {
@@ -183,11 +182,7 @@ struct AddEditMedHistoryView: View {
                 }
             }
         }
-        .navigationBarBackButtonHidden(true)
-        #if os(iOS)
-        .navigationBarItems(leading: cancelBtn)
-        #endif
-        .onAppear() {
+        .onAppear {
             stopDateOngoing = medHistory.stopDate == nil
         }
         .alert("Name is empty", isPresented: $showingNameAlert) {
@@ -195,12 +190,16 @@ struct AddEditMedHistoryView: View {
         } message: {
             Text("The \"Name\" field cannot be empty.")
         }
-        .onDisappear() {
+        .onDisappear {
             if cancelClicked && medHistory.id == nil {
                 viewContext.delete(medHistory)
                 saveData()
             }
         }
+        .navigationBarBackButtonHidden(true)
+        #if os(iOS)
+            .navigationBarItems(leading: cancelBtn)
+        #endif
     }
 }
 

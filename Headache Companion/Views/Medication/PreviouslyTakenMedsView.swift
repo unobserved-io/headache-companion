@@ -69,7 +69,7 @@ struct PreviouslyTakenMedsView: View {
             for medication in day.medications {
                 if uniqueMeds.isEmpty {
                     uniqueMeds.append(medication)
-                } else if !uniqueMeds.contains(where: { $0.name == medication.name && $0.dose == medication.dose && $0.amount == medication.amount}) {
+                } else if !uniqueMeds.contains(where: { $0.name == medication.name && $0.dose == medication.dose && $0.amount == medication.amount }) {
                     uniqueMeds.append(medication)
                 }
             }
@@ -81,7 +81,7 @@ struct PreviouslyTakenMedsView: View {
     private func getUniqueMedsSorted() -> [(key: String, value: [Medication])] {
         var uniqueMedsSorted: [(key: String, value: [Medication])] = []
         getUniqueMeds().forEach { uniqueMed in
-            if let index = uniqueMedsSorted.firstIndex(where: {$0.key == uniqueMed.type}) {
+            if let index = uniqueMedsSorted.firstIndex(where: { $0.key == uniqueMed.type }) {
                 uniqueMedsSorted[index].value.append(uniqueMed)
             } else {
                 uniqueMedsSorted.append((uniqueMed.type, [uniqueMed]))

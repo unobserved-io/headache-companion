@@ -218,8 +218,8 @@ struct SettingsView: View {
                                     deleteAllDayData()
                                     
                                     // Variables to check for today in imported data
-                                    let todayString : String = dateFormatter.string(from: .now)
-                                    var todayFound: Bool = false
+                                    let todayString: String = dateFormatter.string(from: .now)
+                                    var todayFound = false
                                     
                                     for hcDayData in allDayData {
                                         // Check if the day being imported already exists
@@ -449,7 +449,7 @@ struct SettingsView: View {
         } message: {
             Text("This feature is only availble in the Pro version. Upgrade now to access it.")
         }
-        .onAppear() {
+        .onAppear {
             Task {
                 try await storeModel.fetchProducts()
             }

@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(MAppData)
-public class MAppData: NSManagedObject {
-
-}
+public class MAppData: NSManagedObject {}

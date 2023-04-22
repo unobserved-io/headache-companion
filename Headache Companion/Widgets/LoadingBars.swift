@@ -20,7 +20,8 @@ public struct LoadingBars: View {
                 spacing: CGFloat = 8,
                 cornerRadius: CGFloat = 8,
                 scaleRange: ClosedRange<Double> = (0.5...1),
-                opacityRange: ClosedRange<Double> = (0.25...1)) {
+                opacityRange: ClosedRange<Double> = (0.25...1))
+    {
         self._isAnimating = animate
         self.count = count
         self.spacing = spacing
@@ -31,7 +32,7 @@ public struct LoadingBars: View {
 
     public var body: some View {
         GeometryReader { geometry in
-            ForEach(0..<Int(count), id:\.self) { index in
+            ForEach(0 ..< Int(count), id: \.self) { index in
                 item(forIndex: index, in: geometry.size)
             }
         }
@@ -42,11 +43,11 @@ public struct LoadingBars: View {
     private var opacity: Double { isAnimating ? opacityRange.lowerBound : opacityRange.upperBound }
 
     private func size(count: UInt, geometry: CGSize) -> CGFloat {
-        (geometry.width/CGFloat(count)) - (spacing-2)
+        (geometry.width / CGFloat(count)) - (spacing - 2)
     }
 
     private func item(forIndex index: Int, in geometrySize: CGSize) -> some View {
-        RoundedRectangle(cornerRadius: cornerRadius,  style: .continuous)
+        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
             .frame(width: size(count: count, geometry: geometrySize), height: geometrySize.height)
             .scaleEffect(x: 1, y: scale, anchor: .center)
             .opacity(opacity)

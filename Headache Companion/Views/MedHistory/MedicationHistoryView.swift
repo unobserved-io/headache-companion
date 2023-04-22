@@ -23,7 +23,7 @@ struct MedicationHistoryView: View {
         formatter.dateFormat = "MMM d, 'yy"
         return formatter
     }()
-    
+
     var body: some View {
         List {
             NavigationLink(
@@ -32,7 +32,7 @@ struct MedicationHistoryView: View {
                     .navigationTitle("New Medication")
             )
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
-            
+
             ForEach(medHistory) { section in
                 Section(LocalizedStringKey(section.id)) {
                     ForEach(section) { med in
@@ -128,7 +128,7 @@ struct MedicationHistoryView: View {
             }
         }
         .alert("Medication History", isPresented: $showingInfo) {
-            Button("OK"){}
+            Button("OK") {}
         } message: {
             Text("This page is for you to keep track of the medications you are taking now or have taken in the past. It is not automatically generated.\n\nSwipe items right to edit them, or left to delete them.")
         }

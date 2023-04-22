@@ -44,13 +44,13 @@ struct CalendarView: View {
                         dayData.nsPredicate = NSPredicate(format: "date = %@", dateFormatter.string(from: newDay))
                     }
                 }
-                .onAppear() {
+                .onAppear {
                     refreshView()
                 }
                 
                 Section(refreshIt ? "Attacks" : "Attacks") {
-                    ForEach((dayData.first?.attack?.allObjects as? [Attack] ?? []).sorted{$0.wrappedStartTime < $1.wrappedStartTime}) { attack in
-                        NavigationLink (destination: AttackView(attack: attack, for: selectedDay).onDisappear() { refreshView() }) {
+                    ForEach((dayData.first?.attack?.allObjects as? [Attack] ?? []).sorted { $0.wrappedStartTime < $1.wrappedStartTime }) { attack in
+                        NavigationLink(destination: AttackView(attack: attack, for: selectedDay).onDisappear { refreshView() }) {
                             HStack {
                                 if attack.stopTime != nil {
                                     Text("\(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened)) - \(attack.wrappedStopTime.formatted(date: .omitted, time: .shortened))")
@@ -58,8 +58,8 @@ struct CalendarView: View {
                                     Text(attack.wrappedStartTime.formatted(date: .omitted, time: .shortened))
                                 }
                                 Text("(").foregroundColor(.gray) +
-                                Text(LocalizedStringKey(attack.headacheType.localizedCapitalized)).foregroundColor(.gray) +
-                                Text(")").foregroundColor(.gray)
+                                    Text(LocalizedStringKey(attack.headacheType.localizedCapitalized)).foregroundColor(.gray) +
+                                    Text(")").foregroundColor(.gray)
                             }
                             .lineLimit(1)
                         }
@@ -81,7 +81,7 @@ struct CalendarView: View {
                 }
                 
                 Section("Medication") {
-                    ForEach((dayData.first?.medication?.allObjects as? [Medication] ?? []).sorted{$0.wrappedTime < $1.wrappedTime}) { medication in
+                    ForEach((dayData.first?.medication?.allObjects as? [Medication] ?? []).sorted { $0.wrappedTime < $1.wrappedTime }) { medication in
                         Button {
                             clickedMedication.medication = medication
                             showingMedSheet.toggle()

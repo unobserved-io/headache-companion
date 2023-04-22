@@ -33,4 +33,3 @@ struct MedHistoryNotesView_Previews: PreviewProvider {
         MedHistoryNotesView(note: .constant(""))
     }
 }
-

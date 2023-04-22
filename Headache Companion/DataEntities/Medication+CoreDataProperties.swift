@@ -6,34 +6,31 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-extension Medication {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Medication> {
+public extension Medication {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<Medication> {
         return NSFetchRequest<Medication>(entityName: "Medication")
     }
 
-    @NSManaged public var id: String?
-    @NSManaged public var amount: Int32
-    @NSManaged public var dose: String?
-    @NSManaged public var effective: Effectiveness
-    @NSManaged public var time: Date?
-    @NSManaged public var name: String?
-    @NSManaged public var sideEffects: String?
-    @NSManaged public var type: String
-    @NSManaged public var date: DayData?
-    
-    public var wrappedTime: Date {
-        time ?? Date.init(timeIntervalSince1970: 0)
+    @NSManaged var id: String?
+    @NSManaged var amount: Int32
+    @NSManaged var dose: String?
+    @NSManaged var effective: Effectiveness
+    @NSManaged var time: Date?
+    @NSManaged var name: String?
+    @NSManaged var sideEffects: String?
+    @NSManaged var type: String
+    @NSManaged var date: DayData?
+
+    var wrappedTime: Date {
+        time ?? Date(timeIntervalSince1970: 0)
     }
-    
-    public var wrappedName: String {
+
+    var wrappedName: String {
         name ?? "Unknown"
     }
 }
 
-extension Medication : Identifiable {
-
-}
+extension Medication: Identifiable {}

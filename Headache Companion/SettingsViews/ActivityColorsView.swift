@@ -13,12 +13,12 @@ struct ActivityColorsView: View {
         sortDescriptors: []
     )
     var mAppData: FetchedResults<MAppData>
-    @State private var notRecorded: Color = Color.gray
-    @State private var lowColor: Color = Color.gray
-    @State private var middleColor: Color = Color.gray
-    @State private var highColor: Color = Color.gray
+    @State private var notRecorded: Color = .gray
+    @State private var lowColor: Color = .gray
+    @State private var middleColor: Color = .gray
+    @State private var highColor: Color = .gray
     @State private var showingAlert: Bool = false
-    
+
     var body: some View {
         List {
             Section {
@@ -33,13 +33,13 @@ struct ActivityColorsView: View {
                 }
             }
         }
-        .onAppear() {
+        .onAppear {
             notRecorded = Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
             lowColor = Color(hex: mAppData.first?.activityColors?[1]) ?? Color.red
             middleColor = Color(hex: mAppData.first?.activityColors?[2]) ?? Color.yellow
             highColor = Color(hex: mAppData.first?.activityColors?[3]) ?? Color.green
         }
-        .onDisappear() {
+        .onDisappear {
             mAppData.first?.activityColors? = [
                 notRecorded.hex ?? "8E8E93FF",
                 lowColor.hex ?? "EB4E3DFF",
@@ -55,7 +55,7 @@ struct ActivityColorsView: View {
                 middleColor = Color.yellow
                 highColor = Color.green
             }
-            Button("Cancel", role: .cancel) { }
+            Button("Cancel", role: .cancel) {}
         } message: {
             Text("Are you sure you want to reset all colors to defaults?")
         }

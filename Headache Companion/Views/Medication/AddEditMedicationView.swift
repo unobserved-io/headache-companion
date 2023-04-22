@@ -63,7 +63,7 @@ struct AddEditMedicationView: View {
                 Text("\(medAmount)")
                     .bold()
                     .padding(.trailing)
-                Stepper("\(medAmount)", value: $medAmount, in: 1...25)
+                Stepper("\(medAmount)", value: $medAmount, in: 1 ... 25)
                     .labelsHidden()
             }
             
@@ -138,7 +138,7 @@ struct AddEditMedicationView: View {
                 }
             }
         }
-        .onAppear() {
+        .onAppear {
             if medication.medication != nil && medication.medication?.id != nil {
                 // Medication not nil - get values
                 medName = medication.medication?.name ?? ""

@@ -6,10 +6,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(Attack)
-public class Attack: NSManagedObject {
-
-}
+public class Attack: NSManagedObject {}

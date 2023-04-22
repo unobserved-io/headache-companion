@@ -26,7 +26,7 @@ let defaultMedicationTypes: [String] = [
     "other"
 ]
 
-func ??<T>(lhs: Binding<Optional<T>>, rhs: T) -> Binding<T> {
+func ?? <T>(lhs: Binding<T?>, rhs: T) -> Binding<T> {
     Binding(
         get: { lhs.wrappedValue ?? rhs },
         set: { lhs.wrappedValue = $0 }
@@ -59,7 +59,7 @@ func initializeMAppData() {
         "8E8E93FF", // Gray
         "EB4E3DFF", // Red
         "F7CE46FF", // Yellow
-        "65C466FF", // Green
+        "65C466FF" // Green
     ]
     newMAppData.launchDay = Calendar.current.startOfDay(for: .now)
     saveData()

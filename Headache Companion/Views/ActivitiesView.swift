@@ -83,7 +83,7 @@ struct ActivitiesView: View {
                     .foregroundColor(goodColor)
             }
         }
-        .onAppear() {
+        .onAppear {
             getCurrentColor()
             badColor = correspondingColor(of: .bad)
             okColor = correspondingColor(of: .ok)

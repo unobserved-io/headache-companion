@@ -27,8 +27,8 @@ struct PieChart: View {
     }
     
     var body: some View {
-        ZStack{
-            ForEach(0..<self.values.count, id: \.self){ i in
+        ZStack {
+            ForEach(0 ..< self.values.count, id: \.self) { i in
                 PieSliceView(pieSliceData: self.slices[i])
             }
             

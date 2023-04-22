@@ -16,7 +16,7 @@ struct HeadacheCompanionApp: App {
         WindowGroup {
             LoadingView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .onAppear() {
+                .onAppear {
                     Task {
                         try await storeModel.fetchProducts()
                     }

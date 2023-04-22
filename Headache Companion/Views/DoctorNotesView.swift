@@ -15,7 +15,7 @@ struct DoctorNotesView: View {
     )
     var mAppData: FetchedResults<MAppData>
     @FocusState private var isNoteFocused: Bool
-    
+
     private var noteBinding: Binding<String> {
         Binding {
             mAppData.first?.doctorNotes ?? .init("")
@@ -23,7 +23,7 @@ struct DoctorNotesView: View {
             mAppData.first?.doctorNotes = $0
         }
     }
-    
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             TextEditor(text: noteBinding)
@@ -37,7 +37,7 @@ struct DoctorNotesView: View {
             }
         }
         .padding()
-        .onDisappear() {
+        .onDisappear {
             saveData()
         }
     }

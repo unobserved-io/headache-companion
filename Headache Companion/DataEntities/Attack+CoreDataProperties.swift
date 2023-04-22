@@ -6,42 +6,37 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-
-extension Attack {
-
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Attack> {
+public extension Attack {
+    @nonobjc class func fetchRequest() -> NSFetchRequest<Attack> {
         return NSFetchRequest<Attack>(entityName: "Attack")
     }
 
-    @NSManaged public var id: String?
-    @NSManaged public var headacheType: String
-    @NSManaged public var otherPainGroup: Int16
-    @NSManaged public var otherPainText: String?
-    @NSManaged public var painLevel: Double
-    @NSManaged public var pressing: Bool
-    @NSManaged public var pressingSide: Sides
-    @NSManaged public var pulsating: Bool
-    @NSManaged public var pulsatingSide: Sides
-    @NSManaged public var auras: Set<String>
-    @NSManaged public var symptoms: Set<String>
-    @NSManaged public var onPeriod: Bool
-    @NSManaged public var startTime: Date?
-    @NSManaged public var stopTime: Date?
-    @NSManaged public var date: DayData?
-    
-    public var wrappedStartTime: Date {
-        startTime ?? Date.init(timeIntervalSince1970: 0)
-    }
-    
-    public var wrappedStopTime: Date {
-        stopTime ?? Date.init(timeIntervalSince1970: 0)
+    @NSManaged var id: String?
+    @NSManaged var headacheType: String
+    @NSManaged var otherPainGroup: Int16
+    @NSManaged var otherPainText: String?
+    @NSManaged var painLevel: Double
+    @NSManaged var pressing: Bool
+    @NSManaged var pressingSide: Sides
+    @NSManaged var pulsating: Bool
+    @NSManaged var pulsatingSide: Sides
+    @NSManaged var auras: Set<String>
+    @NSManaged var symptoms: Set<String>
+    @NSManaged var onPeriod: Bool
+    @NSManaged var startTime: Date?
+    @NSManaged var stopTime: Date?
+    @NSManaged var date: DayData?
+
+    var wrappedStartTime: Date {
+        startTime ?? Date(timeIntervalSince1970: 0)
     }
 
+    var wrappedStopTime: Date {
+        stopTime ?? Date(timeIntervalSince1970: 0)
+    }
 }
 
-extension Attack : Identifiable {
-
-}
+extension Attack: Identifiable {}

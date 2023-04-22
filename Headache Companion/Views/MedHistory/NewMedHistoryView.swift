@@ -12,13 +12,13 @@ struct NewMedHistoryView: View {
     @Environment(\.managedObjectContext) private var viewContext
 //    @Environment(\.dismiss) var dismiss
     @State var firstRun = true
-    
+
     var body: some View {
         if firstRun {
             AddEditMedHistoryView(medHistory: createMedHistory())
         }
     }
-    
+
     private func createMedHistory() -> MedHistory {
         let medHistory = MedHistory(context: viewContext)
         medHistory.startDate = Calendar.current.startOfDay(for: .now)

@@ -10,7 +10,7 @@ import SwiftUI
 struct MedicationSideEffectsView: View {
     @Environment(\.colorScheme) var colorScheme
     @Binding var sideEffects: Set<String>
-    
+
     @State var showingAdd: Bool = false
     @State var newSideEffect: String = ""
 
@@ -23,7 +23,7 @@ struct MedicationSideEffectsView: View {
                 .alert("New Side Effect", isPresented: $showingAdd, actions: {
                     TextField("", text: $newSideEffect)
                         .labelsHidden()
-                    
+
                     Button("Add") {
                         if !newSideEffect.isEmpty {
                             sideEffects.insert(newSideEffect)
@@ -34,7 +34,7 @@ struct MedicationSideEffectsView: View {
                 })
             }
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
-            
+
             Section {
                 ForEach(sideEffects.sorted { $0 < $1 }, id: \.self) { sideEffect in
                     Text(sideEffect)
@@ -44,7 +44,7 @@ struct MedicationSideEffectsView: View {
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
         }
     }
-    
+
     private func deleteSideEffect(at offsets: IndexSet) {
         let index = offsets.first
         if index != nil {

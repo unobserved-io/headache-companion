@@ -20,11 +20,11 @@ struct LoadingView: View {
     var body: some View {
         if lastLaunch == todayString {
             MainView()
-        } else if dayData.isEmpty || mAppData.isEmpty || !dayData.contains(where: { $0.date == todayString}) {
+        } else if dayData.isEmpty || mAppData.isEmpty || !dayData.contains(where: { $0.date == todayString }) {
             LoadingBars(animate: $isAnimated, count: 3)
                 .foregroundColor(.accentColor)
                 .frame(maxWidth: 100)
-                .onAppear() {
+                .onAppear {
                     isAnimated = true
                     
                     // Use last launch to potentially speed up loading time on first run of the day
@@ -37,7 +37,7 @@ struct LoadingView: View {
                             continueOrEndOngoingAttack()
                             
                             // Double check that dayData doesn't contain date before creating
-                            if !dayData.contains(where: { $0.date == todayString}) {
+                            if !dayData.contains(where: { $0.date == todayString }) {
                                 initNewDay()
                                 lastLaunch = todayString
                             }
@@ -47,7 +47,7 @@ struct LoadingView: View {
                 .onDisappear { isAnimated = false }
         } else {
             MainView()
-                .onAppear() {
+                .onAppear {
                     continueOrEndOngoingAttack()
                     lastLaunch = todayString
                 }
@@ -59,7 +59,7 @@ struct LoadingView: View {
             if mAppData.isEmpty {
                 initializeMAppData()
             }
-            if !dayData.contains(where: { $0.date == todayString}) {
+            if !dayData.contains(where: { $0.date == todayString }) {
                 initNewDay()
                 lastLaunch = todayString
             }

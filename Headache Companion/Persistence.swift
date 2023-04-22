@@ -13,7 +13,7 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
+        for _ in 0 ..< 10 {
             let newItem = DayData(context: viewContext)
             newItem.date = "2023-08-13"
         }
@@ -33,15 +33,15 @@ struct PersistenceController {
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
-        
+
         guard let description = container.persistentStoreDescriptions.first else {
             fatalError("Failed to initialize persistent container")
         }
         description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         container.viewContext.automaticallyMergesChangesFromParent = true
-        
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+
+        container.loadPersistentStores(completionHandler: { _, error in
             if let error = error as NSError? {
                 print("Unresolved error loading stores \(error), \(error.userInfo)")
             }

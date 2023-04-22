@@ -98,7 +98,7 @@ struct MedicationView: View {
                     clickedMedication.medication = Medication(context: viewContext)
                     showingSheet.toggle()
                 }
-                if !medications.isEmpty && medications.contains(where: {$0.date != nil}) {
+                if !medications.isEmpty && medications.contains(where: { $0.date != nil }) {
                     NavigationLink("Add Previous Medication") {
                         PreviouslyTakenMedsView()
                     }
@@ -106,7 +106,7 @@ struct MedicationView: View {
                 }
             }
         }
-        .onAppear() {
+        .onAppear {
             refreshView()
         }
         .sheet(isPresented: $showingSheet, onDismiss: refreshView) {

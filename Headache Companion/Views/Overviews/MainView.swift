@@ -9,24 +9,24 @@ import SwiftUI
 
 struct MainView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
+
     var body: some View {
         TabView {
             ContentView()
                 .tabItem {
                     Label(String(localized: "Home"), systemImage: "house")
                 }
-            
+
             CalendarView()
                 .tabItem {
                     Label("Calendar", systemImage: "calendar")
                 }
-            
+
             StatsView()
                 .tabItem {
                     Label("Stats", systemImage: "chart.line.uptrend.xyaxis")
                 }
-            
+
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gear")

@@ -10,14 +10,14 @@ import SwiftUI
 struct MedicationLabelView: View {
     @State var medication: Medication
     @State var refresh: Bool = false
-        
+
     var body: some View {
         HStack {
             // Amount number
             Text("\(refresh ? "" : "")\(medication.amount)")
                 .font(Font.system(.title).monospacedDigit())
                 .padding(.trailing)
-                
+
             // Med details
             VStack(alignment: .leading) {
                 HStack {
@@ -35,9 +35,9 @@ struct MedicationLabelView: View {
                         .font(.footnote)
                 }
             }
-                
+
             Spacer()
-                
+
             // Time taken
             Text("\(medication.wrappedTime.formatted(date: .omitted, time: .shortened))")
         }

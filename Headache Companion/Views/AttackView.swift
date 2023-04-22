@@ -48,19 +48,19 @@ struct AttackView: View {
         "Speech/Language",
         "Visual"
     ]
-    var cancelBtn : some View {
+    var cancelBtn: some View {
         Button("Cancel") {
             cancelClicked = true
             dismiss()
         }
     }
-    
+
     init(attack: Attack, for inputDate: Date? = nil, new: Bool = false, edit: Bool = false) {
         self.attack = attack
         self.inputDate = inputDate
         self.newAttack = new
         self.editCurrent = edit
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: inputDate ?? Date.now)
@@ -69,7 +69,7 @@ struct AttackView: View {
             predicate: NSPredicate(format: "date = %@", dateString)
         )
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 40) {
@@ -80,7 +80,7 @@ struct AttackView: View {
                     in: startTimeRange(),
                     displayedComponents: [.hourAndMinute]
                 )
-                
+
                 // Stop time picker
                 if !newAttack || !selectedDayIsToday() {
                     DatePicker(
@@ -90,7 +90,7 @@ struct AttackView: View {
                         displayedComponents: [.hourAndMinute]
                     )
                 }
-                
+
                 // Type of headache
                 HStack {
                     Text("Type of headache")
@@ -203,7 +203,7 @@ struct AttackView: View {
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "yyyy-MM-dd"
                         let dateString = dateFormatter.string(from: inputDate ?? Date.now)
-                        
+
                         let newDay = DayData(context: viewContext)
                         newDay.date = dateString
                         newDay.addToAttack(attack)
@@ -215,40 +215,40 @@ struct AttackView: View {
         }
         .navigationBarBackButtonHidden(true)
         #if os(iOS)
-        .navigationBarItems(leading: cancelBtn)
+            .navigationBarItems(leading: cancelBtn)
         #endif
-        .onAppear() {
-            // Make sure the stopTime gets set when editing a previous attack without a stopTime
-            if !newAttack && !editCurrent && attack.stopTime == nil {
-                if selectedDayIsToday() {
-                    attack.stopTime = .now
-                } else {
-                    attack.stopTime = (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)
+            .onAppear {
+                // Make sure the stopTime gets set when editing a previous attack without a stopTime
+                if !newAttack && !editCurrent && attack.stopTime == nil {
+                    if selectedDayIsToday() {
+                        attack.stopTime = .now
+                    } else {
+                        attack.stopTime = (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)
+                    }
                 }
             }
-        }
-        .onDisappear() {
-            if cancelClicked && attack.id == nil {
-                viewContext.delete(attack)
-                saveData()
-            } else if cancelClicked {
-                viewContext.rollback()
+            .onDisappear {
+                if cancelClicked && attack.id == nil {
+                    viewContext.delete(attack)
+                    saveData()
+                } else if cancelClicked {
+                    viewContext.rollback()
+                }
             }
-        }
     }
-    
+
     private func startTimeRange() -> ClosedRange<Date> {
         return (Calendar.current.date(from: startDateComps) ?? .now) ... (attack.stopTime ?? Date.now)
     }
-    
+
     private func stopTimeRange() -> ClosedRange<Date> {
         return (attack.startTime ?? Calendar.current.date(from: startDateComps) ?? .now) ... Date.now
     }
-    
+
     private func unlimitedRange() -> ClosedRange<Date> {
-        return (attack.startTime ?? Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: inputDate ?? .now) ?? .now)  ... (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)
+        return (attack.startTime ?? Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: inputDate ?? .now) ?? .now) ... (Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: inputDate ?? .now) ?? .now)
     }
-        
+
     private func nextButton(addToNext: String) -> some View {
         return Button {
             nextFrom.insert(addToNext)
@@ -259,7 +259,7 @@ struct AttackView: View {
         .buttonStyle(.bordered)
         .tint(.accentColor)
     }
-    
+
     private func selectedDayIsToday() -> Bool {
         return Calendar.current.isDateInToday(inputDate ?? .now)
     }

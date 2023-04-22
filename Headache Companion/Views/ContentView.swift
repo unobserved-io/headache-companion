@@ -168,21 +168,21 @@ struct ContentView: View {
                             destination: NotesView(dayData: dayData.first ?? makeTempDayData())
                                 .navigationTitle("Daily Notes")
                         )
-                            .buttonStyle(.bordered)
-                            .disabled(dayData.isEmpty)
+                        .buttonStyle(.bordered)
+                        .disabled(dayData.isEmpty)
                         NavigationLink(
                             "Notes for Doctor",
                             destination: DoctorNotesView()
                                 .navigationTitle("Notes for Doctor")
                         )
-                            .buttonStyle(.bordered)
-                            .disabled(dayData.isEmpty)
+                        .buttonStyle(.bordered)
+                        .disabled(dayData.isEmpty)
                     }
                     .padding(.top, 40)
                 }
             }
         }
-        .onAppear() {
+        .onAppear {
             refreshIt.toggle()
             
             // Timer to change day at midnight
@@ -211,8 +211,6 @@ struct ContentView: View {
                         }
                     }
                 }
-                
-                
             }
             RunLoop.current.add(timer, forMode: .common)
         }
@@ -251,19 +249,17 @@ struct ContentView: View {
                     }
                     .buttonStyle(.borderedProminent)
                 }
-                
             }
             .padding()
             .presentationDetents([.bar])
         }
-        
     }
     
     private func makeTempDayData() -> DayData {
         /// Create an empty DayData object not associated with the context
         let itemEntity = NSEntityDescription.entity(forEntityName: "DayData",
-            in: viewContext)!
-        return DayData(entity: itemEntity, insertInto:nil)
+                                                    in: viewContext)!
+        return DayData(entity: itemEntity, insertInto: nil)
     }
     
     private func createNewDayWithAttack(ongoingAttack: Attack?) {
@@ -293,8 +289,8 @@ struct ContentView: View {
     private func makeTempAttack() -> Attack {
         /// Create an empty DayData object not associated with the context
         let itemEntity = NSEntityDescription.entity(forEntityName: "Attack",
-            in: viewContext)!
-        return Attack(entity: itemEntity, insertInto:nil)
+                                                    in: viewContext)!
+        return Attack(entity: itemEntity, insertInto: nil)
     }
     
     private func currentAttackOngoing() -> Bool {

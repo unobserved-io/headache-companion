@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-extension Color {
-    public init?(hex: String?) {
+public extension Color {
+    init?(hex: String?) {
         guard let hexString = hex else { return nil }
         
         let r, g, b, a: CGFloat
@@ -24,7 +24,7 @@ extension Color {
                 b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
                 a = CGFloat((hexNumber & 0x000000ff) >> 0) / 255
                 
-                self.init(.sRGB, red: Double(r), green: Double(g), blue:  Double(b), opacity: Double(a))
+                self.init(.sRGB, red: Double(r), green: Double(g), blue: Double(b), opacity: Double(a))
                 return
             } else {
                 return nil
@@ -38,7 +38,7 @@ extension Color {
                 g = CGFloat((hexNumber & 0x00ff00) >> 8) / 255
                 b = CGFloat((hexNumber & 0x0000ff) >> 0) / 255
                 
-                self.init(.sRGB, red: Double(r), green: Double(g), blue:  Double(b))
+                self.init(.sRGB, red: Double(r), green: Double(g), blue: Double(b))
                 return
             } else {
                 return nil
@@ -48,7 +48,7 @@ extension Color {
         }
     }
     
-    public var hex: String? {
+    var hex: String? {
         let colorString = "\(self)"
         if let colorHex = colorString.isHex() {
             return colorHex.cleanedHex
@@ -60,38 +60,38 @@ extension Color {
             if colorArray.count < 3 { colorArray = colorString.components(separatedBy: "-") }
             
             colorArray = colorArray.filter { colorElement in
-                return (!colorElement.isEmpty) && (String(colorElement).replacingOccurrences(of: ".", with: "").rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil)
+                (!colorElement.isEmpty) && (String(colorElement).replacingOccurrences(of: ".", with: "").rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil)
             }
             
-            if (colorArray.count == 3) { //count == 3 no alpha set
-                var r: Float = Float(colorArray[0]) ?? 1
-                var g: Float = Float(colorArray[1]) ?? 1
-                var b: Float = Float(colorArray[2]) ?? 1
+            if colorArray.count == 3 { // count == 3 no alpha set
+                var r = Float(colorArray[0]) ?? 1
+                var g = Float(colorArray[1]) ?? 1
+                var b = Float(colorArray[2]) ?? 1
                 
-                if (r < 0.0) {r = 0.0}
-                if (g < 0.0) {g = 0.0}
-                if (b < 0.0) {b = 0.0}
+                if r < 0.0 { r = 0.0 }
+                if g < 0.0 { g = 0.0 }
+                if b < 0.0 { b = 0.0 }
                 
-                if (r > 1.0) {r = 1.0}
-                if (g > 1.0) {g = 1.0}
-                if (b > 1.0) {b = 1.0}
+                if r > 1.0 { r = 1.0 }
+                if g > 1.0 { g = 1.0 }
+                if b > 1.0 { b = 1.0 }
                 
                 return String(format: "%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255)).cleanedHex
-            } else if (colorArray.count == 4) { //count == 4 alpha is set
-                var r: Float = Float(colorArray[0]) ?? 1
-                var g: Float = Float(colorArray[1]) ?? 1
-                var b: Float = Float(colorArray[2]) ?? 1
-                var a: Float = Float(colorArray[3]) ?? 1
+            } else if colorArray.count == 4 { // count == 4 alpha is set
+                var r = Float(colorArray[0]) ?? 1
+                var g = Float(colorArray[1]) ?? 1
+                var b = Float(colorArray[2]) ?? 1
+                var a = Float(colorArray[3]) ?? 1
                 
-                if (r < 0.0) {r = 0.0}
-                if (g < 0.0) {g = 0.0}
-                if (b < 0.0) {b = 0.0}
-                if (a < 0.0) {a = 0.0}
+                if r < 0.0 { r = 0.0 }
+                if g < 0.0 { g = 0.0 }
+                if b < 0.0 { b = 0.0 }
+                if a < 0.0 { a = 0.0 }
                 
-                if (r > 1.0) {r = 1.0}
-                if (g > 1.0) {g = 1.0}
-                if (b > 1.0) {b = 1.0}
-                if (a > 1.0) {a = 1.0}
+                if r > 1.0 { r = 1.0 }
+                if g > 1.0 { g = 1.0 }
+                if b > 1.0 { b = 1.0 }
+                if a > 1.0 { a = 1.0 }
                 
                 return String(format: "%02lX%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255), lroundf(a * 255)).cleanedHex
             } else {
@@ -101,16 +101,14 @@ extension Color {
     }
 }
 
-
-extension String {
-    
+public extension String {
     /**
      This function will check if the String is a hex.
      
      - warning: This doesn't validate wheter or not this is an actual valid color.
      */
-    public func isHex() -> Bool {
-        if (((self.cleanedHex.count == 6) || (self.cleanedHex.count == 8)) && (self.replacingOccurrences(of: "#", with: "").isAlphanumeric())) {
+    func isHex() -> Bool {
+        if ((self.cleanedHex.count == 6) || (self.cleanedHex.count == 8)) && (self.replacingOccurrences(of: "#", with: "").isAlphanumeric()) {
             return true
         } else {
             return false
@@ -121,7 +119,7 @@ extension String {
      This function will check if the String is a hex and return an alphanumeric string of the hex back.
      This is the hex without special characters.
      */
-    public func isHex() -> String? {
+    func isHex() -> String? {
         if self.isHex() {
             return self.cleanedHex
         } else {
@@ -136,18 +134,17 @@ extension String {
      
      - note: This will remove the "#" from the string.
      */
-    public var cleanedHex: String {
+    var cleanedHex: String {
         return self.replacingOccurrences(of: "#", with: "").trimmingCharacters(in: CharacterSet.alphanumerics.inverted).cleanedString.uppercased()
     }
 }
 
 extension String {
-    
-    internal func isAlphanumeric() -> Bool {
+    func isAlphanumeric() -> Bool {
         return ((!self.isEmpty) && (self.range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil))
     }
     
-    internal var cleanedString: String {
+    var cleanedString: String {
         var cleanedString = self
         
         cleanedString = cleanedString.replacingOccurrences(of: "á", with: "a")

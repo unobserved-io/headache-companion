@@ -11,14 +11,14 @@ struct NewNoteView: View {
     /// This is necessary to stop CalendarView's NavigationStack from creating a new Note anytime the View reloads
     @Environment(\.managedObjectContext) private var viewContext
     var inputDate: Date
-    
+
     var body: some View {
         NotesView(dayData: getDayData())
     }
-    
-    private func getDayData() -> DayData{
+
+    private func getDayData() -> DayData {
         let dateString = dateFormatter.string(from: inputDate)
-        
+
         let newDay = DayData(context: viewContext)
         newDay.date = dateString
         return newDay
