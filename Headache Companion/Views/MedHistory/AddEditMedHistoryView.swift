@@ -155,7 +155,7 @@ struct AddEditMedHistoryView: View {
             // Notes
             NavigationLink {
                 MedHistoryNotesView(note: $medHistory.notes)
-                    .navigationTitle("Daily Notes")
+                    .navigationTitle("Medication Notes")
             } label: {
                 if medHistory.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     Text("Notes")
