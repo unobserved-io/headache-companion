@@ -340,7 +340,7 @@ struct StatsView: View {
                     .foregroundColor(.accentColor)
                     .bold()
                     .padding(.trailing)
-                Text("\(amount == 1 ? daySingular : dayPlural) ") + Text(LocalizedStringKey(medType))
+                Text(amount == 1 ? daySingular : dayPlural) + Text(" ") + Text(LocalizedStringKey(medType))
                 Image(systemName: medTypeTriggers[medType] ?? false ? "chevron.down" : "chevron.right")
                     .font(.system(size: 12))
             }
