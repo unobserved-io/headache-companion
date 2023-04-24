@@ -90,9 +90,13 @@ struct MedicationHistoryView: View {
                         } label: {
                             if med.dose.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                                 Text(med.name)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
                             } else {
                                 HStack {
                                     Text(med.name)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
                                     if med.amount > 1 {
                                         Text("(\(med.amount) x \(med.dose))")
                                             .foregroundColor(.gray)

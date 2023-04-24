@@ -23,16 +23,21 @@ struct MedicationLabelView: View {
                 HStack {
                     Text("\(medication.name ?? "Unknown")")
                         .bold()
-                    if !(medication.dose?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) {
-                        Text("(\(medication.dose ?? ""))")
-                    }
+                        .lineLimit(1)
+                        .truncationMode(.tail)
                 }
-                if medication.effective == .effective {
-                    Text("Effective")
-                        .font(.footnote)
-                } else if medication.effective == .ineffective {
-                    Text("Ineffective")
-                        .font(.footnote)
+                HStack {
+                    if !(medication.dose?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) {
+                        Text("\(medication.dose ?? "")\(medication.effective != .none ? "," : "")")
+                            .font(.footnote)
+                    }
+                    if medication.effective == .effective {
+                        Text("Effective")
+                            .font(.footnote)
+                    } else if medication.effective == .ineffective {
+                        Text("Ineffective")
+                            .font(.footnote)
+                    }
                 }
             }
 
