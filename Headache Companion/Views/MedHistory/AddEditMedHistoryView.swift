@@ -30,7 +30,7 @@ struct AddEditMedHistoryView: View {
     
     init(medHistory: MedHistory) {
         self.medHistory = medHistory
-//        UISegmentedControl.appearance().apportionsSegmentWidthsByContent = true
+        UISegmentedControl.appearance().apportionsSegmentWidthsByContent = true
     }
     
     var body: some View {
