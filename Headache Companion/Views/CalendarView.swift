@@ -182,7 +182,7 @@ struct CalendarView: View {
                             )
                         } else {
                             NavigationLink(
-                                dayData.first?.notes.isEmpty ?? true ? "Add notes" : dayData.first?.notes ?? "Notes",
+                                dayData.first?.notes.isEmpty ?? true ? String(localized: "Add notes") : dayData.first?.notes ?? String(localized: "Notes"),
                                 destination: NotesView(dayData: dayData.first!)
                                     .navigationTitle("Daily Notes")
                             )
