@@ -114,7 +114,6 @@ struct StatsView: View {
                             VStack(alignment: .leading) {
                                 HStack {
                                     Text("\(statsHelper.numberOfAttacks == 1 ? attackSingular : attackPlural)")
-                                        .font(.title3)
                                     Image(systemName: clickedAttacks ? "chevron.down" : "chevron.right")
                                         .font(.system(size: 12))
                                 }
@@ -161,7 +160,6 @@ struct StatsView: View {
                                 VStack(alignment: .leading, spacing: 5) {
                                     HStack {
                                         Text("\(statsHelper.allSymptoms.count == 1 ? String(localized: "symptom") : String(localized: "symptoms"))")
-                                            .font(.title3)
                                         Image(systemName: clickedSymptoms ? "chevron.down" : "chevron.right")
                                             .font(.system(size: 12))
                                     }
@@ -187,7 +185,6 @@ struct StatsView: View {
                                 VStack(alignment: .leading) {
                                     HStack {
                                         Text("\(statsHelper.attacksWithAura == 1 ? attackSingular : attackPlural) with an aura")
-                                            .font(.title3)
                                         Image(systemName: clickedAuraTotals ? "chevron.down" : "chevron.right")
                                             .font(.system(size: 12))
                                     }
@@ -224,7 +221,6 @@ struct StatsView: View {
                                 VStack(alignment: .leading, spacing: 5) {
                                     HStack {
                                         Text("\(statsHelper.daysWithMedication == 1 ? daySingular : dayPlural) you took medication")
-                                            .font(.title3)
                                         Image(systemName: clickedDaysWithMeds ? "chevron.down" : "chevron.right")
                                             .font(.system(size: 12))
                                         Spacer() // Stops other text from jumping when expanded
@@ -285,22 +281,22 @@ struct StatsView: View {
                 )
                 .buttonStyle(.bordered)
                 .tint(.accentColor)
-                .font(.title2)
                 .padding(.bottom)
                 
-                Grid(alignment: .topLeading, verticalSpacing: 5) {
-                    GridRow {
-                        mainStat(String(statsHelper.daysTrackedTotal))
-                        statDescription("\(statsHelper.daysTrackedTotal == 1 ? daySingular : dayPlural) with recorded data")
-                    }
-                    
-                    GridRow {
-                        mainStat(String((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
-                        statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? daySingular : dayPlural) using Headache Companion")
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.bottom)
+                // Total days app was used
+//                Grid(alignment: .topLeading, verticalSpacing: 5) {
+//                    GridRow {
+//                        mainStat(String(statsHelper.daysTrackedTotal))
+//                        statDescription("\(statsHelper.daysTrackedTotal == 1 ? daySingular : dayPlural) with recorded data")
+//                    }
+//
+//                    GridRow {
+//                        mainStat(String((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
+//                        statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? daySingular : dayPlural) using Headache Companion")
+//                    }
+//                }
+//                .frame(maxWidth: .infinity, alignment: .leading)
+//                .padding(.bottom)
                 
                 Spacer()
             }
@@ -315,14 +311,13 @@ struct StatsView: View {
     
     private func mainStat(_ stat: String) -> some View {
         return Text(stat)
-            .font(Font.monospacedDigit(.title3)())
+            .font(Font.monospacedDigit(.body)())
             .foregroundColor(.accentColor)
             .bold()
     }
     
     private func statDescription(_ description: LocalizedStringKey) -> some View {
         return Text(description)
-            .font(.title3)
             .fixedSize(horizontal: false, vertical: true)
     }
     
