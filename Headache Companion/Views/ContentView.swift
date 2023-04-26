@@ -169,6 +169,7 @@ struct ContentView: View {
                                 .navigationTitle("Daily Notes")
                         )
                         .buttonStyle(.bordered)
+                        .tint(.accentColor)
                         .disabled(dayData.isEmpty)
                         NavigationLink(
                             "Notes for Doctor",
@@ -176,6 +177,7 @@ struct ContentView: View {
                                 .navigationTitle("Notes for Doctor")
                         )
                         .buttonStyle(.bordered)
+                        .tint(.accentColor)
                         .disabled(dayData.isEmpty)
                     }
                     .padding(.top, 40)
