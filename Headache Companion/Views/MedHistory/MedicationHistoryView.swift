@@ -124,18 +124,18 @@ struct MedicationHistoryView: View {
                 .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             }
         }
-        .toolbar {
-            Button {
-                showingInfo.toggle()
-            } label: {
-                Image(systemName: "info.circle")
-            }
-        }
-        .alert("Medication History", isPresented: $showingInfo) {
-            Button("OK") {}
-        } message: {
-            Text("This page is for you to keep track of the medications you are taking now or have taken in the past. It is not automatically generated.\n\nSwipe items right to edit them, or left to delete them.")
-        }
+//        .toolbar {
+//            Button {
+//                showingInfo.toggle()
+//            } label: {
+//                Image(systemName: "info.circle")
+//            }
+//        }
+//        .alert("Medication History", isPresented: $showingInfo) {
+//            Button("OK") {}
+//        } message: {
+//            Text("This page is for you to keep track of the medications you are taking now or have taken in the past. It is not automatically generated.\n\nSwipe items right to edit them, or left to delete them.")
+//        }
     }
 }
 

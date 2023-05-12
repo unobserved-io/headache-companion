@@ -22,7 +22,7 @@ struct MainView: View {
                     Label("Calendar", systemImage: "calendar")
                 }
 
-            StatsView()
+            StatsContainerView()
                 .tabItem {
                     Label("Stats", systemImage: "chart.line.uptrend.xyaxis")
                 }

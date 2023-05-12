@@ -191,6 +191,10 @@ struct CalendarView: View {
                 }
             }
         }
+        .onAppear {
+            // Reset segmented pickers to be even (Necessary for long languages)
+            UISegmentedControl.appearance().apportionsSegmentWidthsByContent = false
+        }
         .sheet(isPresented: $activitiesSheet) {
             ActivitiesView(of: $selectedActivity, for: selectedDay)
                 .presentationDetents([.bar])

@@ -186,6 +186,8 @@ struct ContentView: View {
         }
         .onAppear {
             refreshIt.toggle()
+            // Reset segmented pickers to be even (Necessary for long languages)
+            UISegmentedControl.appearance().apportionsSegmentWidthsByContent = false
             
             // Timer to change day at midnight
             let midnight = Calendar.current.startOfDay(for: .now).addingTimeInterval(86400)

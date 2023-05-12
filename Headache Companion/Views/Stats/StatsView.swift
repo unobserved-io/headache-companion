@@ -59,7 +59,6 @@ struct StatsView: View {
     private let attackPlural = String(localized: "attacks")
 
     var body: some View {
-        NavigationStack {
             ScrollView {
                 VStack {
                     Picker("", selection: $dateRange) {
@@ -142,7 +141,7 @@ struct StatsView: View {
                         if statsHelper.daysWithAttack > 0 {
                             GridRow {
                                 mainStat("\(statsHelper.percentWithAttack)%")
-                                statDescription("of days had an attack")
+                                statDescription("of days had an attack") // TODO: Change to "of days tracked had an attack"
                             }
                             
                             Divider()
@@ -272,17 +271,6 @@ struct StatsView: View {
                 .addBorder(Color.accentColor, width: 4, cornerRadius: 15)
                 .padding(.bottom)
                 
-                // MARK: Medication History button
-
-                NavigationLink(
-                    "Medication History",
-                    destination: MedicationHistoryView()
-                        .navigationTitle("Medication History")
-                )
-                .buttonStyle(.bordered)
-                .tint(.accentColor)
-                .padding(.bottom)
-                
                 // Total days app was used
 //                Grid(alignment: .topLeading, verticalSpacing: 5) {
 //                    GridRow {
@@ -299,11 +287,8 @@ struct StatsView: View {
 //                .padding(.bottom)
                 
                 Spacer()
-            }
         }
-        .scrollContentBackground(.hidden)
         .padding(.horizontal)
-        .padding(.top)
         .onAppear {
             statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
         }

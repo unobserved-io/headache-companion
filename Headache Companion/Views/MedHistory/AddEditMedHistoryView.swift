@@ -23,6 +23,7 @@ struct AddEditMedHistoryView: View {
     @State var newStopDate: Date = .now
     var cancelBtn: some View {
         Button("Cancel") {
+            UISegmentedControl.appearance().apportionsSegmentWidthsByContent = false
             cancelClicked = true
             dismiss()
         }
@@ -171,6 +172,7 @@ struct AddEditMedHistoryView: View {
         }
         .toolbar {
             Button("Save") {
+                UISegmentedControl.appearance().apportionsSegmentWidthsByContent = false
                 if medHistory.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     showingNameAlert.toggle()
                 } else {
@@ -191,6 +193,7 @@ struct AddEditMedHistoryView: View {
             Text("The \"Name\" field cannot be empty.")
         }
         .onDisappear {
+            UISegmentedControl.appearance().apportionsSegmentWidthsByContent = false
             if cancelClicked && medHistory.id == nil {
                 viewContext.delete(medHistory)
                 saveData()

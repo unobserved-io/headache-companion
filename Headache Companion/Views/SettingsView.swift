@@ -450,6 +450,8 @@ struct SettingsView: View {
             Text("This feature is only availble in the Pro version. Upgrade now to access it.")
         }
         .onAppear {
+            // Reset segmented pickers to be even (Necessary for long languages)
+            UISegmentedControl.appearance().apportionsSegmentWidthsByContent = false
             Task {
                 try await storeModel.fetchProducts()
             }

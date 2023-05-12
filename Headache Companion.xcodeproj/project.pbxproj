@@ -37,6 +37,7 @@
 		9C98449A29B5E3C600ABDC36 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C98449929B5E3C600ABDC36 /* Globals.swift */; };
 		9C98449C29B5F3E300ABDC36 /* NotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C98449B29B5F3E300ABDC36 /* NotesView.swift */; };
 		9C98449E29B5FC9F00ABDC36 /* DoctorNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C98449D29B5FC9F00ABDC36 /* DoctorNotesView.swift */; };
+		9C9D20582A0E383000D4C696 /* StatsContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9D20572A0E383000D4C696 /* StatsContainerView.swift */; };
 		9CA81F0C29C74DD200EDBCEF /* CustomSymptomsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA81F0B29C74DD200EDBCEF /* CustomSymptomsView.swift */; };
 		9CA81F0E29C7755D00EDBCEF /* ActivityColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA81F0D29C7755D00EDBCEF /* ActivityColorsView.swift */; };
 		9CBBB41C29DF25A5007E933B /* MedHistoryNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBBB41B29DF25A5007E933B /* MedHistoryNotesView.swift */; };
@@ -100,6 +101,7 @@
 		9C98449929B5E3C600ABDC36 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		9C98449B29B5F3E300ABDC36 /* NotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesView.swift; sourceTree = "<group>"; };
 		9C98449D29B5FC9F00ABDC36 /* DoctorNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoctorNotesView.swift; sourceTree = "<group>"; };
+		9C9D20572A0E383000D4C696 /* StatsContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsContainerView.swift; sourceTree = "<group>"; };
 		9CA81F0B29C74DD200EDBCEF /* CustomSymptomsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSymptomsView.swift; sourceTree = "<group>"; };
 		9CA81F0D29C7755D00EDBCEF /* ActivityColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityColorsView.swift; sourceTree = "<group>"; };
 		9CBBB41B29DF25A5007E933B /* MedHistoryNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedHistoryNotesView.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 		9C45EE5B29AE5E04000EB6C2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9C9D20562A0E381000D4C696 /* Stats */,
 				9C9F0DC929E2BBF00049F429 /* Medication */,
 				9CBE455329E2093000723A01 /* Overviews */,
 				9C89471029DEFC3F000E0606 /* MedHistory */,
@@ -188,7 +191,6 @@
 				9CF7308629ACD93800D91F99 /* ContentView.swift */,
 				9C98449B29B5F3E300ABDC36 /* NotesView.swift */,
 				9C18C06E29BB6A04008084E2 /* SettingsView.swift */,
-				9CC529CD29BCBEA500DD5491 /* StatsView.swift */,
 				9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */,
 				9CD317C329D8988900F88EB1 /* NewNoteView.swift */,
 			);
@@ -277,6 +279,15 @@
 				9C98449929B5E3C600ABDC36 /* Globals.swift */,
 			);
 			path = Globals;
+			sourceTree = "<group>";
+		};
+		9C9D20562A0E381000D4C696 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				9CC529CD29BCBEA500DD5491 /* StatsView.swift */,
+				9C9D20572A0E383000D4C696 /* StatsContainerView.swift */,
+			);
+			path = Stats;
 			sourceTree = "<group>";
 		};
 		9C9F0DC929E2BBF00049F429 /* Medication */ = {
@@ -456,6 +467,7 @@
 				9CC2582029BDC36C00E55949 /* StatsHelper.swift in Sources */,
 				9CFCECDA29D076E3001656B5 /* Medication+CoreDataClass.swift in Sources */,
 				9CFCECE129D076E3001656B5 /* MAppData+CoreDataProperties.swift in Sources */,
+				9C9D20582A0E383000D4C696 /* StatsContainerView.swift in Sources */,
 				9CE27D9229E4BF6400D4646D /* CustomHeadacheTypesView.swift in Sources */,
 				9CE8294F29D5968500010142 /* JSONDocument.swift in Sources */,
 				9C4891FB29D1802000E1CD42 /* LoadingView.swift in Sources */,
