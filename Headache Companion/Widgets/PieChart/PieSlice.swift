@@ -36,8 +36,8 @@ struct PieSliceView: View {
 //                .fill(RadialGradient(gradient: Gradient(colors: [pieSliceData.color.opacity(0.60), pieSliceData.color]), center: .center, startRadius: 50, endRadius: 60))
                 .fill(RadialGradient(gradient: Gradient(colors: [pieSliceData.color.opacity(0.60), pieSliceData.color]), center: .center, startRadius: 40, endRadius: 90))
                 
-                if pieSliceData.text != "0%" {
-                    Text(pieSliceData.text)
+                if pieSliceData.percent > 4.99 {
+                    Text(String(format: "%.0f%%", pieSliceData.percent))
                         .position(
                             x: geometry.size.width * 0.5 * CGFloat(1.0 + 0.78 * cos(self.midRadians)),
                             y: geometry.size.height * 0.5 * CGFloat(1.0 - 0.78 * sin(self.midRadians)))
@@ -53,7 +53,7 @@ struct PieSliceView: View {
 struct PieSliceData {
     var startAngle: Angle
     var endAngle: Angle
-    var text: String
+    var percent: Double
     var color: Color
 }
 
@@ -62,7 +62,7 @@ struct PieSliceView_Previews: PreviewProvider {
         PieSliceView(pieSliceData: PieSliceData(
             startAngle: Angle(degrees: 0.0),
             endAngle: Angle(degrees: 220.0),
-            text: "65%",
+            percent: 65.00,
             color: Color.black))
     }
 }

@@ -40,6 +40,13 @@ extension BinaryInteger {
     }
 }
 
+// Get string character
+extension String {
+    subscript(idx: Int) -> String {
+        String(self[index(startIndex, offsetBy: idx)])
+    }
+}
+
 // JSON Encodables
 extension Attack: Encodable {
     enum CodingKeys: String, CodingKey {
