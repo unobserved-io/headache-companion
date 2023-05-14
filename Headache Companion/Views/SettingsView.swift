@@ -254,7 +254,10 @@ struct SettingsView: View {
                                                 newAttack.onPeriod = attack["onPeriod"] as! Bool
                                                 let newStartTime = Date(timeIntervalSince1970: attack["startTime"] as! TimeInterval)
                                                 newAttack.startTime = newStartTime
-                                                let newStopTime = Date(timeIntervalSince1970: attack["stopTime"] as! TimeInterval)
+                                                var newStopTime: Date? = nil
+                                                if attack["stopTime"] as? String != nil {
+                                                    newStopTime = Date(timeIntervalSince1970: attack["stopTime"] as! TimeInterval)
+                                                }
                                                 newAttack.stopTime = newStopTime
                                                 if let auras = attack["auras"] as? [String] {
                                                     newAttack.auras = Set(auras)
