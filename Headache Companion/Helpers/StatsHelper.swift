@@ -12,6 +12,7 @@ import SwiftUI
 class StatsHelper: ObservableObject {
     static let sharedInstance = StatsHelper()
     
+    @Published var daysInRange: Int = 0
     @Published var daysTrackedInRange: Int = 0
     @Published var daysTrackedTotal: Int = 0
     @Published var daysWithAttack: Int = 0
@@ -27,6 +28,7 @@ class StatsHelper: ObservableObject {
     @Published var percentWithMedication: Int = 0
     @Published var mostCommonTypeOfHeadache: String = ""
     @Published var averagePainLevel: Double = 0.0
+    @Published var percentTrackedWithAttack: Int = 0
     @Published var percentWithAttack: Int = 0
     @Published var waterInSelectedDays: [Double] = [0, 0, 0, 0]
     @Published var dietInSelectedDays: [Double] = [0, 0, 0, 0]
@@ -42,6 +44,12 @@ class StatsHelper: ObservableObject {
     
     func getStats(from dayData: [DayData], startDate: Date, stopDate: Date) {
         resetAllStats()
+        
+        // Get total days
+        let difference = Calendar.current.dateComponents([Calendar.Component.day], from: startDate, to: stopDate)
+        daysInRange = difference.day ?? 0
+        
+        // Calculate stats
         calculateMainStats(dayData)
         calculateActivityStats(dayData, startDate: startDate, stopDate: stopDate)
     }
@@ -174,7 +182,32 @@ class StatsHelper: ObservableObject {
         }
     }
     
+    private func getPercentWithAttack() {
+        // % of days with attack
+        if daysInRange == 0 {
+            percentWithAttack = 0
+        } else {
+            percentWithAttack = Int((Double(daysWithAttack) / Double(daysInRange)) * 100)
+        }
+        
+        // % of days tracked with attack
+        if daysTrackedInRange == 0 {
+            percentTrackedWithAttack = 0
+        } else {
+            percentTrackedWithAttack = Int((Double(daysWithAttack) / Double(daysTrackedInRange)) * 100)
+        }
+    }
+    
+    private func getPercentWithMedication() {
+        if daysTrackedInRange == 0 {
+            percentWithMedication = 0
+        } else {
+            percentWithMedication = Int((Double(daysWithMedication) / Double(daysTrackedInRange)) * 100)
+        }
+    }
+    
     private func resetAllStats() {
+        daysInRange = 0
         daysTrackedInRange = 0
         daysTrackedTotal = 0
         daysWithAttack = 0
@@ -187,27 +220,11 @@ class StatsHelper: ObservableObject {
         allAuras.removeAll()
         allTypesOfHeadache.removeAll()
         averagePainLevel = 0.0
-        percentWithAttack = 0
+        percentTrackedWithAttack = 0
         waterInSelectedDays = [0, 0, 0, 0]
         dietInSelectedDays = [0, 0, 0, 0]
         exerciseInSelectedDays = [0, 0, 0, 0]
         relaxInSelectedDays = [0, 0, 0, 0]
         sleepInSelectedDays = [0, 0, 0, 0]
-    }
-    
-    private func getPercentWithAttack() {
-        if daysTrackedInRange == 0 {
-            percentWithAttack = 0
-        } else {
-            percentWithAttack = Int((Double(daysWithAttack) / Double(daysTrackedInRange)) * 100)
-        }
-    }
-    
-    private func getPercentWithMedication() {
-        if daysTrackedInRange == 0 {
-            percentWithMedication = 0
-        } else {
-            percentWithMedication = Int((Double(daysWithMedication) / Double(daysTrackedInRange)) * 100)
-        }
     }
 }

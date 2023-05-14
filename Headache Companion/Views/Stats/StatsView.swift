@@ -141,7 +141,12 @@ struct StatsView: View {
                         if statsHelper.daysWithAttack > 0 {
                             GridRow {
                                 mainStat("\(statsHelper.percentWithAttack)%")
-                                statDescription("of days had an attack") // TODO: Change to "of days tracked had an attack"
+                                statDescription("of days had an attack")
+                            }
+                            
+                            GridRow {
+                                mainStat("\(statsHelper.percentTrackedWithAttack)%")
+                                statDescription("of tracked days had an attack")
                             }
                             
                             Divider()
