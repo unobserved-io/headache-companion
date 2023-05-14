@@ -26,11 +26,12 @@ struct StatsContainerView: View {
             TabView(selection: $viewChoice) {
                 StatsView()
                     .tag(ViewChoice.stats)
+                    .toolbar(.hidden, for: .tabBar)
                 
                 MedicationHistoryView()
                     .tag(ViewChoice.medicationHistory)
+                    .toolbar(.hidden, for: .tabBar)
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
             .animation(.easeIn, value: viewChoice)
         }
         .scrollContentBackground(.hidden)
