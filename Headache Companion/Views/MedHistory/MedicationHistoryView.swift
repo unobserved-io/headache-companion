@@ -26,12 +26,12 @@ struct MedicationHistoryView: View {
 
     var body: some View {
         List {
-            NavigationLink(
-                "Add medication",
-                destination: NewMedHistoryView()
+            NavigationLink("Add medication") {
+                NewMedHistoryView()
                     .navigationTitle("New Medication")
-            )
+            }
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
+            .foregroundColor(.accentColor)
 
             ForEach(medHistory) { section in
                 Section(LocalizedStringKey(section.id)) {
