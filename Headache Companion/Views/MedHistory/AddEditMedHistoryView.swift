@@ -29,11 +29,6 @@ struct AddEditMedHistoryView: View {
         }
     }
     
-    init(medHistory: MedHistory) {
-        self.medHistory = medHistory
-        UISegmentedControl.appearance().apportionsSegmentWidthsByContent = true
-    }
-    
     var body: some View {
         Form {
             // Name field
@@ -86,6 +81,14 @@ struct AddEditMedHistoryView: View {
             }
             .pickerStyle(.segmented)
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
+            .onAppear {
+                // Change segmented pickers to fit contents (Necessary for long languages)
+                UISegmentedControl.appearance().apportionsSegmentWidthsByContent = true
+            }
+            .onDisappear {
+                // Reset segmented pickers to be even
+                UISegmentedControl.appearance().apportionsSegmentWidthsByContent = false
+            }
             
             // Frequency field
             LabeledContent {

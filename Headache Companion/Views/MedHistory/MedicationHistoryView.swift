@@ -13,7 +13,7 @@ struct MedicationHistoryView: View {
     @SectionedFetchRequest(
         entity: MedHistory.entity(),
         sectionIdentifier: \.type,
-        sortDescriptors: [NSSortDescriptor(keyPath: \MedHistory.stopDate, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \MedHistory.type, ascending: true),NSSortDescriptor(keyPath: \MedHistory.stopDate, ascending: true)],
         animation: .default
     )
     var medHistory: SectionedFetchResults<String, MedHistory>
