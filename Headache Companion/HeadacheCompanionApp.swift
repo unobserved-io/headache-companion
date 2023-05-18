@@ -10,7 +10,12 @@ import SwiftUI
 @main
 struct HeadacheCompanionApp: App {
     let persistenceController = PersistenceController.shared
+    @AppStorage("launchCount") private var launchCount = 0
     @ObservedObject var storeModel = StoreModel.sharedInstance
+    
+    init() {
+        launchCount += 1
+    }
 
     var body: some Scene {
         WindowGroup {

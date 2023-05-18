@@ -6,10 +6,13 @@
 //
 
 import CoreData
+import StoreKit
 import SwiftUI
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.requestReview) private var requestReview
+    @AppStorage("launchCount") private var launchCount = 0
     @FetchRequest(
         entity: DayData.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: false)],
@@ -217,6 +220,13 @@ struct ContentView: View {
                 }
             }
             RunLoop.current.add(timer, forMode: .common)
+            
+            // Ask for in-app review
+            if launchCount > 0 && launchCount % 10 == 0 {
+                DispatchQueue.main.async {
+                    requestReview()
+                }
+            }
         }
         .sheet(isPresented: $activitiesSheet) {
             ActivitiesView(of: $selectedActivity, for: .now)
