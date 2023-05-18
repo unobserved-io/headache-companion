@@ -68,7 +68,6 @@ class StatsHelper: ObservableObject {
                 day.exercise != .none
             {
                 daysTrackedInRange += 1
-                daysTrackedTotal += 1
             }
             
             // Attack stats
