@@ -20,25 +20,26 @@ struct MedicationLabelView: View {
 
             // Med details
             VStack(alignment: .leading) {
-                HStack {
-                    Text("\(medication.name ?? "Unknown")")
-                        .bold()
-                        .lineLimit(1)
-                        .truncationMode(.tail)
-                }
-                HStack {
-                    if !(medication.dose?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) {
-                        Text("\(medication.dose ?? "")\(medication.effective != .none ? "," : "")")
-                            .font(.footnote)
+                Text("\(medication.name ?? "Unknown")")
+                    .bold()
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                if !(medication.dose?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) || medication.effective != .none {
+                    HStack {
+                        if !(medication.dose?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true) {
+                            Text("\(medication.dose ?? "")\(medication.effective != .none ? "," : "")")
+                                .font(.footnote)
+                        }
+                        if medication.effective == .effective {
+                            Text("Effective")
+                                .font(.footnote)
+                        } else if medication.effective == .ineffective {
+                            Text("Ineffective")
+                                .font(.footnote)
+                        }
                     }
-                    if medication.effective == .effective {
-                        Text("Effective")
-                            .font(.footnote)
-                    } else if medication.effective == .ineffective {
-                        Text("Ineffective")
-                            .font(.footnote)
-                    }
                 }
+                
             }
 
             Spacer()
