@@ -23,16 +23,14 @@ struct StatsContainerView: View {
             .pickerStyle(.segmented)
             .padding()
             
-            TabView(selection: $viewChoice) {
-                StatsView()
-                    .tag(ViewChoice.stats)
-                    .toolbar(.hidden, for: .tabBar)
-                
-                MedicationHistoryView()
-                    .tag(ViewChoice.medicationHistory)
-                    .toolbar(.hidden, for: .tabBar)
+            Group {
+                if viewChoice == .stats {
+                    StatsView()
+                }
+                if viewChoice == .medicationHistory {
+                    MedicationHistoryView()
+                }
             }
-            .animation(.easeIn, value: viewChoice)
         }
         .scrollContentBackground(.hidden)
         .onAppear {
