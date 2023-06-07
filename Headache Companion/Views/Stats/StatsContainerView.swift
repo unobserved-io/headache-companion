@@ -26,8 +26,7 @@ struct StatsContainerView: View {
             Group {
                 if viewChoice == .stats {
                     StatsView()
-                }
-                if viewChoice == .medicationHistory {
+                } else if viewChoice == .medicationHistory {
                     MedicationHistoryView()
                 }
             }
