@@ -47,7 +47,7 @@ class StatsHelper: ObservableObject {
         
         // Get total days
         let difference = Calendar.current.dateComponents([Calendar.Component.day], from: startDate, to: stopDate)
-        daysInRange = difference.day ?? 0
+        daysInRange = (difference.day ?? 0) + 1
         
         // Calculate stats
         calculateMainStats(dayData)

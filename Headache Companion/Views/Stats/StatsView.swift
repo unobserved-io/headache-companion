@@ -82,6 +82,7 @@ struct StatsView: View {
                             )
                             .labelsHidden()
                             .onChange(of: selectedStart) { _ in
+                                selectedStart = Calendar.current.startOfDay(for: selectedStart)
                                 statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
                             }
                             Text("to")
