@@ -105,103 +105,29 @@ struct StatsView: View {
                             mainStat(String(statsHelper.daysTrackedInRange))
                             statDescription("\(statsHelper.daysTrackedInRange == 1 ? daySingular : dayPlural) tracked")
                         }
-                        GridRow {
-                            mainStat(String(statsHelper.daysWithAttack))
-                            statDescription("\(statsHelper.daysWithAttack == 1 ? daySingular : dayPlural) with an attack")
-                        }
-                        GridRow {
-                            mainStat(String(statsHelper.numberOfAttacks))
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Text("\(statsHelper.numberOfAttacks == 1 ? attackSingular : attackPlural)")
-                                    Image(systemName: clickedAttacks ? "chevron.down" : "chevron.right")
-                                        .font(.system(size: 12))
-                                }
-                                if clickedAttacks {
-                                    Grid(alignment: .leading, verticalSpacing: 5) {
-                                        ForEach(statsHelper.allTypesOfHeadache, id: \.key) { type, num in
-                                            GridRow {
-                                                Text(String(num))
-                                                    .font(Font.monospacedDigit(.body)())
-                                                    .foregroundColor(.accentColor)
-                                                    .bold()
-                                                    .padding(.trailing)
-                                                Text(LocalizedStringKey(type.localizedCapitalized))
-                                            }
-                                        }
-                                    }
-                                    .padding(.leading)
-                                }
-                            }
-                            .containerShape(Rectangle())
-                            .onTapGesture {
-                                clickedAttacks.toggle()
-                            }
-                        }
-
-                        if statsHelper.daysWithAttack > 0 {
+                        if statsHelper.daysTrackedInRange > 0 {
                             GridRow {
-                                mainStat("\(statsHelper.percentWithAttack)%")
-                                statDescription("of days had an attack")
+                                mainStat(String(statsHelper.daysWithAttack))
+                                statDescription("\(statsHelper.daysWithAttack == 1 ? daySingular : dayPlural) with an attack")
                             }
-                            
                             GridRow {
-                                mainStat("\(statsHelper.percentTrackedWithAttack)%")
-                                statDescription("of tracked days had an attack")
-                            }
-                            
-                            Divider()
-                                .background(Color.accentColor)
-                                .frame(minHeight: 1)
-                                .overlay(Color.accentColor)
-                            
-                            GridRow {
-                                mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
-                                statDescription("average pain level")
-                            }
-                            
-                            GridRow {
-                                mainStat(String(statsHelper.allSymptoms.count))
-                                VStack(alignment: .leading, spacing: 5) {
-                                    HStack {
-                                        Text("\(statsHelper.allSymptoms.count == 1 ? String(localized: "symptom") : String(localized: "symptoms"))")
-                                        Image(systemName: clickedSymptoms ? "chevron.down" : "chevron.right")
-                                            .font(.system(size: 12))
-                                    }
-                                    if clickedSymptoms {
-                                        ForEach(statsHelper.symptomsByHeadache, id: \.key) { type, symptoms in
-                                            Text(LocalizedStringKey(type.localizedCapitalized))
-                                            ForEach(symptoms.sorted(), id: \.self) { symptom in
-                                                Text(LocalizedStringKey(symptom))
-                                            }
-                                            .padding(.leading)
-                                        }
-                                        .padding(.leading)
-                                    }
-                                }
-                                .containerShape(Rectangle())
-                                .onTapGesture {
-                                    clickedSymptoms.toggle()
-                                }
-                            }
-                            
-                            GridRow {
-                                mainStat(String(statsHelper.attacksWithAura))
+                                mainStat(String(statsHelper.numberOfAttacks))
                                 VStack(alignment: .leading) {
                                     HStack {
-                                        Text("\(statsHelper.attacksWithAura == 1 ? attackSingular : attackPlural) with an aura")
-                                        Image(systemName: clickedAuraTotals ? "chevron.down" : "chevron.right")
+                                        Text("\(statsHelper.numberOfAttacks == 1 ? attackSingular : attackPlural)")
+                                        Image(systemName: clickedAttacks ? "chevron.down" : "chevron.right")
                                             .font(.system(size: 12))
                                     }
-                                    if clickedAuraTotals {
+                                    if clickedAttacks {
                                         Grid(alignment: .leading, verticalSpacing: 5) {
-                                            ForEach(statsHelper.allAuras, id: \.key) { type, num in
+                                            ForEach(statsHelper.allTypesOfHeadache, id: \.key) { type, num in
                                                 GridRow {
                                                     Text(String(num))
+                                                        .font(Font.monospacedDigit(.body)())
                                                         .foregroundColor(.accentColor)
                                                         .bold()
                                                         .padding(.trailing)
-                                                    Text(LocalizedStringKey(type))
+                                                    Text(LocalizedStringKey(type.localizedCapitalized))
                                                 }
                                             }
                                         }
@@ -210,36 +136,112 @@ struct StatsView: View {
                                 }
                                 .containerShape(Rectangle())
                                 .onTapGesture {
-                                    clickedAuraTotals.toggle()
+                                    clickedAttacks.toggle()
                                 }
                             }
-                        }
-                        
-                        Divider()
-                            .background(Color.accentColor)
-                            .frame(minHeight: 1)
-                            .overlay(Color.accentColor)
-                        
-                        if statsHelper.daysWithMedication > 0 {
-                            GridRow {
-                                mainStat("\(statsHelper.daysWithMedication)")
-                                VStack(alignment: .leading, spacing: 5) {
-                                    HStack {
-                                        Text("\(statsHelper.daysWithMedication == 1 ? daySingular : dayPlural) you took medication")
-                                        Image(systemName: clickedDaysWithMeds ? "chevron.down" : "chevron.right")
-                                            .font(.system(size: 12))
-                                        Spacer() // Stops other text from jumping when expanded
-                                    }
-                                    if clickedDaysWithMeds {
-                                        ForEach(statsHelper.daysByMedType, id: \.key) { type, amount in
-                                            medTypeRow(for: type, amount: amount)
+
+                            if statsHelper.daysWithAttack > 0 {
+                                GridRow {
+                                    mainStat("\(statsHelper.percentWithAttack)%")
+                                    statDescription("of days had an attack")
+                                }
+                                
+                                GridRow {
+                                    mainStat("\(statsHelper.percentTrackedWithAttack)%")
+                                    statDescription("of tracked days had an attack")
+                                }
+                                
+                                Divider()
+                                    .background(Color.accentColor)
+                                    .frame(minHeight: 1)
+                                    .overlay(Color.accentColor)
+                                
+                                GridRow {
+                                    mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
+                                    statDescription("average pain level")
+                                }
+                                
+                                GridRow {
+                                    mainStat(String(statsHelper.allSymptoms.count))
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        HStack {
+                                            Text("\(statsHelper.allSymptoms.count == 1 ? String(localized: "symptom") : String(localized: "symptoms"))")
+                                            Image(systemName: clickedSymptoms ? "chevron.down" : "chevron.right")
+                                                .font(.system(size: 12))
                                         }
-                                        .padding(.leading)
+                                        if clickedSymptoms {
+                                            ForEach(statsHelper.symptomsByHeadache, id: \.key) { type, symptoms in
+                                                Text(LocalizedStringKey(type.localizedCapitalized))
+                                                ForEach(symptoms.sorted(), id: \.self) { symptom in
+                                                    Text(LocalizedStringKey(symptom))
+                                                }
+                                                .padding(.leading)
+                                            }
+                                            .padding(.leading)
+                                        }
+                                    }
+                                    .containerShape(Rectangle())
+                                    .onTapGesture {
+                                        clickedSymptoms.toggle()
                                     }
                                 }
-                                .containerShape(Rectangle())
-                                .onTapGesture {
-                                    clickedDaysWithMeds.toggle()
+                                
+                                GridRow {
+                                    mainStat(String(statsHelper.attacksWithAura))
+                                    VStack(alignment: .leading) {
+                                        HStack {
+                                            Text("\(statsHelper.attacksWithAura == 1 ? attackSingular : attackPlural) with an aura")
+                                            Image(systemName: clickedAuraTotals ? "chevron.down" : "chevron.right")
+                                                .font(.system(size: 12))
+                                        }
+                                        if clickedAuraTotals {
+                                            Grid(alignment: .leading, verticalSpacing: 5) {
+                                                ForEach(statsHelper.allAuras, id: \.key) { type, num in
+                                                    GridRow {
+                                                        Text(String(num))
+                                                            .foregroundColor(.accentColor)
+                                                            .bold()
+                                                            .padding(.trailing)
+                                                        Text(LocalizedStringKey(type))
+                                                    }
+                                                }
+                                            }
+                                            .padding(.leading)
+                                        }
+                                    }
+                                    .containerShape(Rectangle())
+                                    .onTapGesture {
+                                        clickedAuraTotals.toggle()
+                                    }
+                                }
+                            }
+                            
+                            Divider()
+                                .background(Color.accentColor)
+                                .frame(minHeight: 1)
+                                .overlay(Color.accentColor)
+                            
+                            if statsHelper.daysWithMedication > 0 {
+                                GridRow {
+                                    mainStat("\(statsHelper.daysWithMedication)")
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        HStack {
+                                            Text("\(statsHelper.daysWithMedication == 1 ? daySingular : dayPlural) you took medication")
+                                            Image(systemName: clickedDaysWithMeds ? "chevron.down" : "chevron.right")
+                                                .font(.system(size: 12))
+                                            Spacer() // Stops other text from jumping when expanded
+                                        }
+                                        if clickedDaysWithMeds {
+                                            ForEach(statsHelper.daysByMedType, id: \.key) { type, amount in
+                                                medTypeRow(for: type, amount: amount)
+                                            }
+                                            .padding(.leading)
+                                        }
+                                    }
+                                    .containerShape(Rectangle())
+                                    .onTapGesture {
+                                        clickedDaysWithMeds.toggle()
+                                    }
                                 }
                             }
                         }
@@ -249,48 +251,35 @@ struct StatsView: View {
                     
                     // MARK: Activities Stats
 
-                    VStack {
-                        Picker("Activity", selection: $chosenActivity) {
-                            Image(systemName: "drop.fill").tag(ChosenActivity.water)
-                            Image(systemName: "carrot.fill").tag(ChosenActivity.diet)
-                            Image(systemName: "bed.double.fill").tag(ChosenActivity.sleep)
-                            Image(systemName: "figure.strengthtraining.functional").tag(ChosenActivity.exercise)
-                            Image(systemName: "figure.mind.and.body").tag(ChosenActivity.relax)
-                        }
-                        .pickerStyle(.segmented)
-                        .labelsHidden()
-                        switch chosenActivity {
-                        case .water:
-                            PieChart(values: statsHelper.waterInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "drop.fill")
-                        case .diet:
-                            PieChart(values: statsHelper.dietInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "carrot.fill")
-                        case .exercise:
-                            PieChart(values: statsHelper.exerciseInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "figure.strengthtraining.functional")
-                        case .relax:
-                            PieChart(values: statsHelper.relaxInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "figure.mind.and.body")
-                        case .sleep:
-                            PieChart(values: statsHelper.sleepInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "bed.double.fill")
+                    if statsHelper.daysTrackedInRange > 0 {
+                        VStack {
+                            Picker("Activity", selection: $chosenActivity) {
+                                Image(systemName: "drop.fill").tag(ChosenActivity.water)
+                                Image(systemName: "carrot.fill").tag(ChosenActivity.diet)
+                                Image(systemName: "bed.double.fill").tag(ChosenActivity.sleep)
+                                Image(systemName: "figure.strengthtraining.functional").tag(ChosenActivity.exercise)
+                                Image(systemName: "figure.mind.and.body").tag(ChosenActivity.relax)
+                            }
+                            .pickerStyle(.segmented)
+                            .labelsHidden()
+                            switch chosenActivity {
+                            case .water:
+                                PieChart(values: statsHelper.waterInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "drop.fill")
+                            case .diet:
+                                PieChart(values: statsHelper.dietInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "carrot.fill")
+                            case .exercise:
+                                PieChart(values: statsHelper.exerciseInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "figure.strengthtraining.functional")
+                            case .relax:
+                                PieChart(values: statsHelper.relaxInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "figure.mind.and.body")
+                            case .sleep:
+                                PieChart(values: statsHelper.sleepInSelectedDays, colors: [correspondingColor(of: .none), correspondingColor(of: .bad), correspondingColor(of: .ok), correspondingColor(of: .good)], icon: "bed.double.fill")
+                            }
                         }
                     }
                 }
                 .padding()
                 .addBorder(Color.accentColor, width: 4, cornerRadius: 15)
                 .padding(.bottom)
-                
-                // Total days app was used
-//                Grid(alignment: .topLeading, verticalSpacing: 5) {
-//                    GridRow {
-//                        mainStat(String(statsHelper.daysTrackedTotal))
-//                        statDescription("\(statsHelper.daysTrackedTotal == 1 ? daySingular : dayPlural) with recorded data")
-//                    }
-//
-//                    GridRow {
-//                        mainStat(String((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1))
-//                        statDescription("\((Calendar.current.dateComponents([.day], from: mAppData.first?.launchDay ?? .now, to: Calendar.current.startOfDay(for: Date.now)).day ?? 0) + 1 == 1 ? daySingular : dayPlural) using Headache Companion")
-//                    }
-//                }
-//                .frame(maxWidth: .infinity, alignment: .leading)
-//                .padding(.bottom)
                 
                 Spacer()
         }
@@ -328,7 +317,7 @@ struct StatsView: View {
                     .font(Font.monospacedDigit(.body)())
                     .foregroundColor(.accentColor)
                     .bold()
-                // This adds
+                // This adds space if needed
                 if amount.digits.count - 1 < numOfDigitsInBiggest {
                     Text(String(repeating: " ", count: numOfDigitsInBiggest))
                 }
