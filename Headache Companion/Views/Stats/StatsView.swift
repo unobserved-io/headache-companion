@@ -241,6 +241,7 @@ struct StatsView: View {
                                     .containerShape(Rectangle())
                                     .onTapGesture {
                                         clickedDaysWithMeds.toggle()
+                                        print(clickedDaysWithMeds)
                                     }
                                 }
                             }
@@ -302,9 +303,6 @@ struct StatsView: View {
     }
     
     private func medTypeRow(for medType: String, amount: Int) -> some View {
-        if medTypeTriggers[medType] == nil {
-            medTypeTriggers[medType] = false
-        }
         let theTuple = statsHelper.medicationByMedType.first(where: { $0.key == medType })
         
         let sortedDaysByAmount = statsHelper.daysByMedType.sorted(by: { $0.value > $1.value })
@@ -328,6 +326,9 @@ struct StatsView: View {
             }
             .containerShape(Rectangle())
             .onTapGesture {
+                if medTypeTriggers[medType] == nil {
+                    medTypeTriggers[medType] = false
+                }
                 medTypeTriggers[medType]?.toggle()
             }
             if medTypeTriggers[medType] ?? false && theTuple != nil {
