@@ -32,6 +32,9 @@ struct ContentView: View {
     @State private var refreshIt: Bool = false
     @State private var attackOngoing: Bool = false
     @State var todayString: String = dateFormatter.string(from: .now)
+    let willEnterForeground = NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
+        
+//        .addObserver(forName:UIApplication.willEnterForegroundNotification, object: nil, queue: nil)
 
     var body: some View {
         NavigationStack {
@@ -196,28 +199,7 @@ struct ContentView: View {
             let midnight = Calendar.current.startOfDay(for: .now).addingTimeInterval(86400)
             // Code to be executed at midnight
             let timer = Timer(fire: midnight, interval: 0, repeats: false) { _ in
-                // Check for an ongoing attack and end or don't depending on user setting
-                var ongoingAttack: Attack? = nil
-                if let index = dayData.first?.attacks.firstIndex(where: { $0.stopTime == nil }) {
-                    dayData.first?.attacks[index].stopTime = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: dateFormatter.date(from: todayString) ?? (Calendar.current.date(byAdding: .day, value: -1, to: .now) ?? .now))
-                    // If user set to not end with day, store the attack
-                    if !(mAppData.first?.attacksEndWithDay ?? true) {
-                        ongoingAttack = dayData.first?.attacks[index]
-                    }
-                }
-                
-                // Change to new day
-                todayString = dateFormatter.string(from: .now)
-                dayData.nsPredicate = NSPredicate(format: "date = %@", todayString)
-                if dayData.isEmpty {
-                    createNewDayWithAttack(ongoingAttack: ongoingAttack)
-                } else {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        if dayData.isEmpty {
-                            createNewDayWithAttack(ongoingAttack: ongoingAttack)
-                        }
-                    }
-                }
+                changeToNewDay()
             }
             RunLoop.current.add(timer, forMode: .common)
             
@@ -226,6 +208,12 @@ struct ContentView: View {
                 DispatchQueue.main.async {
                     requestReview()
                 }
+            }
+        }
+        .onReceive(willEnterForeground) { (output) in
+            let newDay = dateFormatter.string(from: .now)
+            if todayString != newDay {
+                changeToNewDay()
             }
         }
         .sheet(isPresented: $activitiesSheet) {
@@ -328,6 +316,31 @@ struct ContentView: View {
             return Color(hex: mAppData.first?.activityColors?[3]) ?? Color.green
         default:
             return Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
+        }
+    }
+    
+    private func changeToNewDay() {
+        // Check for an ongoing attack and end or don't depending on user setting
+        var ongoingAttack: Attack? = nil
+        if let index = dayData.first?.attacks.firstIndex(where: { $0.stopTime == nil }) {
+            dayData.first?.attacks[index].stopTime = Calendar.current.date(bySettingHour: 23, minute: 59, second: 59, of: dateFormatter.date(from: todayString) ?? (Calendar.current.date(byAdding: .day, value: -1, to: .now) ?? .now))
+            // If user set to not end with day, store the attack
+            if !(mAppData.first?.attacksEndWithDay ?? true) {
+                ongoingAttack = dayData.first?.attacks[index]
+            }
+        }
+        
+        // Change to new day
+        todayString = dateFormatter.string(from: .now)
+        dayData.nsPredicate = NSPredicate(format: "date = %@", todayString)
+        if dayData.isEmpty {
+            createNewDayWithAttack(ongoingAttack: ongoingAttack)
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                if dayData.isEmpty {
+                    createNewDayWithAttack(ongoingAttack: ongoingAttack)
+                }
+            }
         }
     }
 }
