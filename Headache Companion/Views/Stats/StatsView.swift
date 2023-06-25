@@ -241,7 +241,6 @@ struct StatsView: View {
                                     .containerShape(Rectangle())
                                     .onTapGesture {
                                         clickedDaysWithMeds.toggle()
-                                        print(clickedDaysWithMeds)
                                     }
                                 }
                             }
