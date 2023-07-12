@@ -157,9 +157,10 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9C18C07029BB6BF1008084E2 /* SettingsViews */ = {
+		9C18C07029BB6BF1008084E2 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				9C18C06E29BB6A04008084E2 /* SettingsView.swift */,
 				9C18C07129BB6C5B008084E2 /* RegularMedicationsView.swift */,
 				9C18C07929BB87E1008084E2 /* AddEditRegularMedsView.swift */,
 				9CA81F0B29C74DD200EDBCEF /* CustomSymptomsView.swift */,
@@ -167,7 +168,7 @@
 				9CE27D9129E4BF6400D4646D /* CustomHeadacheTypesView.swift */,
 				9C20B5D929E7E9730011748A /* CustomMedicationTypesView.swift */,
 			);
-			path = SettingsViews;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		9C1983AB29B79210007754AB /* Objects */ = {
@@ -182,7 +183,7 @@
 		9C45EE5B29AE5E04000EB6C2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9C18C07029BB6BF1008084E2 /* SettingsViews */,
+				9C18C07029BB6BF1008084E2 /* Settings */,
 				9C9D20562A0E381000D4C696 /* Stats */,
 				9C9F0DC929E2BBF00049F429 /* Medication */,
 				9CBE455329E2093000723A01 /* Overviews */,
@@ -193,7 +194,6 @@
 				9C98449D29B5FC9F00ABDC36 /* DoctorNotesView.swift */,
 				9CF7308629ACD93800D91F99 /* ContentView.swift */,
 				9C98449B29B5F3E300ABDC36 /* NotesView.swift */,
-				9C18C06E29BB6A04008084E2 /* SettingsView.swift */,
 				9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */,
 				9CD317C329D8988900F88EB1 /* NewNoteView.swift */,
 			);
