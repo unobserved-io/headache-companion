@@ -182,6 +182,7 @@
 		9C45EE5B29AE5E04000EB6C2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9C18C07029BB6BF1008084E2 /* SettingsViews */,
 				9C9D20562A0E381000D4C696 /* Stats */,
 				9C9F0DC929E2BBF00049F429 /* Medication */,
 				9CBE455329E2093000723A01 /* Overviews */,
@@ -355,7 +356,6 @@
 				9C1983AB29B79210007754AB /* Objects */,
 				9CF7308129ACD93800D91F99 /* Persistence.swift */,
 				9CF7308B29ACD93800D91F99 /* Preview Content */,
-				9C18C07029BB6BF1008084E2 /* SettingsViews */,
 				9C45EE5B29AE5E04000EB6C2 /* Views */,
 				9C96928129B4ADA70023A00C /* Widgets */,
 				9CFCECCF29D07447001656B5 /* HeadacheCompanion.xcdatamodeld */,
