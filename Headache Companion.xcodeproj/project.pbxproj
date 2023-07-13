@@ -17,6 +17,7 @@
 		9C1983AD29B7923D007754AB /* ClickedMedication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1983AC29B7923D007754AB /* ClickedMedication.swift */; };
 		9C20B5DA29E7E9730011748A /* CustomMedicationTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C20B5D929E7E9730011748A /* CustomMedicationTypesView.swift */; };
 		9C37EDF529D2E9DB0089DE2B /* NewAttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */; };
+		9C405CC82A5FD73600075C0A /* HTMLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C405CC72A5FD73600075C0A /* HTMLView.swift */; };
 		9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE5F29AE6626000EB6C2 /* AttackView.swift */; };
 		9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE6129AE662E000EB6C2 /* CalendarView.swift */; };
 		9C4891FB29D1802000E1CD42 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4891FA29D1802000E1CD42 /* LoadingView.swift */; };
@@ -83,6 +84,7 @@
 		9C1983AC29B7923D007754AB /* ClickedMedication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickedMedication.swift; sourceTree = "<group>"; };
 		9C20B5D929E7E9730011748A /* CustomMedicationTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMedicationTypesView.swift; sourceTree = "<group>"; };
 		9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAttackView.swift; sourceTree = "<group>"; };
+		9C405CC72A5FD73600075C0A /* HTMLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLView.swift; sourceTree = "<group>"; };
 		9C45EE5F29AE6626000EB6C2 /* AttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackView.swift; sourceTree = "<group>"; };
 		9C45EE6129AE662E000EB6C2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9C4891FA29D1802000E1CD42 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				9CA81F0D29C7755D00EDBCEF /* ActivityColorsView.swift */,
 				9CE27D9129E4BF6400D4646D /* CustomHeadacheTypesView.swift */,
 				9C20B5D929E7E9730011748A /* CustomMedicationTypesView.swift */,
+				9C405CC72A5FD73600075C0A /* HTMLView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -481,6 +484,7 @@
 				9C98449E29B5FC9F00ABDC36 /* DoctorNotesView.swift in Sources */,
 				9CBBB41C29DF25A5007E933B /* MedHistoryNotesView.swift in Sources */,
 				9CC2582029BDC36C00E55949 /* StatsHelper.swift in Sources */,
+				9C405CC82A5FD73600075C0A /* HTMLView.swift in Sources */,
 				9CFCECDA29D076E3001656B5 /* Medication+CoreDataClass.swift in Sources */,
 				9CFCECE129D076E3001656B5 /* MAppData+CoreDataProperties.swift in Sources */,
 				9C9D20582A0E383000D4C696 /* StatsContainerView.swift in Sources */,
