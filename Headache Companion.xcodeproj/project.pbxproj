@@ -18,6 +18,7 @@
 		9C20B5DA29E7E9730011748A /* CustomMedicationTypesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C20B5D929E7E9730011748A /* CustomMedicationTypesView.swift */; };
 		9C37EDF529D2E9DB0089DE2B /* NewAttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */; };
 		9C405CC82A5FD73600075C0A /* HTMLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C405CC72A5FD73600075C0A /* HTMLView.swift */; };
+		9C405CCC2A6004CC00075C0A /* HTMLRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C405CCB2A6004CC00075C0A /* HTMLRenderer.swift */; };
 		9C45EE6029AE6626000EB6C2 /* AttackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE5F29AE6626000EB6C2 /* AttackView.swift */; };
 		9C45EE6229AE662E000EB6C2 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45EE6129AE662E000EB6C2 /* CalendarView.swift */; };
 		9C4891FB29D1802000E1CD42 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4891FA29D1802000E1CD42 /* LoadingView.swift */; };
@@ -85,6 +86,7 @@
 		9C20B5D929E7E9730011748A /* CustomMedicationTypesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMedicationTypesView.swift; sourceTree = "<group>"; };
 		9C37EDF429D2E9DB0089DE2B /* NewAttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAttackView.swift; sourceTree = "<group>"; };
 		9C405CC72A5FD73600075C0A /* HTMLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLView.swift; sourceTree = "<group>"; };
+		9C405CCB2A6004CC00075C0A /* HTMLRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLRenderer.swift; sourceTree = "<group>"; };
 		9C45EE5F29AE6626000EB6C2 /* AttackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackView.swift; sourceTree = "<group>"; };
 		9C45EE6129AE662E000EB6C2 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9C4891FA29D1802000E1CD42 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				9CC6B7D52A5EC7830081F5D6 /* DayRowTemplate.html */,
 				9CC6B7DA2A5ED2390081F5D6 /* AttackTemplate.html */,
 				9CC6B7DC2A5ED7A40081F5D6 /* MedicationTemplate.html */,
+				9C405CCB2A6004CC00075C0A /* HTMLRenderer.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				9CC529CE29BCBEA500DD5491 /* StatsView.swift in Sources */,
 				9CF7308729ACD93800D91F99 /* ContentView.swift in Sources */,
 				9C1983AA29B73DD2007754AB /* MainView.swift in Sources */,
+				9C405CCC2A6004CC00075C0A /* HTMLRenderer.swift in Sources */,
 				9C18C07829BB753C008084E2 /* MedicationLabelView.swift in Sources */,
 				9CFCECD129D07447001656B5 /* HeadacheCompanion.xcdatamodeld in Sources */,
 				9C682CEB29B3962D00032874 /* Extensions.swift in Sources */,

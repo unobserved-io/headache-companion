@@ -10,6 +10,7 @@ import StoreKit
 import SwiftUI
 import UniformTypeIdentifiers
 import WebKit
+import PDFKit
 
 struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -28,6 +29,7 @@ struct SettingsView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \MedHistory.stopDate, ascending: true)]
     )
     var medHistory: FetchedResults<MedHistory>
+    let todaysDate = dateFormatter.string(from: Date.now)
     @ObservedObject var storeModel = StoreModel.sharedInstance
     @State private var showingDeleteAlert: Bool = false
     @State private var showingResetAlert: Bool = false
@@ -38,6 +40,7 @@ struct SettingsView: View {
     @State private var overwriteMedHistory: Bool = false
     @State private var showingDayExporter: Bool = false
     @State private var showingMedExporter: Bool = false
+    @State private var showingPDFExporter: Bool = false
     @State private var showingPurchaseAlert: Bool = false
     @AppStorage("attacksEndWithDay") private var attacksEndWithDay: Bool = true
     @State private var path: [String] = []
@@ -186,7 +189,7 @@ struct SettingsView: View {
                         isPresented: $showingDayExporter,
                         document: JSONDocument(data: getDayDataAsJSON() ?? "[]".data(using: .utf8)!),
                         contentType: .json,
-                        defaultFilename: "HC-DailyData"
+                        defaultFilename: "HC-DailyData-\(todaysDate)"
                     ) { _ in }
                     
                     // Export MedHistory data
@@ -204,7 +207,7 @@ struct SettingsView: View {
                         isPresented: $showingMedExporter,
                         document: JSONDocument(data: getMedHistoryAsJSON() ?? "[]".data(using: .utf8)!),
                         contentType: .json,
-                        defaultFilename: "HC-MedHistory"
+                        defaultFilename: "HC-MedHistory-\(todaysDate)"
                     ) { _ in }
                     
                     // Import DayData
@@ -412,7 +415,23 @@ struct SettingsView: View {
                 } else if view == "CustomMedicationTypesView" {
                     CustomMedicationTypesView()
                 } else if view == "PDFExport" {
-                    HTMLView(dayData: dayData)
+                    let htmlView = HTMLView(dayData: dayData)
+                    htmlView
+                        .toolbar {
+                            ToolbarItem {
+                                Button {
+                                    showingPDFExporter.toggle()
+                                } label: {
+                                    Text("Print")
+                                }
+                                .fileExporter(
+                                    isPresented: $showingPDFExporter,
+                                    document: createPDF(from: htmlView),
+                                    contentType: .pdf,
+                                    defaultFilename: "HC-Data-\(todaysDate)"
+                                ) { _ in }
+                            }
+                        }
                 }
             }
         }
@@ -543,7 +562,54 @@ struct SettingsView: View {
         return try? encoder.encode(medHistory.sorted(by: { $0.stopDate ?? Date.now > $1.stopDate ?? Date.now }))
     }
     
+    private func createPDF(from htmlView: HTMLView) -> PDFDoc {
+        let render = UIPrintPageRenderer()
+        let printFormatter = htmlView.getPrintFormatter()
+        render.addPrintFormatter(printFormatter, startingAtPageAt: 0)
+
+        let page = CGRect(x: 0, y: 0, width: 612, height: 791) // US Letter, 72 dpi
+        let printable = page.insetBy(dx: 0, dy: 40)
+
+        render.setValue(NSValue(cgRect: page), forKey: "paperRect")
+        render.setValue(NSValue(cgRect: printable), forKey: "printableRect")
+
+        let pdfData = NSMutableData()
+        UIGraphicsBeginPDFContextToData(pdfData, CGRect.zero, nil)
+
+        for i in 1...render.numberOfPages {
+
+            UIGraphicsBeginPDFPage();
+            let bounds = UIGraphicsGetPDFContextBounds()
+            render.drawPage(at: i - 1, in: bounds)
+        }
+
+        UIGraphicsEndPDFContext();
+        
+        return PDFDoc(pdfData: pdfData as Data)
+    }
     
     
-    
+}
+
+struct PDFDoc: FileDocument {
+    static var readableContentTypes: [UTType] { [.pdf] }
+
+    var pdfData: Data
+
+    init(pdfData: Data = Data()) {
+        self.pdfData = pdfData
+    }
+
+    init(configuration: ReadConfiguration) throws {
+        if let data = configuration.file.regularFileContents {
+            pdfData = data
+        } else {
+            throw CocoaError(.fileReadCorruptFile)
+        }
+    }
+
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        let fileWrapper = FileWrapper(regularFileWithContents: pdfData)
+        return fileWrapper
+    }
 }
