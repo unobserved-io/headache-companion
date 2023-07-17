@@ -422,7 +422,7 @@ struct SettingsView: View {
                                 Button {
                                     showingPDFExporter.toggle()
                                 } label: {
-                                    Text("Print")
+                                    Text("PDF")
                                 }
                                 .fileExporter(
                                     isPresented: $showingPDFExporter,
