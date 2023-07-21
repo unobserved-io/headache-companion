@@ -41,7 +41,11 @@ struct SettingsView: View {
     @State private var showingDayExporter: Bool = false
     @State private var showingMedExporter: Bool = false
     @State private var showingPDFExporter: Bool = false
+    @State private var showingPDFAspectsPicker: Bool = false
     @State private var showingPurchaseAlert: Bool = false
+    @State private var exportAttacks: Bool = true
+    @State private var exportMedication: Bool = false
+    @State private var exportWellbeing: Bool = false
     @AppStorage("attacksEndWithDay") private var attacksEndWithDay: Bool = true
     @State private var path: [String] = []
     @AppStorage("lastLaunch") private var lastLaunch = ""
@@ -162,10 +166,7 @@ struct SettingsView: View {
                 Section("Data") {
                     // Export Data to PDF
                     Button {
-//                        let renderedHTML = renderHTML()
-//                        print(renderedHTML ?? "NOTHING")
-                        path.append("PDFExport")
-                        
+                        showingPDFAspectsPicker.toggle()
                     } label: {
                         Label {
                             Text("Export to PDF")
@@ -415,7 +416,7 @@ struct SettingsView: View {
                 } else if view == "CustomMedicationTypesView" {
                     CustomMedicationTypesView()
                 } else if view == "PDFExport" {
-                    let htmlView = HTMLView(dayData: dayData)
+                    let htmlView = HTMLView(dayData: dayData, exportAttacks: exportAttacks, exportMedication: exportMedication, exportWellbeing: exportWellbeing)
                     htmlView
                         .toolbar {
                             ToolbarItem {
@@ -458,6 +459,35 @@ struct SettingsView: View {
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("Importing data will delete all current data. Do you still want to import?")
+        }
+        .sheet(isPresented: $showingPDFAspectsPicker) {
+            VStack {
+                Toggle(isOn: $exportAttacks) {
+                    Text("Attacks")
+                }
+                Toggle(isOn: $exportMedication) {
+                    Text("Medication")
+                }
+                Toggle(isOn: $exportWellbeing) {
+                    Text("Well-Being")
+                }
+                HStack {
+                    Button("Cancel", role: .cancel) {
+                        showingPDFAspectsPicker = false
+                    }
+                    .buttonStyle(.bordered)
+                    Button("Export") {
+                        path.append("PDFExport")
+                        showingPDFAspectsPicker = false
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.accentColor)
+                    .disabled(!exportAttacks && !exportMedication && !exportWellbeing)
+                }
+                .padding(.top, 10)
+            }
+            .padding(.horizontal, 20)
+            .presentationDetents([.exporter])
         }
         .alert("Merge or Overwrite?", isPresented: $showingMedImportAlert) {
             Button("Overwrite") {

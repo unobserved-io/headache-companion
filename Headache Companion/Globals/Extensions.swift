@@ -16,6 +16,7 @@ extension Binding {
 
 extension PresentationDetent {
     static let bar = Self.fraction(0.2)
+    static let exporter = Self.fraction(0.3)
 }
 
 extension Date {

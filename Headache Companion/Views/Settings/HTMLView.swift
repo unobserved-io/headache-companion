@@ -12,9 +12,9 @@ struct HTMLView: UIViewRepresentable {
     var dayData: FetchedResults<DayData>
     var html: String?
     
-    init(dayData: FetchedResults<DayData>) {
+    init(dayData: FetchedResults<DayData>, exportAttacks: Bool, exportMedication: Bool, exportWellbeing: Bool) {
         self.dayData = dayData
-        self.html = HTMLRenderer(dayData: dayData).renderHTML()
+        self.html = HTMLRenderer(dayData: dayData, exportAttacks: exportAttacks, exportMedication: exportMedication, exportWellbeing: exportWellbeing).renderHTML()
     }
 
     func makeUIView(context: Context) -> WKWebView {
@@ -23,7 +23,7 @@ struct HTMLView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
-        uiView.loadHTMLString(HTMLRenderer(dayData: dayData).renderHTML() ?? "", baseURL: nil)
+        uiView.loadHTMLString(html ?? "", baseURL: nil)
     }
     
     func getPrintFormatter() -> UIMarkupTextPrintFormatter {
