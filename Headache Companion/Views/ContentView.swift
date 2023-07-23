@@ -210,7 +210,7 @@ struct ContentView: View {
                 }
             }
         }
-        .onReceive(willEnterForeground) { (output) in
+        .onReceive(willEnterForeground) { _ in
             let newDay = dateFormatter.string(from: .now)
             if todayString != newDay {
                 changeToNewDay()

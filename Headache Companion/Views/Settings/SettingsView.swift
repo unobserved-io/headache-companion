@@ -10,7 +10,6 @@ import StoreKit
 import SwiftUI
 import UniformTypeIdentifiers
 import WebKit
-import PDFKit
 
 struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -606,40 +605,14 @@ struct SettingsView: View {
         let pdfData = NSMutableData()
         UIGraphicsBeginPDFContextToData(pdfData, CGRect.zero, nil)
 
-        for i in 1...render.numberOfPages {
-
-            UIGraphicsBeginPDFPage();
+        for i in 1 ... render.numberOfPages {
+            UIGraphicsBeginPDFPage()
             let bounds = UIGraphicsGetPDFContextBounds()
             render.drawPage(at: i - 1, in: bounds)
         }
 
-        UIGraphicsEndPDFContext();
+        UIGraphicsEndPDFContext()
         
         return PDFDoc(pdfData: pdfData as Data)
-    }
-    
-    
-}
-
-struct PDFDoc: FileDocument {
-    static var readableContentTypes: [UTType] { [.pdf] }
-
-    var pdfData: Data
-
-    init(pdfData: Data = Data()) {
-        self.pdfData = pdfData
-    }
-
-    init(configuration: ReadConfiguration) throws {
-        if let data = configuration.file.regularFileContents {
-            pdfData = data
-        } else {
-            throw CocoaError(.fileReadCorruptFile)
-        }
-    }
-
-    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        let fileWrapper = FileWrapper(regularFileWithContents: pdfData)
-        return fileWrapper
     }
 }

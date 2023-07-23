@@ -28,7 +28,7 @@ struct HTMLRenderer {
             let medicationTemplate = try String(contentsOfFile: Bundle.main.path(forResource: "MedicationTemplate.html", ofType: nil)!)
             
             var allDayRows = ""
-            dayData.forEach() { day in
+            dayData.forEach { day in
                 var newDayRow = dayRowTemplate
                 
                 newDayRow = newDayRow.replacingOccurrences(of: "#DATE#", with: day.date ?? "Unknown")
@@ -37,7 +37,7 @@ struct HTMLRenderer {
                 if exportAttacks {
                     newDayRow = newDayRow.replacingOccurrences(of: "#NUM_OF_ATTACKS#", with: String(day.attacks.count))
                     var allAttacks = ""
-                    day.attacks.forEach() { attack in
+                    day.attacks.forEach { attack in
                         var newAttack = attackTemplate
                         
                         if attack.stopTime != nil {
@@ -113,7 +113,7 @@ struct HTMLRenderer {
                 // MEDICATION
                 if exportMedication {
                     var allMedication = ""
-                    day.medications.forEach() { med in
+                    day.medications.forEach { med in
                         var newMedication = medicationTemplate
                         
                         var medTitle = ""
@@ -127,7 +127,7 @@ struct HTMLRenderer {
                         newMedication = newMedication.replacingOccurrences(of: "#MED_TIME#", with: timeFormatter.string(from: med.wrappedTime))
                         
                         var medEffective = ""
-                        switch(med.effective) {
+                        switch med.effective {
                         case .effective:
                             medEffective = "<li>Effective</li>"
                         case .ineffective:
@@ -173,7 +173,7 @@ struct HTMLRenderer {
     }
     
     private func getActivityString(_ activity: ActivityRanks) -> String {
-        switch(activity) {
+        switch activity {
         case .none:
             return "N/A"
         case .bad:
