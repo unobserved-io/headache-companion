@@ -50,8 +50,10 @@ class StatsHelper: ObservableObject {
         daysInRange = (difference.day ?? 0) + 1
         
         // Calculate stats
-        calculateMainStats(dayData)
-        calculateActivityStats(dayData, startDate: startDate, stopDate: stopDate)
+        DispatchQueue.main.async {
+            self.calculateMainStats(dayData)
+            self.calculateActivityStats(dayData, startDate: startDate, stopDate: stopDate)
+        }
     }
     
     private func calculateMainStats(_ dayData: [DayData]) {
