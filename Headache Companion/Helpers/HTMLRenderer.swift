@@ -51,11 +51,11 @@ struct HTMLRenderer {
                         
                         // PAIN
                         if attack.painLevel == 0 {
-                            newAttack = newAttack.replacingOccurrences(of: "#PAIN_LEVEL#", with: String(attack.painLevel))
+                            newAttack = newAttack.replacingOccurrences(of: "#PAIN_LEVEL#", with: String(Int(attack.painLevel)))
                         } else {
-                            var painString = ""
+                            var painString = String(Int(attack.painLevel))
                             if attack.pulsating || attack.pressing {
-                                painString = "<ul>#CONTENTS#</ul>"
+                                painString += "<ul>#CONTENTS#</ul>"
                                 var painInner = ""
                                 
                                 if attack.pressing {
