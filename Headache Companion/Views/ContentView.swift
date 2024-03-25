@@ -33,8 +33,6 @@ struct ContentView: View {
     @State private var attackOngoing: Bool = false
     @State var todayString: String = dateFormatter.string(from: .now)
     let willEnterForeground = NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
-        
-//        .addObserver(forName:UIApplication.willEnterForegroundNotification, object: nil, queue: nil)
 
     var body: some View {
         NavigationStack {
