@@ -62,10 +62,10 @@ struct StatsView: View {
             ScrollView {
                 VStack {
                     Picker("", selection: $dateRange) {
-                        dayData.count > 6 ? Text("Past week").tag(DateRange.week) : nil
-                        dayData.count > 15 ? Text("Past 30 days").tag(DateRange.thirtyDays) : nil
-                        dayData.count > 90 ? Text("Past 6 months").tag(DateRange.sixMonths) : nil
-                        dayData.count > 200 ? Text("Past year").tag(DateRange.year) : nil
+                        Text("Past week").tag(DateRange.week)
+                        Text("Past 30 days").tag(DateRange.thirtyDays)
+                        Text("Past 6 months").tag(DateRange.sixMonths)
+                        Text("Past year").tag(DateRange.year)
                         Text("All time").tag(DateRange.allTime)
                         Text("Date Range").tag(DateRange.custom)
                     }
