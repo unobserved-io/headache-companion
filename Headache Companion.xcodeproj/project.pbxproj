@@ -34,6 +34,7 @@
 		9C66875C29DC645C00AABD58 /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C66875B29DC645C00AABD58 /* StoreModel.swift */; };
 		9C682CEB29B3962D00032874 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEA29B3962D00032874 /* Extensions.swift */; };
 		9C682CED29B3B96C00032874 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C682CEC29B3B96C00032874 /* Enums.swift */; };
+		9C8E35862BB14054003AE911 /* TextWithBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8E35852BB14054003AE911 /* TextWithBadge.swift */; };
 		9C937C4F2A5E81B600F343F0 /* ExportTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 9C937C4E2A5E81B600F343F0 /* ExportTemplate.html */; };
 		9C96928029B497520023A00C /* MultiSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96927F29B497520023A00C /* MultiSelectionView.swift */; };
 		9C96928329B4ADB80023A00C /* MultiSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C96928229B4ADB80023A00C /* MultiSelector.swift */; };
@@ -105,6 +106,7 @@
 		9C66875B29DC645C00AABD58 /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
 		9C682CEA29B3962D00032874 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9C682CEC29B3B96C00032874 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		9C8E35852BB14054003AE911 /* TextWithBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithBadge.swift; sourceTree = "<group>"; };
 		9C937C4E2A5E81B600F343F0 /* ExportTemplate.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = ExportTemplate.html; sourceTree = "<group>"; };
 		9C96927F29B497520023A00C /* MultiSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelectionView.swift; sourceTree = "<group>"; };
 		9C96928229B4ADB80023A00C /* MultiSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSelector.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				9CE27D9129E4BF6400D4646D /* CustomHeadacheTypesView.swift */,
 				9C20B5D929E7E9730011748A /* CustomMedicationTypesView.swift */,
 				9C405CC72A5FD73600075C0A /* HTMLView.swift */,
+				9C8E35852BB14054003AE911 /* TextWithBadge.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				9CFCECE029D076E3001656B5 /* MAppData+CoreDataClass.swift in Sources */,
 				9C18C06F29BB6A04008084E2 /* SettingsView.swift in Sources */,
 				9CD46F2A29EEAE8C006ECA7A /* ColorHex.swift in Sources */,
+				9C8E35862BB14054003AE911 /* TextWithBadge.swift in Sources */,
 				9CC529D029BD02FD00DD5491 /* PreviouslyTakenMedsView.swift in Sources */,
 				9CFCECDC29D076E3001656B5 /* DayData+CoreDataClass.swift in Sources */,
 				9C48B26D29DD6C7400EBC9BC /* MedicationHistoryView.swift in Sources */,

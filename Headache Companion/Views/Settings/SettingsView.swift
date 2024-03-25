@@ -29,7 +29,7 @@ struct SettingsView: View {
     )
     var medHistory: FetchedResults<MedHistory>
     let todaysDate = dateFormatter.string(from: Date.now)
-    @ObservedObject var storeModel = StoreModel.sharedInstance
+    @ObservedObject var storeModel = StoreModel.shared
     @State private var showingDeleteAlert: Bool = false
     @State private var showingResetAlert: Bool = false
     @State private var showingDayImportAlert: Bool = false
@@ -89,7 +89,7 @@ struct SettingsView: View {
                         }
                     } label: {
                         Label {
-                            Text(storeModel.purchasedIds.isEmpty ? "Regular Medications (Pro)" : "Regular Medications")
+                            TextWithBadge("Regular Medications")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "pill.fill")
@@ -105,7 +105,7 @@ struct SettingsView: View {
                         }
                     } label: {
                         Label {
-                            Text(storeModel.purchasedIds.isEmpty ? "Add Symptoms (Pro)" : "Add Symptoms")
+                            TextWithBadge("Add Symptoms")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "medical.thermometer.fill")
@@ -121,7 +121,7 @@ struct SettingsView: View {
                         }
                     } label: {
                         Label {
-                            Text(storeModel.purchasedIds.isEmpty ? "Add Headache Types (Pro)" : "Add Headache Types")
+                            TextWithBadge("Add Headache Types")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "brain.head.profile")
@@ -137,7 +137,7 @@ struct SettingsView: View {
                         }
                     } label: {
                         Label {
-                            Text(storeModel.purchasedIds.isEmpty ? "Add Medication Types (Pro)" : "Add Medication Types")
+                            TextWithBadge("Add Medication Types")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "pills.fill")
@@ -154,7 +154,7 @@ struct SettingsView: View {
                         }
                     } label: {
                         Label {
-                            Text(storeModel.purchasedIds.isEmpty ? "Activity Colors (Pro)" : "Activity Colors")
+                            TextWithBadge("Activity Colors")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "paintpalette.fill")
@@ -165,10 +165,14 @@ struct SettingsView: View {
                 Section("Data") {
                     // Export Data to PDF
                     Button {
-                        showingPDFAspectsPicker.toggle()
+                        if storeModel.purchasedIds.isEmpty {
+                            showingPurchaseAlert.toggle()
+                        } else {
+                            showingPDFAspectsPicker.toggle()
+                        }
                     } label: {
                         Label {
-                            Text("Export to PDF")
+                            TextWithBadge("Export to PDF")
                                 .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "list.clipboard.fill")

@@ -11,7 +11,7 @@ import SwiftUI
 struct HeadacheCompanionApp: App {
     let persistenceController = PersistenceController.shared
     @AppStorage("launchCount") private var launchCount = 0
-    @ObservedObject var storeModel = StoreModel.sharedInstance
+    @ObservedObject var storeModel = StoreModel.shared
     
     init() {
         launchCount += 1
