@@ -190,6 +190,7 @@ struct CalendarView: View {
                     }
                 }
             }
+            .navigationBarTitle("History")
         }
         .onAppear {
             // Reset segmented pickers to be even (Necessary for long languages)

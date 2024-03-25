@@ -407,6 +407,7 @@ struct SettingsView: View {
                     }
                 }
             }
+            .navigationBarTitle("Settings")
             .navigationDestination(for: String.self) { view in
                 if view == "RegularMedicationsView" {
                     RegularMedicationsView()

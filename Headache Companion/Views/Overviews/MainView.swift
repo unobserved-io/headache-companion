@@ -19,7 +19,7 @@ struct MainView: View {
 
             CalendarView()
                 .tabItem {
-                    Label("Calendar", systemImage: "calendar")
+                    Label("History", systemImage: "calendar")
                 }
 
             StatsContainerView()
