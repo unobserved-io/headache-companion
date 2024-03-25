@@ -202,11 +202,11 @@ struct ContentView: View {
             RunLoop.current.add(timer, forMode: .common)
             
             // Ask for in-app review
-            if launchCount > 0 && launchCount % 10 == 0 {
-                DispatchQueue.main.async {
-                    requestReview()
-                }
-            }
+            //if launchCount > 0 && launchCount % 10 == 0 {
+            //    DispatchQueue.main.async {
+            //        requestReview()
+            //    }
+            //}
         }
         .onReceive(willEnterForeground) { _ in
             let newDay = dateFormatter.string(from: .now)
