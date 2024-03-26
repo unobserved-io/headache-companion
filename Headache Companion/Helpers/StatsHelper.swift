@@ -43,8 +43,6 @@ class StatsHelper: ObservableObject {
     }()
     
     func getStats(from dayData: [DayData], startDate: Date, stopDate: Date) {
-        print("Start: \(startDate)")
-        print("Stop: \(stopDate)")
         resetAllStats()
         
         // Get total days
