@@ -21,7 +21,10 @@ struct StatsView: View {
     )
     var mAppData: FetchedResults<MAppData>
     private enum DateRange {
-        case week
+//        case week
+        case thisWeek
+        case lastWeek
+        case sevenDays
         case thirtyDays
         case sixMonths
         case year
@@ -62,7 +65,9 @@ struct StatsView: View {
             ScrollView {
                 VStack {
                     Picker("", selection: $dateRange) {
-                        Text("Past week").tag(DateRange.week)
+                        Text("This week").tag(DateRange.thisWeek)
+                        Text("Last week").tag(DateRange.lastWeek)
+                        Text("Past 7 days").tag(DateRange.sevenDays)
                         Text("Past 30 days").tag(DateRange.thirtyDays)
                         Text("Past 6 months").tag(DateRange.sixMonths)
                         Text("Past year").tag(DateRange.year)
@@ -70,7 +75,11 @@ struct StatsView: View {
                         Text("Date Range").tag(DateRange.custom)
                     }
                     .onChange(of: dateRange) { range in
-                        statsHelper.getStats(from: dayDataInRange(range), startDate: getFromDate(range), stopDate: getStopDate(range))
+                        statsHelper.getStats(
+                            from: dayDataInRange(range),
+                            startDate: getFromDate(range),
+                            stopDate: getStopDate(range, start: range == .lastWeek ? getFromDate(range) : Date.now)
+                        )
                     }
                     if dateRange == .custom {
                         HStack {
@@ -370,7 +379,12 @@ struct StatsView: View {
         let fromDate: Date = Calendar.current.startOfDay(for: Date.now)
         
         switch range {
-        case .week:
+        case .thisWeek:
+            return Calendar.current.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: fromDate).date ?? Date.now
+        case .lastWeek:
+            let weekAgo = Calendar.current.date(byAdding: .day, value: -6, to: fromDate) ?? Date.now
+            return Calendar.current.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: weekAgo).date ?? Date.now
+        case .sevenDays:
             return Calendar.current.date(byAdding: .day, value: -6, to: fromDate) ?? Date.now
         case .thirtyDays:
             return Calendar.current.date(byAdding: .day, value: -29, to: fromDate) ?? Date.now
@@ -385,10 +399,13 @@ struct StatsView: View {
         }
     }
     
-    private func getStopDate(_ range: DateRange) -> Date {
-        if range == .custom {
+    private func getStopDate(_ range: DateRange, start: Date = Date.now) -> Date {
+        switch range {
+        case .lastWeek:
+            return Calendar.current.date(byAdding: .day, value: 6, to: start) ?? Date.now
+        case .custom:
             return selectedStop
-        } else {
+        default:
             return Date.now
         }
     }
