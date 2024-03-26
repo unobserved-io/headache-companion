@@ -9,18 +9,23 @@ import SwiftUI
 
 struct ActivitiesView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.dismiss) var dismiss
+    
     @FetchRequest var dayData: FetchedResults<DayData>
     @FetchRequest(
         entity: MAppData.entity(),
         sortDescriptors: []
     )
     var mAppData: FetchedResults<MAppData>
+    
     @Binding var selectedActivity: String
-    let forDateString: String
+    
     @State var currentColor = Color.gray
     @State var badColor = Color.red
     @State var okColor = Color.yellow
     @State var goodColor = Color.green
+    
+    let forDateString: String
     
     init(of selectedActivity: Binding<String>, for forDate: Date) {
         _selectedActivity = selectedActivity
@@ -48,6 +53,7 @@ struct ActivitiesView: View {
                 Button {
                     currentColor = correspondingColor(of: .bad)
                     saveSelected(rank: .bad)
+                    dismiss()
                 } label: {
                     Image(systemName: "circle.fill")
                 }
@@ -61,6 +67,7 @@ struct ActivitiesView: View {
                 Button {
                     currentColor = correspondingColor(of: .ok)
                     saveSelected(rank: .ok)
+                    dismiss()
                 } label: {
                     Image(systemName: "circle.fill")
                 }
@@ -74,6 +81,7 @@ struct ActivitiesView: View {
                 Button {
                     currentColor = correspondingColor(of: .good)
                     saveSelected(rank: .good)
+                    dismiss()
                 } label: {
                     Image(systemName: "circle.fill")
                 }
