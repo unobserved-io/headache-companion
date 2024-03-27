@@ -21,7 +21,6 @@ struct StatsView: View {
     )
     var mAppData: FetchedResults<MAppData>
     private enum DateRange {
-//        case week
         case thisWeek
         case lastWeek
         case sevenDays
@@ -53,6 +52,7 @@ struct StatsView: View {
     @State private var clickedAuraTypes: Bool = false
     @State private var clickedAuraTotals: Bool = false
     @State private var clickedMedNames: Bool = false
+    @State private var rangeIsEmpty: Bool = false
     @State private var chosenActivity: ChosenActivity = .water
     @State private var medTypeTriggers: [String: Bool] = [:]
     @State private var chevronTriggers: [String: Bool] = [:]
@@ -290,6 +290,56 @@ struct StatsView: View {
                 .addBorder(Color.accentColor, width: 4, cornerRadius: 15)
                 .padding(.bottom)
                 
+                // MARK: Graphs
+//                VStack(spacing: 12.0) {
+//                    Text("Questions Answered")
+//                    Chart(dayDataInRange) { day in
+//                        let totalCount = day.responseCount + day.noResponseCount
+//                        BarMark(
+//                            x: .value("Date", day.grouping),
+//                            y: .value("Questions", totalCount)
+//                        )
+//                        .annotation {
+//                            if showQuestionsAnsweredOverlay {
+//                                Text(String("\(totalCount)"))
+//                                    .rotationEffect(.degrees(-90))
+//                            }
+//                        }
+//
+//                        if showChartThresholds {
+//                            let questionsAnsweredThreshold = totalQuestionsAnswered / dayDataInRange.count
+//                            RuleMark(
+//                                y: .value("Threshold", questionsAnsweredThreshold)
+//                            )
+//                            .lineStyle(StrokeStyle(lineWidth: 2))
+//                            .foregroundStyle(thresholdLineColor)
+//                            .annotation(position: .top, alignment: .leading) {
+//                                Text(String(questionsAnsweredThreshold))
+//                                    .font(.title2.bold())
+//                                    .foregroundColor(.primary)
+//                                    .background {
+//                                        ZStack {
+//                                            RoundedRectangle(cornerRadius: 8)
+//                                                .fill(.background)
+//                                            RoundedRectangle(cornerRadius: 8)
+//                                                .fill(.quaternary.opacity(0.7))
+//                                        }
+//                                        .padding(.horizontal, -8)
+//                                        .padding(.vertical, -4)
+//                                    }
+//                                    .padding(.bottom, 4)
+//                            }
+//                        }
+//                    }
+//                    .chartYAxis {
+//                        AxisMarks(position: .leading)
+//                    }
+//                    .onTapGesture {
+//                        showQuestionsAnsweredOverlay.toggle()
+//                    }
+//                    .frame(height: chartFrameHeight)
+//                }
+                
                 Spacer()
         }
         .padding(.horizontal)
@@ -424,6 +474,58 @@ struct StatsView: View {
             return Color(hex: mAppData.first?.activityColors?[0]) ?? Color.gray
         }
     }
+    
+//    private func getDatesInRange() {
+//        // Get all dayData in range
+//        rangeIsEmpty = false
+//        let stopDate: Date = getStopDate(dateRange)
+//        let fromDate: Date = getFromDate(dateRange)
+//        var tempDayDataInRange = dayData.filter {
+//            (fromDate ... stopDate).contains(dateFormatter.date(from: $0.date ?? "1970-01-01") ?? .distantFuture)
+//        }
+//
+//        if tempDayDataInRange.isEmpty {
+//            rangeIsEmpty = true
+//        } else {
+//            // Add any missing days
+//            let oneDay = TimeInterval(24 * 60 * 60) // seconds in one day
+//            for date in stride(from: fromDate, through: stopDate, by: oneDay) {
+//                if !tempDayDataInRange.contains(where: { $0.date == dateFormatter.string(from: date) }) {
+//                    tempDayDataInRange.append(DayData(date: dateFormatter.string(from: date)))
+//                }
+//            }
+//            // Sort the list
+//            tempDayDataInRange.sort(by: { dateFormatter.date(from: $0.day)! < dateFormatter.date(from: $1.day)! })
+//
+//            // Group dayDataInRange by week/month, etc.
+//            groupingType = decideGroupingType()
+//            let tempDataGrouped = groupDayDataInRange(tempDayDataInRange)
+//
+//            dayDataInRange = tempDataGrouped
+//        }
+//    }
+//
+//    private func decideGroupingType() -> GroupStatsBy {
+//        // TODO: This can be based on number of days in the dayDataInRange, which would be less if "Only show days worked" is turned on
+//        let calendar = Calendar.current
+//        let numberOfDaysInRange = (calendar.dateComponents([.day], from: rangeStartDate, to: rangeEndDate).day ?? 0) + 1
+//        if numberOfDaysInRange <= 31 {
+//            return .days
+//        } else if numberOfDaysInRange <= 62 {
+//            return .weeks
+//        } else if numberOfDaysInRange <= 731 {
+//            return .months
+//        } else {
+//            return .years
+//        }
+//    }
+//
+//    private func groupDayDataInRange(_ tempDayDataInRange: [DayData]) -> [DayDataGrouping] {
+//        switch groupingType {
+//        case .days: return groupDataByDay(tempDayDataInRange)
+//        default: return groupDataByOther(tempDayDataInRange)
+//        }
+//    }
 }
 
 struct StatsView_Previews: PreviewProvider {
