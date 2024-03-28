@@ -5,11 +5,15 @@
 //  Created by Ricky Kresslein on 3/11/23.
 //
 
+import Charts
+import CoreData
+import StoreKit
 import SwiftUI
 
 struct StatsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.colorScheme) var colorScheme
+    
     @FetchRequest(
         entity: DayData.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \DayData.date, ascending: true)]
@@ -20,6 +24,7 @@ struct StatsView: View {
         sortDescriptors: []
     )
     var mAppData: FetchedResults<MAppData>
+    
     private enum DateRange {
         case thisWeek
         case lastWeek
@@ -29,6 +34,13 @@ struct StatsView: View {
         case year
         case allTime
         case custom
+    }
+    
+    private enum GroupStatsBy {
+        case days
+        case weeks
+        case months
+        case years
     }
 
     private enum ChosenActivity: String {
@@ -40,9 +52,9 @@ struct StatsView: View {
     }
 
     @ObservedObject var statsHelper = StatsHelper.sharedInstance
-    @State private var dateRange: DateRange = .allTime
-    @State private var selectedStart: Date = .now
-    @State private var selectedStop: Date = .now
+    @ObservedObject var storeModel = StoreModel.shared
+    
+    @State private var dateRange: DateRange = .sevenDays
     @State private var clickedAttacks: Bool = false
     @State private var clickedSymptoms: Bool = false
     @State private var clickedDaysWithMeds: Bool = false
@@ -53,13 +65,22 @@ struct StatsView: View {
     @State private var clickedAuraTotals: Bool = false
     @State private var clickedMedNames: Bool = false
     @State private var rangeIsEmpty: Bool = false
+    @State private var showingPurchaseAlert: Bool = false
     @State private var chosenActivity: ChosenActivity = .water
     @State private var medTypeTriggers: [String: Bool] = [:]
     @State private var chevronTriggers: [String: Bool] = [:]
+    @State private var groupingType: GroupStatsBy = .days
+    @State private var dayDataInRange: [DayDataGrouping] = []
+    @State private var rangeStartDate: Date = Calendar.current.date(byAdding: .day, value: -6, to: .now) ?? .now
+    @State private var rangeEndDate: Date = .now
+    
+    
     private let daySingular = String(localized: "day")
     private let dayPlural = String(localized: "days")
     private let attackSingular = String(localized: "attack")
     private let attackPlural = String(localized: "attacks")
+    private let chartFrameHeight: CGFloat? = 200
+    private let thresholdLineColor: Color = .gray
 
     var body: some View {
             ScrollView {
@@ -74,41 +95,106 @@ struct StatsView: View {
                         Text("All time").tag(DateRange.allTime)
                         Text("Date Range").tag(DateRange.custom)
                     }
-                    .onChange(of: dateRange) { range in
+                    .onChange(of: dateRange) { newRange in
+                        updateRangeStartDate(range: newRange)
+                        updateRangeEndDate(range: newRange)
                         statsHelper.getStats(
-                            from: dayDataInRange(range),
-                            startDate: getFromDate(range),
-                            stopDate: getStopDate(range, start: range == .lastWeek ? getFromDate(range) : Date.now)
+                            from: dayDataInRange(newRange),
+                            startDate: rangeStartDate,
+                            stopDate: rangeEndDate
                         )
+                        updateAllStats()
                     }
                     if dateRange == .custom {
                         HStack {
                             DatePicker(
-                                selection: $selectedStart,
-                                in: Date(timeIntervalSinceReferenceDate: 0) ... selectedStop,
+                                selection: $rangeStartDate,
+                                in: Date(timeIntervalSinceReferenceDate: 0) ... rangeEndDate,
                                 displayedComponents: [.date],
                                 label: {}
                             )
                             .labelsHidden()
-                            .onChange(of: selectedStart) { _ in
-                                selectedStart = Calendar.current.startOfDay(for: selectedStart)
-                                statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
+                            .onChange(of: rangeStartDate) { _ in
+                                rangeStartDate = Calendar.current.startOfDay(for: rangeStartDate)
+                                statsHelper.getStats(from: dayDataInRange(dateRange), startDate: rangeStartDate, stopDate: rangeEndDate)
+                                updateAllStats()
                             }
                             Text("to")
                             DatePicker(
-                                selection: $selectedStop,
-                                in: selectedStart ... Date.now,
+                                selection: $rangeEndDate,
+                                in: rangeStartDate ... Date.now,
                                 displayedComponents: [.date],
                                 label: {}
                             )
                             .frame(minHeight: 35)
                             .labelsHidden()
-                            .onChange(of: selectedStop) { _ in
-                                statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
+                            .onChange(of: rangeEndDate) { _ in
+                                statsHelper.getStats(from: dayDataInRange(dateRange), startDate: rangeStartDate, stopDate: rangeEndDate)
+                                updateAllStats()
                             }
                         }
                         .padding(.bottom)
                     }
+                    
+                    // MARK: Graphs
+                    VStack(spacing: 12.0) {
+                        Text("Attacks")
+                        Chart(dayDataInRange) { day in
+                            BarMark(
+                                x: .value("Date", day.grouping),
+                                y: .value("Attacks", day.attackCount)
+                            )
+    //                        .annotation {
+    //                            if showQuestionsAnsweredOverlay {
+    //                                Text(String("\(totalCount)"))
+    //                                    .rotationEffect(.degrees(-90))
+    //                            }
+    //                        }
+
+                            if statsHelper.numberOfAttacks != 0 {
+                                let attackCountThreshold = statsHelper.numberOfAttacks / dayDataInRange.count
+                                if attackCountThreshold != 0 {
+                                    RuleMark(
+                                        y: .value("Threshold", attackCountThreshold)
+                                    )
+                                    .lineStyle(StrokeStyle(lineWidth: 2))
+                                    .foregroundStyle(thresholdLineColor)
+                                    .annotation(position: .top, alignment: .leading) {
+                                        Text(String(attackCountThreshold))
+                                            .font(.title2.bold())
+                                            .foregroundColor(.primary)
+                                            .background {
+                                                ZStack {
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .fill(.background)
+                                                    RoundedRectangle(cornerRadius: 8)
+                                                        .fill(.quaternary.opacity(0.7))
+                                                }
+                                                .padding(.horizontal, -8)
+                                                .padding(.vertical, -4)
+                                            }
+                                            .padding(.bottom, 4)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .chartYAxis {
+                        AxisMarks(position: .leading)
+                    }
+    //                .onTapGesture {
+    //                    showQuestionsAnsweredOverlay.toggle()
+    //                }
+                    .frame(height: chartFrameHeight)
+                    
+                    if storeModel.purchasedIds.isEmpty {
+                        Button("Upgrade to Pro to see more graphs") {
+                            showingPurchaseAlert.toggle()
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    
+                    // MARK: Text stats
                     Grid(alignment: .topLeading, verticalSpacing: 5) {
                         GridRow {
                             mainStat(String(statsHelper.daysTrackedInRange))
@@ -257,6 +343,7 @@ struct StatsView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.bottom)
+                    .padding(.top, 20)
                     
                     // MARK: Activities Stats
 
@@ -287,64 +374,32 @@ struct StatsView: View {
                     }
                 }
                 .padding()
-                .addBorder(Color.accentColor, width: 4, cornerRadius: 15)
+//                .addBorder(Color.accentColor, width: 4, cornerRadius: 15)
                 .padding(.bottom)
-                
-                // MARK: Graphs
-//                VStack(spacing: 12.0) {
-//                    Text("Questions Answered")
-//                    Chart(dayDataInRange) { day in
-//                        let totalCount = day.responseCount + day.noResponseCount
-//                        BarMark(
-//                            x: .value("Date", day.grouping),
-//                            y: .value("Questions", totalCount)
-//                        )
-//                        .annotation {
-//                            if showQuestionsAnsweredOverlay {
-//                                Text(String("\(totalCount)"))
-//                                    .rotationEffect(.degrees(-90))
-//                            }
-//                        }
-//
-//                        if showChartThresholds {
-//                            let questionsAnsweredThreshold = totalQuestionsAnswered / dayDataInRange.count
-//                            RuleMark(
-//                                y: .value("Threshold", questionsAnsweredThreshold)
-//                            )
-//                            .lineStyle(StrokeStyle(lineWidth: 2))
-//                            .foregroundStyle(thresholdLineColor)
-//                            .annotation(position: .top, alignment: .leading) {
-//                                Text(String(questionsAnsweredThreshold))
-//                                    .font(.title2.bold())
-//                                    .foregroundColor(.primary)
-//                                    .background {
-//                                        ZStack {
-//                                            RoundedRectangle(cornerRadius: 8)
-//                                                .fill(.background)
-//                                            RoundedRectangle(cornerRadius: 8)
-//                                                .fill(.quaternary.opacity(0.7))
-//                                        }
-//                                        .padding(.horizontal, -8)
-//                                        .padding(.vertical, -4)
-//                                    }
-//                                    .padding(.bottom, 4)
-//                            }
-//                        }
-//                    }
-//                    .chartYAxis {
-//                        AxisMarks(position: .leading)
-//                    }
-//                    .onTapGesture {
-//                        showQuestionsAnsweredOverlay.toggle()
-//                    }
-//                    .frame(height: chartFrameHeight)
-//                }
                 
                 Spacer()
         }
         .padding(.horizontal)
         .onAppear {
-            statsHelper.getStats(from: dayDataInRange(dateRange), startDate: getFromDate(dateRange), stopDate: getStopDate(dateRange))
+            statsHelper.getStats(from: dayDataInRange(dateRange), startDate: rangeStartDate, stopDate: rangeEndDate)
+            updateAllStats()
+        }
+        .alert("Go Pro?", isPresented: $showingPurchaseAlert) {
+            if let product = storeModel.products.first {
+                Button("Upgrade (\(product.displayPrice))") {
+                    Task {
+                        try await storeModel.purchase()
+                    }
+                }
+                Button("Restore purchase") {
+                    Task {
+                        try await AppStore.sync()
+                    }
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Upgrade to Pro to see better stats.")
         }
     }
     
@@ -411,53 +466,16 @@ struct StatsView: View {
     
     private func dayDataInRange(_ range: DateRange) -> [DayData] {
         var inRange: [DayData] = []
-        let stopDate: Date = getStopDate(range)
-        let fromDate: Date = getFromDate(range)
         
         dayData.forEach { day in
             let dayDate = dateFormatter.date(from: day.date ?? "1970-01-01")
             
-            if dayDate?.isBetween(fromDate, and: stopDate) ?? false {
+            if dayDate?.isBetween(rangeStartDate, and: rangeEndDate) ?? false {
                 inRange.append(day)
             }
         }
         
         return inRange
-    }
-    
-    private func getFromDate(_ range: DateRange) -> Date {
-        let fromDate: Date = Calendar.current.startOfDay(for: Date.now)
-        
-        switch range {
-        case .thisWeek:
-            return Calendar.current.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: fromDate).date ?? Date.now
-        case .lastWeek:
-            let weekAgo = Calendar.current.date(byAdding: .day, value: -6, to: fromDate) ?? Date.now
-            return Calendar.current.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: weekAgo).date ?? Date.now
-        case .sevenDays:
-            return Calendar.current.date(byAdding: .day, value: -6, to: fromDate) ?? Date.now
-        case .thirtyDays:
-            return Calendar.current.date(byAdding: .day, value: -29, to: fromDate) ?? Date.now
-        case .sixMonths:
-            return Calendar.current.date(byAdding: .day, value: -179, to: fromDate) ?? Date.now
-        case .year:
-            return Calendar.current.date(byAdding: .day, value: -364, to: fromDate) ?? Date.now
-        case .allTime:
-            return dateFormatter.date(from: dayData.first?.date ?? "1970-01-01") ?? Date(timeIntervalSince1970: 0)
-        case .custom:
-            return selectedStart
-        }
-    }
-    
-    private func getStopDate(_ range: DateRange, start: Date = Date.now) -> Date {
-        switch range {
-        case .lastWeek:
-            return Calendar.current.date(byAdding: .day, value: 6, to: start) ?? Date.now
-        case .custom:
-            return selectedStop
-        default:
-            return Date.now
-        }
     }
     
     private func correspondingColor(of activityRank: ActivityRanks) -> Color {
@@ -475,61 +493,199 @@ struct StatsView: View {
         }
     }
     
-//    private func getDatesInRange() {
-//        // Get all dayData in range
-//        rangeIsEmpty = false
-//        let stopDate: Date = getStopDate(dateRange)
-//        let fromDate: Date = getFromDate(dateRange)
-//        var tempDayDataInRange = dayData.filter {
-//            (fromDate ... stopDate).contains(dateFormatter.date(from: $0.date ?? "1970-01-01") ?? .distantFuture)
-//        }
-//
-//        if tempDayDataInRange.isEmpty {
-//            rangeIsEmpty = true
-//        } else {
-//            // Add any missing days
-//            let oneDay = TimeInterval(24 * 60 * 60) // seconds in one day
-//            for date in stride(from: fromDate, through: stopDate, by: oneDay) {
-//                if !tempDayDataInRange.contains(where: { $0.date == dateFormatter.string(from: date) }) {
-//                    tempDayDataInRange.append(DayData(date: dateFormatter.string(from: date)))
-//                }
-//            }
-//            // Sort the list
-//            tempDayDataInRange.sort(by: { dateFormatter.date(from: $0.day)! < dateFormatter.date(from: $1.day)! })
-//
-//            // Group dayDataInRange by week/month, etc.
-//            groupingType = decideGroupingType()
-//            let tempDataGrouped = groupDayDataInRange(tempDayDataInRange)
-//
-//            dayDataInRange = tempDataGrouped
-//        }
-//    }
-//
-//    private func decideGroupingType() -> GroupStatsBy {
-//        // TODO: This can be based on number of days in the dayDataInRange, which would be less if "Only show days worked" is turned on
-//        let calendar = Calendar.current
-//        let numberOfDaysInRange = (calendar.dateComponents([.day], from: rangeStartDate, to: rangeEndDate).day ?? 0) + 1
-//        if numberOfDaysInRange <= 31 {
-//            return .days
-//        } else if numberOfDaysInRange <= 62 {
-//            return .weeks
-//        } else if numberOfDaysInRange <= 731 {
-//            return .months
-//        } else {
-//            return .years
-//        }
-//    }
-//
-//    private func groupDayDataInRange(_ tempDayDataInRange: [DayData]) -> [DayDataGrouping] {
-//        switch groupingType {
-//        case .days: return groupDataByDay(tempDayDataInRange)
-//        default: return groupDataByOther(tempDayDataInRange)
-//        }
-//    }
+    private func updateRangeStartDate(range: DateRange) {
+        let fromDate: Date = Calendar.current.startOfDay(for: Date.now)
+        switch range {
+        case .thisWeek:
+            rangeStartDate = Calendar.current.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: fromDate).date ?? Date.now
+        case .lastWeek:
+            let weekAgo = Calendar.current.date(byAdding: .day, value: -6, to: fromDate) ?? Date.now
+            rangeStartDate = Calendar.current.dateComponents([.calendar, .yearForWeekOfYear, .weekOfYear], from: weekAgo).date ?? Date.now
+        case .sevenDays:
+            rangeStartDate = Calendar.current.date(byAdding: .day, value: -6, to: fromDate) ?? Date.now
+        case .thirtyDays:
+            rangeStartDate = Calendar.current.date(byAdding: .day, value: -29, to: fromDate) ?? Date.now
+        case .sixMonths:
+            rangeStartDate = Calendar.current.date(byAdding: .day, value: -179, to: fromDate) ?? Date.now
+        case .year:
+            rangeStartDate = Calendar.current.date(byAdding: .day, value: -364, to: fromDate) ?? Date.now
+        case .allTime:
+            rangeStartDate = dateFormatter.date(from: dayData.first?.date ?? "1970-01-01") ?? Date(timeIntervalSince1970: 0)
+        case .custom:
+            break
+        }
+    }
+
+    private func updateRangeEndDate(range: DateRange) {
+        switch range {
+        case .lastWeek:
+            rangeEndDate = Calendar.current.date(byAdding: .day, value: 6, to: rangeStartDate) ?? Date.now
+        case .custom:
+            break
+        default:
+            rangeEndDate = Date.now
+        }
+    }
+    
+    private func updateAllStats() {
+        rangeIsEmpty = false
+        getDatesInRange()
+    }
+    
+    private func getDatesInRange() {
+        var tempDayDataInRange = dayData.filter {
+            (rangeStartDate ... rangeEndDate).contains(dateFormatter.date(from: $0.date ?? "1970-01-01") ?? .distantFuture)
+        }
+
+        if tempDayDataInRange.isEmpty {
+            rangeIsEmpty = true
+        } else {
+            // Add any missing days
+            let childContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+            let oneDay = TimeInterval(24 * 60 * 60) // seconds in one day
+            for date in stride(from: rangeStartDate, through: rangeEndDate, by: oneDay) {
+                if !tempDayDataInRange.contains(where: { $0.date == dateFormatter.string(from: date) }) {
+                    let tempDay = DayData(context: childContext)
+                    tempDay.date = dateFormatter.string(from: date)
+                    tempDayDataInRange.append(tempDay)
+                }
+            }
+            // Sort the list
+            tempDayDataInRange.sort(by: {
+                dateFormatter.date(from: $0.date ?? "1970-01-01")! < dateFormatter.date(from: $1.date ?? "1970-01-01")!
+            })
+
+            // Group dayDataInRange by week/month, etc.
+            groupingType = decideGroupingType()
+            let tempDataGrouped = groupDayDataInRange(tempDayDataInRange)
+
+            dayDataInRange = tempDataGrouped
+        }
+    }
+
+    private func decideGroupingType() -> GroupStatsBy {
+        let calendar = Calendar.current
+        let numberOfDaysInRange = (calendar.dateComponents([.day], from: rangeStartDate, to: rangeEndDate).day ?? 0) + 1
+        if numberOfDaysInRange <= 31 {
+            return .days
+        } else if numberOfDaysInRange <= 62 {
+            return .weeks
+        } else if numberOfDaysInRange <= 731 {
+            return .months
+        } else {
+            return .years
+        }
+    }
+
+    private func groupDayDataInRange(_ tempDayDataInRange: [DayData]) -> [DayDataGrouping] {
+        switch groupingType {
+        case .days: return groupDataByDay(tempDayDataInRange)
+        default: return groupDataByOther(tempDayDataInRange)
+        }
+    }
+    
+    private func groupDataByDay(_ dataInRange: [DayData]) -> [DayDataGrouping] {
+        var dataGrouping: [DayDataGrouping] = []
+        for currentDay in dataInRange {
+            dataGrouping.append(
+                .init(
+                    attackCount: currentDay.attack?.count ?? 0,
+                    // TODO: Localize date for grouping
+                    grouping: String((currentDay.date ?? "1970-01-01").dropFirst(5))
+                )
+            )
+        }
+        return dataGrouping
+    }
+
+    private func groupDataByOther(_ dataInRange: [DayData]) -> [DayDataGrouping] {
+        let component = getComponentType()
+
+        var dataGrouping: [DayDataGrouping] = []
+        var tempGrouping: [Int: DayDataGrouping] = [:]
+        var groupingYear: Int?
+        var groupingWithYears: [Int: Int] = [:]
+        for currentDay in dataInRange {
+            if let currentDate = dateFormatter.date(from: currentDay.date ?? "1970-01-01") {
+                var grouping = Calendar.current.component(component, from: currentDate)
+                if groupingType == .months {
+                    groupingYear = Calendar.current.component(.year, from: currentDate)
+                    grouping = grouping * (groupingYear ?? 2023)
+                    groupingWithYears[grouping] = groupingYear
+                }
+                if let _ = tempGrouping[grouping] {
+                    tempGrouping[grouping]!.attackCount += currentDay.attack?.count ?? 0
+                } else {
+                    tempGrouping[grouping] = .init(
+                        attackCount: currentDay.attack?.count ?? 0,
+                        grouping: ""
+                    )
+                }
+            }
+        }
+
+        if groupingType == .months {
+            let formatter: DateFormatter = {
+                let df = DateFormatter()
+                df.locale = Locale(identifier: "en_US_POSIX")
+                df.dateFormat = "MM yyyy"
+                return df
+            }()
+            // Convert Month/Year string to date to be sorted properly
+            for grouping in tempGrouping.sorted(by: { (formatter.date(from: "\(DateFormatter().monthSymbols[($0.key / (groupingWithYears[$0.key] ?? 1)) - 1]) \(groupingWithYears[$0.key] ?? 1)") ?? .now) < (formatter.date(from: "\(DateFormatter().monthSymbols[($1.key / (groupingWithYears[$1.key] ?? 1)) - 1]) \(groupingWithYears[$1.key] ?? 1)") ?? .now) }) {
+                dataGrouping.append(
+                    .init(
+                        attackCount: grouping.value.attackCount,
+                        grouping: getGroupingString(key: grouping.key, year: groupingWithYears)
+                    )
+                )
+            }
+        } else {
+            for grouping in tempGrouping.sorted(by: { $0.key < $1.key }) {
+                dataGrouping.append(
+                    .init(
+                        attackCount: grouping.value.attackCount,
+                        grouping: getGroupingString(key: grouping.key, year: groupingWithYears)
+                    )
+                )
+            }
+        }
+        return dataGrouping
+    }
+    
+    private func getComponentType() -> Calendar.Component {
+        switch groupingType {
+        case .days:
+            return .day
+        case .weeks:
+            return .weekOfYear
+        case .months:
+            return .month
+        case .years:
+            return .year
+        }
+    }
+    
+    private func getGroupingString(key: Int, year: [Int: Int]) -> String {
+        switch groupingType {
+        case .weeks:
+            return "Wk \(key)"
+        case .months:
+            let monthNum = key / (year[key] ?? 1)
+            let monthName = DateFormatter().monthSymbols[monthNum - 1]
+            return "\(monthName[monthName.startIndex ... monthName.index(monthName.startIndex, offsetBy: 2)]) '\((year[key] ?? 2023) % 100)"
+        default:
+            return String(key)
+        }
+    }
 }
 
-struct StatsView_Previews: PreviewProvider {
-    static var previews: some View {
-        StatsView()
-    }
+struct DayDataGrouping: Identifiable, Equatable {
+    var attackCount: Int
+    var grouping: String
+    var id = UUID()
+}
+
+#Preview {
+    StatsView()
 }
