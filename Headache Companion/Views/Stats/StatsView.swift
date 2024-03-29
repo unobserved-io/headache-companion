@@ -71,6 +71,8 @@ struct StatsView: View {
     @State private var chevronTriggers: [String: Bool] = [:]
     @State private var groupingType: GroupStatsBy = .days
     @State private var dayDataInRange: [DayDataGrouping] = []
+    @State private var dayDataWithAttackInRange: [DayData] = []
+    @State private var dayDataGroupingWithAttackInRange: [DayDataGrouping] = []
     @State private var rangeStartDate: Date = Calendar.current.date(byAdding: .day, value: -6, to: .now) ?? .now
     @State private var rangeEndDate: Date = .now
     
@@ -187,12 +189,70 @@ struct StatsView: View {
     //                }
                     .frame(height: chartFrameHeight)
                     
-                    if storeModel.purchasedIds.isEmpty {
-                        Button("Upgrade to Pro to see more graphs") {
-                            showingPurchaseAlert.toggle()
+                    VStack(spacing: 12.0) {
+                        if storeModel.purchasedIds.isEmpty {
+                            Button("Upgrade to Pro to see more graphs") {
+                                showingPurchaseAlert.toggle()
+                            }
+                            .buttonStyle(.borderedProminent)
+                        } else {
+                            // Pain level line graph (only days with an attack)
+                            VStack(spacing: 12.0) {
+                                Text("Average Pain")
+                                Chart(dayDataGroupingWithAttackInRange) { day in
+                                    LineMark(
+                                        x: .value("Date", day.grouping),
+                                        y: .value("Average Pain", day.pain)
+                                    )
+                                    
+                                    PointMark(
+                                        x: .value("Date", day.grouping),
+                                        y: .value("Average Pain", day.pain)
+                                    )
+            //                        .annotation {
+            //                            if showQuestionsAnsweredOverlay {
+            //                                Text(String("\(totalCount)"))
+            //                                    .rotationEffect(.degrees(-90))
+            //                            }
+            //                        }
+
+                                    if statsHelper.numberOfAttacks != 0 {
+                                        if statsHelper.averagePainLevel > 0 {
+                                            RuleMark(
+                                                y: .value("Threshold", statsHelper.averagePainLevel)
+                                            )
+                                            .lineStyle(StrokeStyle(lineWidth: 2))
+                                            .foregroundStyle(thresholdLineColor)
+                                            .annotation(position: .top, alignment: .leading) {
+                                                Text(String(format: "%.1f", statsHelper.averagePainLevel))
+                                                    .font(.title2.bold())
+                                                    .foregroundColor(.primary)
+                                                    .background {
+                                                        ZStack {
+                                                            RoundedRectangle(cornerRadius: 8)
+                                                                .fill(.background)
+                                                            RoundedRectangle(cornerRadius: 8)
+                                                                .fill(.quaternary.opacity(0.7))
+                                                        }
+                                                        .padding(.horizontal, -8)
+                                                        .padding(.vertical, -4)
+                                                    }
+                                                    .padding(.bottom, 4)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            .chartYAxis {
+                                AxisMarks(position: .leading)
+                            }
+            //                .onTapGesture {
+            //                    showQuestionsAnsweredOverlay.toggle()
+            //                }
+                            .frame(height: chartFrameHeight)
                         }
-                        .buttonStyle(.borderedProminent)
                     }
+                    .padding(.top, 12.0)
                     
                     // MARK: Text stats
                     Grid(alignment: .topLeading, verticalSpacing: 5) {
@@ -529,7 +589,10 @@ struct StatsView: View {
     
     private func updateAllStats() {
         rangeIsEmpty = false
-        getDatesInRange()
+        DispatchQueue.main.async {
+            getDatesInRange()
+            getDatesWithAttackInRange()
+        }
     }
     
     private func getDatesInRange() {
@@ -540,6 +603,9 @@ struct StatsView: View {
         if tempDayDataInRange.isEmpty {
             rangeIsEmpty = true
         } else {
+            // Save days with attacks for later use
+            dayDataWithAttackInRange = tempDayDataInRange.filter { $0.attack?.count ?? 0 > 0 }
+            
             // Add any missing days
             let childContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
             let oneDay = TimeInterval(24 * 60 * 60) // seconds in one day
@@ -549,6 +615,7 @@ struct StatsView: View {
                     tempDay.date = dateFormatter.string(from: date)
                     tempDayDataInRange.append(tempDay)
                 }
+                
             }
             // Sort the list
             tempDayDataInRange.sort(by: {
@@ -557,10 +624,15 @@ struct StatsView: View {
 
             // Group dayDataInRange by week/month, etc.
             groupingType = decideGroupingType()
-            let tempDataGrouped = groupDayDataInRange(tempDayDataInRange)
-
-            dayDataInRange = tempDataGrouped
+            dayDataInRange = groupDayDataInRange(tempDayDataInRange)
         }
+    }
+    
+    private func getDatesWithAttackInRange() {
+        dayDataWithAttackInRange.sort(by: {
+            dateFormatter.date(from: $0.date ?? "1970-01-01")! < dateFormatter.date(from: $1.date ?? "1970-01-01")!
+        })
+        dayDataGroupingWithAttackInRange = groupDayDataInRange(dayDataWithAttackInRange)
     }
 
     private func decideGroupingType() -> GroupStatsBy {
@@ -590,6 +662,7 @@ struct StatsView: View {
             dataGrouping.append(
                 .init(
                     attackCount: currentDay.attack?.count ?? 0,
+                    pain: currentDay.attacks.lazy.compactMap { $0.painLevel }.reduce(0, +) / Double(currentDay.attack?.count ?? 0),
                     // TODO: Localize date for grouping
                     grouping: String((currentDay.date ?? "1970-01-01").dropFirst(5))
                 )
@@ -615,9 +688,12 @@ struct StatsView: View {
                 }
                 if let _ = tempGrouping[grouping] {
                     tempGrouping[grouping]!.attackCount += currentDay.attack?.count ?? 0
+                    tempGrouping[grouping]!.pain += currentDay.attacks.lazy.compactMap { $0.painLevel }.reduce(0, +)
+                    // TODO: Add pain
                 } else {
                     tempGrouping[grouping] = .init(
                         attackCount: currentDay.attack?.count ?? 0,
+                        pain:  currentDay.attacks.lazy.compactMap { $0.painLevel }.reduce(0, +),
                         grouping: ""
                     )
                 }
@@ -636,6 +712,7 @@ struct StatsView: View {
                 dataGrouping.append(
                     .init(
                         attackCount: grouping.value.attackCount,
+                        pain: grouping.value.pain / Double(grouping.value.attackCount),
                         grouping: getGroupingString(key: grouping.key, year: groupingWithYears)
                     )
                 )
@@ -645,6 +722,7 @@ struct StatsView: View {
                 dataGrouping.append(
                     .init(
                         attackCount: grouping.value.attackCount,
+                        pain: grouping.value.pain / Double(grouping.value.attackCount),
                         grouping: getGroupingString(key: grouping.key, year: groupingWithYears)
                     )
                 )
@@ -682,6 +760,7 @@ struct StatsView: View {
 
 struct DayDataGrouping: Identifiable, Equatable {
     var attackCount: Int
+    var pain: Double
     var grouping: String
     var id = UUID()
 }
