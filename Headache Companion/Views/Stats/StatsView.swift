@@ -73,6 +73,7 @@ struct StatsView: View {
     @State private var dayDataInRange: [DayDataGrouping] = []
     @State private var dayDataWithAttackInRange: [DayData] = []
     @State private var dayDataGroupingWithAttackInRange: [DayDataGrouping] = []
+    @State private var hasAttackOrNot: [AttackOrNot]  = []
     @State private var rangeStartDate: Date = Calendar.current.date(byAdding: .day, value: -6, to: .now) ?? .now
     @State private var rangeEndDate: Date = .now
     
@@ -250,6 +251,37 @@ struct StatsView: View {
             //                    showQuestionsAnsweredOverlay.toggle()
             //                }
                             .frame(height: chartFrameHeight)
+                            
+                            // Days with Attack Pie Chart
+                            if #available(iOS 17, *) {
+                                VStack(spacing: 12.0) {
+                                    Text("Days With An Attack")
+                                    Chart(hasAttackOrNot) { attackOrNot in
+                                        SectorMark(
+                                            angle: .value("Days With An Attack", attackOrNot.count),
+                                            angularInset: 3.0
+                                        )
+                                        .annotation(position: .overlay) {
+//                                                if showResponseSplitPercent {
+//                                                    Text("\(countType.percent) %")
+//                                                } else {
+//                                                    Text("\(countType.count)")
+//                                                }
+                                            Text("\(attackOrNot.count)")
+                                        }
+                                        .cornerRadius(6.0)
+                                        .foregroundStyle(by: .value("", attackOrNot.type))
+                                    }
+                                    .chartForegroundStyleScale([
+                                        "Attacks": Color.accent,
+                                        "No Attacks": Color.gray
+                                    ])
+    //                                .onTapGesture {
+    //                                    showResponseSplitPercent.toggle()
+    //                                }
+                                    .frame(height: chartFrameHeight)
+                                }
+                            }
                         }
                     }
                     .padding(.top, 12.0)
@@ -592,6 +624,10 @@ struct StatsView: View {
         DispatchQueue.main.async {
             getDatesInRange()
             getDatesWithAttackInRange()
+            hasAttackOrNot = [
+                .init(type: "Attacks", count: statsHelper.daysWithAttack),
+                .init(type: "No Attacks", count: statsHelper.daysInRange - statsHelper.daysWithAttack)
+            ]
         }
     }
     
@@ -764,6 +800,13 @@ struct DayDataGrouping: Identifiable, Equatable {
     var grouping: String
     var id = UUID()
 }
+
+struct AttackOrNot: Identifiable {
+    var type: String
+    var count: Int
+    var id = UUID()
+}
+
 
 #Preview {
     StatsView()
