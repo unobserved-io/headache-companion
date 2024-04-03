@@ -140,57 +140,10 @@ struct StatsView: View {
                     }
                     
                     // MARK: Graphs
-                    VStack(spacing: 12.0) {
-                        Text("Attacks")
-                        Chart(dayDataInRange) { day in
-                            BarMark(
-                                x: .value("Date", day.grouping),
-                                y: .value("Attacks", day.attackCount)
-                            )
-    //                        .annotation {
-    //                            if showQuestionsAnsweredOverlay {
-    //                                Text(String("\(totalCount)"))
-    //                                    .rotationEffect(.degrees(-90))
-    //                            }
-    //                        }
-
-                            if statsHelper.numberOfAttacks != 0 {
-                                let attackCountThreshold = statsHelper.numberOfAttacks / dayDataInRange.count
-                                if attackCountThreshold != 0 {
-                                    RuleMark(
-                                        y: .value("Threshold", attackCountThreshold)
-                                    )
-                                    .lineStyle(StrokeStyle(lineWidth: 2))
-                                    .foregroundStyle(thresholdLineColor)
-                                    .annotation(position: .top, alignment: .leading) {
-                                        Text(String(attackCountThreshold))
-                                            .font(.title2.bold())
-                                            .foregroundColor(.primary)
-                                            .background {
-                                                ZStack {
-                                                    RoundedRectangle(cornerRadius: 8)
-                                                        .fill(.background)
-                                                    RoundedRectangle(cornerRadius: 8)
-                                                        .fill(.quaternary.opacity(0.7))
-                                                }
-                                                .padding(.horizontal, -8)
-                                                .padding(.vertical, -4)
-                                            }
-                                            .padding(.bottom, 4)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .chartYAxis {
-                        AxisMarks(position: .leading)
-                    }
-    //                .onTapGesture {
-    //                    showQuestionsAnsweredOverlay.toggle()
-    //                }
-                    .frame(height: chartFrameHeight)
+                    attacksBarChart
+                        .padding(.top, 30.0)
                     
-                    VStack(spacing: 12.0) {
+                    VStack(spacing: 30.0) {
                         if storeModel.purchasedIds.isEmpty {
                             Button("Upgrade to Pro to see more graphs") {
                                 showingPurchaseAlert.toggle()
@@ -198,97 +151,14 @@ struct StatsView: View {
                             .buttonStyle(.borderedProminent)
                         } else {
                             // Pain level line graph (only days with an attack)
-                            VStack(spacing: 12.0) {
-                                Text("Average Pain")
-                                Chart(dayDataGroupingWithAttackInRange) { day in
-                                    LineMark(
-                                        x: .value("Date", day.grouping),
-                                        y: .value("Average Pain", day.pain)
-                                    )
-                                    
-                                    PointMark(
-                                        x: .value("Date", day.grouping),
-                                        y: .value("Average Pain", day.pain)
-                                    )
-            //                        .annotation {
-            //                            if showQuestionsAnsweredOverlay {
-            //                                Text(String("\(totalCount)"))
-            //                                    .rotationEffect(.degrees(-90))
-            //                            }
-            //                        }
-
-                                    if statsHelper.numberOfAttacks != 0 {
-                                        if statsHelper.averagePainLevel > 0 {
-                                            RuleMark(
-                                                y: .value("Threshold", statsHelper.averagePainLevel)
-                                            )
-                                            .lineStyle(StrokeStyle(lineWidth: 2))
-                                            .foregroundStyle(thresholdLineColor)
-                                            .annotation(position: .top, alignment: .leading) {
-                                                Text(String(format: "%.1f", statsHelper.averagePainLevel))
-                                                    .font(.title2.bold())
-                                                    .foregroundColor(.primary)
-                                                    .background {
-                                                        ZStack {
-                                                            RoundedRectangle(cornerRadius: 8)
-                                                                .fill(.background)
-                                                            RoundedRectangle(cornerRadius: 8)
-                                                                .fill(.quaternary.opacity(0.7))
-                                                        }
-                                                        .padding(.horizontal, -8)
-                                                        .padding(.vertical, -4)
-                                                    }
-                                                    .padding(.bottom, 4)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            .chartYAxis {
-                                AxisMarks(position: .leading)
-                            }
-            //                .onTapGesture {
-            //                    showQuestionsAnsweredOverlay.toggle()
-            //                }
-                            .frame(height: chartFrameHeight)
+                            painLevelLineGraph
                             
-                            // Days with Attack Pie Chart
-                            if #available(iOS 17, *) {
-                                VStack(spacing: 12.0) {
-                                    Text("Days With An Attack")
-                                    Chart(hasAttackOrNot) { attackOrNot in
-                                        SectorMark(
-                                            angle: .value("Days With An Attack", attackOrNot.count),
-                                            angularInset: 3.0
-                                        )
-                                        .annotation(position: .overlay) {
-//                                                if showResponseSplitPercent {
-//                                                    Text("\(countType.percent) %")
-//                                                } else {
-//                                                    Text("\(countType.count)")
-//                                                }
-                                            Text("\(attackOrNot.count)")
-                                        }
-                                        .cornerRadius(6.0)
-                                        .foregroundStyle(by: .value("", attackOrNot.type))
-                                    }
-                                    .chartForegroundStyleScale([
-                                        "Attacks": Color.accent,
-                                        "No Attacks": Color.gray
-                                    ])
-    //                                .onTapGesture {
-    //                                    showResponseSplitPercent.toggle()
-    //                                }
-                                    .frame(height: chartFrameHeight)
-                                }
-                            }
+                            daysWithAttackPieChart
                             
                             headacheTypeChart
-                            
-                            
                         }
                     }
-                    .padding(.top, 12.0)
+                    .padding(.top, 30.0)
                     
                     // MARK: Text stats
                     Grid(alignment: .topLeading, verticalSpacing: 5) {
@@ -496,6 +366,148 @@ struct StatsView: View {
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("Upgrade to Pro to see better stats.")
+        }
+    }
+    
+    private var attacksBarChart: some View {
+        VStack(spacing: 12.0) {
+            Text("Attacks")
+            Chart(dayDataInRange) { day in
+                BarMark(
+                    x: .value("Date", day.grouping),
+                    y: .value("Attacks", day.attackCount)
+                )
+//                        .annotation {
+//                            if showQuestionsAnsweredOverlay {
+//                                Text(String("\(totalCount)"))
+//                                    .rotationEffect(.degrees(-90))
+//                            }
+//                        }
+
+                if statsHelper.numberOfAttacks != 0 {
+                    let attackCountThreshold = statsHelper.numberOfAttacks / dayDataInRange.count
+                    if attackCountThreshold != 0 {
+                        RuleMark(
+                            y: .value("Threshold", attackCountThreshold)
+                        )
+                        .lineStyle(StrokeStyle(lineWidth: 2))
+                        .foregroundStyle(thresholdLineColor)
+                        .annotation(position: .top, alignment: .leading) {
+                            Text(String(attackCountThreshold))
+                                .font(.title2.bold())
+                                .foregroundColor(.primary)
+                                .background {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(.background)
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(.quaternary.opacity(0.7))
+                                    }
+                                    .padding(.horizontal, -8)
+                                    .padding(.vertical, -4)
+                                }
+                                .padding(.bottom, 4)
+                        }
+                    }
+                }
+            }
+        }
+        .chartYAxis {
+            AxisMarks(position: .leading)
+        }
+//                .onTapGesture {
+//                    showQuestionsAnsweredOverlay.toggle()
+//                }
+        .frame(height: chartFrameHeight)
+    }
+    
+    private var painLevelLineGraph: some View {
+        VStack(spacing: 12.0) {
+            Text("Average Pain")
+            Chart(dayDataGroupingWithAttackInRange) { day in
+                LineMark(
+                    x: .value("Date", day.grouping),
+                    y: .value("Average Pain", day.pain)
+                )
+                
+                PointMark(
+                    x: .value("Date", day.grouping),
+                    y: .value("Average Pain", day.pain)
+                )
+//                        .annotation {
+//                            if showQuestionsAnsweredOverlay {
+//                                Text(String("\(totalCount)"))
+//                                    .rotationEffect(.degrees(-90))
+//                            }
+//                        }
+
+                if statsHelper.numberOfAttacks != 0 {
+                    if statsHelper.averagePainLevel > 0 {
+                        RuleMark(
+                            y: .value("Threshold", statsHelper.averagePainLevel)
+                        )
+                        .lineStyle(StrokeStyle(lineWidth: 2))
+                        .foregroundStyle(thresholdLineColor)
+                        .annotation(position: .top, alignment: .leading) {
+                            Text(String(format: "%.1f", statsHelper.averagePainLevel))
+                                .font(.title2.bold())
+                                .foregroundColor(.primary)
+                                .background {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(.background)
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .fill(.quaternary.opacity(0.7))
+                                    }
+                                    .padding(.horizontal, -8)
+                                    .padding(.vertical, -4)
+                                }
+                                .padding(.bottom, 4)
+                        }
+                    }
+                }
+            }
+        }
+        .chartYAxis {
+            AxisMarks(position: .leading)
+        }
+//                .onTapGesture {
+//                    showQuestionsAnsweredOverlay.toggle()
+//                }
+        .frame(height: chartFrameHeight)
+    }
+    
+    private var daysWithAttackPieChart: some View {
+        if #available(iOS 17, *) {
+            return VStack(spacing: 12.0) {
+                Text("Days With An Attack")
+                Chart(hasAttackOrNot) { attackOrNot in
+                    SectorMark(
+                        angle: .value("Days With An Attack", attackOrNot.count),
+                        angularInset: 3.0
+                    )
+                    .annotation(position: .overlay) {
+//                                                if showResponseSplitPercent {
+//                                                    Text("\(countType.percent) %")
+//                                                } else {
+//                                                    Text("\(countType.count)")
+//                                                }
+                        Text("\(attackOrNot.count)")
+                    }
+                    .cornerRadius(6.0)
+                    .foregroundStyle(by: .value("", attackOrNot.type))
+                }
+                .chartForegroundStyleScale([
+                    "Attacks": Color.accent,
+                    "No Attacks": Color.gray
+                ])
+//                                .onTapGesture {
+//                                    showResponseSplitPercent.toggle()
+//                                }
+                .frame(height: chartFrameHeight)
+            }
+        } else {
+            return EmptyView()
         }
     }
     
