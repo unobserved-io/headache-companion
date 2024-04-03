@@ -520,7 +520,7 @@ struct StatsView: View {
                         x: .value("Date", day.grouping),
                         y: .value("Attack Type", count)
                     )
-                    .foregroundStyle(by: .value("", attackType))
+                    .foregroundStyle(by: .value("", attackType.capitalized))
                 }
             }
             .chartYAxis {
