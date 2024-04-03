@@ -155,7 +155,9 @@ struct StatsView: View {
                             
                             daysWithAttackPieChart
                             
-                            headacheTypeChart
+                            headacheTypeMultiBarChart
+                            
+                            symptomsMultiBarChart
                         }
                     }
                     .padding(.top, 30.0)
@@ -511,7 +513,8 @@ struct StatsView: View {
         }
     }
     
-    private var headacheTypeChart: some View {
+    private var headacheTypeMultiBarChart: some View {
+        // TODO: Only show this graph if there are attacks in range
         VStack(spacing: 12.0) {
             Text("Attack Types")
             Chart(dayDataGroupingWithAttackInRange) { day in
@@ -521,6 +524,26 @@ struct StatsView: View {
                         y: .value("Attack Type", count)
                     )
                     .foregroundStyle(by: .value("", attackType.capitalized))
+                }
+            }
+            .chartYAxis {
+                AxisMarks(position: .leading)
+            }
+            .frame(height: chartFrameHeight)
+        }
+    }
+    
+    private var symptomsMultiBarChart: some View {
+        // TODO: Only show this graph if there are attacks in range
+        VStack(spacing: 12.0) {
+            Text("Symptoms")
+            Chart(dayDataGroupingWithAttackInRange) { day in
+                ForEach(day.symptoms.sorted(by: >), id: \.key) { symptom, count in
+                    BarMark(
+                        x: .value("Date", day.grouping),
+                        y: .value("Symptom", count)
+                    )
+                    .foregroundStyle(by: .value("", symptom.capitalized))
                 }
             }
             .chartYAxis {
@@ -730,10 +753,21 @@ struct StatsView: View {
     private func groupDataByDay(_ dataInRange: [DayData]) -> [DayDataGrouping] {
         var dataGrouping: [DayDataGrouping] = []
         for currentDay in dataInRange {
+            var tempSymptoms: [String:Int] = [:]
+            for attack in currentDay.attacks {
+                if attack.symptoms.isEmpty {
+                    tempSymptoms["No Symptoms", default: 0] += 1
+                } else {
+                    for symptom in attack.symptoms {
+                        tempSymptoms[symptom, default: 0] += 1
+                    }
+                }
+            }
             dataGrouping.append(
                 .init(
                     attackCount: currentDay.attack?.count ?? 0,
                     attackTypes: Dictionary(grouping: currentDay.attacks, by: { $0.headacheType }).mapValues { items in items.count },
+                    symptoms: tempSymptoms,
                     pain: currentDay.attacks.lazy.compactMap { $0.painLevel }.reduce(0, +) / Double(currentDay.attack?.count ?? 0),
                     // TODO: Localize date for grouping
                     grouping: String((currentDay.date ?? "1970-01-01").dropFirst(5))
@@ -762,13 +796,31 @@ struct StatsView: View {
                     tempGrouping[grouping]!.attackCount += currentDay.attack?.count ?? 0
                     for attack in currentDay.attacks {
                         tempGrouping[grouping]!.attackTypes[attack.headacheType, default: 0] += 1
+                        if attack.symptoms.isEmpty {
+                            tempGrouping[grouping]!.symptoms["No Symptoms", default: 0] += 1
+                        } else {
+                            for symptom in attack.symptoms {
+                                tempGrouping[grouping]!.symptoms[symptom, default: 0] += 1
+                            }
+                        }
                     }
                     tempGrouping[grouping]!.pain += currentDay.attacks.lazy.compactMap { $0.painLevel }.reduce(0, +)
                     // TODO: Add pain
                 } else {
+                    var tempSymptoms: [String:Int] = [:]
+                    for attack in currentDay.attacks {
+                        if attack.symptoms.isEmpty {
+                            tempSymptoms["No Symptoms", default: 0] += 1
+                        } else {
+                            for symptom in attack.symptoms {
+                                tempSymptoms[symptom, default: 0] += 1
+                            }
+                        }
+                    }
                     tempGrouping[grouping] = .init(
                         attackCount: currentDay.attack?.count ?? 0,
                         attackTypes: Dictionary(grouping: currentDay.attacks, by: { $0.headacheType }).mapValues { items in items.count },
+                        symptoms: tempSymptoms,
                         pain:  currentDay.attacks.lazy.compactMap { $0.painLevel }.reduce(0, +),
                         grouping: ""
                     )
@@ -789,6 +841,7 @@ struct StatsView: View {
                     .init(
                         attackCount: grouping.value.attackCount,
                         attackTypes: grouping.value.attackTypes,
+                        symptoms: grouping.value.symptoms,
                         pain: grouping.value.pain / Double(grouping.value.attackCount),
                         grouping: getGroupingString(key: grouping.key, year: groupingWithYears)
                     )
@@ -800,6 +853,7 @@ struct StatsView: View {
                     .init(
                         attackCount: grouping.value.attackCount,
                         attackTypes: grouping.value.attackTypes,
+                        symptoms: grouping.value.symptoms,
                         pain: grouping.value.pain / Double(grouping.value.attackCount),
                         grouping: getGroupingString(key: grouping.key, year: groupingWithYears)
                     )
@@ -839,6 +893,7 @@ struct StatsView: View {
 struct DayDataGrouping: Identifiable, Equatable {
     var attackCount: Int
     var attackTypes: [String:Int]
+    var symptoms: [String:Int]
     var pain: Double
     var grouping: String
     var id = UUID()
