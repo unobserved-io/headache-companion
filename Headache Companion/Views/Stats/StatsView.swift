@@ -807,7 +807,6 @@ struct StatsView: View {
                         }
                     }
                     tempGrouping[grouping]!.pain += currentDay.attacks.lazy.compactMap { $0.painLevel }.reduce(0, +)
-                    // TODO: Add pain
                 } else {
                     var tempSymptoms: [String:Int] = [:]
                     for attack in currentDay.attacks {
