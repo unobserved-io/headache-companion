@@ -157,7 +157,7 @@ struct StatsView: View {
                             
                             headacheTypeMultiBarChart
                             
-                            symptomsMultiBarChart
+//                            symptomsMultiBarChart
                         }
                     }
                     .padding(.top, 30.0)
