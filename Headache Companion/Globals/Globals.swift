@@ -14,6 +14,12 @@ let dateFormatter: DateFormatter = {
     return formatter
 }()
 
+let dateDisplayFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.setLocalizedDateFormatFromTemplate("M d")
+    return formatter
+}()
+
 let defaultHeadacheTypes: [String] = [
     "migraine",
     "tension",

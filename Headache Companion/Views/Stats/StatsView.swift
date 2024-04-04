@@ -774,8 +774,7 @@ struct StatsView: View {
                     attackTypes: Dictionary(grouping: currentDay.attacks, by: { $0.headacheType }).mapValues { items in items.count },
                     symptoms: tempSymptoms,
                     pain: currentDay.attacks.lazy.compactMap { $0.painLevel }.reduce(0, +) / Double(currentDay.attack?.count ?? 0),
-                    // TODO: Localize date for grouping
-                    grouping: String((currentDay.date ?? "1970-01-01").dropFirst(5))
+                    grouping: dateDisplayFormatter.string(from: dateFormatter.date(from: currentDay.date ?? "1970-01-01") ?? .now)
                 )
             )
         }
