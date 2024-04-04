@@ -513,43 +513,45 @@ struct StatsView: View {
         }
     }
     
-    private var headacheTypeMultiBarChart: some View {
-        // TODO: Only show this graph if there are attacks in range
-        VStack(spacing: 12.0) {
-            Text("Attack Types")
-            Chart(dayDataGroupingWithAttackInRange) { day in
-                ForEach(day.attackTypes.sorted(by: >), id: \.key) { attackType, count in
-                    BarMark(
-                        x: .value("Date", day.grouping),
-                        y: .value("Attack Type", count)
-                    )
-                    .foregroundStyle(by: .value("", attackType.capitalized))
+    @ViewBuilder private var headacheTypeMultiBarChart: some View {
+        if statsHelper.numberOfAttacks > 0 {
+            VStack(spacing: 12.0) {
+                Text("Attack Types")
+                Chart(dayDataGroupingWithAttackInRange) { day in
+                    ForEach(day.attackTypes.sorted(by: >), id: \.key) { attackType, count in
+                        BarMark(
+                            x: .value("Date", day.grouping),
+                            y: .value("Attack Type", count)
+                        )
+                        .foregroundStyle(by: .value("", attackType.capitalized))
+                    }
                 }
+                .chartYAxis {
+                    AxisMarks(position: .leading)
+                }
+                .frame(height: chartFrameHeight)
             }
-            .chartYAxis {
-                AxisMarks(position: .leading)
-            }
-            .frame(height: chartFrameHeight)
         }
     }
     
-    private var symptomsMultiBarChart: some View {
-        // TODO: Only show this graph if there are attacks in range
-        VStack(spacing: 12.0) {
-            Text("Symptoms")
-            Chart(dayDataGroupingWithAttackInRange) { day in
-                ForEach(day.symptoms.sorted(by: >), id: \.key) { symptom, count in
-                    BarMark(
-                        x: .value("Date", day.grouping),
-                        y: .value("Symptom", count)
-                    )
-                    .foregroundStyle(by: .value("", symptom.capitalized))
+    @ViewBuilder private var symptomsMultiBarChart: some View {
+        if statsHelper.numberOfAttacks > 0 {
+            VStack(spacing: 12.0) {
+                Text("Symptoms")
+                Chart(dayDataGroupingWithAttackInRange) { day in
+                    ForEach(day.symptoms.sorted(by: >), id: \.key) { symptom, count in
+                        BarMark(
+                            x: .value("Date", day.grouping),
+                            y: .value("Symptom", count)
+                        )
+                        .foregroundStyle(by: .value("", symptom.capitalized))
+                    }
                 }
+                .chartYAxis {
+                    AxisMarks(position: .leading)
+                }
+                .frame(height: chartFrameHeight)
             }
-            .chartYAxis {
-                AxisMarks(position: .leading)
-            }
-            .frame(height: chartFrameHeight)
         }
     }
     
