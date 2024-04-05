@@ -173,9 +173,11 @@ struct StatsView: View {
                             mainStat(String(statsHelper.daysTrackedInRange))
                             statDescription("\(statsHelper.daysTrackedInRange == 1 ? daySingular : dayPlural) tracked")
                         }
-                        GridRow {
-                            mainStat(String(statsHelper.daysWithAttack))
-                            statDescription("\(statsHelper.daysWithAttack == 1 ? daySingular : dayPlural) with an attack")
+                        if storeModel.purchasedIds.isEmpty {
+                            GridRow {
+                                mainStat(String(statsHelper.daysWithAttack))
+                                statDescription("\(statsHelper.daysWithAttack == 1 ? daySingular : dayPlural) with an attack")
+                            }
                         }
                         GridRow {
                             mainStat(String(statsHelper.numberOfAttacks))
@@ -223,9 +225,11 @@ struct StatsView: View {
                                 .frame(minHeight: 1)
                                 .overlay(Color.accentColor)
                                     
-                            GridRow {
-                                mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
-                                statDescription("average pain level")
+                            if storeModel.purchasedIds.isEmpty {
+                                GridRow {
+                                    mainStat(String(format: "%.1f", statsHelper.averagePainLevel))
+                                    statDescription("average pain level")
+                                }
                             }
                                     
                             GridRow {
@@ -233,8 +237,10 @@ struct StatsView: View {
                                 VStack(alignment: .leading, spacing: 5) {
                                     HStack {
                                         Text("\(statsHelper.allSymptoms.count == 1 ? String(localized: "symptom") : String(localized: "symptoms"))")
-                                        Image(systemName: clickedSymptoms ? "chevron.down" : "chevron.right")
-                                            .font(.system(size: 12))
+                                        if statsHelper.allSymptoms.count > 0 {
+                                            Image(systemName: clickedSymptoms ? "chevron.down" : "chevron.right")
+                                                .font(.system(size: 12))
+                                        }
                                     }
                                     if clickedSymptoms {
                                         ForEach(statsHelper.symptomsByHeadache, id: \.key) { type, symptoms in
@@ -249,7 +255,9 @@ struct StatsView: View {
                                 }
                                 .containerShape(Rectangle())
                                 .onTapGesture {
-                                    clickedSymptoms.toggle()
+                                    if statsHelper.allSymptoms.count > 0 {
+                                        clickedSymptoms.toggle()
+                                    }
                                 }
                             }
                                     
@@ -258,8 +266,10 @@ struct StatsView: View {
                                 VStack(alignment: .leading) {
                                     HStack {
                                         Text("\(statsHelper.attacksWithAura == 1 ? attackSingular : attackPlural) with an aura")
-                                        Image(systemName: clickedAuraTotals ? "chevron.down" : "chevron.right")
-                                            .font(.system(size: 12))
+                                        if statsHelper.attacksWithAura > 0 {
+                                            Image(systemName: clickedAuraTotals ? "chevron.down" : "chevron.right")
+                                                .font(.system(size: 12))
+                                        }
                                     }
                                     if clickedAuraTotals {
                                         Grid(alignment: .leading, verticalSpacing: 5) {
@@ -278,7 +288,9 @@ struct StatsView: View {
                                 }
                                 .containerShape(Rectangle())
                                 .onTapGesture {
-                                    clickedAuraTotals.toggle()
+                                    if statsHelper.attacksWithAura > 0 {
+                                        clickedAuraTotals.toggle()
+                                    }
                                 }
                             }
                         }
