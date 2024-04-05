@@ -184,8 +184,10 @@ struct StatsView: View {
                             VStack(alignment: .leading) {
                                 HStack {
                                     Text("\(statsHelper.numberOfAttacks == 1 ? attackSingular : attackPlural)")
-                                    Image(systemName: clickedAttacks ? "chevron.down" : "chevron.right")
-                                        .font(.system(size: 12))
+                                    if statsHelper.numberOfAttacks > 0 {
+                                        Image(systemName: clickedAttacks ? "chevron.down" : "chevron.right")
+                                            .font(.system(size: 12))
+                                    }
                                 }
                                 if clickedAttacks {
                                     Grid(alignment: .leading, verticalSpacing: 5) {
@@ -205,7 +207,9 @@ struct StatsView: View {
                             }
                             .containerShape(Rectangle())
                             .onTapGesture {
-                                clickedAttacks.toggle()
+                                if statsHelper.numberOfAttacks > 0 {
+                                    clickedAttacks.toggle()
+                                }
                             }
                         }
 
