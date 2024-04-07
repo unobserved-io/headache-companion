@@ -441,60 +441,58 @@ struct StatsView: View {
         .frame(height: chartFrameHeight)
     }
     
-    private var painLevelLineGraph: some View {
-        VStack(spacing: 12.0) {
-            Text("Average Pain")
-            Chart(dayDataGroupingWithAttackInRange) { day in
-                LineMark(
-                    x: .value("Date", day.grouping),
-                    y: .value("Average Pain", day.pain)
-                )
-                
-                PointMark(
-                    x: .value("Date", day.grouping),
-                    y: .value("Average Pain", day.pain)
-                )
-//                        .annotation {
-//                            if showQuestionsAnsweredOverlay {
-//                                Text(String("\(totalCount)"))
-//                                    .rotationEffect(.degrees(-90))
-//                            }
-//                        }
+    @ViewBuilder private var painLevelLineGraph: some View {
+        if dayDataGroupingWithAttackInRange.lazy.compactMap({ $0.pain }).reduce(0, +) > 0 {
+            VStack(spacing: 12.0) {
+                Text("Average Pain")
+                Chart(dayDataGroupingWithAttackInRange) { day in
+                    LineMark(
+                        x: .value("Date", day.grouping),
+                        y: .value("Average Pain", day.pain)
+                    )
+                    
+                    PointMark(
+                        x: .value("Date", day.grouping),
+                        y: .value("Average Pain", day.pain)
+                    )
 
-                if statsHelper.numberOfAttacks != 0 {
-                    if statsHelper.averagePainLevel > 0 {
-                        RuleMark(
-                            y: .value("Threshold", statsHelper.averagePainLevel)
-                        )
-                        .lineStyle(StrokeStyle(lineWidth: 2))
-                        .foregroundStyle(thresholdLineColor)
-                        .annotation(position: .top, alignment: .leading) {
-                            Text(String(format: "%.1f", statsHelper.averagePainLevel))
-                                .font(.title2.bold())
-                                .foregroundColor(.primary)
-                                .background {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(.background)
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .fill(.quaternary.opacity(0.7))
+                    if statsHelper.numberOfAttacks != 0 {
+                        if statsHelper.averagePainLevel > 0 {
+                            RuleMark(
+                                y: .value("Threshold", statsHelper.averagePainLevel)
+                            )
+                            .lineStyle(StrokeStyle(lineWidth: 2))
+                            .foregroundStyle(thresholdLineColor)
+                            .annotation(position: .top, alignment: .leading) {
+                                Text(String(format: "%.1f", statsHelper.averagePainLevel))
+                                    .font(.title2.bold())
+                                    .foregroundColor(.primary)
+                                    .background {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .fill(.background)
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .fill(.quaternary.opacity(0.7))
+                                        }
+                                        .padding(.horizontal, -8)
+                                        .padding(.vertical, -4)
                                     }
-                                    .padding(.horizontal, -8)
-                                    .padding(.vertical, -4)
-                                }
-                                .padding(.bottom, 4)
+                                    .padding(.bottom, 4)
+                            }
                         }
                     }
                 }
+                .chartYAxis {
+                    AxisMarks(position: .leading)
+                }
+        //                .onTapGesture {
+        //                    showQuestionsAnsweredOverlay.toggle()
+        //                }
+                .frame(height: chartFrameHeight)
             }
+        } else {
+            EmptyView()
         }
-        .chartYAxis {
-            AxisMarks(position: .leading)
-        }
-//                .onTapGesture {
-//                    showQuestionsAnsweredOverlay.toggle()
-//                }
-        .frame(height: chartFrameHeight)
     }
     
     private var daysWithAttackPieChart: some View {
@@ -715,8 +713,10 @@ struct StatsView: View {
         var tempDayDataInRange = dayData.filter {
             (rangeStartDate ... rangeEndDate).contains(dateFormatter.date(from: $0.date ?? "1970-01-01") ?? .distantFuture)
         }
-
+        
         if tempDayDataInRange.isEmpty {
+            rangeIsEmpty = true
+        } else if tempDayDataInRange.count == 1 && tempDayDataInRange[0].date == dateFormatter.string(from: .now) && tempDayDataInRange[0].attacks.isEmpty {
             rangeIsEmpty = true
         } else {
             // Save days with attacks for later use
