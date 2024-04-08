@@ -545,6 +545,19 @@ struct StatsView: View {
                 .chartYAxis {
                     AxisMarks(position: .leading)
                 }
+//                .chartForegroundStyleScale({
+//                    let allAttackTypes: [String] = statsHelper.allTypesOfHeadache.map{ $0.key }
+//                    if Set(allAttackTypes).isSubset(of: Set(defaultHeadacheTypes)) {
+//                        print("SUBSET")
+//                        return [
+//                            "Migraine": Color.accent,
+//                            "Tension": Color(UIColor(red: 193/255, green: 225/255, blue: 193/255, alpha: 1)),
+//                            "Other": Color.gray
+//                        ]
+//                    } else {
+//                        return [:]
+//                    }
+//                }())
                 .frame(height: chartFrameHeight)
             }
         }
