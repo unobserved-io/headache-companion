@@ -39,11 +39,21 @@ struct MedicationHistoryView: View {
                         DisclosureGroup {
                             // Start/stop times
                             if Calendar.current.isDateInToday(med.startDate ?? Date.distantPast) {
-                                Text("Started today")
-                                    .foregroundColor(.gray)
+                                if Calendar.current.isDateInToday(med.stopDate ?? Date.distantPast) {
+                                    Text("Today")
+                                        .foregroundColor(.gray)
+                                } else {
+                                    Text("Started today")
+                                        .foregroundColor(.gray)
+                                }
                             } else {
-                                Text("\(DateFormatter.localizedString(from: med.startDate ?? .now, dateStyle: .short, timeStyle: .none)) to \(med.stopDate != nil ? DateFormatter.localizedString(from: med.stopDate!, dateStyle: .short, timeStyle: .none) : "Present")")
-                                    .foregroundColor(.gray)
+                                if Calendar.current.isDate(med.startDate ?? Date.distantPast, equalTo: med.stopDate ?? Date.distantFuture, toGranularity: .day) {
+                                    Text("\(DateFormatter.localizedString(from: med.startDate ?? .now, dateStyle: .short, timeStyle: .none))")
+                                        .foregroundColor(.gray)
+                                } else {
+                                    Text("\(DateFormatter.localizedString(from: med.startDate ?? .now, dateStyle: .short, timeStyle: .none)) to \(med.stopDate != nil ? DateFormatter.localizedString(from: med.stopDate!, dateStyle: .short, timeStyle: .none) : "Present")")
+                                        .foregroundColor(.gray)
+                                }
                             }
 
                             // Dose & amount
