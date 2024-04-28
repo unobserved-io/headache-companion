@@ -10,7 +10,6 @@ import SwiftUI
 struct NewMedHistoryView: View {
     /// This is necessary to stop MedicationHistoryView's NavigationStack from creating a new MedHistory anytime the View reloads
     @Environment(\.managedObjectContext) private var viewContext
-//    @Environment(\.dismiss) var dismiss
     @State var firstRun = true
 
     var body: some View {

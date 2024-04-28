@@ -101,7 +101,10 @@ struct AddEditMedHistoryView: View {
             .listRowBackground(colorScheme == .light ? Color.gray.opacity(0.10) : Color.white.opacity(0.10))
             
             // Side Effects selector
-            NavigationLink(destination: MedicationSideEffectsView(sideEffects: $medHistory.sideEffects.toUnwrapped(defaultValue: [])).navigationTitle("Add Side Effects")) {
+            NavigationLink {
+                MedicationSideEffectsView(sideEffects: $medHistory.sideEffects)
+                    .navigationTitle("Add Side Effects")
+            } label: {
                 HStack {
                     Text("Side Effects")
                         .foregroundColor(.primary)
