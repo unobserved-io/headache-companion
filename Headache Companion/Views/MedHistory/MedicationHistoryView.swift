@@ -10,14 +10,17 @@ import SwiftUI
 struct MedicationHistoryView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.colorScheme) var colorScheme
+
     @SectionedFetchRequest(
         entity: MedHistory.entity(),
         sectionIdentifier: \.type,
-        sortDescriptors: [NSSortDescriptor(keyPath: \MedHistory.type, ascending: true),NSSortDescriptor(keyPath: \MedHistory.stopDate, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \MedHistory.type, ascending: true), NSSortDescriptor(keyPath: \MedHistory.stopDate, ascending: true)],
         animation: .default
     )
     var medHistory: SectionedFetchResults<String, MedHistory>
+
     @State var showingInfo: Bool = false
+
     let medDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d, 'yy"
@@ -35,7 +38,7 @@ struct MedicationHistoryView: View {
 
             ForEach(medHistory) { section in
                 Section(LocalizedStringKey(section.id)) {
-                    ForEach(section) { med in
+                    ForEach(section.sorted(by: { $0.stopDate ?? Date.distantFuture > $1.stopDate ?? Date.distantFuture })) { med in
                         DisclosureGroup {
                             // Start/stop times
                             if Calendar.current.isDateInToday(med.startDate ?? Date.distantPast) {
