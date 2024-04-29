@@ -161,7 +161,14 @@ struct AttackView: View {
                     }
                     .pickerStyle(.segmented)
 
-                    if newAttack && attack.symptoms.isEmpty && !attack.pressing && !attack.pulsating && !nextFrom.contains("painType") {
+                    if newAttack && 
+                        attack.symptoms.isEmpty &&
+                        !attack.pressing &&
+                        !attack.pulsating &&
+                        !nextFrom.contains("painType") &&
+                        !nextFrom.contains("symptoms") &&
+                        !(nextFrom.contains("painLevel") && attack.painLevel != 0)
+                    {
                         nextButton(addToNext: "painType")
                     }
                 }
